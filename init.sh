@@ -4,6 +4,8 @@ script_dir=`dirname $script_path`
 
 cd $script_dir/init
 
-sudo -u $USERNAME ./aura-install&
-sudo -u $USERNAME ./dein-install.sh&
+sudo -u $USERNAME ./aura-install
+sudo -u $USERNAME ./dein-install.sh
 
+cd $script_dir
+./install.sh

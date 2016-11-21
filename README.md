@@ -1,5 +1,5 @@
 # myconfig
-If you want to description about each config, see Wiki(I haven't yet written).
+If you want descriptions about each config, see Wiki(I haven't yet written).
 
 ## Directories
 - init/
@@ -31,3 +31,7 @@ sudo ./install-etc.sh
 sudo ./init.sh
 ```
 If you want to install partially, write path that isn't need to "exclude" or "exclude-etc".
+
+## Update
+```
+./update.sh
