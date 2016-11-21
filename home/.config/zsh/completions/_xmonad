@@ -1,0 +1,5 @@
+#compdef xmonad
+
+_xmonad () {
+	_arguments '--recompile' '--restart'
+}

@@ -1,0 +1,44 @@
+*background:#000000
+*foreground:#ffffff
+
+*color0:#000000
+*color1:#ff0000
+*color2:#00aa00
+*color3:#aa6600
+*color4:#5566ff
+*color5:#dd00dd
+*color6:#009988
+*color7:#777777
+
+*color8:#444444
+*color9:#ffaa55
+*color10:#bbff88
+*color11:#ffff33
+*color12:#aaccff
+*color13:#ffaacc
+*color14:#66ffdd
+*color15:#ffffff
+
+*highlightColor:#777777
+*highlightTextColor:#ffffff
+
+! bold
+!*colorBD:#fcfcfc
+
+! italic
+!*colorIT:
+! under line
+!*colorUL:
+!*underlineColor:
+!*cursorColor:
+!*cursorColor2:
+!*pointerIolor:
+!*pointerColor2:
+!*borderColor:
+!*tab-bg:
+!*tab-fg
+!*tabbar-bg:
+!*tabbar-fg:
+
+! bgcolor when reverseVideo
+!*colorRV:

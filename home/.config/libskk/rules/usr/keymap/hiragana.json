@@ -1,0 +1,10 @@
+{
+    "include": [
+        "common-kana"
+    ],
+    "define": {
+        "keymap": {
+            "k": "set-input-mode-katakana"
+        }
+    }
+}

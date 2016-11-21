@@ -1,0 +1,114 @@
+! URxvt*rxvt-unicode (urxvt) v9.20 - released: 2014-04-26
+! URxvt*options: perl,xft,styles,combining,blink,iso14755,unicode3,encodings=eu+vn+jp+jp-ext+kr+zh+zh-ext,fade,transparent,tint,XIM,frills,selectionscrolling,wheel,slipwheel,cursorBlink,pointerBlank,scrollbars=plain+rxvt+NeXT+xterm
+! URxvt*Usage: urxvt [options] [-e command args]
+!
+! discription(defaultValue or optionType)
+! optionName:value
+!
+! title(urxvt)
+!URxvt*title:urxvt-zsh
+
+! reverse window color(false)
+!URxvt*reverseVideo:true
+
+! font
+!URxvt*letterSpace:-1
+
+! output screencapture as textdata when push PrintScreen key
+! include text which scrollback when push PrintScreen with ctrl or shift
+! pipe to command which this option value
+URxvt*print-pipe:cat > /home/youhei/.urxvt_screen
+
+! scrollback
+URxvt*saveLines:1000
+
+! rgb:24 rgba:32 
+URxvt*depth:24
+
+! set $TERM(rxvt-unicode-256color)
+!URxvt*termName:rxvt-unicode-256color
+!
+! window size(80*24)
+! URxvt*geometry:geometry
+!
+! current directory when start term. must be an absolute path(~/)
+! URxvt*chdir:string
+!
+! loading .zprofile(false)
+! URxvt*loginShell:bool
+!
+! true is |0x80 false is esxape prefix
+! URxvt*meta8:                          boolean
+!
+! securemode?
+! URxvt*insecure:                       boolean
+!
+! icon
+! URxvt*iconFile:                       file
+! URxvt*iconName:                       string
+!
+! warning xmonad can not control(false)
+! URxvt*borderLess:false
+!
+! URxvt*lineSpace:                      number
+! URxvt*letterSpace:                    number
+!
+! Meta key(alt)
+! URxvt*modifier:                       modifier
+!
+! word delimiter
+! URxvt*cutchars:                       string
+!
+! when paste
+! URxvt*pastableTabs:                   boolean
+!
+! unknown
+! URxvt*tripleclickwords:bool
+! URxvt*visual:                         number
+! URxvt*transient-for:                  windowid
+! URxvt*override-redirect:              boolean
+! URxvt*secondaryScreen:true
+! URxvt*secondaryScroll:true
+URxvt*iso14755:false
+URxvt*iso14755_52:false
+! URxvt*hold:                           boolean
+! URxvt*externalBorder:number
+! URxvt*internalBorder:                 number
+! URxvt*skipBuiltinGlyphs:bool
+! URxvt*answerbackString:               string
+! URxvt*xrm:                            string
+! URxvt*jumpScroll:bool
+! URxvt*skipScroll:                     boolean
+! URxvt*scrollTtyOutput:bool
+! URxvt*scrollTtyKeypress:              boolean
+! URxvt*scrollWithBuffer:bool
+
+! Scroll
+URxvt*scrollBar:false
+
+! true is scroll a page. false is scroll five lines.
+! URxvt*mouseWheelScrollPage:false
+!
+! Key
+! URxvt*backspacekey:                   string
+! URxvt*deletekey:                      string
+! URxvt*keysym.sym:                     keysym
+!
+! imput method
+! URxvt*imLocale:                       string
+!URxvt*preeditType:OnTheSpot
+! URxvt*imFont:                         fontname
+!URxvt*inputMethod:fcitx
+!
+!
+! do not use perl out of Xresources
+URxvt*perl-ext:
+URxvt*perl-ext-common:
+
+URxvt*font: xft:Noto Sans CJK:size=8
+! do not need because adjust automatic
+! URxvt*boldFont:color
+! URxvt*italicFont:color
+! URxvt*boldItalicFont:color
+
+!*imFont: xft:Noto Sans CJK:size=8

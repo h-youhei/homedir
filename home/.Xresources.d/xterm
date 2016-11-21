@@ -1,0 +1,12 @@
+xterm*termName:xterm-256color
+xterm*locale:true
+!fonts
+xterm*faceName:xft:DejaVu Sans Mono
+xterm*faceNameDoublesize:xft:Noto Sans CJK JP
+xterm*faceSize:11
+!Alt key
+xterm*metaSendsEscape:true
+xterm*eightBitInput:false
+!Backspace key
+backarrowKey:false
+ttyModes:erase ^?

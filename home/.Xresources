@@ -1,0 +1,2 @@
+#include ".Xresources.d/color"
+#include ".Xresources.d/xterm"
