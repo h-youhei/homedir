@@ -193,6 +193,7 @@ augroup init
 "restore cursor position
 	autocmd BufReadPost * normal! g`"
 	autocmd BufNewFile * startinsert
+	autocmd FileType gitcommit startinsert
 	autocmd TermClose * call feedkeys("\<CR>")
 augroup END
 
