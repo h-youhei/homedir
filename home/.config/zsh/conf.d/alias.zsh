@@ -2,7 +2,6 @@
 alias s='sudo ' sudo='sudo '
 
 alias ls='ls -F' l='ls' la='ls -A' ll='ls -l -h' lal='ll -A'
-alias c='cd' c.='cd ..'
 alias cm='chmod' cmx='chmod 755'
 alias rn='rename'
 alias p='cp -d' pr='p -r'
@@ -19,6 +18,26 @@ alias f='find'
 alias pm='pacman -S' pms='pacman -Ss' pmr='pacman -Rsn' pmu='pacman -Syu'
 alias pma='aura -A' pmas='aura -As' pmau='aura -Au'
 
+alias c='cd' c.='cd ..'
+#in git project, cd git-root
+#in git root, cd $HOME
+#the other, builtin
+cd() {
+	if test "$#" -gt 0
+	then
+		builtin cd $@
+		return
+	fi
+
+	local gitroot=`git rev-parse --show-toplevel 2>/dev/null`
+	if test "$gitroot" && test "$gitroot" != "$PWD"
+	then
+		builtin cd $gitroot
+		return
+	fi
+
+	builtin cd
+}
 
 # save dir for xmonad
 alias x="pwd > $HOME/.xmonad/mark"
