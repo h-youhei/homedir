@@ -1,3 +1,8 @@
+# control io (stop<C-s> restart<C-q>)
+unsetopt flow_control
+# deactivate push <C-d> to end zsh
+setopt ignore_eof
+
 # load special key
 source $ZDOTDIR/kbd/xterm.zsh
 

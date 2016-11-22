@@ -1,24 +1,19 @@
+#completion
+#--------------------
 autoload -Uz compinit
 compinit
-
-# keybind
-#--------------------
-# control io (stop<C-s> restart<C-q>)
-unsetopt flow_control
-# deactivate push <C-d> to end zsh
-setopt ignore_eof
-
-# completion
-#--------------------
+# only when overflow window size, ask me to see all possibilities
+LISTMAX=0
 # variable can complete cd ~
 setopt auto_name_dirs
 # don't keep slash
 setopt auto_remove_slash
-# smartcase
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # show list with compact
 setopt list_packed
-
+# similar ls -F
+setopt list_types
+# smartcase
+#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # command history
 #--------------------
@@ -65,7 +60,7 @@ setopt glob_subst
 # add / after directory name
 setopt mark_dirs
 #expand to empty string if grob is null
-#setopt null_glob
+setopt null_glob
 setopt extended_glob
 
 # etc
@@ -75,8 +70,6 @@ setopt no_beep
 setopt interactive_comments
 # show message when recieve mail at &mailpath
 # setopt mail_warning
-# push '' to send '
-# setopt rc_quotes
 # setopt rc_expand_param
 
 source $ZDOTDIR/conf.d/alias.zsh
