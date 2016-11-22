@@ -55,8 +55,8 @@ bindkey -e
 
 #bindkey '\t' expand-or-complete
 bindkey '\t' expand-or-complete-prefix
-bindkey "${key[Down]}" down-line-or-history
-bindkey "${key[Up]}" up-line-or-history
+bindkey "${key[Down]}" history-beginning-search-forward
+bindkey "${key[Up]}" history-beginning-search-backward
 bindkey "${key[Left]}" backward-char
 bindkey "${key[Right]}" forward-char
 bindkey "${key[Home]}" beginning-of-line
