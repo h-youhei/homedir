@@ -42,8 +42,4 @@ type fcitx && fcitx
 export BROWSER='firefox'
 
 
-LANG='ja_JP.UTF-8'
-LC_MESSAGES='en_US.UTF-8'
-export LANG LC_MESSAGES
-
 type xmonad && exec xmonad
