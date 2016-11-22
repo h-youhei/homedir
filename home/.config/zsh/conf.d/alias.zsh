@@ -17,11 +17,13 @@ alias sln='ln -s'
 alias f='find'
 alias pm='pacman -S' pms='pacman -Ss' pmr='pacman -Rsn' pmu='pacman -Syu'
 alias pma='aura -A' pmas='aura -As' pmau='aura -Au'
+alias g='git'
 
 alias c='cd' c.='cd ..'
-#in git project, cd git-root
-#in git root, cd $HOME
-#the other, builtin
+# when to be given no argument
+# in git project, cd git-root
+# in git root, cd $HOME
+# the other, builtin
 cd() {
 	if test "$#" -gt 0
 	then
@@ -41,10 +43,6 @@ cd() {
 
 # save dir for xmonad
 alias x="pwd > $HOME/.xmonad/mark"
-
-#alias audiocd='vlc cdda:///dev/sr0'
-
-#alias mat='cd ~/share/mfiles;FreeMat'
 
 alias -g A='| awk'
 alias -g C='| cut'
