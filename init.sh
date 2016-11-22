@@ -1,11 +1,11 @@
-#! /bin/sh
+#!/bin/sh
+
 script_path=`readlink -f $0`
 script_dir=`dirname $script_path`
-
 cd $script_dir/init
 
-sudo -u $USERNAME ./aura-install
-sudo -u $USERNAME ./dein-install.sh
+sudo -u $SUDO_USER ./aura-install.sh
+sudo -u $SUDO_USER ./dein-install.sh
 
-cd $script_dir
-./install.sh
+sudo -u $SUDO_USER cp .gitignore $HOME
+sudo -u $SUDO_USER rsync -a -v fcitx/ $XDG_CONFIG_HOME/fcitx

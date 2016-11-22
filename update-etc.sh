@@ -1,7 +1,7 @@
-#! /bin/sh
+#!/bin/sh
 
 script_path=`readlink -f $0`
 script_dir=`dirname $script_path`
-sudo -u $USERNAME cd $script_dir
+cd $script_dir
 
-rsync -a -v -n --exclude-from=exclude-etc etc/ /etc
+rsync -rlpt -v --exclude-from=exclude-etc etc/ /etc
