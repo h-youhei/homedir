@@ -13,7 +13,6 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' formats '(%b) '
 zstyle ':vcs_info:*' actionformats '(%b|%a) '
 
-
 #this is called before showing prompt
 precmd() {
 	vcs_info

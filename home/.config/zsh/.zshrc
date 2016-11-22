@@ -1,8 +1,5 @@
-# Created by newuser for 5.0.7
-
-autoload -Uz compinit; compinit
-
-#source $ZDOTDIR/conf.d/
+autoload -Uz compinit
+compinit
 
 # keybind
 #--------------------
@@ -30,7 +27,6 @@ HISTFILE=
 HISTSIZE=100
 # save history to file
 SAVEHIST=0
-# share around zsh
 #setopt share_history
 # ignore dupplicated command
 setopt hist_find_no_dups
@@ -47,9 +43,9 @@ setopt hist_reduce_blanks
 
 # directory
 #--------------------
-# auto push to directory stack
+# push to directory stack with cd
 setopt auto_pushd
-# ls when cd
+# ls after cd
 function chpwd() {
 	ls -F -A
 }
@@ -59,16 +55,16 @@ setopt pushd_ignore_dups
 
 # correct
 #--------------------
-# command
+# command only
 setopt correct
 
-# glob
+# * expand
 #--------------------
-# can use variable
+# also affect * in variable
 setopt glob_subst
-# show dir/ when show directory
+# add / after directory name
 setopt mark_dirs
-#setopt csh_null_glob
+#expand to empty string if grob is null
 #setopt null_glob
 setopt extended_glob
 

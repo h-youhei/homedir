@@ -29,7 +29,7 @@ cd() {
 		return
 	fi
 
-	local gitroot=`git rev-parse --show-toplevel 2>/dev/null`
+	local gitroot=`git rev-parse --show-toplevel 2> /dev/null`
 	if test "$gitroot" && test "$gitroot" != "$PWD"
 	then
 		builtin cd $gitroot
