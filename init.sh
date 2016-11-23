@@ -4,7 +4,6 @@ script_path=`readlink -f $0`
 script_dir=`dirname $script_path`
 cd $script_dir/init
 
-sudo -u $SUDO_USER ./aura-install.sh
 sudo -u $SUDO_USER ./dein-install.sh
 
 sudo -u $SUDO_USER cp .gitignore $HOME
