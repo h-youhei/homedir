@@ -5,9 +5,11 @@ echo "$list"
 printf "choose network. type IDX (default 2):"
 read idx
 case $idx in
-	"" ) idx=2 ;;
+	"" )
+		idx=2 ;;
 	[1-9] ) ;;
-	* ) echo "type number"
+	* )
+		echo "type number"
 		exit 1 ;;
 esac
 

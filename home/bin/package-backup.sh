@@ -1,8 +1,7 @@
 #!/bin/sh
 
 case $# in
-	1 )
-		break ;;
+	1 ) ;;
 	0 )
 		echo "pass me output path"
 		exit 1 ;;
