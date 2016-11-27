@@ -221,21 +221,23 @@ execute 'nnoremap <nowait> <CR><Space>P :edit ' . init#conf_dir . '/dein_lazy.to
 "setting
 "toggle options
 nnoremap z <Nop>
-nnoremap zh :setl hlsearch!<CR>
 nnoremap z_ :setl list!<CR>
-nnoremap zs :setl spell!<CR>
-nnoremap zp :setl paste!<CR>
-nnoremap zc :setl autochdir!<CR>
-nnoremap zm :setl showmatch!<CR>
 nnoremap zb :setl backup!<CR>
+nnoremap zc :setl autochdir!<CR>
+nnoremap zh :setl hlsearch!<CR>
 nnoremap zl :setl linebreak!<CR>
+nnoremap zm :setl showmatch!<CR>
 nnoremap zn :setl relativenumber!<CR>
+nnoremap zp :setl paste!<CR>
+nnoremap zs :setl spell!<CR>
 nnoremap zw :setl wrap!<CR>
 "autoindent
 "cindent
 "copyindent
 "cursorbind
 "diff
+"expandtab
+"foldenable
 "readonly
 "scrollbind
 "smartindent
