@@ -86,7 +86,8 @@ set relativenumber
 "show be typing
 set showcmd
 
-set statusline=%{getcwd()}\ \ \ %=%t%m%r%h%w\ %y[%{&fileformat}][%{&fileencoding}]\ \ 0x%B\ (%lL,%cC)\ %LL(%p%%)
+"always
+set showtabline=2
 
 set matchpairs& mps+=<:>
 
