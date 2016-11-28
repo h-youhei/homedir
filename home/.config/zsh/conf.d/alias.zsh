@@ -18,8 +18,9 @@ alias f='find'
 alias pm='pacman -S' pms='pacman -Ss' pmr='pacman -Rsn' pmu='pacman -Syu'
 alias pma='aura -A' pmas='aura -As' pmau='aura -Au'
 alias g='git'
+alias xclip='xclip -selection clipboard'
 
-alias c='cd' c.='cd ..'
+alias c='cd' c.='cd ..' c-='cd -'
 # when to be given no argument
 # in git project, cd git-root
 # in git root, cd $HOME
@@ -59,3 +60,4 @@ alias -g U='| uniq'
 alias -g V='| tac'
 alias -g W='| wc'
 alias -g X='| xargs'
+alias -g Y='| xclip'
