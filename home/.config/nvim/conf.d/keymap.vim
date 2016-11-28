@@ -619,6 +619,11 @@ inoremap <nowait> <A-b> <C-o>B
 
 "Jump
 
+"scroll
+noremap <nowait> <Space><Space> zz
+noremap <nowait> <Space><Up> zb
+noremap <nowait> <Space><Down> zt
+
 "tab
 "move index
 noremap <nowait> <S-Left> gT
