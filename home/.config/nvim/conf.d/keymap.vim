@@ -114,17 +114,17 @@ noremap r<A-k>O rオ
 noremap r<A-k>l rん
 noremap r<A-k>L rン
 
-"For Inactivate IM and Capslock, raise InsertEvent after search.
-"Not working when an error is encountered. Why? See :help *map_return*
-"IMが起動した状態で実行されるから特殊文字しか意味をなさない。
-cnoremap <expr><silent> <CR> keymap#CR_with_InsertEvent()
-function! keymap#CR_with_InsertEvent()
-	return s:is_search() ? "\<CR>\<Insert>\<Right>\<Esc>" : "\<CR>"
-endfunction
-function! s:is_search()
-	let l:cmdtype = getcmdtype()
-	return l:cmdtype == '/' || l:cmdtype == '?' ? 1 : 0
-endfunction
+"Inactivate IM and Capslock after command mode
+"BUG always locate cursor at head
+"nnoremap <expr><silent> <SID>Inactivate keymap#inactivate()
+"cnoremap <silent><script> <CR> <CR><SID>Inactivate
+"cnoremap <silent><script> <Esc> <Esc><SID>Inactivate
+"function! keymap#inactivate()
+"	let l:view = winsaveview()
+"	call capslock#inactivate()
+"	call fcitx#inactivate()
+"	call winrestview(l:view)
+"endfunction
 
 """Buffer/Tabpage/Window
 "filer
