@@ -37,15 +37,39 @@ endfunction
 
 function! s:modified(i)
 	let l:buffer_list = tabpagebuflist(a:i)
-	for l:buffer in l:buffer_list
-		if getbufvar(l:buffer, "&modified")
-			let l:modified = ' [+]'
-			break
+	let l:current_tabpage = tabpagenr()
+	if a:i == l:current_tabpage
+		let l:current_window = tabpagewinnr(a:i)
+		let l:current_buffer = l:buffer_list[l:current_window - 1]
+		if s:is_preview(l:current_buffer)
+			let l:modified = '[PV]'
+		elseif s:is_readonly(l:current_buffer)
+			let l:modified = '[RO]'
+		elseif s:is_modified(l:current_buffer)
+			let l:modified = '[+]'
 		else
-			let l:modified = ''
+			for l:buffer in l:buffer_list
+				if s:is_modified(l:buffer)
+					let l:modified = '[+]'
+					break
+				else
+					let l:modified = ''
+				endif
+			endfor
 		endif
-	endfor
 	return l:modified
+endfunction
+
+function! s:is_modified(buffer)
+	return getbufvar(a:buffer, "&modified")
+endfunction
+
+function! s:is_readonly(buffer)
+	return getbufvar(a:buffer, "&readonly")
+endfunction
+
+function! s:is_preview(buffer)
+	return getbufvar(a:buffer, "&previewwindow")
 endfunction
 
 function! s:strip_directory(path)
