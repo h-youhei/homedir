@@ -107,8 +107,7 @@ set undofile
 
 set shortmess=aoOtTI
 
-
-"同じウィンドウで新しいファイルを開いた時、元のバッファを隠す
+"when to open new buffer in same window
 set bufhidden=hide
 
 "increment
@@ -129,8 +128,8 @@ set mousefocus
 set textwidth=0
 set formatoptions& fo+=nmM
 
-"Allowed keys to move left/right at line head/end
-set whichwrap=b,s,h,l,<,>,[,]
+"Allowed left/right keys to move prev/next line at start/end of the line
+set whichwrap=<,>,[,]
 
 "全角記号を全角幅で表示
 set ambiwidth=double

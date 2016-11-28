@@ -371,7 +371,7 @@ xnoremap <nowait> k !
 
 "command
 noremap <nowait> ; :
-noremap <nowait> : q:
+"noremap <nowait> : q:
 
 "Macro
 noremap <nowait> e @z
@@ -414,6 +414,7 @@ noremap <nowait> I I
 noremap <nowait><silent> <A-i> :<C-u>execute 'normal i'.repeat(nr2char(getchar()), v:count1)<CR>
 noremap <nowait> <Space>i Bi
 noremap <nowait> <Space>I 0i
+inoremap <nowait> <A-i> <C-y>
 
 "append
 noremap <nowait> a a
@@ -421,6 +422,7 @@ noremap <nowait> A A
 noremap <nowait><silent> <A-a> :<C-u>execute 'normal a'.repeat(nr2char(getchar()), v:count1)<CR>
 noremap <nowait> <Space>a Ea
 noremap <nowait> <Space>A g_a
+inoremap <nowait> <A-a> <C-e>
 
 "Open
 "noremap <nowait> o o
@@ -443,20 +445,19 @@ noremap <nowait> J i<CR><Esc>
 "Replace
 "noremap r r
 "noremap <nowait> R R
+inoremap <nowait> <A-r> <Insert>
 
 "Register
 "* + 0 a-z A-Z % # / :
 noremap ' "+
 "noremap " "
 noremap <A-'> "0
-inoremap <A-'> <C-o>"+
-inoremap <A-"> <C-o>"
 
 "Paste
 noremap <nowait> p ]p
 noremap <nowait> P [p
 noremap <nowait> <Space>p gpk
-inoremap <nowait> <A-p> <C-o>p
+inoremap <nowait> <A-p> <C-r>+
 
 """Motion"""
 "xx word
@@ -555,8 +556,6 @@ noremap <nowait> <Space>Q :<C-u>helpgrep \v
 "no regex
 noremap <nowait> / /\V
 noremap <nowait> ? ?\V
-inoremap <nowait> <A-/> <C-o>/\V
-inoremap <nowait> <A-?> <C-o>?\V
 "regex
 noremap <nowait> <Space>/ /\v
 noremap <nowait> <Space>? ?\v
@@ -569,24 +568,16 @@ xnoremap <nowait> n gn
 xnoremap <nowait> N gN
 xnoremap <nowait> <Space>n n
 xnoremap <nowait> <Space>N N
-inoremap <nowait> <A-n> <C-o>n
-inoremap <nowait> <A-N> <C-o>N
 
 "find
 "noremap f f
 "noremap F F
-inoremap <A-f> <C-o>f
-inoremap <A-F> <C-o>F
 "Exclusive
 "noremap t t
 "noremap T T
-inoremap <A-t> <C-o>t
-inoremap <A-T> <C-o>T
 "repeat
 noremap <nowait> , ;
 noremap <nowait> < ,
-inoremap <nowait> <A-,> <C-o>;
-inoremap <nowait> <A-<> <C-o>,
 
 "match
 "noremap <nowait> % %
@@ -619,6 +610,10 @@ inoremap <nowait> <A-b> <C-o>B
 
 "Jump
 
+"window
+noremap <nowait> <A-n> <C-w>w
+noremap <nowait> <A-t> <C-w>W
+
 "scroll
 noremap <nowait> <Space><Space> zz
 noremap <nowait> <Space><Up> zb
@@ -631,20 +626,14 @@ noremap <nowait> <S-Right> gt
 noremap <nowait><silent> <Space><S-Left> :<C-u>tabfirst<CR>
 noremap <nowait><silent> <Space><S-Right> :<C-u>tablast<CR>
 
-"window
-noremap <nowait> <A-Left> <C-w>h
-noremap <nowait> <A-Down> <C-w>j
-noremap <nowait> <A-Up> <C-w>k
-noremap <nowait> <A-Right> <C-w>l
-
 "Cursor
 noremap <nowait><expr> <Up> (v:count ? 'k' : 'gk')
 noremap <nowait><expr> <Down> (v:count ? 'j' : 'gj')
 noremap <nowait> <S-Up> -
 noremap <nowait> <S-Down> +
 
-noremap <nowait> <Left> h
-noremap <nowait> <Right> l
+"noremap <nowait> <Left> <Left>
+"noremap <nowait> <Right> <Right>
 
 noremap <nowait><silent> <PageDown> :<C-u>call keymap#down_half_winheight(v:count1)<CR>
 noremap <nowait><silent> <PageUp> :<C-u>call keymap#up_half_winheight(v:count1)<CR>
