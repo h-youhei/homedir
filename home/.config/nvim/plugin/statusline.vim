@@ -11,13 +11,10 @@ function! statusline#make_statusline()
 endfunction
 
 function! s:make_cwd()
-	return substitute(getcwd(), '/home/[^/]*/', '~/', '')
+	let l:cwd = substitute(getcwd(), '^/home/[^/]*/', '~/', '')
+	let l:cwd = substitute(l:cwd, '\~/workspace/', 'WS/', '')
+	return l:cwd
 endfunction
-
-"/i/i/i/iiii/iiii/iiii
-"function! (path)
-"	l:levels = count('/', a:path)
-	"l:n_truncates = l:levels - 3
 
 
 set statusline=%!statusline#make_statusline()
