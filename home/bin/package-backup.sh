@@ -21,7 +21,7 @@ fi
 #get package list
 pacman -Qqe > all.plst
 pacman -Qqg | grep '^base \|^base-devel ' | awk '{print $2}' > base.plst
-pacman -Qqg | grep '^user ' | awk '{print $2}' > abs.plst
+pacman -Qqg | grep '^modified ' | awk '{print $2}' > abs.plst
 pacman -Qqm > aur.plst
 
 #exclude base, aur, abs packages from main list
