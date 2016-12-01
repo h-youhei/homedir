@@ -14,8 +14,8 @@ noremap ZQ <Nop>
 
 "to use as prefix key
 "to prevent default mapping when type prefix key then <Esc>
-noremap <Space> <Nop>
-noremap <CR> <Nop>
+nnoremap <Space> <Nop>
+nnoremap <CR> <Nop>
 
 "find and replace for Japanese letter
 digraph ca 12363
@@ -128,10 +128,10 @@ noremap r<A-k>L rン
 
 """Buffer/Tabpage/Window
 "filer
-nnoremap <CR>f :update<CR>:edit %:p:h<CR>
-nnoremap <CR>tf :update<CR>:tabedit %:p:h<CR>
-nnoremap <CR>vf :update<CR>:vsplit %:p:h<CR>
-nnoremap <CR>hf :update<CR>:split %:p:h<CR>
+"nnoremap <CR>f :update<CR>:edit %:p:h<CR>
+"nnoremap <CR>tf :update<CR>:tabedit %:p:h<CR>
+"nnoremap <CR>vf :update<CR>:vsplit %:p:h<CR>
+"nnoremap <CR>hf :update<CR>:split %:p:h<CR>
 
 "edit
 nnoremap <CR>e :update<CR>:!ls<CR>:edit<Space>
@@ -145,7 +145,7 @@ nnoremap <CR>to <C-w>gF
 "to do test
 nnoremap <CR>vo :exec("vsplit ".expand("<cword>"))
 nnoremap <CR>ho <C-w>F
-
+"
 "tag
 "to do test
 nnoremap <CR>vt :exec("vertical stjump ".expand("<cword>"))
@@ -176,8 +176,15 @@ nnoremap <CR>vn :vnew<CR>
 nnoremap <CR>hn :new<CR>
 
 "diff
+nnoremap <CR>d :windo diffthis<CR>
+nnoremap <CR>D :windo diffoff<CR>
 nnoremap <CR>vd :!ls<CR>:vertical diffsplit<Space>
 nnoremap <CR>hd :!ls<CR>:diffsplit<Space>
+
+"open same file as readonly
+"this is not expected that can be edit
+"nnoremap <CR>V :sview %<CR>
+"copy to temp dir; then open it as readonly
 
 "help
 nnoremap <CR>vh :vertical help<CR>
@@ -190,16 +197,16 @@ nnoremap <CR>= <C-w>=
 nnoremap <CR>r :!ls<CR>:read<Space>
 nnoremap <CR>u :update<CR>
 nnoremap <CR>q :quit<CR>
-nnoremap <CR><Space>q :quit!<CR>
+nnoremap <CR>Q :quit!<CR>
+nnoremap <CR><Space>q :qall<CR>
 nnoremap <CR><Space>Q :qall!<CR>
-nnoremap <CR>Q :qall<CR>
 "update then quit
 nnoremap <CR>x :xit<CR>
 nnoremap <CR>X :xall<CR>
 
 "buffer
 "show list of buffers then move to a buffer
-nnoremap <CR>b :up<CR>:ls<CR>:buffer<Space>
+nnoremap <CR>b :update<CR>:ls<CR>:buffer<Space>
 "noremap <CR>tb :up<CR>:ls<CR>:buffer<Space>
 "noremap <CR>vb :up<CR>:ls<CR>:buffer<Space>
 "noremap <CR>hb :up<CR>:ls<CR>:buffer<Space>
@@ -224,23 +231,19 @@ nnoremap z <Nop>
 nnoremap z_ :setl list!<CR>
 nnoremap zb :setl backup!<CR>
 nnoremap zc :setl autochdir!<CR>
+nnoremap zf :setl foldenable!<CR>
 nnoremap zh :setl hlsearch!<CR>
+nnoremap zi :setl autoindent!<CR>
 nnoremap zl :setl linebreak!<CR>
 nnoremap zm :setl showmatch!<CR>
 nnoremap zn :setl relativenumber!<CR>
 nnoremap zp :setl paste!<CR>
 nnoremap zs :setl spell!<CR>
+nnoremap zt :setl expandtab!<CR>
 nnoremap zw :setl wrap!<CR>
-"autoindent
-"cindent
-"copyindent
 "cursorbind
-"diff
-"expandtab
-"foldenable
-"readonly
 "scrollbind
-"smartindent
+
 "reload
 nnoremap <nowait> Z :source $MYVIMRC<CR>
 execute 'nnoremap <nowait> <Space>z :edit ' . init#conf_dir . '/keymap.vim<CR>'
@@ -256,19 +259,19 @@ augroup keymap
 augroup END
 
 "abbreviations
-nnoremap @ <Nop>
-nnoremap @p :iabbrev <buffer><CR>
-nnoremap @a :iabbrev <buffer><Space>
-nnoremap @d :iunabbrev <buffer><Space>
-nnoremap @D :iabclear<CR>
+nnoremap $ <Nop>
+nnoremap $p :iabbrev <buffer><CR>
+nnoremap $a :iabbrev <buffer><Space>
+nnoremap $d :iunabbrev <buffer><Space>
+nnoremap $D :iabclear<CR>
 
 "args
-nnoremap $ <Nop>
-nnoremap $p :args<CR>
-nnoremap $a :argadd<Space>
-nnoremap $d :argdel<Space>
-nnoremap $e :argedit<Space>
-"noremap $x :argdo<Space>
+nnoremap @ <Nop>
+nnoremap @p :args<CR>
+nnoremap @a :argadd<Space>
+nnoremap @d :argdel<Space>
+nnoremap @e :argedit<Space>
+"noremap @x :argdo<Space>
 "%s grep
 
 "object range
@@ -309,8 +312,8 @@ noremap <CR><Space>g :g/\v
 noremap <CR><Space>G :v/\v
 
 "diff
-noremap <nowait> \ ]c 
-noremap <nowait> <Bar> [c 
+noremap <nowait> \ ]c
+noremap <nowait> <Bar> [c
 
 "This is useful after recovering from swap file
 noremap <nowait><silent> ! :<C-u>edit<CR>
@@ -329,19 +332,17 @@ noremap <nowait> _ <C-x>
 
 "jumplist
 noremap <nowait> h <C-o>
-noremap <nowait> <Space>h <C-i>
+noremap <nowait> H <C-i>
 "the newest jump
-"why 50? It's the maxbound of jumplist.
-noremap <nowait> <Space><Space>H 50<C-i>
 inoremap <nowait> <A-h> <C-o><C-o>
 inoremap <nowait> <A-H> <C-o><C-i>
 
 "changelist
-noremap <nowait> H g;
-noremap <nowait> <Space>H g,
+"noremap <nowait> H g;
+"noremap <nowait> <Space>H g,
 "the newest change
 "why 50? It's the maxbound of changelist.
-noremap <nowait> <Space><Space>H 50g,
+"noremap <nowait> <Space><Space>H 50g,
 
 "indent
 noremap <nowait> <Tab> >>
@@ -414,7 +415,8 @@ noremap <nowait> I I
 noremap <nowait><silent> <A-i> :<C-u>execute 'normal i'.repeat(nr2char(getchar()), v:count1)<CR>
 noremap <nowait> <Space>i Bi
 noremap <nowait> <Space>I 0i
-inoremap <nowait> <A-i> <C-y>
+"insert word above cursor
+inoremap <nowait><expr> <A-i> (col('.') == 1 ? '<Esc>kyaWjpa' : '<Esc>klyaWjpa')
 
 "append
 noremap <nowait> a a
@@ -422,7 +424,8 @@ noremap <nowait> A A
 noremap <nowait><silent> <A-a> :<C-u>execute 'normal a'.repeat(nr2char(getchar()), v:count1)<CR>
 noremap <nowait> <Space>a Ea
 noremap <nowait> <Space>A g_a
-inoremap <nowait> <A-a> <C-e>
+"insert word below cursor
+inoremap <nowait><expr> <A-a> (col('.') == 1 ? '<Esc>jyaWkpa' : '<Esc>jlyaWkpa')
 
 "Open
 "noremap <nowait> o o
@@ -517,6 +520,9 @@ nmap <silent> cs <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-relea
 nmap <silent> cS <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
 "transpose
 inoremap <A-c> <Esc>daWBhPgi
+nnoremap cd :<C-u>silent lcd<Space>
+nnoremap cD :<C-u>lcd %:p:h<CR>
+
 
 "Delete
 noremap <nowait> <Delete> x
@@ -611,8 +617,8 @@ inoremap <nowait> <A-b> <C-o>B
 "Jump
 
 "window
-noremap <nowait> <A-n> <C-w>w
-noremap <nowait> <A-t> <C-w>W
+noremap <nowait> <A-PageDown> <C-w>w
+noremap <nowait> <A-PageUp> <C-w>W
 
 "scroll
 noremap <nowait> <Space><Space> zz
