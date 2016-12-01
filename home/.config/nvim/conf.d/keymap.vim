@@ -14,8 +14,8 @@ noremap ZQ <Nop>
 
 "to use as prefix key
 "to prevent default mapping when type prefix key then <Esc>
-nnoremap <Space> <Nop>
-nnoremap <CR> <Nop>
+noremap <Space> <Nop>
+noremap <CR> <Nop>
 
 "find and replace for Japanese letter
 digraph ca 12363
@@ -585,8 +585,42 @@ xnoremap <nowait> <Space>N N
 noremap <nowait> , ;
 noremap <nowait> < ,
 
+inoremap <A-f> <C-o>f
+inoremap <A-F> <C-o>F
+inoremap <A-t> <C-o>t
+inoremap <A-T> <C-o>T
+inoremap <A-,> <C-o>f,
+inoremap <A-<> <C-o>f<
+inoremap <A-.> <C-o>f.
+inoremap <A->> <C-o>f>
+inoremap <A--> <C-o>f-
+inoremap <A-_> <C-o>f_
+inoremap <A-/> <C-o>f/
+inoremap <A-?> <C-o>f?
+inoremap <A-;> <C-o>f;
+inoremap <A-:> <C-o>f:
+inoremap <A-'> <C-o>f'
+inoremap <A-"> <C-o>f"
+inoremap <A-=> <C-o>f=
+inoremap <A-+> <C-o>f+
+inoremap <A-\> <C-o>f\
+inoremap <A-Bar> <C-o>f<Bar>
+inoremap <A-(> <C-o>f(
+inoremap <A-)> <C-o>f)
+inoremap <A-[> <C-o>f[
+inoremap <A-]> <C-o>f]
+inoremap <A-{> <C-o>f{
+inoremap <A-}> <C-o>f}
+inoremap <A-&> <C-o>f&
+inoremap <A-*> <C-o>f*
+inoremap <A-@> <C-o>f@
+inoremap <A-#> <C-o>f#
+inoremap <A-!> <C-o>f!
+inoremap <A-$> <C-o>f$
+
 "match
 "noremap <nowait> % %
+inoremap <A-%> <C-o>%
 
 "sentence
 "noremap <nowait> ) )
