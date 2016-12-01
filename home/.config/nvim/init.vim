@@ -43,18 +43,12 @@ set diffopt& dip+=vertical
 set clipboard=unnamed
 
 "fold
-"set foldmarker
 "set foldmethod
 "set foldopen
 "set thesaurus=
 
 "set helpheight
 "set highlight
-
-"soft linebreak
-"set linebreak
-" set breakat& brk+= (default SpaceTab!@*-+;:,./?)
-set breakindent
 
 set fileencoding=utf-8
 "LF, CR or both depend on OS
@@ -63,12 +57,9 @@ set fileformat=unix
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,cp932,sjis,euc-jp,default,latin1
 set fileformats=unix,dos,mac
 
-" set noautoindent (default on)
-" set smartindent
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
-set copyindent
 
 "Search
 set ignorecase
@@ -131,10 +122,6 @@ set formatoptions& fo+=nmM
 
 "Allowed left/right keys to move prev/next line at start/end of the line
 set whichwrap=<,>,[,]
-
-"全角記号を全角幅で表示
-set ambiwidth=double
-
 
 set complete=k,d,t
 
