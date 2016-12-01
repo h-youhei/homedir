@@ -356,29 +356,10 @@ filterOutWorkspaces out = filter (\(Workspace tag _ _) -> not (tag `elem` out))
 
 
 --Actions.DualScreen
---toggleWsOnScreen :: [WorkspaceId] -> [WorkspaceId] -> X ()
---toggleWsOnScreen primary secondary =
---	toggleWsOnScreen' []
-
---toggleWsOnScreen' :: [WorkspaceId] -> X ()
---toggleWsOnScreen' skips =
---    bindOn $ delegateSecondary ++ delegatePrimary ++ [("", return ())]
---    where
---        delegatePrimary = zip primaryScreenWorkspaces (repeat (toggleWS' $ skips ++ secondaryScreenWorkspaces))
---        delegateSecondary = zip secondaryScreenWorkspaces (repeat (toggleWS' $ skips ++ primaryScreenWorkspaces))
-
 focusLastViewedOnScreen' :: [WorkspaceId] -> X ()
 focusLastViewedOnScreen' skips = do
     lastViewed <- lastViewedOnScreen skips
     whenJust lastViewed (windows . view)
-
---shiftToLastViewedOnScreen' :: [WorkspaceId] -> X ()
---shiftToLastViewedOnScreen' skips = do
---    currentScreen <- getCurrentScreen
---    lastViewed <- case currentScreen of
---        0 -> getLastViewedSkip $ skips ++ secondaryScreenWorkspaces
---        _ -> getLastViewedSkip $ skips ++ primaryScreenWorkspaces
---    whenJust lastViewed (windows . shift)
 
 shiftToLastViewedOnScreen' :: [WorkspaceId] -> X ()
 shiftToLastViewedOnScreen' skips = do
