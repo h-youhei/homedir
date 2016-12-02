@@ -62,6 +62,7 @@ setopt mark_dirs
 #expand to empty string if grob is null
 setopt null_glob
 setopt extended_glob
+setopt globdots
 
 # etc
 #--------------------
