@@ -355,7 +355,7 @@ inoremap <nowait> <Tab> <C-t>
 inoremap <nowait> <S-Tab> <C-d>
 
 "repeat
-noremap <nowait> . .
+nmap <nowait> . <Plug>(operator-sandwich-dot)
 "macro
 noremap <nowait> > @@
 "substitute
