@@ -1,6 +1,6 @@
 import XMonad
 import qualified XMonad.StackSet as StackSet
-import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), view, currentTag, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift)
+import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), allWindows, view, currentTag, findTag, shiftWin, focusWindow, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift)
 
 import XMonad.Actions.CycleWS(nextScreen, shiftNextScreen, toggleWS', toggleOrDoSkip, skipTags)
 import XMonad.Actions.Navigation2D(windowGo)
@@ -8,10 +8,10 @@ import XMonad.Actions.OnScreen(viewOnScreen)
 import XMonad.Actions.PerWorkspaceKeys(bindOn)
 import XMonad.Actions.Search(SearchEngine(..), search, selectSearch, searchEngine, google, amazon, hoogle, hackage, images, wikipedia, youtube)
 --import XMonad.Actions.Submap(submap)
-import XMonad.Actions.SpawnOn(spawnOn)
+import XMonad.Actions.SpawnOn(manageSpawn, spawnOn, spawnHere)
 import XMonad.Actions.UpdatePointer(updatePointer)
 import XMonad.Actions.WithAll(killAll)
-import XMonad.Actions.WindowGo(raiseBrowser)
+import XMonad.Actions.WindowBringer(bringWindow)
 
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
 import XMonad.Hooks.EwmhDesktops(fullscreenEventHook)
@@ -33,12 +33,13 @@ import XMonad.Util.Run(runInTerm, spawnPipe, hPutStrLn)
 import XMonad.Util.Types(Direction1D(..), Direction2D(..))
 
 
+import Control.Monad(filterM)
 import Control.Monad.Fix(fix)
 
 import Data.Bits((.&.), shiftL)
 import qualified Data.Map.Lazy as Map
 import Data.Map.Lazy(Map)
-import Data.Char(isSpace)
+import Data.Char(isSpace, toLower)
 import Data.List(find, any)
 import Data.Maybe(isJust)
 
@@ -60,7 +61,8 @@ main = do
         , logHook = myLogger myStatusBar >> updatePointer (0.5, 0.2) (0, 0)
         , startupHook = myStartup
         --,mouseBindings = myMouseBindings
-        , manageHook = manageApps <+> manageDocks <+> namedScratchpadManageHook myScratchpads
+        , manageHook = manageApps <+> manageDocks <+> manageSpawn
+        -- <+> namedScratchpadManageHook myScratchpads
         , handleEventHook = fullscreenEventHook
         , focusFollowsMouse = True
         , clickJustFocuses = False
@@ -93,17 +95,18 @@ myLogger bar = dynamicLogWithPP $ xmobarPP
     , ppVisible = xmobarColor "cyan" "" . pad
     , ppSep = "  |  "
     , ppOrder = \(ws:_:t:_) -> [ws,t]
-    , ppSort = fmap (. filterOutWorkspaces ["NSP"]) $ ppSort def
+    --, ppSort = fmap (. filterOutWorkspaces ["NSP"]) $ ppSort def
     , ppOutput = hPutStrLn bar
     }
 
 myStartup :: X ()
 myStartup = do
-    --Are there better solution to detect is restart?
+    --Are there any better solution to detect is restart?
     ws <- gets windowset
     if isExistAnyWindow ws then return ()
     else do
         windows $ viewOnScreen 1 $ head secondaryScreenWorkspaces
+        spawnHere =<< io getBrowser
         windows $ viewOnScreen 0 $ head primaryScreenWorkspaces
 
 isExistAnyWindow :: WindowSet -> Bool
@@ -154,7 +157,7 @@ myKeys conf = Map.fromList $
     , ((guiMask, xK_t), onTray fromTray toTray)
     , ((guiMask .|. shiftMask, xK_t), toggleTray)
 
-    , ((guiMask, xK_m), scratchpadToggle "memo")
+    --, ((guiMask, xK_m), scratchpadToggle "memo")
 
     , ((guiMask, xK_Return), spawn $ XMonad.terminal conf)
     , ((guiMask .|. shiftMask, xK_Return), io $ terminalWithMark $ XMonad.terminal conf)
@@ -173,7 +176,7 @@ myKeys conf = Map.fromList $
 
     , ((guiMask, xK_slash), dmenuSearch google)
     , ((guiMask .|. shiftMask, xK_slash), submap submapDmenuSearch)
-    , ((guiMask, xK_s), selectSearch google >> raiseBrowserThere)
+    , ((guiMask, xK_s), raiseBrowserThere >> selectSearch google)
     , ((guiMask .|. shiftMask, xK_s), submap submapSelectSearch)
 
     , ((guiMask, xK_o), shellPrompt myPromptConfig)
@@ -181,6 +184,7 @@ myKeys conf = Map.fromList $
     , ((guiMask, xK_Escape), lock)
     , ((guiMask .|. shiftMask, xK_Escape), submap $ Map.fromList $
         [ ((0, xK_c), spawn "xmonad --recompile && xmonad --restart")
+        --[ ((0, xK_c), whenX recompile $ restart "xmonad")
         , ((0, xK_e), io exitSuccess)
         , ((0, xK_p), poweroff)
         , ((0, xK_r), reboot)
@@ -225,7 +229,7 @@ myKeys conf = Map.fromList $
         submapDmenuSearch = Map.fromList $
             [ (k, dmenuSearch q) | (k, q) <- searchQuery]
         submapSelectSearch = Map.fromList $
-            [ (k, selectSearch q >> raiseBrowserThere) | (k, q) <- searchQuery]
+            [ (k, raiseBrowserThere >> selectSearch q) | (k, q) <- searchQuery]
         searchQuery =
             [ ((0, xK_h), hoogle)
             , ((shiftMask, xK_h), hackage)
@@ -301,6 +305,7 @@ terminalWithMark term = do
 
 --After here. I'd like to add to Contrib
 --Actions.Search
+--Bug when not exist: open then popup window saying firefox already exists
 dmenuSearch :: SearchEngine -> X ()
 dmenuSearch (SearchEngine name url) = do
     currentScreen <- getCurrentScreen
@@ -309,25 +314,8 @@ dmenuSearch (SearchEngine name url) = do
     if input == "" then return()
     else do
         browser <- io getBrowser
-        search browser url input
         raiseBrowserThere
-
---This is makeshift
---自分の能力が追い着いたら、書き直し。
---I wanna raise the browser in ブラウザが開いてるスクリーン
---自分がブラウザを開くスクリーンを固定する。
-raiseBrowserThere :: X ()
-raiseBrowserThere = do
-    mws <-screenWorkspace 1
-    case mws of
-        Nothing -> raiseBrowser
-        Just ws -> do
-            windows $ view ws
-            raiseBrowser
-
---whereIs :: Query Bool -> 
---whereIs q =
-
+        search browser url input
 
 --Util.?
 getCurrentScreen :: X (ScreenId)
@@ -347,7 +335,6 @@ getLastViewedSkip skips = do
         delegate [] _ = Nothing
         delegate (h:_) Nothing = Just h
         delegate _ lv@(Just _) = lv
-
 
 
 --Hooks.DynamicLog
@@ -404,6 +391,53 @@ getFromList :: [a] -> Int -> Maybe a
 getFromList xs i
     | 0 <= i && i < length xs = Just $ xs !! i
     | otherwise = Nothing
+
+
+raiseBrowserThere :: X ()
+raiseBrowserThere = do
+    ws <- gets windowset
+    matches <- filterM (runQuery isExistBrowser) $ allWindows ws
+    w <- return $ case matches of
+        [] -> Nothing
+        (firstMatch:_) -> case findTag firstMatch ws of
+            Nothing -> Nothing
+            Just wid -> Just (wid, firstMatch)
+    case w of
+        --not exist browser
+        Nothing -> do
+            toggleScreenIf 1
+        Just (wid, win) -> case whichScreenIs wid of
+            --Tray
+            Nothing -> bringWindowOnScreen 1 win
+            --primary or secondary screenWorkspaces
+            Just sid -> raiseWindowOnScreen sid win
+
+raiseWindowOnScreen :: ScreenId -> Window -> X ()
+raiseWindowOnScreen sid w = do
+    toggleScreenIf sid
+    windows $ focusWindow w
+
+bringWindowOnScreen :: ScreenId -> Window -> X ()
+bringWindowOnScreen sid w = do
+    toggleScreenIf sid
+    windows $ bringWindow w
+
+toggleScreenIf :: ScreenId -> X ()
+toggleScreenIf sid = do
+    currentSid <- getCurrentScreen
+    if sid /= currentSid then nextScreen else return ()
+
+isExistBrowser :: Query Bool
+isExistBrowser = do
+    browser <- io getBrowser
+    fmap (map toLower) className =? browser
+
+whichScreenIs :: WorkspaceId -> Maybe ScreenId
+whichScreenIs tag
+    | tag `elem` secondaryScreenWorkspaces = Just 1
+    | tag `elem` primaryScreenWorkspaces = Just 0
+    | otherwise = Nothing
+
 
 --Actions.Submap
 --add io $ sync d False
