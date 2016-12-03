@@ -36,10 +36,8 @@ XMODIFIERS='@im=fcitx'
 GTK_IM_MODULE='fcitx'
 QT_IM_MODULE='fcitx'
 export XMODIFIERS GTK_IM_MODULE QT_IM_MODULE
-type fcitx && fcitx
-
 
 export BROWSER='firefox'
 
 
-type xmonad && exec xmonad
+exec xmonad

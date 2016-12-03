@@ -101,6 +101,7 @@ myLogger bar = dynamicLogWithPP $ xmobarPP
 
 myStartup :: X ()
 myStartup = do
+    spawn "fcitx -d -r"
     --Are there any better solution to detect is restart?
     ws <- gets windowset
     if isExistAnyWindow ws then return ()
