@@ -220,11 +220,6 @@ nnoremap <nowait> <CR>pr :registers<CR>
 nnoremap <nowait> <CR>pj :jumps<CR>
 nnoremap <nowait> <CR>pt :tags<CR>
 
-"plugin
-nnoremap <nowait> <CR>P :call init#plugin_update()<CR>
-execute 'nnoremap <nowait> <CR><Space>p :edit ' . init#conf_dir . '/dein.toml<CR>'
-execute 'nnoremap <nowait> <CR><Space>P :edit ' . init#conf_dir . '/dein_lazy.toml<CR>'
-
 "setting
 "toggle options
 nnoremap z <Nop>
@@ -245,10 +240,8 @@ nnoremap zw :setl wrap!<CR>
 "scrollbind
 
 "reload
-nnoremap <nowait> Z :source $MYVIMRC<CR>
-execute 'nnoremap <nowait> <Space>z :edit ' . init#conf_dir . '/keymap.vim<CR>'
-nnoremap <nowait> <Space>Z :edit $MYVIMRC<CR>
-
+nnoremap <nowait> Zv :source $MYVIMRC<CR>
+nnoremap <nowait> Zp :call init#plugin_update()<CR>
 
 "quickfix
 nnoremap <nowait> x :copen<CR>

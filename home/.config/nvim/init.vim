@@ -2,41 +2,20 @@ if has('vim_starting')
 	set encoding=utf-8
 endif
 
-scriptencoding utf-8
-
 augroup init
 	autocmd!
 augroup END
 
 let init#conf_dir = expand('$XDG_CONFIG_HOME/nvim/conf.d')
 
-"plugin manager(dein)
-let s:dein_dir = expand('$XDG_CACHE_HOME/dein')
-let s:dein_runtime = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-if isdirectory(s:dein_runtime)
-	execute 'set runtimepath& rtp+=' . s:dein_runtime
-	call dein#begin(s:dein_dir)
-
-	call dein#load_toml(init#conf_dir . '/dein.toml', {'lazy':0})
-	call dein#load_toml(init#conf_dir . '/dein_lazy.toml', {'lazy':1})
-
-	if dein#check_install()
-		call dein#install()
-	endif
-
-	function! init#plugin_update()
-		if dein#check_update()
-			call dein#update()
-		endif
-	endfunction
-endif
+execute 'source ' . init#conf_dir . '/plugin.vim'
 
 filetype plugin indent on
 syntax on
 
 ":help 'option_name'
 
-set wildmode=list:longest,full
+set wildmode=list,full
 
 set diffopt& dip+=vertical
 
@@ -112,7 +91,6 @@ set imsearch=0
 "when to move pointer
 set mousefocus
 
-
 "auto real line break
 set textwidth=0
 
@@ -131,6 +109,5 @@ augroup init
 	autocmd FileType * setlocal formatoptions& fo+=rnmM
 	autocmd TermClose * call feedkeys("\<CR>")
 augroup END
-
 
 execute 'source ' . init#conf_dir . '/keymap.vim'
