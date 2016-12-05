@@ -6,9 +6,6 @@ repo = 'Shougo/dein.vim'
 #hook_add = '''
 #'''
 
-#[[plugins]]
-#repo = 'vifm/neovim-vifm'
-
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 hook_add = '''
@@ -19,6 +16,14 @@ hook_add = '''
 
 [[plugins]]
 repo = 'machakann/vim-textobj-delimited'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+	let g:openbrowser_browser_commands = [
+		\{ "name": "firefox"
+		\, "args": ["{browser}", "{uri}"] }]
+'''
 
 #[[plugins]]
 #repo = 'rust-lang/rust.vim'

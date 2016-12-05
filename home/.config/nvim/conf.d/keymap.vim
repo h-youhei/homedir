@@ -435,8 +435,8 @@ noremap <nowait> <Space>o gi
 noremap <nowait> ^ za
 noremap <nowait> <Space>^ zA
 
-"comment
-"nmap <nowait> # <Plug>(comment-toggle)
+
+map <nowait> # <Plug>(openbrowser-smart-search)
 
 "joint
 noremap <nowait> j J
