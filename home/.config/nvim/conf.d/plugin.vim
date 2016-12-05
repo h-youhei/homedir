@@ -1,3 +1,6 @@
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+
 let s:dein_dir = expand('$XDG_CACHE_HOME/dein')
 let s:dein_runtime = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if isdirectory(s:dein_runtime)
