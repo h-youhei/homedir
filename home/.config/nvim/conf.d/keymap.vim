@@ -182,9 +182,15 @@ nnoremap <CR>vd :!ls<CR>:vertical diffsplit<Space>
 nnoremap <CR>hd :!ls<CR>:diffsplit<Space>
 
 "open same file as readonly
-"this is not expected that can be edit
-"nnoremap <CR>V :sview %<CR>
-"copy to temp dir; then open it as readonly
+nnoremap <CR>V :call keymap#view()<CR>
+function! keymap#view()
+	let l:fname = expand('%:t')
+	let l:temp_file = '/tmp/nv-tmp-' . l:fname
+	execute 'write! ' . l:temp_file
+	if filereadable(l:temp_file)
+		execute 'sview ' .  l:temp_file
+	endif
+endfunction
 
 "help
 nnoremap <CR>vh :vertical help<CR>
