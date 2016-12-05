@@ -113,12 +113,8 @@ set imsearch=0
 set mousefocus
 
 
-"r  改行時にコメント開始文字列を自動挿入
-"n  テキスト整形時、formatlistpatで指定されたリストを認識する
-"mM 改行、連結時の日本語サポート
 "auto real line break
 set textwidth=0
-set formatoptions& fo+=nmM
 
 "Allowed left/right keys to move prev/next line at start/end of the line
 set whichwrap=<,>,[,]
@@ -132,6 +128,7 @@ augroup init
 	autocmd BufReadPost * normal! g`"
 	autocmd BufNewFile * startinsert
 	autocmd FileType gitcommit startinsert
+	autocmd FileType * setlocal formatoptions& fo+=rnmM
 	autocmd TermClose * call feedkeys("\<CR>")
 augroup END
 
