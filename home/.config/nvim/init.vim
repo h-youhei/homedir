@@ -103,11 +103,17 @@ set spelllang=en_us,cjk
 
 augroup init
 "restore cursor position
-	autocmd BufReadPost * normal! g`"
+	autocmd BufReadPost * call init#restore_cursor()
 	autocmd BufNewFile * startinsert
 	autocmd FileType gitcommit startinsert
 	autocmd FileType * setlocal formatoptions& fo+=rnmM
 	autocmd TermClose * call feedkeys("\<CR>")
 augroup END
+
+function! init#restore_cursor()
+	if line("'\"") > 1 && line("'\"") <= line("$")
+		normal! g`"
+	endif
+endfunction
 
 execute 'source ' . init#conf_dir . '/keymap.vim'
