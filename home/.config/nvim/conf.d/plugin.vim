@@ -11,6 +11,8 @@ if isdirectory(s:dein_runtime)
 		call dein#load_toml(init#conf_dir . '/dein.toml', {'lazy':0})
 		call dein#load_toml(init#conf_dir . '/dein_lazy.toml', {'lazy':1})
 
+		call dein#local(expand('$HOME/workspace/vim-plugins'))
+
 		call dein#end()
 		call dein#save_state()
 	endif
