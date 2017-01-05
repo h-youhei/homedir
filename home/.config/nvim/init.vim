@@ -36,6 +36,7 @@ set fileformat=unix
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,cp932,sjis,euc-jp,default,latin1
 set fileformats=unix,dos,mac
 
+set copyindent
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
@@ -106,7 +107,7 @@ augroup init
 	autocmd BufReadPost * call init#restore_cursor()
 	autocmd BufNewFile * startinsert
 	autocmd FileType gitcommit startinsert
-	autocmd FileType * setlocal formatoptions& fo+=rnmM
+	autocmd FileType * setlocal formatoptions& fo+=rnmM fo-=tc
 	autocmd TermClose * call feedkeys("\<CR>")
 augroup END
 
