@@ -1,10 +1,9 @@
 {
 	"define": {
 		"keymap": {
-			"Escape": "abort",
+			"Q": "abort",
 			"\n": "commit-unhandled",
 			"\b": "delete",
-			"\\": "abbrev",
 			" ": "next-candidate",
 			">": "special-midasi",
 			"x": "previous-candidate",
