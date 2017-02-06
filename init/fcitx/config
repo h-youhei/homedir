@@ -72,19 +72,19 @@ SaveAllKey=
 # Switch Embeded Preedit
 SwitchPreedit=
 # Previous Candidate Word
-#PrevWord=SHIFT_TAB
+PrevWord=
 # Next Candidate Word
-#NextWord=TAB
+NextWord=
 
 [Program]
 # Seconds sleep before fcitx really start
-#DelayStart=0
+DelayStart=1
 # Share State Among Window
 # Available Value:
 # No
 # All
 # PerProgram
-#ShareStateAmongWindow=No
+ShareStateAmongWindow=All
 # Default Input Method State
 # Available Value:
 # Inactive
@@ -105,11 +105,11 @@ SwitchPreedit=
 # True False
 #SendTextWhenSwitchEng=True
 # Candidate Word Number
-#CandidateWordNumber=5
+CandidateWordNumber=10
 # Give the tips of Phrase
 # Available Value:
 # True False
-#PhraseTips=True
+PhraseTips=False
 # Do not commit preedit text when unfocus a window
 # Available Value:
 # True False
