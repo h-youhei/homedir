@@ -1,5 +1,7 @@
 #!/bin/sh
 
+eval "$(dbus-launch --sh-syntax --exit-with-session)"
+
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -36,6 +38,8 @@ XMODIFIERS='@im=fcitx'
 GTK_IM_MODULE='fcitx'
 QT_IM_MODULE='fcitx'
 export XMODIFIERS GTK_IM_MODULE QT_IM_MODULE
+
+fcitx -dr &
 
 export BROWSER='firefox'
 
