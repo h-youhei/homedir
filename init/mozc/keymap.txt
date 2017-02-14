@@ -1,9 +1,7 @@
 status	key	command
 Precomposition	Backspace	Revert
 Precomposition	Ctrl Backspace	Undo
-Precomposition	Muhenkan	ToggleAlphanumericMode
-Precomposition	Henkan	InputModeFullKatakana
-Precomposition	Shift Henkan	InputModeHiragana
+Precomposition	Shift Henkan	ToggleAlphanumericMode
 Precomposition	Ctrl Henkan	Reconvert
 Precomposition	Space	InsertSpace
 Precomposition	Shift Space	InsertAlternateSpace
@@ -21,11 +19,9 @@ Composition	Home	MoveCursorToBeginning
 Composition	End	MoveCursorToEnd
 Composition	Ctrl Space	InsertSpace
 Composition	Ctrl Shift Space	InsertAlternateSpace
-Composition	Henkan	InputModeFullKatakana
-Composition	Shift Henkan	InputModeHiragana
-Composition	Katakana	SwitchKanaType
-Composition	Muhenkan	ToggleAlphanumericMode
-Composition	Shift Muhenkan	ConvertToHalfAlphanumeric
+Composition	Shift Henkan	ToggleAlphanumericMode
+Composition	Shift Enter	DisplayAsFullKatakana
+Composition	Shift Escape	DisplayAsHiragana
 Composition	Space	Convert
 Suggestion	Shift Space	PredictAndConvert
 Composition	Enter	Commit
@@ -44,11 +40,9 @@ Conversion	Ctrl Space	InsertSpace
 Conversion	Ctrl Shift Space	InsertAlternateSpace
 Conversion	Tab	CommitOnlyFirstSegment
 Conversion	Enter	Commit
-Conversion	Henkan	InputModeFullKatakana
-Conversion	Shift Henkan	InputModeHiragana
-Conversion	Katakana	SwitchKanaType
-Conversion	Muhenkan	ToggleAlphanumericMode
-Conversion	Shift Muhenkan	ConvertToFullAlphanumeric
+Composition	Shift Enter	ConvertToFullKatakana
+Composition	Shift Escape	ConvertToHiragana
+Conversion	Shift Henkan	ToggleAlphanumericMode
 Conversion	Space	ConvertNext
 Conversion	Shift Space	ConvertPrev
 Conversion	PageDown	ConvertNextPage
