@@ -1,15 +1,16 @@
 Config
 	{ font = "xft:Noto Sans CJK:size=11"
 	, bgColor = "black"
-	, fgColor = "gray"
+	, fgColor = "white"
 	, position = Top
 	, lowerOnStart = True
 	, overrideRedirect = False
 	, commands =
-		[ Run Date "%y年%_m月%_d日 (%a)  %H時%M分" "date" 10
+		[ Run Date "%_m/%_d (%a) %p%_H:%M" "date" 10
 		, Run StdinReader
+		, Run Com ".config/xmobar/getimstate.sh" [] "im" 2
 		]
 	, sepChar = "%"
 	, alignSep = "}{"
-	, template = " %date% | %StdinReader% }{ "
+	, template = "  %StdinReader% }{ %im% | %date%  "
 	}
