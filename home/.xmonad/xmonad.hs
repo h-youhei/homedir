@@ -2,8 +2,8 @@ import XMonad
 import qualified XMonad.StackSet as StackSet
 import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), allWindows, view, currentTag, findTag, shiftWin, focusWindow, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift)
 
-import XMonad.Actions.CycleWS(nextScreen, shiftNextScreen, toggleWS', toggleOrDoSkip, skipTags)
-import XMonad.Actions.Navigation2D(windowGo)
+import XMonad.Actions.CycleWS(nextScreen, shiftNextScreen, swapNextScreen, toggleWS, toggleOrDoSkip, skipTags)
+import XMonad.Actions.Navigation2D(windowGo, windowSwap)
 import XMonad.Actions.OnScreen(viewOnScreen)
 import XMonad.Actions.PerWorkspaceKeys(bindOn)
 import XMonad.Actions.Search(SearchEngine(..), search, selectSearch, searchEngine, google, amazon, hoogle, hackage, images, wikipedia, youtube)
@@ -11,39 +11,35 @@ import XMonad.Actions.Search(SearchEngine(..), search, selectSearch, searchEngin
 import XMonad.Actions.SpawnOn(manageSpawn, spawnOn, spawnHere)
 import XMonad.Actions.UpdatePointer(updatePointer)
 import XMonad.Actions.WithAll(killAll)
-import XMonad.Actions.WindowBringer(bringWindow)
 
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
 import XMonad.Hooks.EwmhDesktops(fullscreenEventHook)
-import XMonad.Hooks.ManageDocks(manageDocks, avoidStruts)
-import XMonad.Hooks.ManageHelpers(currentWs, isFullscreen, isDialog, doFullFloat, doCenterFloat)
+import XMonad.Hooks.ManageDocks(docks, avoidStruts)
+import XMonad.Hooks.ManageHelpers(currentWs, isDialog)
+import XMonad.Hooks.SetWMName(setWMName)
 import XMonad.Hooks.WorkspaceHistory(workspaceHistory)
 
 import XMonad.Layout.Grid(Grid(..))
 import XMonad.Layout.PerWorkspace(onWorkspace, onWorkspaces)
 import XMonad.Layout.Tabbed(simpleTabbed)
 
-import XMonad.Prompt(XPPosition(..), XPConfig(..), quit, killBefore, startOfLine, endOfLine, pasteString, moveCursor, moveWord', killWord', deleteString, setSuccess, setDone)
-import XMonad.Prompt.Man(manPrompt)
-import XMonad.Prompt.Shell(shellPrompt, getBrowser)
+import XMonad.Prompt.Shell(getBrowser)
 
 import XMonad.Util.Dmenu(menuArgs)
-import XMonad.Util.NamedScratchpad(NamedScratchpad(NS), customFloating, namedScratchpadAction, namedScratchpadManageHook)
 import XMonad.Util.Run(runInTerm, spawnPipe, hPutStrLn)
-import XMonad.Util.Types(Direction1D(..), Direction2D(..))
+import XMonad.Util.Types(Direction2D(..))
 
 
-import Control.Monad(filterM)
 import Control.Monad.Fix(fix)
 
 import Data.Bits((.&.), shiftL)
 import qualified Data.Map.Lazy as Map
 import Data.Map.Lazy(Map)
-import Data.Char(isSpace, toLower)
-import Data.List(find, any)
+import Data.Char(toLower)
+import Data.List(find, any, init)
 import Data.Maybe(isJust)
 
-import Graphics.X11.ExtraTypes.XF86(xF86XK_AudioMute, xF86XK_AudioPlay)
+import Graphics.X11.ExtraTypes.XF86(xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute, xF86XK_AudioPlay)
 
 import System.Environment(getEnv)
 import System.Exit(exitSuccess)
@@ -51,71 +47,65 @@ import System.Exit(exitSuccess)
 
 main :: IO ()
 main = do
-    myStatusBar <- spawnPipe "xmobar"
-    xmonad def
+    myStatusBar1 <- spawnPipe "xmobar -x 1"
+    myStatusBar2 <- spawnPipe "xmobar -x 2"
+    xmonad $ docks def
         { workspaces = myWorkspaces
         , layoutHook = avoidStruts myLayout
         , modMask = mod4Mask
         , terminal = "xterm"
         , keys = myKeys
-        , logHook = myLogger myStatusBar >> updatePointer (0.5, 0.2) (0, 0)
+        , logHook = myPP myStatusBar1 >> myPP myStatusBar2 >> updatePointer (0.5, 0.2) (0, 0)
         , startupHook = myStartup
         --,mouseBindings = myMouseBindings
-        , manageHook = manageApps <+> manageDocks <+> manageSpawn
-        -- <+> namedScratchpadManageHook myScratchpads
+        , manageHook = manageApps <+> manageSpawn
         , handleEventHook = fullscreenEventHook
         , focusFollowsMouse = True
         , clickJustFocuses = False
         }
 
-
---["1:P", "2:P", ... "1:S", "2:S", ... "Tray"]
-myWorkspaces, primaryScreenWorkspaces, secondaryScreenWorkspaces :: [WorkspaceId]
-myWorkspaces = primaryScreenWorkspaces ++ secondaryScreenWorkspaces ++ ["Tray"]
-primaryScreenWorkspaces = map (: ":P") ['1' .. '5']
-secondaryScreenWorkspaces = map (: ":S") ['1' .. '5']
+myWorkspaces :: [WorkspaceId]
+myWorkspaces = ["1:Main", "2:Sub", "3:Ref", "4:Web", "5:Mail", "6:Media"] ++ map (: ":Any") ['7' .. '9'] ++ ["0:Tray"]
 
 myLayout =
-    onWorkspace "Tray" trayLayout
+    onWorkspace "0:Tray" trayLayout
     defaultLayout
     where
-        defaultLayout = horizontalLayout
-        horizontalLayout = horizontal ||| simpleTabbed
-        horizontal = Tall nmaster delta ratio
-        --uncomment when I rotate a display again
-        --verticalLayout = vertical ||| simpleTabbed
-        --vertical = Mirror horizontal
+        defaultLayout = horizontal ||| simpleTabbed
         trayLayout = Grid
+        horizontal = Tall nmaster delta ratio
+        vertical = Mirror horizontal
         nmaster = 1
-        ratio = 1/2 --master pain to another
+        ratio = 1/2 --master pain to others
         delta = 3/100 --be used when to resize window
 
-myLogger bar = dynamicLogWithPP $ xmobarPP
-    { ppCurrent = xmobarColor "yellow" "" . pad
-    , ppVisible = xmobarColor "cyan" "" . pad
-    , ppSep = "  |  "
-    , ppOrder = \(ws:_:t:_) -> [ws,t]
+myPP bar = dynamicLogWithPP $ xmobarPP
+    { ppCurrent = xmobarColor "hotpink" "" . pad . wrap "[" "]"
+    , ppVisible = xmobarColor "lime" "" . pad . wrap "<" ">"
+    , ppHidden = xmobarColor "white" "" . pad . wrap "(" ")"
+    , ppHiddenNoWindows = xmobarColor "white" "" . pad
+    --, ppSep = "  |  "
+    , ppOrder = \(ws:_) -> [ws]
     --, ppSort = fmap (. filterOutWorkspaces ["NSP"]) $ ppSort def
     , ppOutput = hPutStrLn bar
     }
 
 myStartup :: X ()
 myStartup = do
-    spawn "fcitx -d -r"
-    --Are there any better solution to detect is restart?
+    --for making Java programs work
+    setWMName "LG3D"
+    --Are there any better solution to detect is it restart?
     ws <- gets windowset
     if isExistAnyWindow ws then return ()
     else do
-        windows $ viewOnScreen 1 $ head secondaryScreenWorkspaces
-        spawnHere =<< io getBrowser
-        windows $ viewOnScreen 0 $ head primaryScreenWorkspaces
+        spawnOn "4:Web" =<< io getBrowser
+        setScreenWith "1:Term" "4:Web"
 
 isExistAnyWindow :: WindowSet -> Bool
 isExistAnyWindow ws = any (isJust . stack) (StackSet.workspaces ws)
 
 manageApps = composeAll
-    [ isFullscreen --> doFloat
-    , isDialog --> doFloat
+    [ isDialog --> doFloat
     ]
 
 guiMask, altMask :: KeyMask
@@ -130,10 +120,14 @@ myKeys conf = Map.fromList $
     , ((guiMask .|. shiftMask, xK_Page_Up),   windows swapUp)
     , ((guiMask .|. shiftMask, xK_Page_Down), windows swapDown)
 
-    , ((guiMask, xK_Down),  windowGo D True)
-    , ((guiMask, xK_Up),    windowGo U True)
-    , ((guiMask, xK_Left),  windowGo L True)
-    , ((guiMask, xK_Right), windowGo R True)
+    , ((guiMask, xK_Down),  windowGo D False)
+    , ((guiMask, xK_Up),    windowGo U False)
+    , ((guiMask, xK_Left),  windowGo L False)
+    , ((guiMask, xK_Right), windowGo R False)
+    , ((guiMask .|. shiftMask, xK_Down),  windowSwap D False)
+    , ((guiMask .|. shiftMask, xK_Up),    windowSwap U False)
+    , ((guiMask .|. shiftMask, xK_Left),  windowSwap L False)
+    , ((guiMask .|. shiftMask, xK_Right), windowSwap R False)
 
     , ((guiMask, xK_Home), windows focusMaster)
     , ((guiMask .|. shiftMask, xK_Home), windows shiftMaster)
@@ -149,38 +143,33 @@ myKeys conf = Map.fromList $
     , ((guiMask, xK_f), withFocused float)
     , ((guiMask .|. shiftMask, xK_f), withFocused (windows . sink))
 
-    , ((guiMask, xK_space), toggleWsOnScreen)
-    , ((guiMask .|. shiftMask, xK_space), shiftToLastViewedOnScreen)
+    , ((guiMask, xK_space), toggleWS)
+    , ((guiMask .|. shiftMask, xK_space), swapNextScreen)
 
     , ((guiMask, xK_Tab), nextScreen)
-    , ((guiMask .|. shiftMask, xK_Tab), shiftNextScreen >> nextScreen)
+    , ((guiMask .|. shiftMask, xK_Tab), shiftNextScreen)
 
-    , ((guiMask, xK_t), onTray fromTray toTray)
-    , ((guiMask .|. shiftMask, xK_t), toggleTray)
-
-    --, ((guiMask, xK_m), scratchpadToggle "memo")
+    , ((guiMask, xK_0), onTray fromTray toTray)
+    , ((guiMask .|. shiftMask, xK_0), toggleTray)
 
     , ((guiMask, xK_Return), spawn $ XMonad.terminal conf)
     , ((guiMask .|. shiftMask, xK_Return), io $ terminalWithMark $ XMonad.terminal conf)
-    , ((guiMask .|. shiftMask, xK_w), web)
-    , ((guiMask .|. shiftMask, xK_m), mail)
-    , ((guiMask .|. shiftMask, xK_c), chat)
-    , ((guiMask .|. shiftMask, xK_n), news)
 
     , ((0, xK_Print), screenshot)
-    , ((shiftMask, xK_Print), selectScreenshot)
+    , ((shiftMask, xK_Print), selectingScreenshot)
 
     , ((0, xF86XK_AudioMute), mute)
     , ((0, xF86XK_AudioPlay), musicToggle)
-    , ((shiftMask, xF86XK_AudioMute), volumeDown)
-    , ((shiftMask, xF86XK_AudioPlay), volumeUp)
+    , ((0, xF86XK_AudioLowerVolume), volumeDown)
+    , ((0, xF86XK_AudioRaiseVolume), volumeUp)
 
     , ((guiMask, xK_slash), dmenuSearch google)
     , ((guiMask .|. shiftMask, xK_slash), submap submapDmenuSearch)
-    , ((guiMask, xK_s), raiseBrowserThere >> selectSearch google)
+    , ((guiMask, xK_s), selectSearch google)
     , ((guiMask .|. shiftMask, xK_s), submap submapSelectSearch)
 
-    , ((guiMask, xK_o), shellPrompt myPromptConfig)
+    , ((guiMask, xK_o), spawn "dmenu_run -b")
+    , ((guiMask .|. shiftMask, xK_o), submap submapOpenApp)
 
     , ((guiMask, xK_Escape), lock)
     , ((guiMask .|. shiftMask, xK_Escape), submap $ Map.fromList $
@@ -194,21 +183,18 @@ myKeys conf = Map.fromList $
         , ((0, xK_l), logout)
         ])
     ]
-    ++ [((guiMask, k), focusOnScreen 0 n) | (n, k) <- zip [1 .. 5] [xK_0 .. ]]
-    ++ [((guiMask, k), focusOnScreen 1 n) | (n, k) <- zip [1 .. 5] [xK_5 .. ]]
-    ++ [((guiMask .|. shiftMask, k), shiftOnScreen 0 n >> focusOnScreen 0 n) | (n, k) <- zip [1 .. 5] [xK_0 .. ]]
-    ++ [((guiMask .|. shiftMask, k), shiftOnScreen 1 n >> focusOnScreen 1 n) | (n, k) <- zip [1 .. 5] [xK_5 .. ]]
+    ++ [((guiMask, k), windows $ viewOnScreen 0 ws) | (ws, k) <- zip workspacesExceptTray [xK_1 .. xK_9]]
+    ++ [((guiMask, k), windows $ viewOnScreen 1 ws) | (ws, k) <- zip workspacesExceptTray [xK_F1 .. xK_F9]]
+    ++ [((guiMask .|. shiftMask, k), windows $ shift ws) | (ws, k) <- zip workspacesExceptTray [xK_1 .. xK_9]]
     where
-        toggleWsOnScreen = focusLastViewedOnScreen' ["NSP", "Tray"]
-        toggleTray = toggleOrDoSkip ["NSP"] view "Tray"
-        toTray = windows $ shift "Tray"
-        fromTray = shiftToLastViewedOnScreen' ["NSP"]
-        shiftToLastViewedOnScreen = shiftToLastViewedOnScreen' ["NSP", "Tray"]
-        onTray actionInTray defaultAction = bindOn [("Tray", actionInTray), ("", defaultAction)]
-        scratchpadToggle name = namedScratchpadAction myScratchpads name
+        workspacesExceptTray = init myWorkspaces
+        toggleTray = toggleOrDoSkip [] view "0:Tray"
+        toTray = windows $ shift "0:Tray"
+        fromTray = shiftToLastViewed
+        onTray actionInTray defaultAction = bindOn [("0:Tray", actionInTray), ("", defaultAction)]
 
         screenshot = spawn "maim $HOME/Pictures/$(date +%F-%T).png"
-        selectScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
+        selectingScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
 
         mute = spawn "pactl set-sink-mute 0 toggle"
         musicToggle = spawn "cmus-remote -u"
@@ -222,15 +208,22 @@ myKeys conf = Map.fromList $
         reboot = spawn "systemctl reboot"
         logout = spawn "pkill -KILL -u $USERNAME"
 
-        web = spawn "firefox -new-window"
-        mail = return ()
-        chat = return ()
-        news = return ()
+        submapOpenApp = Map.fromList $ [(k, f) | (k, f) <- apps]
+        apps =
+            [ ((0, xK_w), web)
+            , ((0, xK_m), mail)
+            , ((0, xK_c), chat)
+            , ((0, xK_n), news)
+            ]
+            where
+                web = spawn "firefox -new-window"
+                mail = return ()
+                chat = return ()
+                news = return ()
 
-        submapDmenuSearch = Map.fromList $
-            [ (k, dmenuSearch q) | (k, q) <- searchQuery]
-        submapSelectSearch = Map.fromList $
-            [ (k, raiseBrowserThere >> selectSearch q) | (k, q) <- searchQuery]
+
+        submapDmenuSearch = Map.fromList $ [(k, dmenuSearch q) | (k, q) <- searchQuery]
+        submapSelectSearch = Map.fromList $ [(k, selectSearch q) | (k, q) <- searchQuery]
         searchQuery =
             [ ((0, xK_h), hoogle)
             , ((shiftMask, xK_h), hackage)
@@ -249,49 +242,7 @@ myKeys conf = Map.fromList $
                 archLinux = searchEngine "arch linux" "https://wiki.archlinux.org/index.php?title=Special%3ASearch&search="
                 japanese = searchEngine "japanese" "http://dictionary.goo.ne.jp/freewordsearcher.html?mode=6&kind=jn&MT="
 
-myPromptConfig :: XPConfig
-myPromptConfig = def
-    { position = Bottom
-    , historySize = 0
-    , promptKeymap = myPromptKeymap
-    --,font = myFont
-    }
-
---myFont = "xft: "
-
-myPromptKeymap = Map.fromList $
-    [ ((0, xK_Return), setSuccess True >> setDone True)
-    , ((0, xK_BackSpace), deleteString Prev)
-    , ((0, xK_Delete), deleteString Next)
-    , ((0, xK_Left), moveCursor Prev)
-    , ((0, xK_Right), moveCursor Next)
-    , ((0, xK_Home), startOfLine)
-    , ((0, xK_End), endOfLine)
-    , ((0, xK_Escape), quit)
-    , ((altMask, xK_w), moveWord Next)
-    , ((altMask, xK_b), moveWord Prev)
-    , ((altMask, xK_d), killWord Prev)
-    , ((altMask .|. shiftMask, xK_d), killBefore)
-    , ((altMask, xK_p), pasteString)
-    ]
-    where
-        moveWord dir = moveWord' wfilter dir
-        killWord dir = killWord' wfilter dir
-        wfilter c = isSpace c || c == '/'
-
 --myMouseBindings = Map.fromlist
-
---TODO: use getXMonadDir
---fix size
-myScratchpads :: [NamedScratchpad]
-myScratchpads =
-    [ NS "memo" (runInTermString "-name memo" "nvim ~/.xmonad/memo") (appName =? "memo") doFloat
-    ]
-
-
---TODO: get terminal name from config
-runInTermString :: String -> String -> String
-runInTermString options command = "xterm" ++ " " ++ options ++ " -e " ++ command
 
 
 terminalWithMark :: String -> IO ()
@@ -302,7 +253,6 @@ terminalWithMark term = do
     sh <- getEnv "SHELL"
     -- xterm -title xterm -e "cd ~/.xmonad/mark && zsh"
     spawn $ term ++ " -title " ++ term ++ " -e \"cd " ++ mark ++ " && " ++ sh ++ "\""
-
 
 --After here. I'd like to add to Contrib
 --Actions.Search
@@ -315,7 +265,6 @@ dmenuSearch (SearchEngine name url) = do
     if input == "" then return()
     else do
         browser <- io getBrowser
-        raiseBrowserThere
         search browser url input
 
 --Util.?
@@ -324,121 +273,37 @@ getCurrentScreen = do
     ws <- gets windowset
     return $ screen $ current ws
 
-getLastViewedSkip :: [WorkspaceId] -> X (Maybe WorkspaceId)
-getLastViewedSkip skips = do
+getLastViewed :: X (Maybe WorkspaceId)
+getLastViewed = do
     history <- workspaceHistory
     ws <- gets windowset
-    let skipped' = skipTags (hidden ws) skips
-    let skipped = map tag skipped'
-    let lastViewed = find (`elem` skipped) history
-    return $ delegate skipped lastViewed
-    where
-        delegate [] _ = Nothing
-        delegate (h:_) Nothing = Just h
-        delegate _ lv@(Just _) = lv
+    let hdnWs = map tag . hidden $ ws
+    let lastViewed = find (`elem` hdnWs) history
+    return $ case (hdnWs, lastViewed) of
+        ([], _) -> Nothing
+        (empty:_, Nothing) -> Just empty
+        (_, Just lv) -> Just lv
 
 
 --Hooks.DynamicLog
 filterOutWorkspaces :: [String] -> [WindowSpace] -> [WindowSpace]
 filterOutWorkspaces out = filter (\(Workspace tag _ _) -> not (tag `elem` out))
 
+setScreenWith :: WorkspaceId -> WorkspaceId -> X ()
+setScreenWith s1 s2 = do
+    windows $ viewOnScreen 1 s2
+    windows $ viewOnScreen 0 s1
 
---Actions.DualScreen
-focusLastViewedOnScreen' :: [WorkspaceId] -> X ()
-focusLastViewedOnScreen' skips = do
-    lastViewed <- lastViewedOnScreen skips
-    whenJust lastViewed (windows . view)
 
-shiftToLastViewedOnScreen' :: [WorkspaceId] -> X ()
-shiftToLastViewedOnScreen' skips = do
-    lastViewed <- lastViewedOnScreen skips
+shiftToLastViewed :: X ()
+shiftToLastViewed = do
+    lastViewed <- getLastViewed
     whenJust lastViewed (windows . shift)
-
-lastViewedOnScreen :: [WorkspaceId] -> X (Maybe WorkspaceId)
-lastViewedOnScreen skips = do
-    currentScreen <- getCurrentScreen
-    case currentScreen of
-        0 -> getLastViewedSkip $ skips ++ secondaryScreenWorkspaces
-        _ -> getLastViewedSkip $ skips ++ primaryScreenWorkspaces
-
-focusOnScreen :: ScreenId -> Int -> X ()
-focusOnScreen screen n =
-    doIfExist (windows . viewOnScreen screen) workspaces i
-    where
-        i = n - 1
-        workspaces = screenWorkspaces screen
-
-shiftOnScreen :: ScreenId -> Int -> X ()
-shiftOnScreen screen n =
-    doIfExist (windows . shift)  workspaces i
-    where
-        i = n - 1
-        workspaces = screenWorkspaces screen
-
-screenWorkspaces :: ScreenId -> [WorkspaceId]
-screenWorkspaces screen =
-    case screen of
-        0 -> primaryScreenWorkspaces
-        _ -> secondaryScreenWorkspaces
-
-doIfExist :: (WorkspaceId -> X ()) -> [WorkspaceId] -> Int -> X ()
-doIfExist f xs i = do
-    let x = getFromList xs i
-    case x of
-        Just x -> f x
-        Nothing -> return()
-
-getFromList :: [a] -> Int -> Maybe a
-getFromList xs i
-    | 0 <= i && i < length xs = Just $ xs !! i
-    | otherwise = Nothing
-
-
-raiseBrowserThere :: X ()
-raiseBrowserThere = do
-    ws <- gets windowset
-    matches <- filterM (runQuery isExistBrowser) $ allWindows ws
-    w <- return $ case matches of
-        [] -> Nothing
-        (firstMatch:_) -> case findTag firstMatch ws of
-            Nothing -> Nothing
-            Just wid -> Just (wid, firstMatch)
-    case w of
-        --not exist browser
-        Nothing -> do
-            toggleScreenIf 1
-        Just (wid, win) -> case whichScreenIs wid of
-            --Tray
-            Nothing -> bringWindowOnScreen 1 win
-            --primary or secondary screenWorkspaces
-            Just sid -> raiseWindowOnScreen sid win
-
-raiseWindowOnScreen :: ScreenId -> Window -> X ()
-raiseWindowOnScreen sid w = do
-    toggleScreenIf sid
-    windows $ focusWindow w
-
-bringWindowOnScreen :: ScreenId -> Window -> X ()
-bringWindowOnScreen sid w = do
-    toggleScreenIf sid
-    windows $ bringWindow w
-
-toggleScreenIf :: ScreenId -> X ()
-toggleScreenIf sid = do
-    currentSid <- getCurrentScreen
-    if sid /= currentSid then nextScreen else return ()
 
 isExistBrowser :: Query Bool
 isExistBrowser = do
     browser <- io getBrowser
     fmap (map toLower) className =? browser
-
-whichScreenIs :: WorkspaceId -> Maybe ScreenId
-whichScreenIs tag
-    | tag `elem` secondaryScreenWorkspaces = Just 1
-    | tag `elem` primaryScreenWorkspaces = Just 0
-    | otherwise = Nothing
-
 
 --Actions.Submap
 --add io $ sync d False
