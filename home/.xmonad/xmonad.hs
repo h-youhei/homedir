@@ -13,7 +13,7 @@ import XMonad.Actions.UpdatePointer(updatePointer)
 import XMonad.Actions.WithAll(killAll)
 
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
-import XMonad.Hooks.EwmhDesktops(fullscreenEventHook)
+import XMonad.Hooks.EwmhDesktops(ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks(docks, avoidStruts)
 import XMonad.Hooks.ManageHelpers(currentWs, isDialog)
 import XMonad.Hooks.SetWMName(setWMName)
@@ -35,7 +35,6 @@ import Control.Monad.Fix(fix)
 import Data.Bits((.&.), shiftL)
 import qualified Data.Map.Lazy as Map
 import Data.Map.Lazy(Map)
-import Data.Char(toLower)
 import Data.List(find, any, init)
 import Data.Maybe(isJust)
 
@@ -49,7 +48,7 @@ main :: IO ()
 main = do
     myStatusBar1 <- spawnPipe "xmobar -x 1"
     myStatusBar2 <- spawnPipe "xmobar -x 2"
-    xmonad $ docks def
+    xmonad $ (ewmh . docks) def
         { workspaces = myWorkspaces
         , layoutHook = avoidStruts myLayout
         , modMask = mod4Mask
@@ -94,12 +93,12 @@ myStartup :: X ()
 myStartup = do
     --for making Java programs work
     setWMName "LG3D"
-    --Are there any better solution to detect is it restart?
+    --Are there better solution to detect it is restart?
     ws <- gets windowset
     if isExistAnyWindow ws then return ()
     else do
         spawnOn "4:Web" =<< io getBrowser
-        setScreenWith "1:Term" "4:Web"
+        setScreenWith "1:Main" "4:Web"
 
 isExistAnyWindow :: WindowSet -> Bool
 isExistAnyWindow ws = any (isJust . stack) (StackSet.workspaces ws)
@@ -195,7 +194,6 @@ myKeys conf = Map.fromList $
 
         screenshot = spawn "maim $HOME/Pictures/$(date +%F-%T).png"
         selectingScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
-
         mute = spawn "pactl set-sink-mute 0 toggle"
         musicToggle = spawn "cmus-remote -u"
         volumeDown = spawn "sh -c 'pactl set-sink-mute 0 false ; pactl set-sink-volume 0 +5%'"
@@ -256,7 +254,6 @@ terminalWithMark term = do
 
 --After here. I'd like to add to Contrib
 --Actions.Search
---Bug when not exist: open then popup window saying firefox already exists
 dmenuSearch :: SearchEngine -> X ()
 dmenuSearch (SearchEngine name url) = do
     currentScreen <- getCurrentScreen
@@ -294,16 +291,10 @@ setScreenWith s1 s2 = do
     windows $ viewOnScreen 1 s2
     windows $ viewOnScreen 0 s1
 
-
 shiftToLastViewed :: X ()
 shiftToLastViewed = do
     lastViewed <- getLastViewed
     whenJust lastViewed (windows . shift)
-
-isExistBrowser :: Query Bool
-isExistBrowser = do
-    browser <- io getBrowser
-    fmap (map toLower) className =? browser
 
 --Actions.Submap
 --add io $ sync d False
