@@ -1,8 +1,6 @@
-local workspace=$HOME/workspace
-local myconfig=$workspace/myconfig
-
-hash -d ws=$workspace
-hash -d kbd=$workspace/qmk_firmware/keyboards/ergodox/keymaps/youhei
-hash -d nv=$myconfig/home/.config/nvim
-hash -d zsh=$myconfig/home/.config/zsh
-hash -d xm=$myconfig/home/.xmonad
+hash -d ws=$HOME/workspace
+hash -d conf=~ws/myconfig
+hash -d kbd=~ws/qmk_firmware/keyboards/ergodox/keymaps/youhei
+hash -d nv=~conf/home/.config/nvim
+hash -d zsh=~conf/home/.config/zsh
+hash -d xm=~conf/home/.xmonad

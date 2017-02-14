@@ -1,3 +1,9 @@
+#to show widget list, run this command
+#zle -lL
+#
+#for more details, run this command
+#man zshmodules
+
 # control io (stop<C-s> restart<C-q>)
 unsetopt flow_control
 # deactivate push <C-d> to end zsh
@@ -20,24 +26,23 @@ function capitalize-whole-word () {
 }
 zle -N capitalize-whole-word
 
+function down-case-whole-word () {
+	zle backward-word
+	zle down-case-word
+}
+zle -N down-case-whole-word
+
 function up-case-whole-word () {
 	zle backward-word
 	zle up-case-word
 }
 zle -N up-case-whole-word
 
-function spell-whole-word () {
-	zle backward-word
-	zle spell-word
-}
-zle -N spell-whole-word
-
 function transpose-whole-words () {
 	zle vi-forward-blank-word-end
 	zle transpose-words
 }
 zle -N transpose-whole-words
-
 
 function insert-to-visual () {
 	zle vi-cmd-mode
@@ -72,15 +77,14 @@ bindkey '^[t' vi-find-next-char-skip
 bindkey '^[T' vi-find-prev-char-skip
 bindkey '^[,' vi-repeat-find
 bindkey '^[<' vi-rev-repeat-find
-bindkey '^[/' vi-history-search-backward
-bindkey '^[n' vi-repeat-search
-bindkey '^[N' vi-rev-repeat-search
+bindkey '^[/' history-incremental-pattern-search-backward
+bindkey '^[?' history-incremental-pattern-search-forward
 bindkey '^[d' kill-whole-word
 bindkey '^[D' kill-whole-line
-bindkey '^[C' transpose-chars
-bindkey '^[c' transpose-whole-words
-#bindkey '^[k' vi-swap-case
-bindkey '^[`' capitalize-whole-word
+bindkey '^[r' transpose-whole-words
+bindkey '^[s' vi-swap-case
+bindkey '^[c' capitailze-whole-word
+bindkey '^[`' down-case-whole-word
 bindkey '^[~' up-case-whole-word
 bindkey '^[y' copy-prev-word
 bindkey '^[Y' push-line
@@ -92,15 +96,13 @@ bindkey '^[U' redo
 bindkey '^[v' insert-to-visual
 bindkey '^[%' vi-match-bracket
 
-#bindkey '^s' spell-whole-word
 #visual
 
 bindkey -M visual 'c' vi-change
 bindkey -M visual 'd' vi-delete
 bindkey -M visual 'y' vi-yank
-# uncomment after release version5.3
-#bindkey -M visual '`' vi-lowercase
-#bindkey -M visual '~' vi-uppercase
+bindkey -M visual '`' vi-lowercase
+bindkey -M visual '~' vi-uppercase
 
 bindkey -M visual '%' vi-match-bracket
 bindkey -M visual "${key[Down]}" down-line
@@ -109,6 +111,8 @@ bindkey -M visual "${key[Left]}" backward-char
 bindkey -M visual "${key[Right]}" forward-char
 bindkey -M visual "${key[Home]}" beginning-of-line
 bindkey -M visual "${key[End]}" end-of-line
+bindkey -M visual '\b' vi-delete
+bindkey -M visual "${key[Delete]}" vi-delete
 
 bindkey -M visual 'b' backward-word
 bindkey -M visual 'w' forward-word

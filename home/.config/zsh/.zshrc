@@ -1,11 +1,13 @@
-#completion
+#Reference
+#man zshoptions
+
+
+##completion
 #--------------------
 autoload -Uz compinit
 compinit
-# only when overflow window size, ask me to see all possibilities
+# only when it overflows the window size, ask me to see all possibilities
 LISTMAX=0
-# variable can complete cd ~
-setopt auto_name_dirs
 # don't keep slash
 setopt auto_remove_slash
 # show list with compact
@@ -17,12 +19,12 @@ setopt list_types
 
 # command history
 #--------------------
-HISTFILE=
+HISTFILE=$ZDOTDIR/history
 # save history to memory
-HISTSIZE=100
+HISTSIZE=1000
 # save history to file
-SAVEHIST=0
-#setopt share_history
+SAVEHIST=1000
+setopt share_history
 # ignore dupplicated command
 setopt hist_find_no_dups
 setopt hist_ignore_dups
@@ -42,11 +44,18 @@ setopt hist_reduce_blanks
 setopt auto_pushd
 # ls after cd
 function chpwd() {
-	ls -F -A
+	command ls -F -A
 }
 
 # ignore dupplicated direcory
 setopt pushd_ignore_dups
+
+# word
+# -------------------
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " /@"
+zstyle ':zle:*' word-style unspecified
 
 # correct
 #--------------------
@@ -69,8 +78,6 @@ setopt globdots
 setopt no_beep
 # activate comments even if not script
 setopt interactive_comments
-# show message when recieve mail at &mailpath
-# setopt mail_warning
 # setopt rc_expand_param
 
 source $ZDOTDIR/conf.d/alias.zsh
