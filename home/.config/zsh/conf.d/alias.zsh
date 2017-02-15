@@ -22,7 +22,7 @@ alias g='git'
 alias gh='hub'
 alias xclip='xclip -selection clipboard' xp='xclip -o'
 
-alias c='cd' c.='c ..' c-='c -'
+alias c='cd'
 # when to be given no argument
 # in git project, cd git-root
 # in git root, cd $HOME

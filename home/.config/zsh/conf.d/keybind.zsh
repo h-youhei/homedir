@@ -56,6 +56,20 @@ function visual-to-insert () {
 }
 zle -N visual-to-insert
 
+function cd-parent () {
+	zle push-line
+	builtin cd ..
+	zle accept-line
+}
+zle -N cd-parent
+
+function cd-toggle () {
+	zle push-line
+	builtin cd -
+	zle accept-line
+}
+zle -N cd-toggle
+
 bindkey -e
 
 #bindkey '\t' expand-or-complete
@@ -86,6 +100,7 @@ bindkey '^[s' vi-swap-case
 bindkey '^[c' capitailze-whole-word
 bindkey '^[`' down-case-whole-word
 bindkey '^[~' up-case-whole-word
+bindkey '^[i' insert-last-word
 bindkey '^[y' copy-prev-word
 bindkey '^[Y' push-line
 bindkey '^[p' yank
@@ -95,6 +110,8 @@ bindkey '^[u' undo
 bindkey '^[U' redo
 bindkey '^[v' insert-to-visual
 bindkey '^[%' vi-match-bracket
+bindkey '^[^' cd-parent
+bindkey '^[j' cd-toggle
 
 #visual
 
