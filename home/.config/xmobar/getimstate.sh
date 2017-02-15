@@ -3,8 +3,8 @@
 imstate=`fcitx-remote`
 
 case $imstate in
-	2) output='日' ;;
-	*) output='英' ;;
+	2) output='JP' ;;
+	*) output='EN' ;;
 esac
 
 echo $output

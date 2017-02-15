@@ -1,9 +1,9 @@
 xterm*termName: xterm-256color
 xterm*locale: true
 !fonts
-xterm*faceName: xft:Inconsolata
-xterm*faceNameDoublesize: xft:Ricty
-xterm*faceSize: 13
+xterm*faceName: xft:DejaVu Sans Mono
+xterm*faceNameDoublesize: xft:IPAGothic
+xterm*faceSize: 11
 !make non-ascii sign full-width
 xterm*cjkWidth: true
 !Alt key

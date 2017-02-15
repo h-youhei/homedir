@@ -26,7 +26,7 @@ import XMonad.Layout.Tabbed(simpleTabbed)
 import XMonad.Prompt.Shell(getBrowser)
 
 import XMonad.Util.Dmenu(menuArgs)
-import XMonad.Util.Run(runInTerm, spawnPipe, hPutStrLn)
+import XMonad.Util.Run(runInTerm, safeSpawn, spawnPipe, hPutStrLn)
 import XMonad.Util.Types(Direction2D(..))
 
 
@@ -35,8 +35,8 @@ import Control.Monad.Fix(fix)
 import Data.Bits((.&.), shiftL)
 import qualified Data.Map.Lazy as Map
 import Data.Map.Lazy(Map)
-import Data.List(find, any, init)
-import Data.Maybe(isJust)
+import Data.List(find, any, init, concat)
+import Data.Maybe(isJust, catMaybes)
 
 import Graphics.X11.ExtraTypes.XF86(xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute, xF86XK_AudioPlay)
 
@@ -167,7 +167,7 @@ myKeys conf = Map.fromList $
     , ((guiMask, xK_s), selectSearch google)
     , ((guiMask .|. shiftMask, xK_s), submap submapSelectSearch)
 
-    , ((guiMask, xK_o), spawn "dmenu_run -b")
+    , ((guiMask, xK_o), dmenuRun)
     , ((guiMask .|. shiftMask, xK_o), submap submapOpenApp)
 
     , ((guiMask, xK_Escape), lock)
@@ -191,6 +191,8 @@ myKeys conf = Map.fromList $
         toTray = windows $ shift "0:Tray"
         fromTray = shiftToLastViewed
         onTray actionInTray defaultAction = bindOn [("0:Tray", actionInTray), ("", defaultAction)]
+        dmenuSearch = dmenuSearchWithConf myDmenuConfig
+        dmenuRun = dmenuRunWithConf myDmenuConfig
 
         screenshot = spawn "maim $HOME/Pictures/$(date +%F-%T).png"
         selectingScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
@@ -219,7 +221,6 @@ myKeys conf = Map.fromList $
                 chat = return ()
                 news = return ()
 
-
         submapDmenuSearch = Map.fromList $ [(k, dmenuSearch q) | (k, q) <- searchQuery]
         submapSelectSearch = Map.fromList $ [(k, selectSearch q) | (k, q) <- searchQuery]
         searchQuery =
@@ -242,6 +243,12 @@ myKeys conf = Map.fromList $
 
 --myMouseBindings = Map.fromlist
 
+myDmenuConfig :: DmenuConfig
+myDmenuConfig = def
+    { bottom = True
+    , font = "sans-serif 11"
+    }
+
 
 terminalWithMark :: String -> IO ()
 terminalWithMark term = do
@@ -250,19 +257,78 @@ terminalWithMark term = do
     let mark = filter (/= '\n') markfile
     sh <- getEnv "SHELL"
     -- xterm -title xterm -e "cd ~/.xmonad/mark && zsh"
-    spawn $ term ++ " -title " ++ term ++ " -e \"cd " ++ mark ++ " && " ++ sh ++ "\""
+    safeSpawn term ["-title", term, "-e", "cd " ++ mark ++ " && " ++ sh]
 
 --After here. I'd like to add to Contrib
+--Util.Dmenu
+data DmenuConfig = DmenuConfig
+    { bottom :: !Bool
+    , ignorecase :: !Bool
+    , line :: Maybe Int
+    , monitor :: Maybe Int
+    , prompt :: String
+    , font :: String
+    , bgColor :: String
+    , fgColor :: String
+    , selectedBgColor :: String
+    , selectedFgColor :: String
+    }
+
+instance Default DmenuConfig where
+    def = DmenuConfig
+        { bottom = False
+        , ignorecase = False
+        , line = Nothing
+        , monitor = Nothing
+        , prompt = ""
+        , font = ""
+        , bgColor = ""
+        , fgColor = ""
+        , selectedBgColor = ""
+        , selectedFgColor = ""
+        }
+
+mkDmenuArgs :: DmenuConfig -> [String]
+mkDmenuArgs conf = concat . catMaybes $ args
+    where
+        mkArgFromBool _ False = Nothing
+        mkArgFromBool arg True = Just ['-' : arg]
+        mkArgFromMaybe _ Nothing = Nothing
+        mkArgFromMaybe arg (Just v) = Just ['-' : arg, show v]
+        mkArgFromString _ "" = Nothing
+        mkArgFromString arg str = Just ['-' : arg, str]
+        args =
+            [ mkArgFromBool "b" (bottom conf)
+            , mkArgFromBool "i" (ignorecase conf)
+            , mkArgFromMaybe "l" (line conf)
+            , mkArgFromMaybe "m" (monitor conf)
+            , mkArgFromString "p" (prompt conf)
+            , mkArgFromString "fn" (font conf)
+            , mkArgFromString "nb" (bgColor conf)
+            , mkArgFromString "nf" (fgColor conf)
+            , mkArgFromString "sb" (selectedBgColor conf)
+            , mkArgFromString "sf" (selectedFgColor conf)
+            ]
+
 --Actions.Search
-dmenuSearch :: SearchEngine -> X ()
-dmenuSearch (SearchEngine name url) = do
-    currentScreen <- getCurrentScreen
-    let n = case currentScreen of S n -> show n
-    input <- menuArgs "dmenu" ["-b", "-m", n , "-p", name ++ ":"] []
+dmenuSearchWithConf :: DmenuConfig -> SearchEngine -> X ()
+dmenuSearchWithConf conf (SearchEngine name url) = do
+    (S currentScreen) <- getCurrentScreen
+    let args = mkDmenuArgs $ conf
+            { monitor = Just currentScreen
+            , prompt = name ++ ":"
+            }
+    input <- menuArgs "dmenu" args []
     if input == "" then return()
     else do
         browser <- io getBrowser
         search browser url input
+
+dmenuRunWithConf :: DmenuConfig -> X ()
+dmenuRunWithConf conf = do
+    (S currentScreen) <- getCurrentScreen
+    let args = mkDmenuArgs $ conf { monitor = Just currentScreen }
+    safeSpawn "dmenu_run" args
 
 --Util.?
 getCurrentScreen :: X (ScreenId)
