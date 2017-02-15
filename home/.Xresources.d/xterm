@@ -1,12 +1,16 @@
-xterm*termName:xterm-256color
-xterm*locale:true
+xterm*termName: xterm-256color
+xterm*locale: true
 !fonts
-xterm*faceName:xft:DejaVu Sans Mono
-xterm*faceNameDoublesize:xft:Noto Sans CJK JP
-xterm*faceSize:11
+xterm*faceName: xft:Inconsolata
+xterm*faceNameDoublesize: xft:Ricty
+xterm*faceSize: 13
+!make non-ascii sign full-width
+xterm*cjkWidth: true
 !Alt key
-xterm*metaSendsEscape:true
-xterm*eightBitInput:false
+xterm*metaSendsEscape: true
+xterm*eightBitInput: false
 !Backspace key
-backarrowKey:false
-ttyModes:erase ^?
+backarrowKey: false
+ttyModes: erase ^?
+
+! vim:ft=xdefaults

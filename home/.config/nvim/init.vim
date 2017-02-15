@@ -2,6 +2,7 @@ if has('vim_starting')
 	set encoding=utf-8
 endif
 
+"avoid duplicate autocmd
 augroup init
 	autocmd!
 augroup END
@@ -13,6 +14,7 @@ execute 'source ' . init#conf_dir . '/plugin.vim'
 filetype plugin indent on
 syntax on
 
+"for more information, run this command
 ":help 'option_name'
 
 set wildmode=list,full
@@ -29,6 +31,7 @@ set clipboard=unnamed
 "set helpheight
 "set highlight
 
+"file
 set fileencoding=utf-8
 "LF, CR or both depend on OS
 set fileformat=unix
@@ -36,6 +39,7 @@ set fileformat=unix
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,cp932,sjis,euc-jp,default,latin1
 set fileformats=unix,dos,mac
 
+"indent
 set copyindent
 set shiftwidth=4
 set softtabstop=4
@@ -54,13 +58,13 @@ set gdefault
 set number
 set relativenumber
 
-"show be typing
+"show the command that is being typed
 set showcmd
 
 "always
 set showtabline=2
 
-set matchpairs& mps+=<:>
+"set matchpairs& mps+=<:>
 
 "only one key escape seaquence
 set notimeout
@@ -96,7 +100,10 @@ set mousefocus
 set textwidth=0
 
 "Allowed left/right keys to move prev/next line at start/end of the line
-set whichwrap=<,>,[,]
+set whichwrap=
+
+"make non ascii sign full-width
+set ambiwidth=double
 
 set complete=k,d,t
 
