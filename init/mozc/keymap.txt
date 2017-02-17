@@ -40,8 +40,8 @@ Conversion	Ctrl Space	InsertSpace
 Conversion	Ctrl Shift Space	InsertAlternateSpace
 Conversion	Tab	CommitOnlyFirstSegment
 Conversion	Enter	Commit
-Composition	Shift Enter	ConvertToFullKatakana
-Composition	Shift Escape	ConvertToHiragana
+Conversion	Shift Enter	ConvertToFullKatakana
+Conversion	Shift Escape	ConvertToHiragana
 Conversion	Shift Henkan	ToggleAlphanumericMode
 Conversion	Space	ConvertNext
 Conversion	Shift Space	ConvertPrev
