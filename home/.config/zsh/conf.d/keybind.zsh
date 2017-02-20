@@ -57,14 +57,14 @@ function visual-to-insert () {
 zle -N visual-to-insert
 
 function cd-parent () {
-	zle push-line
+	builtin echo
 	builtin cd ..
 	zle accept-line
 }
 zle -N cd-parent
 
 function cd-toggle () {
-	zle push-line
+	builtin echo
 	builtin cd -
 	zle accept-line
 }
