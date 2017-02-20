@@ -13,7 +13,7 @@
 *foreground: WHITE
 
 *color0: BLACKGRAY
-*color8: BLACKGRAY
+*color8: BLACKG
 
 *color1: RED
 *color9: RED
@@ -34,7 +34,7 @@
 *color14: CYAN
 
 *color7: WHITEGRAY
-*color15: WHITEGRAY
+*color15: WHITE
 
 
 !xterm*highlightColorMode: true
