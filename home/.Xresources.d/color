@@ -1,44 +1,55 @@
-*background:#000000
-*foreground:#ffffff
+#define BLACK #000000
+#define WHITE #ffffff
+#define RED #ff6666
+#define GREEN #66FF66
+#define YELLOW #dddd11
+#define BLUE #6666ff
+#define MAGENTA #dd11dd
+#define CYAN #11dddd
+#define BLACKGRAY #333333
+#define WHITEGRAY #666666
 
-*color0:#000000
-*color1:#ff0000
-*color2:#00aa00
-*color3:#aa6600
-*color4:#5566ff
-*color5:#dd00dd
-*color6:#009988
-*color7:#777777
+*background: BLACK
+*foreground: WHITE
 
-*color8:#444444
-*color9:#ffaa55
-*color10:#bbff88
-*color11:#ffff33
-*color12:#aaccff
-*color13:#ffaacc
-*color14:#66ffdd
-*color15:#ffffff
+*color0: BLACKGRAY
+*color8: BLACKGRAY
 
-*highlightColor:#777777
-*highlightTextColor:#ffffff
+*color1: RED
+*color9: RED
+
+*color2: GREEN
+*color10: GREEN
+
+*color3: YELLOW
+*color11: YELLOW
+
+*color4: BLUE
+*color12: BLUE
+
+*color5: MAGENTA
+*color13: MAGENTA
+
+*color6: CYAN
+*color14: CYAN
+
+*color7: WHITEGRAY
+*color15: WHITEGRAY
+
+
+!xterm*highlightColorMode: true
+xterm*highlightColor: WHITEGRAY
+!xterm*highlightTextColor: BLACK
 
 ! bold
-!*colorBD:#fcfcfc
+xterm*colorBD: WHITE
 
 ! italic
-!*colorIT:
+xterm*colorIT: WHITE
 ! under line
-!*colorUL:
-!*underlineColor:
-!*cursorColor:
-!*cursorColor2:
-!*pointerIolor:
-!*pointerColor2:
-!*borderColor:
-!*tab-bg:
-!*tab-fg
-!*tabbar-bg:
-!*tabbar-fg:
+xterm*colorUL: WHITE
+xterm*cursorColor: WHITE
+xterm*pointerColor: WHITE
+xterm*pointerColorBackground: BLACK
 
-! bgcolor when reverseVideo
-!*colorRV:
+! vim:ft=xdefaults
