@@ -68,7 +68,7 @@ main = do
         , logHook = myPP myStatusBar1 >> myPP myStatusBar2 >> updatePointer (0.1, 0.2) (0, 0)
         , startupHook = myStartup
         --,mouseBindings = myMouseBindings
-        , manageHook = manageApps <+> manageSpawn
+        , manageHook = myManageHook
         , handleEventHook = fullscreenEventHook
         , focusFollowsMouse = True
         , clickJustFocuses = False
@@ -110,7 +110,6 @@ myStartup :: X ()
 myStartup = do
     --for making Java programs work
     setWMName "LG3D"
-    spawn "fcitx -dr"
     --Are there better solution to detect it is restart?
     ws <- gets windowset
     if isExistAnyWindow ws then return ()
@@ -122,8 +121,10 @@ myStartup = do
 isExistAnyWindow :: WindowSet -> Bool
 isExistAnyWindow ws = any (isJust . stack) (W.workspaces ws)
 
-manageApps = composeAll
-    [ isDialog --> doFloat
+myManageHook = composeAll
+    [ manageSpawn
+    , isDialog --> doFloat
+    , className =? "Xmessage" --> doFloat
     ]
 
 guiMask, altMask :: KeyMask
@@ -134,16 +135,18 @@ altMask = mod1Mask
 help :: String
 help = unlines
     [ "-- change window focus --"
-    , "M-Arrow     Move focus toward the direction"
-    , "M-PageUp    Move focus to the previous window"
-    , "M-PageDown  Move focus to the next window"
-    , "M-Home      Move focus to the master window"
+    , "M-Up     Move focus to the previous window"
+    , "M-Down   Move focus to the next window"
+    , "M-Left   Move focus toward left"
+    , "M-Right  Move focus toward right"
+    , "M-m      Move focus to the master window"
     , ""
     , "-- modifying the window order --"
-    , "M-S-Arrow     Swap the focused window toward the direction"
-    , "M-S-PageUp    Swap the focused window to the previous window"
-    , "M-S-PageDown  Swap the focused window to the next window"
-    , "M-S-Home Set  the focused window to the master window"
+    , "M-S-Up     Swap the focused window to the previous window"
+    , "M-S-Down   Swap the focused window to the next window"
+    , "M-S-Left   Swap the focused window toward left"
+    , "M-S-Right  Swap the focused window toward right"
+    , "M-S-m      Set the focused window to the master window"
     , ""
     , "-- workspaces & screens --"
     , "M-[1..9]    Switch to workspace N on primary screen"
@@ -189,26 +192,20 @@ help = unlines
     , "M-h    Show this help"
     ]
 
-
-
 myKeys :: XConfig Layout -> Map (KeyMask, KeySym) (X ())
 myKeys conf = M.fromList $
-    [ ((guiMask, xK_Page_Up),   windows focusUp)
-    , ((guiMask, xK_Page_Down), windows focusDown)
-    , ((guiMask .|. shiftMask, xK_Page_Up),   windows swapUp)
-    , ((guiMask .|. shiftMask, xK_Page_Down), windows swapDown)
-
-    , ((guiMask, xK_Down),  windowGo D False)
-    , ((guiMask, xK_Up),    windowGo U False)
+    [ ((guiMask, xK_Up),   windows focusUp)
+    , ((guiMask, xK_Down), windows focusDown)
     , ((guiMask, xK_Left),  windowGo L False)
     , ((guiMask, xK_Right), windowGo R False)
-    , ((guiMask .|. shiftMask, xK_Down),  windowSwap D False)
-    , ((guiMask .|. shiftMask, xK_Up),    windowSwap U False)
+
+    , ((guiMask .|. shiftMask, xK_Up),   windows swapUp)
+    , ((guiMask .|. shiftMask, xK_Down), windows swapDown)
     , ((guiMask .|. shiftMask, xK_Left),  windowSwap L False)
     , ((guiMask .|. shiftMask, xK_Right), windowSwap R False)
 
-    , ((guiMask, xK_Home), windows focusMaster)
-    , ((guiMask .|. shiftMask, xK_Home), windows shiftMaster)
+    , ((guiMask, xK_m), windows focusMaster)
+    , ((guiMask .|. shiftMask, xK_m), windows shiftMaster)
 
     , ((guiMask, xK_q), kill)
     , ((guiMask .|. shiftMask, xK_q), killAll)
@@ -216,7 +213,7 @@ myKeys conf = M.fromList $
     , ((guiMask, xK_f), sendMessage NextLayout)
     , ((guiMask .|. shiftMask, xK_f), withFocused $ windows . sink)
 
-    , ((guiMask, xK_h), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+    , ((guiMask, xK_h), spawn ("echo \"" ++ help ++ "\" | xmessage -default okay -file -"))
 
     , ((guiMask, xK_space), myWsSwitch)
     , ((guiMask .|. shiftMask, xK_space), swapNextScreen)
@@ -237,8 +234,8 @@ myKeys conf = M.fromList $
 
     , ((0, xF86XK_AudioMute), mute)
     , ((0, xF86XK_AudioPlay), mediaToggle)
-    , ((0, xF86XK_AudioLowerVolume), volumeDown)
-    , ((0, xF86XK_AudioRaiseVolume), volumeUp)
+    , ((0, xF86XK_AudioLowerVolume), unmute >> volumeDown)
+    , ((0, xF86XK_AudioRaiseVolume), unmute >> volumeUp)
 
     , ((guiMask, xK_slash), dmenuSearch google)
     , ((guiMask .|. shiftMask, xK_slash), submap submapDmenuSearch)
@@ -281,9 +278,11 @@ myKeys conf = M.fromList $
         screenshot = spawn "maim $HOME/Pictures/$(date +%F-%T).png"
         selectingScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
         mute = spawn "pactl set-sink-mute 0 toggle"
+        unmute = spawn "pactl set sink mute 0 false"
+        volumeUp = spawn "pactl set-sink-volume 0 +5%"
+        volumeDown = spawn "pactl set-sink-volume 0 -5%"
+
         mediaToggle = spawn "cmus-remote -u"
-        volumeUp = spawn "pactl set-sink-mute 0 false" >> spawn "pactl set-sink-volume 0 +5%"
-        volumeDown = spawn "pactl set-sink-mute 0 false" >>  spawn "pactl set-sink-volume 0 -5%"
 
         lock = spawn "xtrlock -b"
         suspend = spawn "systemctl suspend"
