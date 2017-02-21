@@ -1,55 +1,46 @@
 #define BLACK #000000
-#define WHITE #ffffff
-#define RED #ff6666
-#define GREEN #66FF66
-#define YELLOW #dddd11
-#define BLUE #6666ff
-#define MAGENTA #dd11dd
-#define CYAN #11dddd
-#define BLACKGRAY #333333
-#define WHITEGRAY #666666
+#define RED #FF9999
+#define GREEN #99FF99
+#define YELLOW #DD77DD
+#define BLUE #9999FF
+#define MAGENTA #DD77DD
+#define CYAN #77DDDD
+#define WHITE #DDDDDD
+
+#define HL_BLACK #000000
+#define HL_RED #FF0000
+#define HL_GREEN #00FF00
+#define HL_YELLOW #FFFF00
+#define HL_BLUE #0000FF
+#define HL_MAGENTA #FF00FF
+#define HL_CYAN #00FFFF
+#define HL_WHITE #FFFFFF
 
 *background: BLACK
 *foreground: WHITE
 
-*color0: BLACKGRAY
-*color8: BLACK
+*color0: BLACK
+*color8: HL_BLACK
 
 *color1: RED
-*color9: RED
+*color9: HL_RED
 
 *color2: GREEN
-*color10: GREEN
+*color10: HL_GREEN
 
 *color3: YELLOW
-*color11: YELLOW
+*color11: HL_YELLOW
 
 *color4: BLUE
-*color12: BLUE
+*color12: HL_BLUE
 
 *color5: MAGENTA
-*color13: MAGENTA
+*color13: HL_MAGENTA
 
 *color6: CYAN
-*color14: CYAN
+*color14: HL_CYAN
 
-*color7: WHITEGRAY
-*color15: WHITE
-
-
-!xterm*highlightColorMode: true
-xterm*highlightColor: WHITEGRAY
-!xterm*highlightTextColor: BLACK
-
-! bold
-xterm*colorBD: WHITE
-
-! italic
-xterm*colorIT: WHITE
-! under line
-xterm*colorUL: WHITE
-xterm*cursorColor: WHITE
-xterm*pointerColor: WHITE
-xterm*pointerColorBackground: BLACK
+*color7: WHITE
+*color15: HL_WHITE
 
 ! vim:ft=xdefaults

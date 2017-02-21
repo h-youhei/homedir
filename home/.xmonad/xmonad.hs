@@ -8,7 +8,7 @@ import XMonad.Actions.OnScreen(greedyViewOnScreen, viewOnScreen)
 import XMonad.Actions.PerWorkspaceKeys(bindOn)
 import XMonad.Actions.Search(SearchEngine(..), search, selectSearch, searchEngine, google, hoogle, images, wikipedia, youtube)
 --import XMonad.Actions.Submap(submap)
-import XMonad.Actions.SpawnOn(manageSpawn, spawnOn, spawnHere)
+import XMonad.Actions.SpawnOn(manageSpawn, spawnOn)
 import XMonad.Actions.UpdatePointer(updatePointer)
 import XMonad.Actions.WithAll(killAll)
 
@@ -20,7 +20,7 @@ import XMonad.Hooks.SetWMName(setWMName)
 import XMonad.Hooks.WorkspaceHistory(workspaceHistory)
 
 import XMonad.Layout.Grid(Grid(..))
-import XMonad.Layout.PerWorkspace(onWorkspace, onWorkspaces)
+import XMonad.Layout.PerWorkspace(onWorkspace)
 import XMonad.Layout.Tabbed(simpleTabbed)
 
 import qualified XMonad.Prompt as P
@@ -30,9 +30,9 @@ import XMonad.Prompt.Shell(shellPrompt, getBrowser)
 
 import XMonad.Util.Dmenu(menuArgs)
 import XMonad.Util.Loggers(Logger, onLogger, wrapL)
-import XMonad.Util.Run(runInTerm, safeSpawn, spawnPipe, hPutStrLn, runProcessWithInput)
+import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.Types(Direction1D(..), Direction2D(..))
-import XMonad.Util.WindowProperties(getProp32s)
+--import XMonad.Util.WindowProperties(getProp32s)
 
 
 import Control.Monad.Fix(fix)
@@ -44,7 +44,8 @@ import qualified Data.Map as M
 import Data.Map(Map)
 import Data.Maybe(isJust, catMaybes)
 
-import Foreign.C.Types(CLong)
+import GHC.IO.Handle.Types(Handle)
+--jmport Foreign.C.Types(CLong)
 import Graphics.X11.ExtraTypes.XF86(xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute, xF86XK_AudioPlay)
 
 import System.Directory(setCurrentDirectory, getCurrentDirectory)
@@ -63,7 +64,7 @@ main = do
         { workspaces = myWorkspaces
         , layoutHook = avoidStruts myLayout
         , modMask = mod4Mask
-        , terminal = myTerminal
+        , terminal = "mlterm"
         , keys = myKeys
         , logHook = myPP myStatusBar1 >> myPP myStatusBar2 >> updatePointer (0.1, 0.2) (0, 0)
         , startupHook = myStartup
@@ -73,9 +74,6 @@ main = do
         , focusFollowsMouse = True
         , clickJustFocuses = False
         }
-
-myTerminal :: String
-myTerminal = "xterm"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1:Edit", "2:Term", "3:Ref", "4:Web", "5:Mail", "6:Media"] ++ map (: ":Any") ['7' .. '9'] ++ ["0:Tray"]
@@ -92,6 +90,7 @@ myLayout =
         ratio = 1/2 --master pain to others
         delta = 3/100 --be used when to resize window
 
+myPP :: Handle -> X ()
 myPP bar = dynamicLogWithPP $ xmobarPP
     { ppCurrent = xmobarColor "lime" "" . wrap "<" ">"
     , ppVisible = xmobarColor "yellow" "" . wrap "<" ">"
@@ -116,11 +115,12 @@ myStartup = do
     else do
         setScreenWith "1:Edit" "4:Web"
         spawnOn "4:Web" =<< io getBrowser
-        spawnOn "1:Edit" "gvim"
+        runInTermOn "1:Edit" "nvim"
 
 isExistAnyWindow :: WindowSet -> Bool
 isExistAnyWindow ws = any (isJust . stack) (W.workspaces ws)
 
+myManageHook :: ManageHook
 myManageHook = composeAll
     [ manageSpawn
     , isDialog --> doFloat
@@ -224,8 +224,11 @@ myKeys conf = M.fromList $
     , ((guiMask, xK_0), onTray fromTray toTray)
     , ((guiMask .|. shiftMask, xK_0), toggleTray)
 
-    , ((guiMask, xK_Return), spawn myTerminal)
-    , ((guiMask .|. shiftMask, xK_Return), terminalWithMark myTerminal)
+    , ((guiMask, xK_Return), launchTerminal)
+    --, ((guiMask .|. shiftMask, xK_Return), terminalWithMark)
+
+    , ((guiMask, xK_l), launcher)
+    , ((guiMask .|. shiftMask, xK_l), submap submapLaunchApp)
 
     , ((guiMask, xK_c), cd)
 
@@ -241,9 +244,6 @@ myKeys conf = M.fromList $
     , ((guiMask .|. shiftMask, xK_slash), submap submapDmenuSearch)
     , ((guiMask, xK_s), selectSearch google)
     , ((guiMask .|. shiftMask, xK_s), submap submapSelectSearch)
-
-    , ((guiMask, xK_o), launcher)
-    , ((guiMask .|. shiftMask, xK_o), submap submapOpenApp)
 
     , ((guiMask, xK_Escape), lock)
     , ((guiMask .|. shiftMask, xK_Escape), submap $ M.fromList $
@@ -271,7 +271,6 @@ myKeys conf = M.fromList $
         dmenuSearch = dmenuSearchWithConf myDmenuConfig
 
         launcher = shellPrompt $ mkPromptConfig (\c -> isSpace c || c == '/')
-        --dmenuRun = dmenuRunWithConf myDmenuConfig
 
         cd = promptChangeDir $ mkPromptConfig (== '/')
 
@@ -292,7 +291,7 @@ myKeys conf = M.fromList $
         reboot = spawn "systemctl reboot"
         logout = spawn "pkill -KILL -u $USERNAME"
 
-        submapOpenApp = M.fromList $ [(k, f) | (k, f) <- apps]
+        submapLaunchApp = M.fromList $ [(k, f) | (k, f) <- apps]
         apps =
             [ ((0, xK_w), web)
             , ((0, xK_m), mail)
@@ -366,14 +365,32 @@ myDmenuConfig = def
     , font = "sans-serif 11"
     }
 
-terminalWithMark :: String -> X ()
-terminalWithMark term = do
+getTerminal :: X String
+getTerminal = asks $ terminal . config
+
+runInTerm' :: (String -> X ()) -> String -> X ()
+runInTerm' f cmd = getTerminal >>= \t -> f $  t ++ " -title " ++ t ++ " -e " ++ cmd
+
+runInTerm :: String -> X ()
+runInTerm = runInTerm' spawn
+
+runInTermOn :: WorkspaceId -> String -> X ()
+runInTermOn ws = runInTerm' (spawnOn ws)
+
+launchTerminal :: X ()
+launchTerminal = spawn =<< getTerminal
+
+{-
+--this isn't work on mlterm
+terminalWithMark :: X ()
+terminalWithMark = do
     confdir <- getXMonadDir
     markfile <- io $ readFile $ confdir ++ "/mark"
     let mark = filter (/= '\n') markfile
     sh <- io $ getEnv "SHELL"
-    -- xterm -title xterm -e "cd ~/.xmonad/mark && zsh"
-    safeSpawn term ["-title", term, "-e", "cd " ++ mark ++ " && " ++ sh]
+    --terminal -e "cd ~/.xmonad/mark && zsh"
+    runInTerm $ "\"cd " ++ mark ++ " && " ++ sh ++ "\""
+-}
 
 {-
 getPID :: Window -> X (Maybe [CLong])
@@ -522,17 +539,6 @@ dmenuSearchWithConf conf (SearchEngine name url) = do
     else do
         browser <- io getBrowser
         search browser url input
-
-{-
-dmenuRunWithConf :: DmenuConfig -> X ()
-dmenuRunWithConf conf = do
-    (S currentScreen) <- getCurrentScreen
-    let args = mkDmenuArgs $ conf
-            { monitor = Just currentScreen
-            , prompt = "run:"
-            }
-    safeSpawn "dmenu_run" args
--}
 
 --Actions.cycleWs
 doBetween :: (WorkspaceId -> WindowSet -> WindowSet) -> WorkspaceId -> WorkspaceId -> X ()

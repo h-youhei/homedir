@@ -1,0 +1,6 @@
+"Encoding" {
+	"Auto"	"encoding=auto"
+	"UTF-8"	"encoding=UTF-8"
+	"S-JIS"	"Shift_JIS"
+	"EUC-JP"	"encoding=EUC-JP"
+}
