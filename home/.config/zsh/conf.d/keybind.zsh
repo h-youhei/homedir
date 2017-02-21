@@ -60,7 +60,7 @@ zle -N visual-to-insert
 function cd-parent () {
 	builtin echo
 	builtin cd ..
-	zle redisplay
+	zle accept-line
 }
 zle -N cd-parent
 
