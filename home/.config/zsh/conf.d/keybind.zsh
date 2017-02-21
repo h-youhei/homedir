@@ -1,6 +1,3 @@
-#to show widget list, run this command
-#zle -lL
-#
 #for more details, run this command
 #man zshmodules
 
@@ -11,6 +8,10 @@ setopt ignore_eof
 
 # load special key
 source $ZDOTDIR/kbd/xterm.zsh
+
+# load plugin
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
 
 KEYTIMEOUT=10
 
@@ -59,7 +60,7 @@ zle -N visual-to-insert
 function cd-parent () {
 	builtin echo
 	builtin cd ..
-	zle accept-line
+	zle redisplay
 }
 zle -N cd-parent
 
@@ -72,8 +73,14 @@ zle -N cd-toggle
 
 bindkey -e
 
+bindkey '\t' fzf-completion
+bindkey '^[/' fzf-history-widget
+bindkey '^[c' fzf-cd-widget
+bindkey '^[e' fzf-file-widget
+
+
 #bindkey '\t' expand-or-complete
-bindkey '\t' expand-or-complete-prefix
+#bindkey '\t' expand-or-complete-prefix
 bindkey "${key[Down]}" history-beginning-search-forward
 bindkey "${key[Up]}" history-beginning-search-backward
 bindkey "${key[Left]}" backward-char
@@ -91,13 +98,13 @@ bindkey '^[t' vi-find-next-char-skip
 bindkey '^[T' vi-find-prev-char-skip
 bindkey '^[,' vi-repeat-find
 bindkey '^[<' vi-rev-repeat-find
-bindkey '^[/' history-incremental-pattern-search-backward
-bindkey '^[?' history-incremental-pattern-search-forward
+#bindkey '^[/' history-incremental-pattern-search-backward
+#bindkey '^[?' history-incremental-pattern-search-forward
 bindkey '^[d' kill-whole-word
 bindkey '^[D' kill-whole-line
 bindkey '^[r' transpose-whole-words
 bindkey '^[s' vi-swap-case
-bindkey '^[c' capitailze-whole-word
+bindkey '^[C' capitailze-whole-word
 bindkey '^[`' down-case-whole-word
 bindkey '^[~' up-case-whole-word
 bindkey '^[i' insert-last-word

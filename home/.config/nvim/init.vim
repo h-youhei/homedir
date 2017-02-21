@@ -3,7 +3,7 @@ augroup init
 	autocmd!
 augroup END
 
-let init#conf_dir = expand('$XDG_CONFIG_HOME/.vim/conf.d')
+let init#conf_dir = expand('$XDG_CONFIG_HOME/nvim/conf.d')
 
 execute 'source ' . init#conf_dir . '/plugin.vim'
 

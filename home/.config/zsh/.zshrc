@@ -17,6 +17,7 @@ setopt list_types
 # smartcase
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
+
 # command history
 #--------------------
 HISTFILE=$ZDOTDIR/history
@@ -38,6 +39,7 @@ setopt hist_verify
 setopt hist_reduce_blanks
 #setopt hist_subst_pattern
 
+
 # directory
 #--------------------
 # push to directory stack with cd
@@ -50,17 +52,20 @@ function chpwd() {
 # ignore dupplicated direcory
 setopt pushd_ignore_dups
 
+
 # word
-# -------------------
+#--------------------
 autoload -Uz select-word-style
 select-word-style default
 zstyle ':zle:*' word-chars " /@"
 zstyle ':zle:*' word-style unspecified
 
+
 # correct
 #--------------------
 # command only
-setopt correct
+#setopt correct
+
 
 # * expand
 #--------------------
@@ -73,6 +78,7 @@ setopt null_glob
 setopt extended_glob
 setopt globdots
 
+
 # etc
 #--------------------
 setopt no_beep
@@ -80,6 +86,9 @@ setopt no_beep
 setopt interactive_comments
 # setopt rc_expand_param
 
+
+# complex setting
+#--------------------
 source $ZDOTDIR/conf.d/alias.zsh
 source $ZDOTDIR/conf.d/keybind.zsh
 source $ZDOTDIR/conf.d/prompt.zsh

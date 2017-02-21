@@ -49,6 +49,7 @@ alias x="pwd > $HOME/.xmonad/mark"
 
 alias -g A='| awk'
 alias -g C='| cut'
+alias -g F='| fzf'
 alias -g G='| grep'
 alias -g H='| head'
 alias -g J='| join'
