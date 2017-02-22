@@ -1,4 +1,3 @@
-#for more details, run this command
 #man zshmodules
 
 # control io (stop<C-s> restart<C-q>)
@@ -77,7 +76,6 @@ bindkey '^[c' fzf-cd-widget
 bindkey '^[e' fzf-file-widget
 
 
-#bindkey '\t' expand-or-complete
 bindkey '\t' expand-or-complete-prefix
 bindkey "${key[S-Tab]}" reverse-menu-complete
 bindkey "${key[Down]}" history-beginning-search-forward
@@ -97,8 +95,6 @@ bindkey '^[t' vi-find-next-char-skip
 bindkey '^[T' vi-find-prev-char-skip
 bindkey '^[,' vi-repeat-find
 bindkey '^[<' vi-rev-repeat-find
-#bindkey '^[/' history-incremental-pattern-search-backward
-#bindkey '^[?' history-incremental-pattern-search-forward
 bindkey '^[d' kill-whole-word
 bindkey '^[D' kill-whole-line
 bindkey '^[r' transpose-whole-words

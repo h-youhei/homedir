@@ -7,42 +7,45 @@
 #define CYAN #77DDDD
 #define WHITE #DDDDDD
 
-#define HL_BLACK #000000
-#define HL_RED #FF0000
-#define HL_GREEN #00FF00
-#define HL_YELLOW #FFFF00
-#define HL_BLUE #0000FF
-#define HL_MAGENTA #FF00FF
-#define HL_CYAN #00FFFF
-#define HL_WHITE #FFFFFF
+#define HI_BLACK #000000
+#define HI_RED #FF0000
+#define HI_GREEN #00FF00
+#define HI_YELLOW #FFFF00
+#define HI_BLUE #0000FF
+#define HI_MAGENTA #FF00FF
+#define HI_CYAN #00FFFF
+#define HI_WHITE #FFFFFF
 
 *background: BLACK
 *foreground: WHITE
 
 *color0: BLACK
-*color8: HL_BLACK
+*color8: HI_BLACK
 
 *color1: RED
-*color9: HL_RED
+*color9: HI_RED
 
 *color2: GREEN
-*color10: HL_GREEN
+*color10: HI_GREEN
 
 *color3: YELLOW
-*color11: HL_YELLOW
+*color11: HI_YELLOW
 
 *color4: BLUE
-*color12: HL_BLUE
+*color12: HI_BLUE
 
 *color5: MAGENTA
-*color13: HL_MAGENTA
+*color13: HI_MAGENTA
 
 *color6: CYAN
-*color14: HL_CYAN
+*color14: HI_CYAN
 
 *color7: WHITE
-*color15: HL_WHITE
+*color15: HI_WHITE
 
 *underlineColor: CYAN
 *colorUL: CYAN
+
+*reverseVideo: false
+
 ! vim:ft=xdefaults

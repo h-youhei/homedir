@@ -4,7 +4,7 @@ key[S-Tab]='^[[Z'
 key[Insert]='^[[2~'
 key[S-Insert]='^[[2;2~'
 key[Delete]='^[[3~'
-key[S-Delete]='^[[3$'
+key[S-Delete]='^[[3;2~'
 
 key[Up]='^[[A'
 key[S-Up]='^[[1;2A'

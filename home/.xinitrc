@@ -41,7 +41,7 @@ export XMODIFIERS GTK_IM_MODULE QT_IM_MODULE
 
 export BROWSER='firefox'
 
-urxvtd -qfo
+urxvtd -q -f -o
 
 fcitx-autostart
 
