@@ -1,0 +1,89 @@
+!Default setting is good.
+
+!URxvt*insecure:                       boolean
+URxvt*saveLines: 512
+URxvt*reverseVideo: false
+URxvt*loginShell: false
+URxvt*multiClickTime: 500
+URxvt*tripleclickwords: true
+URxvt*jumpScroll: true
+URxvt*skipScroll: true
+URxvt*pastableTabs: true
+URxvt*scrollBar: false
+URxvt*scrollTtyOutput: false
+URxvt*scrollTtyKeypress: true
+URxvt*scrollWithBuffer: true
+URxvt*transparent: false
+URxvt*utmpInhibit: false
+URxvt*urgentOnBell: true
+URxvt*visualBell: false
+URxvt*mapAlert: true
+URxvt*mouseWheelScrollPage: false
+URxvt*cursorUnderline: false
+URxvt*cursorBlink: false
+URxvt*pointerBlank: false
+
+! charaster appearence
+URxvt*depth: 24
+URxvt*font: xft:DejaVu Sans Mono:size=11,xft:IPAGothic:size=11
+!URxvt*imFont:                         fontname
+! same color, bold style
+URxvt*intensityStyles: true
+! this option should be false on xmonad
+URxvt*borderLess: false
+URxvt*lineSpace: 0
+URxvt*letterSpace: 0
+URxvt*skipBuiltinGlyphs: true
+
+! Input Method
+URxvt*inputMethod: fcitx
+URxvt*preeditType: OverTheSpot
+URxvt*imLocale: ja_JP.UTF-8
+! Unicode?
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+URxvt*iconName: urxvt
+
+!URxvt*visual:                         number
+!URxvt*transient-for:                  windowid
+URxvt*override-redirect: false
+URxvt*hold: false
+URxvt*print-pipe: cat > /tmp/urxvt/$(date +%Y-%m-%d_%H:%M:%S)
+URxvt*modifier: alt
+!URxvt*cutchars:                       string
+!URxvt*answerbackString:               string
+URxvt*secondaryScreen: true
+URxvt*secondaryScroll: false
+
+! perl
+!URxvt*perl-lib:                       path
+!URxvt*perl-eval:                      perl-eval
+URxvt*perl-ext-common: matcher
+URxvt*matcher.button: 1
+URxvt*url-launcher: firefox
+!URxvt*matcher.launcher: firefox
+!URxvt*matcher.pattern.*: pattern
+!URxvt*matcher.launcher.*: pattern
+!URxvt*matcher.rend.*:                 string
+
+! key
+URxvt*meta8: false
+!URxvt*backspacekey:                   string
+!URxvt*deletekey:                      string
+URxvt*keysym.S-Up: \033[1;2A
+URxvt*keysym.S-Down: \033[1;2B
+URxvt*keysym.S-Left: \033[1;2D
+URxvt*keysym.S-Right: \033[1;2C
+URxvt*keysym.S-Page_Up: \033[5;2~
+URxvt*keysym.S-Page_Down: \033[6;2~
+URxvt*keysym.S-Home: \033[1;2H
+URxvt*keysym.S-End: \033[1;2F
+URxvt*keysym.S-Insert: \033[2;2~
+URxvt*keysym.S-Delete: \033[3;2~
+!URxvt*keysym.S-Backspace: \033[127;2u
+!URxvt*keysym.S-Space: \033[32;2u
+URxvt*keysym.S-Tab: \033[Z
+!URxvt*keysym.S-Esc: \033[27;5u
+!URxvt*keysym.S-Enter: \033[13;2u
+
+! vim:ft=xdefaults

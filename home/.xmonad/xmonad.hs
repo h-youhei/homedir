@@ -29,16 +29,18 @@ import XMonad.Prompt.Directory(directoryPrompt)
 import XMonad.Prompt.Shell(shellPrompt, getBrowser)
 
 import XMonad.Util.Dmenu(menuArgs)
-import XMonad.Util.Loggers(Logger, onLogger, wrapL)
+import XMonad.Util.Loggers(Logger, onLogger)
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.Types(Direction1D(..), Direction2D(..))
 --import XMonad.Util.WindowProperties(getProp32s)
 
-
+import qualified Control.Exception as E
+import Control.Exception(IOException)
 import Control.Monad.Fix(fix)
 
 import Data.Bits((.&.), shiftL)
 import Data.Char(isSpace)
+import Data.Foldable(traverse_)
 import Data.List(find, any, init, concat, intersperse)
 import qualified Data.Map as M
 import Data.Map(Map)
@@ -58,17 +60,17 @@ import Text.Regex(mkRegex, subRegex)
 
 main :: IO ()
 main = do
-    myStatusBar1 <- spawnPipe "xmobar -x 1"
-    myStatusBar2 <- spawnPipe "xmobar -x 2"
+    bar1 <- spawnPipe "xmobar -x 1"
+    bar2 <- spawnPipe "xmobar -x 2"
     xmonad $ (ewmh . docks) def
         { workspaces = myWorkspaces
         , layoutHook = avoidStruts myLayout
         , modMask = mod4Mask
-        , terminal = "mlterm"
+        , terminal = "urxvtc"
         , keys = myKeys
-        , logHook = myPP myStatusBar1 >> myPP myStatusBar2 >> updatePointer (0.1, 0.2) (0, 0)
+        , logHook = dynamicMultiLogWithPP mkPP [bar1, bar2] >> updatePointer (0.1, 0.2) (0, 0)
         , startupHook = myStartup
-        --,mouseBindings = myMouseBindings
+        --, mouseBindings = myMouseBindings
         , manageHook = myManageHook
         , handleEventHook = fullscreenEventHook
         , focusFollowsMouse = True
@@ -90,8 +92,8 @@ myLayout =
         ratio = 1/2 --master pain to others
         delta = 3/100 --be used when to resize window
 
-myPP :: Handle -> X ()
-myPP bar = dynamicLogWithPP $ xmobarPP
+mkPP :: Handle -> PP
+mkPP bar = xmobarPP
     { ppCurrent = xmobarColor "lime" "" . wrap "<" ">"
     , ppVisible = xmobarColor "yellow" "" . wrap "<" ">"
     , ppHidden = xmobarColor "white" "" . wrap "(" ")"
@@ -101,9 +103,10 @@ myPP bar = dynamicLogWithPP $ xmobarPP
     , ppOrder = \(ws:_:_:cwd:_) -> [ws, cwd]
     --, ppSort = fmap (. filterOutWorkspaces ["NSP"]) $ ppSort def
     , ppOutput = hPutStrLn bar
-    , ppExtras = [wrapL "[" "]" . dirShortenL 90 6 $ logCwd]
+    , ppExtras =
+        [ onLogger (wrap "[" "]" . dirShorten 90 6 . homeToTilde) logCwd
+        ]
     }
-
 
 myStartup :: X ()
 myStartup = do
@@ -225,7 +228,7 @@ myKeys conf = M.fromList $
     , ((guiMask .|. shiftMask, xK_0), toggleTray)
 
     , ((guiMask, xK_Return), launchTerminal)
-    --, ((guiMask .|. shiftMask, xK_Return), terminalWithMark)
+    , ((guiMask .|. shiftMask, xK_Return), terminalWithMark)
 
     , ((guiMask, xK_l), launcher)
     , ((guiMask .|. shiftMask, xK_l), submap submapLaunchApp)
@@ -301,7 +304,7 @@ myKeys conf = M.fromList $
             ]
             where
                 web = spawn "firefox -new-window"
-                vim = spawn "gvim"
+                vim = runInTerm "nvim"
                 mail = return ()
                 chat = return ()
                 news = return ()
@@ -365,38 +368,26 @@ myDmenuConfig = def
     , font = "sans-serif 11"
     }
 
+homeToTilde :: String -> String
+homeToTilde p =
+    let homeRegex = mkRegex "^/home/[^/]+"
+    in subRegex homeRegex p "~"
+
 getTerminal :: X String
 getTerminal = asks $ terminal . config
 
-runInTerm' :: (String -> X ()) -> String -> X ()
-runInTerm' f cmd = getTerminal >>= \t -> f $  t ++ " -title " ++ t ++ " -e " ++ cmd
-
-runInTerm :: String -> X ()
-runInTerm = runInTerm' spawn
-
-runInTermOn :: WorkspaceId -> String -> X ()
-runInTermOn ws = runInTerm' (spawnOn ws)
-
-launchTerminal :: X ()
-launchTerminal = spawn =<< getTerminal
-
-{-
---this isn't work on mlterm
 terminalWithMark :: X ()
 terminalWithMark = do
     confdir <- getXMonadDir
     markfile <- io $ readFile $ confdir ++ "/mark"
     let mark = filter (/= '\n') markfile
-    sh <- io $ getEnv "SHELL"
-    --terminal -e "cd ~/.xmonad/mark && zsh"
-    runInTerm $ "\"cd " ++ mark ++ " && " ++ sh ++ "\""
--}
+    commandInTerm $ "cd " ++ mark
 
 {-
 getPID :: Window -> X (Maybe [CLong])
 getPID = getProp32s "_NET_WM_PID"
 
---it isn't match focused pid; probably is new window's pid
+--it doesn't match to focused pid; probably to new window's pid
 --that's because its pid is always different but its cwd is always home dir
 runTermInFocusedCwd :: String -> X ()
 runTermInFocusedCwd term = do
@@ -461,20 +452,33 @@ split :: Char -> String -> [String]
 split _ "" = []
 split c s = takeWhile (/= c) s : split c (dropWhile (== c) . dropWhile (/= c) $ s)
 
-{-
 filterOutWorkspaces :: [String] -> [WindowSpace] -> [WindowSpace]
 filterOutWorkspaces out = filter (\(Workspace tag _ _) -> not (tag `elem` out))
--}
+
+--Util.Run
+runInTerm' :: (String -> X ()) -> String -> String -> X ()
+runInTerm' f opt cmd = do
+    t <- getTerminal
+    f $ t ++ " " ++ opt ++ " -e " ++ cmd
+
+runInTerm :: String -> X ()
+runInTerm = runInTerm' spawn ""
+
+runInTermOn :: WorkspaceId -> String -> X ()
+runInTermOn ws = runInTerm' (spawnOn ws) ""
+
+launchTerminal :: X ()
+launchTerminal = spawn =<< getTerminal
+
+commandInTerm :: String -> X ()
+commandInTerm cmd = do
+    sh <- getShell
+    --terminal -title shell -e shell -c "command && shell"
+    runInTerm' spawn ("-title " ++ sh) (sh ++ " -c \"" ++ cmd ++ " && " ++ sh ++ "\"")
 
 --Util.Loggers
 logCwd :: Logger
-logCwd = do
-    cwd <- io getCurrentDirectory
-    let homeRegex = mkRegex "^/home/[^/]+"
-    return $ Just $ subRegex homeRegex cwd "~"
-
-dirShortenL :: Int -> Int ->  Logger -> Logger
-dirShortenL nWhole nDir = onLogger $ dirShorten nWhole nDir
+logCwd = io getCurrentDirectory >>= \cwd -> return $ Just cwd
 
 --Util.Dmenu
 data DmenuConfig = DmenuConfig
@@ -525,6 +529,13 @@ mkDmenuArgs conf = concat . catMaybes $ args
             , mkArgFromString "sb" (selectedBgColor conf)
             , mkArgFromString "sf" (selectedFgColor conf)
             ]
+
+--Util.Environment
+econst :: Monad m => a -> IOException -> m a
+econst = const . return
+
+getShell :: X String
+getShell = io $ getEnv "SHELL" `E.catch` econst "bash"
 
 --Actions.Search
 dmenuSearchWithConf :: DmenuConfig -> SearchEngine -> X ()
@@ -592,6 +603,9 @@ perScreen actInMain actInSub = do
     case currentScreen of
         0 -> actInMain
         _ -> actInSub
+
+dynamicMultiLogWithPP :: (Handle -> PP) -> [Handle] -> X ()
+dynamicMultiLogWithPP mk = traverse_ (\bar -> dynamicLogWithPP $ mk bar)
 
 --Actions.Submap
 --add io $ sync d False

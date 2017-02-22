@@ -7,10 +7,9 @@ unsetopt flow_control
 setopt ignore_eof
 
 # load special key
-source $ZDOTDIR/kbd/xterm.zsh
+source $ZDOTDIR/kbd/urxvt.zsh
 
 # load plugin
-source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
 KEYTIMEOUT=10
@@ -73,14 +72,14 @@ zle -N cd-toggle
 
 bindkey -e
 
-bindkey '\t' fzf-completion
 bindkey '^[/' fzf-history-widget
 bindkey '^[c' fzf-cd-widget
 bindkey '^[e' fzf-file-widget
 
 
 #bindkey '\t' expand-or-complete
-#bindkey '\t' expand-or-complete-prefix
+bindkey '\t' expand-or-complete-prefix
+bindkey "${key[S-Tab]}" reverse-menu-complete
 bindkey "${key[Down]}" history-beginning-search-forward
 bindkey "${key[Up]}" history-beginning-search-backward
 bindkey "${key[Left]}" backward-char

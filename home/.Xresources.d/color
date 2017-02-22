@@ -43,4 +43,6 @@
 *color7: WHITE
 *color15: HL_WHITE
 
+*underlineColor: CYAN
+*colorUL: CYAN
 ! vim:ft=xdefaults
