@@ -8,7 +8,6 @@ Precomposition	Shift Space	InsertAlternateSpace
 Precomposition	Ctrl Space	InsertSpace
 Precomposition	Ctrl Shift Space	InsertAlternateSpace
 Precomposition	Ctrl w	LaunchWordRegisterDialog
-Precomposition	Ctrl c	LaunchConfigDialog
 Precomposition	Ctrl d	LaunchDictionaryTool
 Composition	Backspace	Backspace
 Composition	Delete	Delete
