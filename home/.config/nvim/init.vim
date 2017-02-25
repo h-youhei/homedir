@@ -13,7 +13,7 @@ syntax on
 "for more information, run this command
 ":help 'option_name'
 
-set wildmode=list,full
+set wildmode=list:longest,full
 
 set diffopt& dip+=vertical
 
@@ -77,7 +77,8 @@ set list
 set listchars=tab:>_,trail:$,extends:<,precedes:>
 
 "set history
-set shada=!,%,'100,:0,<50,@0,h,s10
+set shada=!,%,'10,h,s1
+set history=20
 set viewoptions=cursor,folds,localoptions
 set sessionoptions=blank,buffers,curdir,folds,localoptions,help,tabpages,winpos
 set undofile
@@ -94,14 +95,11 @@ set nrformats=alpha,bin,hex
 set iminsert=0
 set imsearch=0
 
-"when to move pointer
-set mousefocus
-
 "auto real line break
 set textwidth=0
 
 "Allowed left/right keys to move prev/next line at start/end of the line
-set whichwrap=
+set whichwrap=<,>,[,]
 
 set complete=k,d,t
 
@@ -109,15 +107,23 @@ set spelllang=en_us,cjk
 
 augroup init
 	autocmd BufReadPost * call init#restore_cursor()
+	autocmd VimEnter * nested call init#restore_buffer()
 	autocmd BufNewFile * startinsert
 	autocmd FileType gitcommit call init#empty_first_startinsert()
 	autocmd FileType * setlocal formatoptions& fo+=rnmM fo-=tc
-	autocmd TermClose * call feedkeys("\<CR>")
+	autocmd BufReadCmd *.jar,*.xpi call zip#Browse(expand"<amatch>"))
 augroup END
 
 function! init#restore_cursor()
+	"is saved line in file range?
 	if line("'\"") > 1 && line("'\"") <= line("$")
 		normal! g`"
+	endif
+endfunction
+
+function! init#restore_buffer()
+	if argc() == 0 && bufname('%') == ''
+		bdelete
 	endif
 endfunction
 

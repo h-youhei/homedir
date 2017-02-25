@@ -17,103 +17,6 @@ noremap ZQ <Nop>
 noremap <Space> <Nop>
 noremap <CR> <Nop>
 
-"find and replace for Japanese letter
-digraph ca 12363
-digraph ci 12365
-digraph cu 12367
-digraph ce 12369
-digraph co 12371
-digraph Ca 12459
-digraph Ci 12461
-digraph Cu 12463
-digraph Ce 12465
-digraph Co 12467
-noremap f<A-k> f<C-k>
-noremap f<A-,> f、
-noremap f<A-.> f。
-noremap f<A-[> f「
-noremap f<A-]> f」
-noremap f<A-k>a fあ
-noremap f<A-k>A fア
-noremap f<A-k>i fい
-noremap f<A-k>I fイ
-noremap f<A-k>u fう
-noremap f<A-k>U fウ
-noremap f<A-k>e fえ
-noremap f<A-k>E fエ
-noremap f<A-k>o fお
-noremap f<A-k>O fオ
-noremap f<A-k>l fん
-noremap f<A-k>L fン
-noremap F<A-k> F<C-k>
-noremap F<A-,> F、
-noremap F<A-.> F。
-noremap F<A-[> F「
-noremap F<A-]> F」
-noremap F<A-k>a Fあ
-noremap F<A-k>A Fア
-noremap F<A-k>i Fい
-noremap F<A-k>I Fイ
-noremap F<A-k>u Fう
-noremap F<A-k>U Fウ
-noremap F<A-k>e Fえ
-noremap F<A-k>E Fエ
-noremap F<A-k>o Fお
-noremap F<A-k>O Fオ
-noremap F<A-k>l Fん
-noremap F<A-k>L Fン
-noremap t<A-k> t<C-k>
-noremap t<A-,> t、
-noremap t<A-.> t。
-noremap t<A-[> t「
-noremap t<A-]> t」
-noremap t<A-k>a tあ
-noremap t<A-k>A tア
-noremap t<A-k>i tい
-noremap t<A-k>I tイ
-noremap t<A-k>u tう
-noremap t<A-k>U tウ
-noremap t<A-k>e tえ
-noremap t<A-k>E tエ
-noremap t<A-k>o tお
-noremap t<A-k>O tオ
-noremap t<A-k>l tん
-noremap t<A-k>L tン
-noremap T<A-k> T<C-k>
-noremap T<A-,> T、
-noremap T<A-.> T。
-noremap T<A-[> T「
-noremap T<A-]> T」
-noremap T<A-k>a Tあ
-noremap T<A-k>A Tア
-noremap T<A-k>i Tい
-noremap T<A-k>I Tイ
-noremap T<A-k>u Tう
-noremap T<A-k>U Tウ
-noremap T<A-k>e Tえ
-noremap T<A-k>E Tエ
-noremap T<A-k>o Tお
-noremap T<A-k>O Tオ
-noremap T<A-k>l Tん
-noremap T<A-k>L Tン
-noremap r<A-k> r<C-k>
-noremap r<A-,> r、
-noremap r<A-.> r。
-noremap r<A-[> r「
-noremap r<A-]> r」
-noremap r<A-k>a rあ
-noremap r<A-k>A rア
-noremap r<A-k>i rい
-noremap r<A-k>I rイ
-noremap r<A-k>u rう
-noremap r<A-k>U rウ
-noremap r<A-k>e rえ
-noremap r<A-k>E rエ
-noremap r<A-k>o rお
-noremap r<A-k>O rオ
-noremap r<A-k>l rん
-noremap r<A-k>L rン
-
 "Inactivate IM and Capslock after command mode
 "BUG always locate cursor at head
 "nnoremap <expr><silent> <SID>Inactivate keymap#inactivate()
@@ -127,131 +30,103 @@ noremap r<A-k>L rン
 "endfunction
 
 """Buffer/Tabpage/Window
-"filer
-"nnoremap <CR>f :update<CR>:edit %:p:h<CR>
-"nnoremap <CR>tf :update<CR>:tabedit %:p:h<CR>
-"nnoremap <CR>vf :update<CR>:vsplit %:p:h<CR>
-"nnoremap <CR>hf :update<CR>:split %:p:h<CR>
+
+nnoremap <A-o> :<C-u>tabnew<CR>
+nnoremap <A-v> :<C-u>vnew<CR>
+nnoremap <A-h> :<C-u>new<CR>
+"switch horizontal or vertical
+nnoremap <A-H> :<C-u>ball 2<CR>
+nnoremap <A-V> :<C-u>vertical ball 2<CR>
 
 "edit
-nnoremap <CR>e :update<CR>:!ls<CR>:edit<Space>
-nnoremap <CR>te :update<CR>:!ls<CR>:tabedit<Space>
-nnoremap <CR>ve :update<CR>:!ls<CR>:vsplit<Space>
-nnoremap <CR>he :update<CR>:!ls<CR>:split<Space>
+nnoremap <CR>e :<C-u>update<CR>:!ls<CR>:edit<Space>
 
 "open the file whose name is under the cursor
 nnoremap <CR>o gF
-nnoremap <CR>to <C-w>gF
-"to do test
-nnoremap <CR>vo :exec("vsplit ".expand("<cword>"))
-nnoremap <CR>ho <C-w>F
-"
+
 "tag
-"to do test
-nnoremap <CR>vt :exec("vertical stjump ".expand("<cword>"))
-nnoremap <CR>ht <C-w>g<C-]>
-nnoremap <CR>T :tjump<Space>
-nnoremap <CR>vT :vertical stjump<Space>
-nnoremap <CR>hT :stjump<Space>
+nnoremap <CR>t :<C-u>tags<CR>:tag<Space>
+nnoremap <CR>T :<C-u>tjump<Space>
 
 "write/append to chosen file
-nnoremap <CR>w :write<Space>
-nnoremap <CR>a :write >><Space>
+nnoremap <CR>w :<C-u>write<Space>
+nnoremap <CR>a :<C-u>write >><Space>
 
 "close
-nnoremap <CR>c :bdelete<CR>
-nnoremap <CR>C :!ls<CR>:bdelete<Space>
-nnoremap <CR>tc :tabclose<CR>
-nnoremap <CR>tC :tabs<CR>:tabclose<Space>
+nnoremap <CR>c :<C-u>tabclose<CR>
+nnoremap <CR>C :<C-u>tabs<CR>:tabclose<Space>
 
-"move/multiple
-nnoremap <CR>tm <C-w>t
-nnoremap <CR>vm :vsplit<CR>
-nnoremap <CR>hm :split<CR>
+"move to another tab
+nnoremap <CR>m <C-w>t
 
 "new
-nnoremap <CR>n :enew<CR>
-nnoremap <CR>tn :tabnew<CR>
-nnoremap <CR>vn :vnew<CR>
-nnoremap <CR>hn :new<CR>
+nnoremap <CR>n :<C-u>enew<CR>
 
 "diff
-nnoremap <CR>d :windo diffthis<CR>
-nnoremap <CR>D :windo diffoff<CR>
-nnoremap <CR>vd :!ls<CR>:vertical diffsplit<Space>
-nnoremap <CR>hd :!ls<CR>:diffsplit<Space>
+nnoremap <CR>d :<C-u>windo diffthis<CR>
+nnoremap <CR>D :<C-u>windo diffoff<CR>
 
 "open same file as readonly
-nnoremap <CR>V :call keymap#view()<CR>
-function! keymap#view()
-	let l:fname = expand('%:t')
-	let l:temp_file = '/tmp/nv-tmp-' . l:fname
-	execute 'write! ' . l:temp_file
-	if filereadable(l:temp_file)
-		execute 'sview ' .  l:temp_file
-	endif
-endfunction
-
-"help
-nnoremap <CR>vh :vertical help<CR>
-nnoremap <CR>hh :help<CR>
+nnoremap <CR>v :<C-u>sview %<CR>
 
 "adjust window size
 nnoremap <CR>= <C-w>=
 
 "file manage
-nnoremap <CR>r :!ls<CR>:read<Space>
-nnoremap <CR>u :update<CR>
-nnoremap <CR>q :quit<CR>
-nnoremap <CR>Q :quit!<CR>
-nnoremap <CR><Space>q :qall<CR>
-nnoremap <CR><Space>Q :qall!<CR>
+nnoremap <CR>r :<C-u>!ls<CR>:read<Space>
+nnoremap <CR>u :<C-u>update<CR>
+nnoremap <CR>q :<C-u>quit<CR>
+nnoremap <CR>Q :<C-u>quit!<CR>
+nnoremap <CR><Space>q :<C-u>qall<CR>
+nnoremap <CR><Space>Q :<C-u>qall!<CR>
 "update then quit
-nnoremap <CR>x :xit<CR>
-nnoremap <CR>X :xall<CR>
+nnoremap <CR>x :<C-u>xit<CR>
+nnoremap <CR>X :<C-u>update<CR>:bdelete<CR>
+nnoremap <CR><Space>x :<C-u>xall<CR>
 
 "buffer
 "show list of buffers then move to a buffer
-nnoremap <CR>b :update<CR>:ls<CR>:buffer<Space>
-"noremap <CR>tb :up<CR>:ls<CR>:buffer<Space>
-"noremap <CR>vb :up<CR>:ls<CR>:buffer<Space>
-"noremap <CR>hb :up<CR>:ls<CR>:buffer<Space>
+nnoremap <CR>b :<C-u>update<CR>:ls<CR>:buffer<Space>
+"hide
+nnoremap <CR>h :<C-u>bdelete<CR>
+nnoremap <CR>H :<C-u>ls<CR>:bdelete<Space>
 
-"noremap <Leader>s :call session#make_project()<CR>
+"project
+nnoremap <CR>P :<C-u>call project#make()<CR>
 
 "print
-nnoremap <nowait> <CR>pc :changes<CR>
-nnoremap <nowait> <CR>pm :marks<CR>
-nnoremap <nowait> <CR>pr :registers<CR>
-nnoremap <nowait> <CR>pj :jumps<CR>
-nnoremap <nowait> <CR>pt :tags<CR>
+nnoremap <nowait> <CR>pc :<C-u>changes<CR>
+nnoremap <nowait> <CR>pm :<C-u>marks<CR>
+nnoremap <nowait> <CR>pr :<C-u>registers<CR>
+nnoremap <nowait> <CR>pj :<C-u>jumps<CR>
+nnoremap <nowait> <CR>pt :<C-u>tags<CR>
 
 "setting
 "toggle options
 nnoremap z <Nop>
-nnoremap z_ :setl list!<CR>
-nnoremap zb :setl backup!<CR>
-nnoremap zc :setl autochdir!<CR>
-nnoremap zf :setl foldenable!<CR>
-nnoremap zh :setl hlsearch!<CR>
-nnoremap zi :setl autoindent!<CR>
-nnoremap zl :setl linebreak!<CR>
-nnoremap zm :setl showmatch!<CR>
-nnoremap zn :setl relativenumber!<CR>
-nnoremap zp :setl paste!<CR>
-nnoremap zs :setl spell!<CR>
-nnoremap zt :setl expandtab!<CR>
-nnoremap zw :setl wrap!<CR>
+nnoremap z_ :<C-u>setl list!<CR>
+nnoremap zb :<C-u>setl backup!<CR>
+nnoremap zc :<C-u>setl autochdir!<CR>
+nnoremap zf :<C-u>setl foldenable!<CR>
+nnoremap zh :<C-u>setl hlsearch!<CR>
+nnoremap zi :<C-u>setl autoindent!<CR>
+nnoremap zl :<C-u>setl linebreak!<CR>
+nnoremap zm :<C-u>setl showmatch!<CR>
+nnoremap zn :<C-u>setl relativenumber!<CR>
+nnoremap zp :<C-u>setl paste!<CR>
+nnoremap zs :<C-u>setl spell!<CR>
+nnoremap zt :<C-u>setl expandtab!<CR>
+nnoremap zw :<C-u>setl wrap!<CR>
 "cursorbind
 "scrollbind
 
 "reload
-nnoremap <nowait> Zv :source $MYVIMRC<CR>
-nnoremap <nowait> Zp :call init#plugin_update()<CR>
+nnoremap <nowait> Zv :<C-u>source $MYVIMRC<CR>
+nnoremap <nowait> Zp :<C-u>call plugin#update()<CR>
 
 "quickfix
-nnoremap <nowait> x :copen<CR>
-nnoremap <nowait> X :cclose<CR>
+nnoremap <nowait> x :<C-u>copen<CR>
+nnoremap <nowait> X :<C-u>cclose<CR>
 augroup keymap
 	autocmd BufReadPost quickfix noremap <buffer><nowait> x <C-w>k
 	autocmd BufReadPost quickfix noremap <buffer><nowait> <CR> <CR>
@@ -259,18 +134,18 @@ augroup END
 
 "abbreviations
 nnoremap $ <Nop>
-nnoremap $p :iabbrev <buffer><CR>
-nnoremap $a :iabbrev <buffer><Space>
-nnoremap $d :iunabbrev <buffer><Space>
-nnoremap $D :iabclear<CR>
+nnoremap $p :<C-u>iabbrev <buffer><CR>
+nnoremap $a :<C-u>iabbrev <buffer><Space>
+nnoremap $d :<C-u>iunabbrev <buffer><Space>
+nnoremap $D :<C-u>iabclear<CR>
 
 "args
 nnoremap @ <Nop>
-nnoremap @p :args<CR>
-nnoremap @a :argadd<Space>
-nnoremap @d :argdel<Space>
-nnoremap @e :argedit<Space>
-"noremap @x :argdo<Space>
+nnoremap @p :<C-u>args<CR>
+nnoremap @a :<C-u>argadd<Space>
+nnoremap @d :<C-u>argdel<Space>
+nnoremap @e :<C-u>argedit<Space>
+"noremap @x :<C-u>argdo<Space>
 "%s grep
 
 "object range
@@ -300,13 +175,9 @@ xmap af <Plug>(textobj-sandwich-query-a)
 
 "edit
 "noreg
-noremap <CR>s :s/\V
-nnoremap <CR>S :%s/\V
 noremap <CR>g :g/\V
 noremap <CR>G :v/\V
 "reg
-noremap <CR><Space>s :s/\v
-nnoremap <CR><Space>S :%s/\v
 noremap <CR><Space>g :g/\v
 noremap <CR><Space>G :v/\v
 
@@ -345,13 +216,13 @@ inoremap <nowait> <A-H> <C-o><C-i>
 
 "indent
 noremap <nowait> <Tab> >>
-noremap	<nowait> <S-Tab> <<
+noremap <nowait> <S-Tab> <<
 vnoremap <nowait> <Tab> >
 vnoremap <nowait> <S-Tab> <
 noremap <nowait> <Space><Tab> gg=G2<C-o>
 xnoremap <nowait> <Space><Tab> =
-inoremap <nowait> <Tab> <C-t>
-inoremap <nowait> <S-Tab> <C-d>
+inoremap <nowait> <A-Tab> <C-t>
+inoremap <nowait> <A-S-Tab> <C-d>
 
 "repeat
 nmap <nowait> . <Plug>(operator-sandwich-dot)
@@ -364,42 +235,32 @@ noremap <nowait><silent> + :@:<CR>
 
 "shell
 noremap <nowait> k :!
-noremap <nowait><silent> K :<C-u>terminal<CR>
+noremap <nowait><silent> K :<C-u>call system('urxvtc')<CR>
 noremap <nowait><silent> <Space>k :read !
 noremap <nowait> <Space>K <C-z>
 xnoremap <nowait> k !
 
 "command
 noremap <nowait> ; :
-"noremap <nowait> : q:
+noremap <nowait> : gQ
 
 "Macro
-noremap <nowait> e @z
-noremap <nowait> E qz<Esc>
-noremap <Space>e @
-noremap <Space>E q
+noremap <nowait> x @
+noremap <nowait> X q
 
 "mark
-noremap ] `
-noremap [ '
-noremap <nowait> ]] ''
-noremap <nowait> [[ ``
-noremap <nowait> ]# ]#
-noremap <nowait> [# [#
-"quick
-noremap <nowait> m `z
-noremap <nowait> M mz
-noremap <Space>M m
-inoremap <nowait> <A-m> <C-o>`z
-inoremap <nowait> <A-M> <C-o>mz
+noremap <nowait> m `
+noremap <nowait> M m
+inoremap <nowait> <A-m> <C-o>`
+inoremap <nowait> <A-M> <C-o>m
 
 "visual
 noremap <nowait> v <C-v>
 "noremap <nowait> V V
-noremap <nowait> <A-v> v
+noremap <nowait> <C-v> v
 noremap <nowait> <Space>v gv
-inoremap <nowait> <A-y> <C-o><C-v>
-inoremap <nowait> <A-Y> <C-o>V
+inoremap <nowait> <A-v> <C-o><C-v>
+inoremap <nowait> <A-V> <C-o>V
 
 "tip: C-v I $A
 "tn tN
@@ -411,7 +272,7 @@ inoremap <nowait> <A-Y> <C-o>V
 "insert
 noremap <nowait> i i
 noremap <nowait> I I
-noremap <nowait><silent> <A-i> :<C-u>execute 'normal i'.repeat(nr2char(getchar()), v:count1)<CR>
+"noremap <nowait><silent> <A-i> :<C-u>execute 'normal i'.repeat(nr2char(getchar()), v:count1)<CR>
 noremap <nowait> <Space>i Bi
 noremap <nowait> <Space>I 0i
 "insert word above cursor
@@ -420,7 +281,6 @@ inoremap <nowait><expr> <A-i> (col('.') == 1 ? '<Esc>kyaWjpa' : '<Esc>klyaWjpa')
 "append
 noremap <nowait> a a
 noremap <nowait> A A
-noremap <nowait><silent> <A-a> :<C-u>execute 'normal a'.repeat(nr2char(getchar()), v:count1)<CR>
 noremap <nowait> <Space>a Ea
 noremap <nowait> <Space>A g_a
 "insert word below cursor
@@ -499,13 +359,13 @@ nnoremap <nowait> <Space>~l gu$
 nnoremap <nowait> <Space>~L gu^
 xnoremap <nowait> ` u
 
-"Surround
-map <silent> s <Plug>(operator-sandwich-add)
-nmap <silent> ss <Plug>(operator-sandwich-add)iw
-nmap <silent> sS <Plug>(operator-sandwich-add)iW
-nmap <silent> S <Home><Plug>(operator-sandwich-add)<End>
-nmap <silent> <Space>s <Plug>(operator-sandwich-add)<End>
-nmap <silent> <Space>S <Plug>(operator-sandwich-add)<Home>
+"enclose
+map <silent> e <Plug>(operator-sandwich-add)
+nmap <silent> ee <Plug>(operator-sandwich-add)iw
+nmap <silent> eE <Plug>(operator-sandwich-add)iW
+nmap <silent> E <Home><Plug>(operator-sandwich-add)<End>
+nmap <silent> <Space>e <Plug>(operator-sandwich-add)<End>
+nmap <silent> <Space>E <Plug>(operator-sandwich-add)<Home>
 
 "Change
 "noremap c c
@@ -515,8 +375,8 @@ nnoremap <nowait> C cc
 nnoremap <nowait> <Space>c C
 nnoremap <nowait> <Space>C c^
 "xnoremap <nowait> c c
-nmap <silent> cs <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-nmap <silent> cS <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+nmap <silent> ce <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+nmap <silent> cE <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
 "transpose
 inoremap <A-c> <Esc>daWBhPgi
 nnoremap cd :<C-u>silent lcd<Space>
@@ -527,6 +387,8 @@ nnoremap cD :<C-u>lcd %:p:h<CR>
 noremap <nowait> <Delete> x
 noremap <nowait> <S-Delete> s
 noremap <nowait> <Backspace> X
+"noremap <nowait> <S-Backspace> Xi
+
 "noremap d d
 nnoremap <nowait> dd daw
 nnoremap <nowait> dD daW
@@ -534,8 +396,8 @@ nnoremap <nowait> D dd
 nnoremap <nowait> <Space>d D
 nnoremap <nowait> <Space>D d^
 "xnoremap <nowait> d d
-nmap <silent> ds <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-nmap <silent> dS <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+nmap <silent> de <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+nmap <silent> dE <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
 inoremap <A-d> <C-o>daw
 inoremap <A-D> <C-o>dd
 "diff
@@ -556,6 +418,14 @@ noremap <nowait><silent> Q :<C-u>helpclose<CR>
 noremap <nowait> <Space>q :<C-u>helpgrep \V
 noremap <nowait> <Space>Q :<C-u>helpgrep \v
 "use Tagjump for jump in help
+
+"substitute
+"no regex
+noremap s :s/\V
+nnoremap S :%s/\V
+"regex
+noremap <Space>s :s/\v
+nnoremap <Space>S :%s/\v
 
 "search
 "no regex
@@ -588,34 +458,6 @@ inoremap <A-f> <C-o>f
 inoremap <A-F> <C-o>F
 inoremap <A-t> <C-o>t
 inoremap <A-T> <C-o>T
-inoremap <A-,> <C-o>f,
-inoremap <A-<> <C-o>f<
-inoremap <A-.> <C-o>f.
-inoremap <A->> <C-o>f>
-inoremap <A--> <C-o>f-
-inoremap <A-_> <C-o>f_
-inoremap <A-/> <C-o>f/
-inoremap <A-?> <C-o>f?
-inoremap <A-;> <C-o>f;
-inoremap <A-:> <C-o>f:
-inoremap <A-'> <C-o>f'
-inoremap <A-"> <C-o>f"
-inoremap <A-=> <C-o>f=
-inoremap <A-+> <C-o>f+
-inoremap <A-\> <C-o>f\
-inoremap <A-Bar> <C-o>f<Bar>
-inoremap <A-(> <C-o>f(
-inoremap <A-)> <C-o>f)
-inoremap <A-[> <C-o>f[
-inoremap <A-]> <C-o>f]
-inoremap <A-{> <C-o>f{
-inoremap <A-}> <C-o>f}
-inoremap <A-&> <C-o>f&
-inoremap <A-*> <C-o>f*
-inoremap <A-@> <C-o>f@
-inoremap <A-#> <C-o>f#
-inoremap <A-!> <C-o>f!
-inoremap <A-$> <C-o>f$
 
 "match
 "noremap <nowait> % %
@@ -647,23 +489,16 @@ noremap <nowait> <Space>B gE
 noremap <nowait> <A-b> #
 inoremap <nowait> <A-b> <C-o>B
 
-"Jump
-
 "window
-noremap <nowait> <A-PageDown> <C-w>w
-noremap <nowait> <A-PageUp> <C-w>W
-
-"scroll
-noremap <nowait> <Space><Space> zz
-noremap <nowait> <Space><Up> zb
-noremap <nowait> <Space><Down> zt
+noremap <nowait> <A-Down> <C-w>w
+noremap <nowait> <A-Up> <C-w>W
 
 "tab
 "move index
-noremap <nowait> <S-Left> gT
-noremap <nowait> <S-Right> gt
-noremap <nowait><silent> <Space><S-Left> :<C-u>tabfirst<CR>
-noremap <nowait><silent> <Space><S-Right> :<C-u>tablast<CR>
+noremap <nowait> <A-Right> gt
+noremap <nowait> <A-Left> gT
+"noremap <nowait><silent> <Space><A-Left> :<C-u>tabfirst<CR>
+"noremap <nowait><silent> <Space><A-Right> :<C-u>tablast<CR>
 
 "Cursor
 noremap <nowait><expr> <Up> (v:count ? 'k' : 'gk')
@@ -671,32 +506,25 @@ noremap <nowait><expr> <Down> (v:count ? 'j' : 'gj')
 noremap <nowait> <S-Up> -
 noremap <nowait> <S-Down> +
 
-"noremap <nowait> <Left> <Left>
-"noremap <nowait> <Right> <Right>
+noremap <nowait> <Left> h
+noremap <nowait> <Right> l
 
-noremap <nowait><silent> <PageDown> :<C-u>call keymap#down_half_winheight(v:count1)<CR>
-noremap <nowait><silent> <PageUp> :<C-u>call keymap#up_half_winheight(v:count1)<CR>
-noremap <nowait> <Space><PageUp> gg
-noremap <nowait> <Space><PageDown> G
+"noremap <nowait><silent> <PageDown> <PageDown>
+"noremap <nowait><silent> <PageUp> <PageUp>
+noremap <nowait> <S-PageUp> gg
+noremap <nowait> <S-PageDown> G
 
-function! keymap#up_half_winheight(count)
-	let l:half_height = winheight(0) / 2
-	let l:move_amount = l:half_height * a:count
-	execute 'normal!' . l:move_amount . 'gk'
-endfunction
+noremap <nowait> <S-Left> g^
+noremap <nowait> <S-Right> g$
+noremap <nowait> <Home> ^
+noremap <nowait> <End> $
+noremap <nowait><expr> <S-Home> (v:count ? '<Bar>' : '0')
+noremap <nowait><expr> <S-End> (v:count ? '<Bar>' : 'g_')
 
-function! keymap#down_half_winheight(count)
-	let l:half_height = winheight(0) / 2
-	let l:move_amount = l:half_height * a:count
-	execute 'normal!' . l:move_amount . 'gj'
-endfunction
-
-noremap <nowait> <Home> g^
-noremap <nowait> <End> g$
-noremap <nowait> <S-Home> ^
-noremap <nowait> <S-End> $
-noremap <nowait><expr> <Space><Home> (v:count ? '<Bar>' : '0')
-noremap <nowait><expr> <Space><End> (v:count ? '<Bar>' : 'g_')
+"scroll
+noremap <nowait> <Space><Space> zz
+noremap <nowait> <Space><Up> zb
+noremap <nowait> <Space><Down> zt
 
 "Esc
 noremap <nowait> <Esc> <Esc>

@@ -1,5 +1,9 @@
 let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
+let g:loaded_ruby_provider = 1
+let g:loaded_python_provider = 1
+let g:python_host_skip_check = 1
+let g:python3_host_skip_check = 1
 
 let s:dein_dir = expand('$XDG_CACHE_HOME/dein')
 let s:dein_runtime = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
