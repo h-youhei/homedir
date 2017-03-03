@@ -27,6 +27,9 @@ inoremap <A-M> <C-o>mz
 inoremap <A-n> <C-o>n
 inoremap <A-N> <C-o>N
 
+"Once
+inoremap <A-o> <C-o>
+
 "Paste
 inoremap <A-p> <C-r>+
 
@@ -81,10 +84,12 @@ inoremap <expr> <S-Tab> (pumvisible() ? '<C-p>' : '<C-d>')
 inoremap <A-Tab> <Tab>
 
 inoremap <expr> <BS> (keymap#abort_popup() . '<BS>')
+
 inoremap <expr> <CR> (keymap#accept_popup() . '<CR>')
-inoremap <A-CR> <C-o>
+inoremap <expr> <A-CR> (keymap#accept_popup() . '<CR><C-o>:left<CR>')
+
 "`^ keep cursor after leaving insert
-inoremap <expr> <Esc> (keymap#abort_popup() . '<Esc>`^')
+inoremap <expr> <Esc> (keymap#accept_popup() . '<Esc>`^')
 
 "cursor
 inoremap <expr> <Up> (keymap#accept_popup() . '<Up>')

@@ -5,7 +5,7 @@ on_event = 'InsertEnter'
 hook_add = '''
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#max_list = 7
-	inoremap <expr> <A-u> deoplete#undo_completion()
+	inoremap <expr> <A-u> (pumvisible() ? keymap#abort_popup() : deoplete#undo_completion())
 '''
 
 [[plugins]]

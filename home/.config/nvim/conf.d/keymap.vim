@@ -53,6 +53,7 @@
 "----------Mnemonic----------{{{
 "---A---
 "Append
+"All
 "---B---
 "Back
 "Buffer
@@ -79,6 +80,7 @@
 "History
 "---I---
 "Insert
+"Inner
 "---J---
 "Joint
 "---K---
@@ -93,6 +95,7 @@
 "Next
 "---O---
 "Open
+"Once
 "---P---
 "Paste
 "Print
@@ -106,6 +109,7 @@
 "Sed
 "Save
 "Search
+"Select
 "---T---
 "Take
 "Terminal

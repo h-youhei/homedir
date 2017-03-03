@@ -11,7 +11,7 @@ function! fcitx#toggle()
 endfunction
 
 function! fcitx#is_on()
-	return system('fcitx-remote') == 2 ? 1 : 0
+	return system('fcitx-remote') == 2 ? v:true : v:false
 endfunction
 
 function! fcitx#inactivate_with_state()

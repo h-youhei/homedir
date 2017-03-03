@@ -12,8 +12,8 @@ endif
 "1 9  red     hi_red
 "2 10 green   hi_green
 "3 11 yellow  hi_yellow
-"4 12 blue    blue_gray
-"5 13 magenta red_gray
+"4 12 blue    hi_blue
+"5 13 magenta blue_gray
 "6 14 cyan    green_gray
 "7 15 white   light_giey
 

@@ -27,7 +27,8 @@ function! keymap#set_macro()
 	else
 		registers
 		let c = nr2char(getchar())
-		if c == '^['
+		if c == "\e"
+			redraw
 			return
 		endif
 		let g:keymap#in_macro = v:true
