@@ -1,26 +1,26 @@
 #define BLACK #000000
-#define RED #FF9999
-#define GREEN #99FF99
-#define YELLOW #DD77DD
-#define BLUE #9999FF
-#define MAGENTA #DD77DD
-#define CYAN #77DDDD
-#define WHITE #DDDDDD
+#define RED #FF6677
+#define GREEN #AAFF88
+#define YELLOW #FFBB55
+#define BLUE #99BBFF
+#define MAGENTA #FFAAFF
+#define CYAN #44FFFF
+#define WHITE #FFFFFF
 
-#define HI_BLACK #000000
-#define HI_RED #FF0000
-#define HI_GREEN #00FF00
+#define D_GRAY #555555
+#define HI_RED #FF2233
+#define HI_GREEN #00CC55
 #define HI_YELLOW #FFFF00
-#define HI_BLUE #0000FF
-#define HI_MAGENTA #FF00FF
-#define HI_CYAN #00FFFF
-#define HI_WHITE #FFFFFF
+#define HI_BLUE #1155FF
+#define B_GRAY #333366
+#define G_GRAY #336633
+#define L_GRAY #CCCCCC
 
 *background: BLACK
 *foreground: WHITE
 
 *color0: BLACK
-*color8: HI_BLACK
+*color8: D_GRAY
 
 *color1: RED
 *color9: HI_RED
@@ -35,16 +35,16 @@
 *color12: HI_BLUE
 
 *color5: MAGENTA
-*color13: HI_MAGENTA
+*color13: B_GRAY
 
 *color6: CYAN
-*color14: HI_CYAN
+*color14: G_GRAY
 
 *color7: WHITE
-*color15: HI_WHITE
+*color15: L_GRAY
 
-*underlineColor: CYAN
-*colorUL: CYAN
+*underlineColor: HI_GREEN
+*colorUL: HI_GREEN
 
 *reverseVideo: false
 

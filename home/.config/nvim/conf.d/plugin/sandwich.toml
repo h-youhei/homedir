@@ -1,0 +1,33 @@
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+	let g:sandwich_no_default_key_mappings = 1
+	let g:operator_sandwich_no_default_key_mappings = 1
+	let g:textobj_sandwich_no_default_key_mappings = 1
+
+	omap ib <Plug>(textobj-sandwich-auto-i)
+	xmap ib <Plug>(textobj-sandwich-auto-i)
+	omap ab <Plug>(textobj-sandwich-auto-a)
+	xmap ab <Plug>(textobj-sandwich-auto-a)
+	omap if <Plug>(textobj-sandwich-query-i)
+	xmap if <Plug>(textobj-sandwich-query-i)
+	omap af <Plug>(textobj-sandwich-query-a)
+	xmap af <Plug>(textobj-sandwich-query-a)
+
+	map <silent> e <Plug>(operator-sandwich-add)
+	nmap <silent> ee <Plug>(operator-sandwich-add)iw
+	nmap <silent> eE <Plug>(operator-sandwich-add)iW
+	nmap <silent> E <Home><Plug>(operator-sandwich-add)<End>
+	nmap <silent> <A-e> <Plug>(operator-sandwich-add)<End>
+	nmap <silent> <A-E> <Plug>(operator-sandwich-add)<Home>
+
+	nmap <silent> ce <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+	nmap <silent> cE <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+	nmap <silent> de <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+	nmap <silent> dE <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+
+	xmap <silent> C <Plug>(operator-sandwich-replace)
+	xmap <silent> D <Plug>(opecator-sandwich-delete)
+
+	nmap . <Plug>(operator-sandwich-dot)
+'''

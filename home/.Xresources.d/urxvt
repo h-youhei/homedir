@@ -30,7 +30,7 @@ URxvt*iconName: urxvt
 URxvt*depth: 24
 URxvt*font: xft:DejaVu Sans Mono:size=11,xft:IPAGothic:size=11
 !URxvt*imFont: fontname
-URxvt*intensityStyles: true
+URxvt*intensityStyles: false
 URxvt*lineSpace: 0
 URxvt*letterSpace: 0
 URxvt*skipBuiltinGlyphs: true

@@ -1,0 +1,9 @@
+[[plugins]]
+repo = 'itchyny/vim-haskell-indent'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+#[[plugins]]
+#repo = 'rust-lang/rust.vim'
+#on_ft = ['rust']

@@ -1,0 +1,29 @@
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+lazy = 1
+on_event = 'InsertEnter'
+hook_add = '''
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#max_list = 7
+	inoremap <expr> <A-u> deoplete#undo_completion()
+'''
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+lazy = 1
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'zchee/deoplete-zsh'
+lazy = 1
+on_ft = 'zsh'
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+lazy = 1
+on_ft = 'python'
+
+[[plugins]]
+repo = 'eagletmt/neco-ghc'
+lazy = 1
+on_ft = 'haskell'

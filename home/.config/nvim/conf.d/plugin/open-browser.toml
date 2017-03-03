@@ -1,0 +1,9 @@
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+	let g:openbrowser_browser_commands = [
+		\{ "name": "firefox"
+		\, "args": ["{browser}", "{uri}"] }]
+
+	map <Space>s <Plug>(openbrowser-smart-search)
+'''
