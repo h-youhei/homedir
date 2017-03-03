@@ -1,4 +1,5 @@
-#man zshmodules
+#man zshzle
+##/STANDARD WIDGETS
 
 # control io (stop<C-s> restart<C-q>)
 unsetopt flow_control
@@ -13,41 +14,17 @@ source /usr/share/fzf/key-bindings.zsh
 
 KEYTIMEOUT=10
 
-function kill-whole-word () {
-	zle backward-word
-	zle kill-word
-}
-zle -N kill-whole-word
-
-function capitalize-whole-word () {
-	zle backward-word
-	zle capitalize-word
-}
-zle -N capitalize-whole-word
-
-function down-case-whole-word () {
-	zle backward-word
-	zle down-case-word
-}
-zle -N down-case-whole-word
-
-function up-case-whole-word () {
-	zle backward-word
-	zle up-case-word
-}
-zle -N up-case-whole-word
-
-function transpose-whole-words () {
-	zle vi-forward-blank-word-end
-	zle transpose-words
-}
-zle -N transpose-whole-words
-
 function insert-to-visual () {
 	zle vi-cmd-mode
 	zle visual-mode
 }
 zle -N insert-to-visual
+
+function insert-to-visual-line () {
+	zle vi-cmd-mode
+	zle visual-line-mode
+}
+zle -N insert-to-visual-line
 
 function visual-to-insert () {
 	zle deactivate-region
@@ -58,16 +35,10 @@ zle -N visual-to-insert
 function cd-parent () {
 	builtin echo
 	builtin cd ..
-	zle accept-line
+	zle send-break
+	zle push-line
 }
 zle -N cd-parent
-
-function cd-toggle () {
-	builtin echo
-	builtin cd -
-	zle accept-line
-}
-zle -N cd-toggle
 
 bindkey -e
 
@@ -95,13 +66,12 @@ bindkey '^[t' vi-find-next-char-skip
 bindkey '^[T' vi-find-prev-char-skip
 bindkey '^[,' vi-repeat-find
 bindkey '^[<' vi-rev-repeat-find
-bindkey '^[d' kill-whole-word
-bindkey '^[D' kill-whole-line
-bindkey '^[r' transpose-whole-words
-bindkey '^[s' vi-swap-case
-bindkey '^[C' capitailze-whole-word
-bindkey '^[`' down-case-whole-word
-bindkey '^[~' up-case-whole-word
+bindkey '^[d' backward-kill-word
+bindkey '^[D' backward-kill-line
+bindkey '^[r' transpose-words
+bindkey '^[~' vi-swap-case
+bindkey '^[C' capitailze-word
+bindkey '^[`' up-case-word
 bindkey '^[i' insert-last-word
 bindkey '^[y' copy-prev-word
 bindkey '^[Y' push-line
@@ -111,9 +81,11 @@ bindkey "^['" vi-set-buffer
 bindkey '^[u' undo
 bindkey '^[U' redo
 bindkey '^[v' insert-to-visual
+bindkey '^[V' insert-to-visual-line
 bindkey '^[%' vi-match-bracket
+bindkey '^[:' execute-named-cmd
 bindkey '^[^' cd-parent
-bindkey '^[j' cd-toggle
+bindkey '\e' kill-whole-line
 
 #visual
 

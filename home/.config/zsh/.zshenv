@@ -1,7 +1,6 @@
-XDG_CONFIG_HOME="$HOME/.config"
-XDG_CACHE_HOME="$HOME/.cache"
-XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CONFIG_HOME XDG_CACHE_HOME XDG_DATA_HOME
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
 
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
@@ -18,5 +17,9 @@ fpath=(
 
 export EDITOR='nvim'
 export DIFFPROG='nvim -d'
+
+export PAGER='less'
+export MANPAGER='nvim -R -c "set ft=man" -'
+export LESS='-iM'
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
