@@ -51,3 +51,9 @@ endfunction
 function keymap#accept_popup()
 	return pumvisible() ? "\<C-y>" : ''
 endfunction
+
+function keymap#mark_to_file()
+	exe 'redir! >' expand('$HOME/.xmonad/mark')
+	echo getcwd()
+	redir END
+endfunction

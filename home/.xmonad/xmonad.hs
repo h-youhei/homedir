@@ -1,3 +1,54 @@
+{-
+ - -- windows --
+ - M-Arrow   Move focus to the direction
+ - M-S-Arrow Swap the focused window to tho direction
+ - M-n/N     Move focus to the next/previous window
+ - M-m       Move focus to the master window
+ - M-S-m    Set the focused window to the master window
+ -
+ - -- workspaces & screens --
+ - M-[1..9]    Switch to workspace N on primary screen
+ - M-[F1..F9]  Switch to workspace N on the other screen
+ - M-S-[1..9]  Move the focused window to woekspace N
+ - M-Tab       Move focus to the other screen
+ - M-S-Tab     Move the focused window to the other screen
+ - M-Space     Toggle workspaces on the screen
+ - M-S-Space   Swap the screen to the other
+ -
+ - -- launch and close --
+ - M-Enter   Launch terminal
+ - M-S-Enter Launch launcher
+ - M-q       Close the focused window
+ - M-S-q     Close all windows in current workspace
+ -
+ - -- layout --
+ - M-f    Toggle fullscreen
+ - M-S-f  Sink the focused window
+ -
+ - -- search --
+ - M-/              Search on google
+ - M-s              Search on google with X11 selection
+ - M-S-/ [Initial]  Search on selected search engine
+ - M-S-s [Initial]  Search on selected search engine with X11 selection
+ - -- list of search engine --
+ - Amazon, English, Github, Hoogle, Image
+ - Japanese, Translate, arch Linux, Youtube, Wikipedia
+ -
+ - -- Exit --
+ - M-Esc      Lock screens
+ - M-S-Esc c  Recompile and restart xmonad
+ - M-S-Esc e  Exit xmonad
+ - M-S-Esc l  Logout
+ - M-S-Esc p  Poweroff
+ - M-S-Esc s  Suspend
+ - M-S-Esc r  Reboot
+ -
+ - -- misc --
+ - M-x    Change cwd to marked directory
+ - M-0    Move the focused window to or from tray
+ - M-S-0  Switch to or from tray
+-}
+
 import XMonad
 import qualified XMonad.StackSet as W
 import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), allWindows, view, greedyView, currentTag, findTag, shiftWin, focusWindow, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift, floating)
@@ -116,9 +167,10 @@ myStartup = do
     ws <- gets windowset
     if isExistAnyWindow ws then return ()
     else do
+        io cdToMark
         setScreenWith "1:Edit" "4:Web"
         spawnOn "4:Web" =<< io getBrowser
-        runInTermOn "1:Edit" "nvim"
+        launchTerminalOn "1:Edit"
 
 isExistAnyWindow :: WindowSet -> Bool
 isExistAnyWindow ws = any (isJust . stack) (W.workspaces ws)
@@ -127,7 +179,6 @@ myManageHook :: ManageHook
 myManageHook = composeAll
     [ manageSpawn
     , isDialog --> doFloat
-    , className =? "Xmessage" --> doFloat
     ]
 
 guiMask, altMask :: KeyMask
@@ -135,78 +186,21 @@ guiMask, altMask :: KeyMask
 guiMask = mod4Mask
 altMask = mod1Mask
 
-help :: String
-help = unlines
-    [ "-- change window focus --"
-    , "M-Up     Move focus to the previous window"
-    , "M-Down   Move focus to the next window"
-    , "M-Left   Move focus toward left"
-    , "M-Right  Move focus toward right"
-    , "M-m      Move focus to the master window"
-    , ""
-    , "-- modifying the window order --"
-    , "M-S-Up     Swap the focused window to the previous window"
-    , "M-S-Down   Swap the focused window to the next window"
-    , "M-S-Left   Swap the focused window toward left"
-    , "M-S-Right  Swap the focused window toward right"
-    , "M-S-m      Set the focused window to the master window"
-    , ""
-    , "-- workspaces & screens --"
-    , "M-[1..9]    Switch to workspace N on primary screen"
-    , "M-[F1..F9]  Switch to workspace N on the other screen"
-    , "M-S-[1..9]  Move the focused window to woekspace N"
-    , "M-Tab       Move focus to the other screen"
-    , "M-S-Tab     Move the focused window to the other screen"
-    , "M-Space     Toggle workspaces on the screen"
-    , "M-S-Space   Swap the screen to the other"
-    , ""
-    , "-- launch and close --"
-    , "M-Enter  Launch terminal"
-    , "M-l      Launch launcher"
-    , "M-q      Close the focused window"
-    , "M-S-q    Close all windows in current workspace"
-    , ""
-    , "-- layout --"
-    , "M-f    Toggle fullscreen"
-    , "M-S-f  Sink the focused window"
-    , ""
-    , "-- search --"
-    , "M-/              Search on google"
-    , "M-s              Search on google with X11 selection"
-    , "M-S-/ [Initial]  Search on selected search engine"
-    , "M-S-s [Initial]  Search on selected search engine with X11 selection"
-    , "-- list of search engine --"
-    , "Amazon, English, Github, Hoogle, Image"
-    , "Japanese, Translate, arch Linux, Youtube, Wikipedia"
-    , ""
-    , "-- Exit --"
-    , "M-Esc      Lock screens"
-    , "M-S-Esc c  Recompile and restart xmonad"
-    , "M-S-Esc e  Exit xmonad"
-    , "M-S-Esc l  Logout"
-    , "M-S-Esc p  Poweroff"
-    , "M-S-Esc s  Suspend"
-    , "M-S-Esc r  Reboot"
-    , ""
-    , "-- misc --"
-    , "M-0    Move the focused window to or from tray"
-    , "M-S-0  Switch to or from tray"
-    , "M-c    Change working directory"
-    , "M-h    Show this help"
-    ]
 
 myKeys :: XConfig Layout -> Map (KeyMask, KeySym) (X ())
 myKeys conf = M.fromList $
-    [ ((guiMask, xK_Up),   windows focusUp)
-    , ((guiMask, xK_Down), windows focusDown)
+    [ ((guiMask, xK_Up),   windowGo U False)
+    , ((guiMask, xK_Down), windowGo D False)
     , ((guiMask, xK_Left),  windowGo L False)
     , ((guiMask, xK_Right), windowGo R False)
 
-    , ((guiMask .|. shiftMask, xK_Up),   windows swapUp)
-    , ((guiMask .|. shiftMask, xK_Down), windows swapDown)
+    , ((guiMask .|. shiftMask, xK_Up),   windowSwap U False)
+    , ((guiMask .|. shiftMask, xK_Down), windowSwap D False)
     , ((guiMask .|. shiftMask, xK_Left),  windowSwap L False)
     , ((guiMask .|. shiftMask, xK_Right), windowSwap R False)
 
+    , ((guiMask, xK_n), windows focusDown)
+    , ((guiMask .|. shiftMask, xK_n), windows focusUp)
     , ((guiMask, xK_m), windows focusMaster)
     , ((guiMask .|. shiftMask, xK_m), windows shiftMaster)
 
@@ -215,8 +209,6 @@ myKeys conf = M.fromList $
 
     , ((guiMask, xK_f), sendMessage NextLayout)
     , ((guiMask .|. shiftMask, xK_f), withFocused $ windows . sink)
-
-    , ((guiMask, xK_h), spawn ("echo \"" ++ help ++ "\" | xmessage -default okay -file -"))
 
     , ((guiMask, xK_space), myWsSwitch)
     , ((guiMask .|. shiftMask, xK_space), swapNextScreen)
@@ -227,13 +219,10 @@ myKeys conf = M.fromList $
     , ((guiMask, xK_0), onTray fromTray toTray)
     , ((guiMask .|. shiftMask, xK_0), toggleTray)
 
-    , ((guiMask, xK_Return), launchTerminal)
-    , ((guiMask .|. shiftMask, xK_Return), terminalWithMark)
+    , ((guiMask, xK_Return), io cdToMark >> launchTerminal)
+    , ((guiMask .|. shiftMask, xK_Return), launcher)
 
-    , ((guiMask, xK_l), launcher)
-    , ((guiMask .|. shiftMask, xK_l), submap submapLaunchApp)
-
-    , ((guiMask, xK_c), cd)
+    , ((guiMask, xK_x), io cdToMark >> rescreen)
 
     , ((0, xK_Print), screenshot)
     , ((shiftMask, xK_Print), selectingScreenshot)
@@ -245,7 +234,7 @@ myKeys conf = M.fromList $
 
     , ((guiMask, xK_slash), dmenuSearch google)
     , ((guiMask .|. shiftMask, xK_slash), submap submapDmenuSearch)
-    , ((guiMask, xK_s), selectSearch google)
+    , ((guiMask, xK_s), raiseOnWeb >> selectSearch google)
     , ((guiMask .|. shiftMask, xK_s), submap submapSelectSearch)
 
     , ((guiMask, xK_Escape), lock)
@@ -271,11 +260,10 @@ myKeys conf = M.fromList $
 
         myWsSwitch = perScreen (toggleBetween "1:Edit" "2:Term") (toggleBetween "4:Web" "3:Ref")
 
-        dmenuSearch = dmenuSearchWithConf myDmenuConfig
+        raiseOnWeb = windows $ viewOnScreen 1 "4:Web"
+        dmenuSearch = dmenuSearchWithConf' raiseOnWeb myDmenuConfig
 
-        launcher = shellPrompt $ mkPromptConfig (\c -> isSpace c || c == '/')
-
-        cd = promptChangeDir $ mkPromptConfig (== '/')
+        launcher = dmenuLaunchWithConf myDmenuConfig myApps
 
         screenshot = spawn "maim $HOME/Pictures/$(date +%F-%T).png"
         selectingScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
@@ -294,23 +282,8 @@ myKeys conf = M.fromList $
         reboot = spawn "systemctl reboot"
         logout = spawn "pkill -KILL -u $USERNAME"
 
-        submapLaunchApp = M.fromList $ [(k, f) | (k, f) <- apps]
-        apps =
-            [ ((0, xK_w), web)
-            , ((0, xK_m), mail)
-            , ((0, xK_c), chat)
-            , ((0, xK_n), news)
-            , ((0, xK_v), vim)
-            ]
-            where
-                web = spawn "firefox -new-window"
-                vim = runInTerm "nvim"
-                mail = return ()
-                chat = return ()
-                news = return ()
-
         submapDmenuSearch = M.fromList $ [(k, dmenuSearch q) | (k, q) <- searchQuery]
-        submapSelectSearch = M.fromList $ [(k, selectSearch q) | (k, q) <- searchQuery]
+        submapSelectSearch = M.fromList $ [(k, raiseOnWeb >> selectSearch q) | (k, q) <- searchQuery]
         searchQuery =
             [ ((0, xK_a), amazon)
             , ((0, xK_e), english)
@@ -368,6 +341,33 @@ myDmenuConfig = def
     , font = "sans-serif 11"
     }
 
+myApps =
+    M.fromList
+    [ ("w", web)
+    , ("m", mail)
+    , ("c", chat)
+    , ("v", vim)
+    ]
+    where
+        web = spawn "firefox -new-window"
+        vim = runInTerm "nvim"
+        mail = return ()
+        chat = return ()
+
+dmenuLaunchWithConf :: DmenuConfig -> Map String (X ()) -> X ()
+dmenuLaunchWithConf conf apps = do
+    (S currentScreen) <- getCurrentScreen
+    let args = mkDmenuArgs $ conf
+            { monitor = Just currentScreen
+            , prompt = "run:"
+            }
+    input <- menuArgs "dmenu" args $ M.keys apps
+    if input == "" then return ()
+    else
+        case M.lookup input apps of
+            Nothing -> return ()
+            (Just x) -> x
+
 homeToTilde :: String -> String
 homeToTilde p =
     let homeRegex = mkRegex "^/home/[^/]+"
@@ -376,12 +376,16 @@ homeToTilde p =
 getTerminal :: X String
 getTerminal = asks $ terminal . config
 
-terminalWithMark :: X ()
-terminalWithMark = do
+getMark :: IO FilePath
+getMark = do
     confdir <- getXMonadDir
-    markfile <- io $ readFile $ confdir ++ "/mark"
-    let mark = filter (/= '\n') markfile
-    commandInTerm $ "cd " ++ mark
+    mark <- readFile (confdir ++ "/mark") `E.catch` econst (getEnv "HOME")
+    return $ filter (/= '\n') mark
+
+cdToMark :: IO ()
+cdToMark = do
+    mark <- getMark
+    changeDir mark
 
 {-
 getPID :: Window -> X (Maybe [CLong])
@@ -419,18 +423,19 @@ numberOfFloating = gets $ length . M.keys . floating . windowset
 -}
 
 --Prompt.Directory
+--example
+--cd = promptChangeDir $ mkPromptConfig (== '/')
 promptChangeDir :: XPConfig -> X ()
-promptChangeDir conf = directoryPrompt conf "cd: " changeDir
+promptChangeDir conf = directoryPrompt conf "cd: " (io . changeDir)
 
-changeDir :: FilePath -> X ()
+emptyIsHome :: FilePath -> IO FilePath
+emptyIsHome "" = getEnv "HOME"
+emptyIsHome s = return s
+
+changeDir :: FilePath -> IO ()
 changeDir s = do
-    dest <- case s of
-        "" -> io $ getEnv "HOME"
-        s -> return s
+    dest <- emptyIsHome s
     catchIO $ setCurrentDirectory dest
-    --to update statusbar message
-    --is there better way?
-    rescreen
 
 --Hooks.DinamicLog
 dirShorten :: Int -> Int -> String -> String
@@ -469,6 +474,9 @@ runInTermOn ws = runInTerm' (spawnOn ws) ""
 
 launchTerminal :: X ()
 launchTerminal = spawn =<< getTerminal
+
+launchTerminalOn :: WorkspaceId -> X ()
+launchTerminalOn ws = spawnOn ws =<< getTerminal
 
 commandInTerm :: String -> X ()
 commandInTerm cmd = do
@@ -531,25 +539,29 @@ mkDmenuArgs conf = concat . catMaybes $ args
             ]
 
 --Util.Environment
-econst :: Monad m => a -> IOException -> m a
-econst = const . return
+econst :: a -> IOException -> a
+econst = const
 
 getShell :: X String
-getShell = io $ getEnv "SHELL" `E.catch` econst "bash"
+getShell = io $ getEnv "SHELL" `E.catch` (econst . return) "bash"
 
 --Actions.Search
-dmenuSearchWithConf :: DmenuConfig -> SearchEngine -> X ()
-dmenuSearchWithConf conf (SearchEngine name url) = do
+dmenuSearchWithConf' :: X () -> DmenuConfig -> SearchEngine -> X ()
+dmenuSearchWithConf' f conf (SearchEngine name url) = do
     (S currentScreen) <- getCurrentScreen
     let args = mkDmenuArgs $ conf
             { monitor = Just currentScreen
             , prompt = name ++ ":"
             }
     input <- menuArgs "dmenu" args []
-    if input == "" then return()
+    if input == "" then return ()
     else do
+        f
         browser <- io getBrowser
         search browser url input
+
+dmenuSearchWithConf :: DmenuConfig -> SearchEngine -> X ()
+dmenuSearchWithConf = dmenuSearchWithConf' (return ())
 
 --Actions.cycleWs
 doBetween :: (WorkspaceId -> WindowSet -> WindowSet) -> WorkspaceId -> WorkspaceId -> X ()

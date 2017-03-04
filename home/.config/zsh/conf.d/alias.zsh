@@ -1,7 +1,7 @@
 # accept aliases for sudo
 alias s='sudo ' sudo='sudo '
 
-alias c='cd' c-='cd -'cg='c `git rev-parse --show-toplevel 2> /dev/null`'
+alias c='cd' c-='cd -' cg='c `git rev-parse --show-toplevel 2> /dev/null`'
 alias cm='chmod' cmx='chmod 755'
 alias f='find'
 alias g='git' ga='g add' gc='g commit' gc!='gc --amend' gs='g status'

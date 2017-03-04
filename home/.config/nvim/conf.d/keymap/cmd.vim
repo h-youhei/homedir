@@ -31,3 +31,6 @@ noremap ;v :v/\V
 noremap ;V :%v/\V
 noremap ;<A-v> :v/\v
 noremap ;<A-V> :%v/\v
+
+"mark dir for xmonad
+nnoremap ;x :<C-u>call keymap#mark_to_file()<CR>
