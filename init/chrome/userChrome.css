@@ -1,0 +1,19 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+#TabsToolbar {
+	counter-reset: tabs-counter !important;
+}
+
+.tab-close-button {
+	visibility: hidden !important;
+	display: block !important;
+	color: inherit !important;
+	counter-increment: tabs-counter !important;
+}
+
+.tab-close-button::before {
+	content: counter(tabs-counter) !important;
+	visibility: visible !important;
+	font-weight: normal !important;
+	font-style: normal !important;
+}
