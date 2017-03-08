@@ -120,6 +120,7 @@ noremap <A-p> gpk
 
 "Quit
 nnoremap q :<C-u>cclose<CR>:quit<CR>
+nnoremap Q <Nop>
 nnoremap Q! :<C-u>cclose<CR>:quit!<CR>
 nnoremap Qa :<C-u>qall<CR>
 
@@ -133,6 +134,8 @@ noremap s :s/\V
 nnoremap S :%s/\V
 noremap <A-s> :s/\v
 nnoremap <A-S> :%s/\v
+"surround target by snippet
+"vmap S
 
 "Take
 "t T
@@ -185,7 +188,6 @@ nnoremap zw :<C-u>setl wrap!<CR>
 nnoremap Zv :<C-u>source $MYVIMRC<CR>
 nnoremap Zp :<C-u>call dein#update()<CR>
 nnoremap Zr :<C-u>call dein#remote_plugins()<CR>
-"by Ultisnips
 "Zs edit snipet
 
 "repeat find
@@ -196,7 +198,7 @@ noremap < ,
 ".
 "macro
 noremap > @@
-"substitute
+"sed
 noremap <silent> <A-.> :&&<CR>
 "commandline
 noremap <silent> <A->> + :@:<CR>
