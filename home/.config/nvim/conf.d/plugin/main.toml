@@ -3,3 +3,10 @@ repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'machakann/vim-textobj-delimited'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+#[[plugins]]
+#repo = 'rust-lang/rust.vim'
+#on_ft = ['rust']

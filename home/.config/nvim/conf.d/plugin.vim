@@ -11,13 +11,12 @@ if dein#load_state(s:dein_dir)
 	call dein#begin(s:dein_runtime)
 
 	call dein#load_toml(s:conf_dir . '/main.toml')
-	call dein#load_toml(s:conf_dir . '/filetype.toml')
 
 	call dein#load_toml(s:conf_dir . '/sandwich.toml')
 	call dein#load_toml(s:conf_dir . '/denite.toml')
-	call dein#load_toml(s:conf_dir . '/ultisnips.toml')
 	call dein#load_toml(s:conf_dir . '/open-browser.toml')
 	call dein#load_toml(s:conf_dir . '/deoplete.toml')
+	call dein#load_toml(s:conf_dir . '/neosnippet.toml')
 
 	call dein#local(expand('$HOME/workspace/vim-plugins/enable'))
 

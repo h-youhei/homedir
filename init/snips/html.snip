@@ -1,0 +1,467 @@
+snippet skelton
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="utf-8">
+			<title>${1}</title>${2}
+		</head>
+		<body>
+			<h1>$1</h1>
+			${3}
+		</body>${0}
+	</html>
+
+snippet html
+	<html>
+		${1:TARGET}
+	</html>
+
+snippet comment
+	<!--${1:TARGET}-->
+
+snippet head
+	<head>
+		${1:TARGET}
+	</head>
+
+snippet title
+	<title>${1:TARGET}</title>
+
+snippet link
+	<link rel="${1}" type="${2}" href="${3}">
+
+snippet css
+	<link rel="stylesheet" type="text/css" href="${1}.css">
+
+snippet inline_css
+	<style type="text/css">
+		${1:TARGET}
+	</style>
+
+snippet js
+	<script type="text/javascript" src="${1}.js"></script>
+
+snippet inline_js
+	<script type="text/javascript">
+		${1:TARGET}
+	</script>
+
+snippet meta
+	<meta name="${1}" content="${2}">
+
+snippet charset
+	<meta charset="${1:TARGET}">
+
+snippet author
+	<meta name="author" content="${1:TARGET}">
+
+snippet description
+	<meta name="description" content="${1:TARGET}">
+
+snippet base
+	<base href="${1:TARGET}">
+
+snippet body
+	<body>
+		${1:TARGET}
+	</body>
+
+snippet section
+	<section>
+		${1:TARGET}
+	</section>
+
+snippet nav
+	<nav>
+		${1:TARGET}
+	</nav>
+
+snippet article
+	<article>
+		${1:TARGET}
+	</article>
+
+snippet main
+	<main>
+		${1:TARGET}
+	</main>
+
+snippet aside
+	<aside>
+		${1:TARGET}
+	</aside>
+
+snippet blockquote
+	<blockquote>
+		${1:TARGET}
+	</blockquote>
+
+snippet figure
+	<figure>
+		${1:TARGET}
+	</figure>
+
+snippet header
+	<header>
+		${1:TARGET}
+	</header>
+
+snippet footer
+	<footer>
+		${1:TARGET}
+	</footer>
+
+snippet address
+	<address>
+		${1:TARGET}
+	</address>
+
+snippet h1
+	<h1>${1:TARGET}</h1>
+
+snippet h2
+	<h2>${1:TARGET}</h2>
+
+snippet h3
+	<h3>${1:TARGET}</h3>
+
+snippet h4
+	<h4>${1:TARGET}</h4>
+
+snippet h5
+	<h5>${1:TARGET}</h5>
+
+snippet h6
+	<h6>${1:TARGET}</h6>
+
+snippet h1#
+	<h1 id="${1}">${2:TARGET}</h1>
+
+snippet h2#
+	<h2 id="${1}">${2:TARGET}</h2>
+
+snippet h3#
+	<h3 id="${1}">${2:TARGET}</h3>
+
+snippet h4#
+	<h4 id="${1}">${2:TARGET}</h4>
+
+snippet h5#
+	<h5 id="${1}">${2:TARGET}</h5>
+
+snippet h6#
+	<h6 id="${1}">${2:TARGET}</h6>
+
+snippet id
+	id="${1:TARGET}"
+
+snippet class
+	class="${1:TARGET}"
+
+snippet div
+	<div>
+		${1:TARGET}
+	</div>
+
+snippet div.
+	<div class="${1}">
+		${2:TARGET}
+	</div>
+
+snippet div#
+	<div id="${1}">
+		${2:TARGET}
+	</div>
+
+snippet span
+	<span>${1:TARGET}</span>
+
+snippet span.
+	<span class="${1}">${2:TARGET}</span>
+
+snippet span#
+	<span id="${1}">${2:TARGET}</span>
+
+snippet p
+	<p>${1:TARGET}</p>
+
+snippet pre
+	<pre>${1:TARGET}</pre>
+
+snippet ul
+	<ul>
+		${1:TARGET}
+	</ul>
+
+snippet ol
+	<ol>
+		${1:TARGET}
+	</ol>
+
+snippet li
+	<li>${1:TARGET}</li>
+
+snippet dl
+	<dl>
+		${1:TARGET}
+	</dl>
+
+snippet dt
+	<dt>${1:TARGET}</dt>
+
+snippet dd
+	<dd>${1:TARGET}</dd>
+
+snippet table
+	<table>
+		${1:TARGET}
+	</table>
+
+snippet thead
+	<thead>
+		${1:TARGET}
+	</thead>
+
+snippet tbody
+	<tbody>
+		${1:TARGET}
+	</tbody>
+
+snippet tfoot
+	<tfoot>
+		${1:TARGET}
+	</tfoot>
+
+snippet tr
+	<tr>
+		${1:TARGET}
+	</tr>
+
+snippet th
+	<th>${1:TARGET}</th>
+
+snippet td
+	<td>${1:TARGET}</td>
+
+snippet colgroup
+	<colgroup span="${1}">
+
+snippet a
+	<a href="${1}">${2:TARGET}</a>
+
+snippet http
+	<a href="${1:TARGET}">${2}</a>
+
+snippet mailto
+	<a href="mailto:${1:TARGET}">$1</a>
+
+snippet img
+	<img src="${1}" alt="${2:TARGET}">
+
+snippet iframe
+	<iframe src="${1}"></iframe>
+
+snippet video
+	<video src="${1}" preload="${2:auto}" controls>${3}</video>
+
+snippet audio
+	<audio src="${1}" preload="${2:auto}" controls>${3}</audio>
+
+snippet source
+	<source src="${1}">
+
+snippet embed
+	<embed src="${1}">
+
+snippet object
+	<object data="${1}">${2}</object>
+
+snippet param
+	<param name="${1}" value="${2}">
+
+snippet canvas
+	<canvas>${1}</canvas>
+
+snippet figcaption
+	<figcaption>${1}</figcaption>
+
+snippet em
+	<em>${1:TARGET}</em>
+
+snippet strong
+	<strong>${1:TARGET}</strong>
+
+snippet small
+	<small>${1:TARGET}</small>
+
+snippet s
+	<s>${1:TARGET}</s>
+
+snippet cite
+	<cite>${1:TARGET}</cite>
+
+snippet q
+	<q>${1:TARGET}</q>
+
+snippet dfn
+	<dfn>${1:TARGET}</dfn>
+
+snippet abbr
+	<abbr title="${1}">${2:TARGET}</abbr>
+
+snippet time
+	<time datetime="${1}">${2:TARGET}</time>
+
+snippet pubdate
+	<time datetime="${1}" pubdate>${2:TARGET}</time>
+
+snippet code
+	<code>${1:TARGET}</code>
+
+snippet var
+	<var>${1:TARGET}</var>
+
+snippet samp
+	<samp>${1:TARGET}</samp>
+
+snippet kbd
+	<kbd>${1:TARGET}</kbd>
+
+snippet sub
+	<sub>${1:TARGET}</sub>
+
+snippet sup
+	<sup>${1:TARGET}</sup>
+
+snippet i
+	<i>${1:TARGET}</i>
+
+snippet b
+	<b>${1:TARGET}</b>
+
+snippet mark
+	<mark>${1:TARGET}</mark>
+
+snippet ins
+	<ins>${1:TARGET}</ins>
+
+snippet del
+	<del>${1:TARGET}</del>
+
+snippet ruby
+	<ruby>${1}<rt>${2}</rt>${3:TARGET}</ruby>
+
+snippet rt
+	${1}<rt>${2}</rt>
+
+snippet bdo
+	<bdo dir="rtl">${1:TARGET}</bdo>
+
+snippet wbr
+	<wbr>
+
+snippet br
+	<br>
+	${0}
+
+snippet hr
+	<hr>
+	${0}
+
+snippet get
+	<form action="${1}" name="${2}"method="get" accept-charset="utf-8">
+		${3:TARGET}
+	</form>
+
+snippet post
+	<form action="${1}" name="${2}"method="post" accept-charset="utf-8">
+		${3:TARGET}
+	</form>
+
+snippet fieldset
+	<fieldset name="${1}">
+		${2:TARGET}
+	</fieldset>
+
+snippet legend
+	<legend>${1:TARGET}</legend>
+
+snippet label
+	<label>${1:TARGET}</label>
+
+snippet text
+	<input type="text" name="${1}">
+
+snippet search
+	<input type="search" name="${1}">
+
+snippet tel
+	<input type="tel" name="${1}">
+
+snippet url
+	<input type="url" name="${1}">
+
+snippet email
+	<input type="email" name="${1}">
+
+snippet password
+	<input type="password" name="${1}">
+
+snippet number
+	<input type="number" name="${1}">
+
+snippet range
+	<input type="range" name="${1}">
+
+snippet checkbox
+	<input type="checkbox" name="${1}">
+
+snippet checkbox_checked
+	<input type="checkbox" name="${1}" checked>
+
+snippet radio
+	<input type="radio" name="${1}">
+
+snippet radio_checked
+	<input type="radio" name="${1}">
+
+snippet file
+	<input type="file" name="${1}" accept="${2}">
+
+snippet submit
+	<button type="submit" name="${1}">${2:TARGET}</button>
+
+snippet reset
+	<button type="reset" name="${1}">${2:TARGET}</button>
+
+snippet button
+	<button type="button" name="${1}">${2:TARGET}</button>
+
+snippet select
+	<select name="${1}">
+		${2:TARGET}
+	</select>
+
+snippet multiple
+	<select name="${1}" multiple>
+		${2:TARGET}
+	</select>
+
+snippet optgroup
+	<optgroup label="${1}">
+		${2:TARGET}
+	</optgroup>
+
+snippet option
+	<option value="${1}">${2:TARGET}</option>
+
+snippet textarea
+	<textarea name="${1}"></textarea>
+
+snippet datails
+	<details>
+		${1:TARGET}
+	</details>
+
+snippet summary
+	<summary>${1:TARGET}<summary>

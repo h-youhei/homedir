@@ -61,8 +61,8 @@ nnoremap <Space>u :<C-u>bdelete<CR>
 nnoremap <Space>v :<C-u>call system('urxvtc -e  nvim')<CR>
 
 "update then quit
-nnoremap <Space>x :<C-u>xit<CR>
-nnoremap <Space>X :<C-u>update<CR>:bdelete<CR>
+nnoremap <Space>x :<C-u>update<CR>:bdelete<CR>
+nnoremap <Space>X :<C-u>xit<CR>
 
 "REPL
 nnoremap <Space>: gQ
