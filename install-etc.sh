@@ -5,3 +5,8 @@ script_dir=`dirname $script_path`
 cd $script_dir
 
 ./update-etc.sh
+
+#apach web server
+systemctl enable httpd.service
+
+systemctl enable xtrlock-sleep@youhei.service
