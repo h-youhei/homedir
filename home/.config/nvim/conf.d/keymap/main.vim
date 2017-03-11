@@ -204,11 +204,13 @@ noremap <silent> <A-.> :&&<CR>
 noremap <silent> <A->> + :@:<CR>
 
 "search
-noremap / /\V
-noremap ? ?\V
-noremap <A-/> /\v
-noremap <A-?> ?\v
+noremap <expr> / (ibus#activate() . '/\V')
+noremap <expr> ? (ibus#activate() . '?\V')
+noremap <expr> <A-/> (ibus#activate() . '/\v')
+noremap <expr> <A-?> (ibus#activate() . '?\v')
 
+cnoremap <expr> <CR> (ibus#inactivate() . '<CR>')
+cnoremap <expr> <Esc> (ibus#inactivate() . '<C-u><BS>')
 "Register
 "* + 0 a-z A-Z % # / :
 noremap ' "+

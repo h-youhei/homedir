@@ -8,9 +8,8 @@ Config
 	, commands =
 		[ Run Date "%_m/%_d (%a) %p%_H:%M" "date" 10
 		, Run StdinReader
-		, Run Com ".config/xmobar/getimstate.sh" [] "im" 2
 		]
 	, sepChar = "%"
 	, alignSep = "}{"
-	, template = "  %StdinReader% }{ %im% | %date%  "
+	, template = "  %StdinReader% }{ %date%  "
 	}
