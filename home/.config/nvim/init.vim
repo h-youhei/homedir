@@ -30,6 +30,7 @@ exe 'source' init#conf_dir . '/option.vim'
 exe 'source' init#conf_dir . '/autocmd.vim'
 exe 'source' init#conf_dir . '/keymap.vim'
 exe 'source' init#conf_dir . '/bar.vim'
+exe 'source' init#conf_dir . '/digraph.vim'
 
 if has('gui_running')
 	exe 'source' init#conf_dir . '/gui.vim'

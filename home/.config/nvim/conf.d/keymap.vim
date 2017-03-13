@@ -90,7 +90,6 @@
 "---M---
 "Mark
 "Make
-"Mimic
 "---N---
 "Next
 "---O---
@@ -143,14 +142,16 @@
 "toggling case by default
 "--- +- ---
 "plus minus
+"--- - ---
+"horizontal
 "--- = ---
 "adjusting indent by default
+"adjust window size
 "--- % ---
 "moving cursor to match paren by default
 "--- ^_ ---
 "fold like appearence
-"--- ^ ---
-"^ direct up so ^ is changing dir to parent
+"changing dir to parent since ^ face up
 "--- ()[]{} ---
 "parens has direction
 "() move to next/prev difference
@@ -160,10 +161,13 @@
 "help
 "--- | ---
 "quickfix
+"vertical
 "---Tab---
 "Tab is used for indent
 "---CR---
-"Open window
+"append a char
+"---Insert
+"insert a char
 "}}}
 
 "in case make mistake
@@ -187,5 +191,3 @@ exe 'source' s:keymap_dir . '/win.vim'
 "%s grep
 "noremap ` :!grep -F -r<Space>
 "noremap ~ :!grep -E -r<Space>
-
-"noremap <nowait><silent> <A-i> :<C-u>execute 'normal i'.repeat(nr2char(getchar()), v:count1)<CR>

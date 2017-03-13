@@ -1,5 +1,4 @@
 noremap <Space> <Nop>
-noremap <CR> <Nop>
 augroup my
 	au BufReadPost quickfix noremap <buffer> <CR> <CR>
 augroup END
@@ -33,7 +32,8 @@ noremap <Space>n <C-w>w
 noremap <Space>N <C-w>W
 
 "open
-nnoremap <Space>n :<C-u>enew<CR>
+nnoremap <Space>o :<C-u>enew<CR>
+nnoremap <CR>O :<C-u>tabnew<CR>
 
 "print
 nnoremap <Space>pc :<C-u>changes<CR>
@@ -71,10 +71,9 @@ nnoremap <Space>: gQ
 nnoremap <Space>= <C-w>=
 
 "open
-nnoremap <CR>v :<C-u>vertical split<CR>
-nnoremap <CR>h :<C-u>split<CR>
-nnoremap <CR>t :<C-u>tabnew<CR>
+nnoremap <Space><Bar> :<C-u>vertical split<CR>
+nnoremap <Space>- :<C-u>split<CR>
 
 "2pain
-nnoremap <CR>V :<C-u>vertical ball 2<CR>
-nnoremap <CR>H :<C-u>ball 2<CR>
+nnoremap <Space><A-Bar> :<C-u>vertical ball 2<CR>
+nnoremap <Space><A--> :<C-u>ball 2<CR>

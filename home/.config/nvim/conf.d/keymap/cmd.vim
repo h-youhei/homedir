@@ -26,7 +26,7 @@ nnoremap ;m :<C-u>mksession!<CR>
 nnoremap ;s :<C-u>update<CR>
 nnoremap ;S :<C-u>write<Space>
 
-"reVerse global filter
+"inVerse global filter
 noremap ;v :v/\V
 noremap ;V :%v/\V
 noremap ;<A-v> :v/\v

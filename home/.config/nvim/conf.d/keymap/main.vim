@@ -2,8 +2,6 @@
 "a A
 noremap <A-a> ea
 noremap <A-A> Ea
-"Append a kana by hitomozi
-"<A-a> <A-A>
 
 "Back
 "b B
@@ -47,8 +45,8 @@ noremap e<Esc> <Nop>
 
 "Find
 "f F
-"find a kana by hitomozi
-"<A-f> <A-F>
+noremap <A-f> f<C-k>
+noremap <A-F> F<C-k>
 
 "Goto
 noremap gg M
@@ -69,8 +67,6 @@ noremap <A-H> g,
 
 "Insert
 "i I
-"Insert a kana by hitomozi
-"<A-i> <A-I>
 noremap <A-i> bi
 noremap <A-I> Bi
 
@@ -126,8 +122,7 @@ nnoremap Qa :<C-u>qall<CR>
 
 "Replace
 "r R
-"replace a kana by hitomozi
-"<A-r> <A-R>
+noremap <A-r> r<C-k>
 
 "Sed
 noremap s :s/\V
@@ -139,8 +134,8 @@ nnoremap <A-S> :%s/\v
 
 "Take
 "t T
-"take a kana by hitomozi
-"<A-t> <A-T>
+noremap <A-t> t<C-k>
+noremap <A-T> T<C-k>
 
 "Undo
 "u
@@ -171,13 +166,13 @@ nnoremap <A-Y> y^
 "setting
 "toggle options
 nnoremap z <Nop>
-nnoremap z_ :<C-u>setl list!<CR>
+nnoremap z<CR> :<C-u>setl linebreak!<CR>
 nnoremap zb :<C-u>setl backup!<CR>
 nnoremap zc :<C-u>setl autochdir!<CR>
 nnoremap zf :<C-u>setl foldenable!<CR>
 nnoremap zh :<C-u>setl hlsearch!<CR>
 nnoremap zi :<C-u>setl autoindent!<CR>
-nnoremap zl :<C-u>setl linebreak!<CR>
+nnoremap zl :<C-u>setl list!<CR>
 nnoremap zn :<C-u>setl relativenumber!<CR>
 nnoremap zp :<C-u>setl paste!<CR>
 nnoremap zs :<C-u>setl spell!<CR>
@@ -280,6 +275,12 @@ noremap ( [c
 "quickfix
 noremap <A-)> :cnext<CR>
 noremap <A-(> :cNext<CR>
+
+"insert a char
+noremap <silent> <Insert> :<C-u>call keymap#insert_a_char()<CR>
+noremap <silent> <A-Insert> :<C-u>call keymap#insert_a_digraph()<CR>
+noremap <silent> <CR> :<C-u>call keymap#append_a_char()<CR>
+noremap <silent> <A-CR> :<C-u>call keymap#append_a_digraph()<CR>
 
 "indent
 nnoremap <Tab> >>
