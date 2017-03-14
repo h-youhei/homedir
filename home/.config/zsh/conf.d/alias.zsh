@@ -4,7 +4,7 @@ alias s='sudo ' sudo='sudo '
 alias c='cd' c-='cd -' cg='c `git rev-parse --show-toplevel 2> /dev/null`'
 alias cm='chmod' cmx='chmod 755'
 alias f='find'
-alias g='git' ga='g add' gc='g commit' gc!='gc --amend' gs='g status' gb='g checkout -b' gco='g checkout' gcl='xclip -o | xargs git clone' gr='g rebase -i'
+alias g='git' ga='g add' gc='g commit' gca='gc --amend' gco='g checkout' gcl='xclip -o | xargs git clone' gm='g mv' grau='xclip -o | xargs git remote add upstream' grb='g rebase -i' grm='g rm' grs='g reset' gs='g status'
 alias gh='hub' ghb='gh browse'
 alias h='man'
 alias ls='ls -F --group-directories-first' lsl='ls -l -h' l='ls -A' ll='lsl -A'
@@ -47,3 +47,13 @@ alias -g W='| wc'
 alias -g X='| xargs'
 alias -g X@='| xargs -I @@'
 alias -g Y='| xclip'
+
+gb() {
+	if test "$#" -gt 0
+	then
+		command git checkout -b $@
+		return
+	fi
+
+	command git branch
+}

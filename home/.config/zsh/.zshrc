@@ -46,7 +46,7 @@ setopt hist_reduce_blanks
 setopt auto_pushd
 # ls after cd
 function chpwd() {
-	command ls -F -A
+	command ls -F -A --group-directories-first
 }
 
 # ignore dupplicated direcory
