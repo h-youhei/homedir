@@ -77,7 +77,7 @@ URxvt*keysym.S-Page_Up: \033[5;2~
 URxvt*keysym.S-Page_Down: \033[6;2~
 URxvt*keysym.S-Home: \033[1;2H
 URxvt*keysym.S-End: \033[1;2F
-URxvt*keysym.S-Insert: \033[2;2~
+!URxvt*keysym.S-Insert: \033[2;2~
 URxvt*keysym.S-Delete: \033[3;2~
 !what is wrong?
 !URxvt*keysym.S-Backspace: \033[127;2u
