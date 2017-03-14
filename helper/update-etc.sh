@@ -2,7 +2,6 @@
 
 script_path=`readlink -f $0`
 script_dir=`dirname $script_path`
-cd $script_dir/helper
+cd $script_dir
 
-#./backup-fcitx.sh
-./backup-neosnippet.sh
+rsync -rlpt -v --exclude-from=exclude-etc ../etc/ /etc
