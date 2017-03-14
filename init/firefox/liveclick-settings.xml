@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<liveclick-settings><meta>
+<ext-guid>{d166ee2a-36bb-4f33-aff7-e85f912df509}</ext-guid>
+<ext-version>1.5.0</ext-version>
+<save-engine>1.7</save-engine>
+</meta>
+<prefs>
+<pref id="checkOnStart">true</pref>
+<pref id="checkAutomatic">true</pref>
+<pref id="defaultInterval">3600</pref>
+<pref id="locationVisit">1</pref>
+<pref id="browserExit">0</pref>
+<pref id="browserClear">false</pref>
+<pref id="checkOnDemand">true</pref>
+<pref id="checkWhenIdle">false</pref>
+<pref id="alertForeground">true</pref>
+<pref id="debug">false</pref>
+<pref id="debugLog">false</pref>
+<pref id="showCount">1</pref>
+<pref id="styleNewAsFresh">true</pref>
+<pref id="styleFolderNew">6</pref>
+<pref id="styleFolderFresh">6</pref>
+<pref id="styleFolderUnread">0</pref>
+<pref id="styleFolderRead">0</pref>
+<pref id="styleFeedNew">6</pref>
+<pref id="styleFeedFresh">6</pref>
+<pref id="styleFeedUnread">0</pref>
+<pref id="styleFeedRead">0</pref>
+<pref id="styleItemNew">6</pref>
+<pref id="styleItemFresh">6</pref>
+<pref id="styleItemUnread">0</pref>
+<pref id="styleItemRead">1</pref>
+<pref id="maxFeedItems">0</pref>
+<pref id="showFavIcons">true</pref>
+<pref id="showItemTooltips">false</pref>
+<pref id="itemPreview">1</pref>
+<pref id="clickLeft">1</pref>
+<pref id="clickMiddle">2</pref>
+<pref id="clickAccel">0</pref>
+<pref id="keepOpenOnMiddle">false</pref>
+<pref id="keepOpenExceptLast">false</pref>
+<pref id="showAtTop">0</pref>
+<pref id="showPopupOpen">true</pref>
+<pref id="showPopupFeed">false</pref>
+<pref id="showPopupTabs">false</pref>
+<pref id="showPopupRead">true</pref>
+<pref id="livemarkView">1</pref>
+<pref id="monitorAction">0</pref>
+<pref id="monitorAll">true</pref>
+<pref id="alert1Action">3</pref>
+<pref id="alert1Read">false</pref>
+<pref id="alertNAction">1</pref>
+<pref id="alertNRead">true</pref>
+<pref id="alertRepeat">0</pref>
+<pref id="autoload1Action">3</pref>
+<pref id="autoload1Read">false</pref>
+<pref id="autoloadNAction">1</pref>
+<pref id="autoloadNRead">true</pref>
+<pref id="autoloadAlert">true</pref>
+<pref id="liveTagLabel">LiveTag</pref>
+<pref id="liveTagAlert">true</pref>
+<pref id="liveTagOnRead">true</pref>
+</prefs>
+<monitors>
+<monitor>
+</monitor>
+</monitors>
+</liveclick-settings>
