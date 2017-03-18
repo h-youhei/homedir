@@ -20,6 +20,6 @@ export DIFFPROG='nvim -d'
 
 export PAGER='less'
 export MANPAGER='nvim -R -c "set ft=man" -'
-export LESS='-iM'
+export LESS='-iMR'
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
