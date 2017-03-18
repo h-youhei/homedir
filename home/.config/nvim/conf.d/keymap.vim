@@ -54,6 +54,7 @@
 "---A---
 "Append
 "All
+"Accept
 "---B---
 "Back
 "Buffer
@@ -61,7 +62,7 @@
 "Change
 "Close
 "Cd
-"Confirm
+"Capitalize
 "---D---
 "Delete
 "Diff
@@ -78,6 +79,7 @@
 "Grep
 "---H---
 "History
+"Higher case
 "---I---
 "Insert
 "Inner
@@ -87,6 +89,7 @@
 "Komanndo(foreign command)
 "---l---
 "Look into
+"Lower case
 "---M---
 "Mark
 "Make

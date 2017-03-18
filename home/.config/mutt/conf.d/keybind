@@ -119,7 +119,11 @@ bind editor <space> noop
 
 bind editor <home> bol
 #<A-b> backword-word
-bind editor \ew forward-word
+bind editor \eb backward-char
+#<A-c> capitalize
 bind editor \ed kill-word
 bind editor \eD kill-line
+bind editor \eh upcase-word
+#<A-l> downcase
+bind editor \ew forward-word
 # vim:ft=muttrc

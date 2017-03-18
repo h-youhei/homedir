@@ -1,9 +1,13 @@
+"accept completion
+inoremap <expr> <A-a> keymap#accept_popup()
+
 "Back
 noremap! <A-b> <S-Left>
 inoremap <A-B> <C-o>B
 
-"Confirm completion
-inoremap <expr> <A-c> keymap#accept_popup()
+"Capitalize
+inoremap <A-c> <C-r>=keymap#capitalize_word()<CR>
+inoremap <A-C> <C-r>=keymap#capitalize_line()<CR>
 
 "Delete
 noremap! <A-d> <C-w>
@@ -16,8 +20,16 @@ inoremap <A-F> <C-o>F
 "go next by ultisnips in insert
 "insert <A-g> <A-G>
 
+"convert the word to higher case
+inoremap <A-h> <C-r>=keymap#upcase_word()<CR>
+inoremap <A-H> <C-r>=keymap#upcase_line()<CR>
+
 "joint
 inoremap <A-j> <C-o>J
+
+"convert the word to lower case
+inoremap <A-l> <C-r>=keymap#downcase_word()<CR>
+inoremap <A-L> <C-r>=keymap#downcase_line()<CR>
 
 "Mark
 inoremap <A-m> <C-o>`z
@@ -61,7 +73,6 @@ inoremap <A-/> <C-o>?\V
 inoremap <A-?> <C-o>?\V
 
 "case
-inoremap <A-`> <C-o>gUb
 inoremap <A-~> <C-o>~
 
 "increment
@@ -86,6 +97,7 @@ inoremap <A-Tab> <Tab>
 inoremap <expr> <BS> (keymap#abort_popup() . '<BS>')
 
 inoremap <expr> <CR> (keymap#accept_popup() . '<CR>')
+"CR and put cursor on begging of line
 inoremap <expr> <A-CR> (keymap#accept_popup() . '<CR><C-o>:left<CR>')
 
 "`^ keep cursor after leaving insert

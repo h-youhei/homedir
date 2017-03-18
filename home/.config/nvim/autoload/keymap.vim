@@ -79,3 +79,46 @@ function! keymap#append_a_digraph()
 	let c2 = nr2char(getchar())
 	execute 'normal! a' . repeat("\<C-k>" . c1 . c2, v:count1)
 endfunction
+
+function! keymap#capitalize_word()
+	let pos = getpos('.')
+	norm! guiwgUl
+	call setpos('.', pos)
+	return ''
+endfunction
+
+function! keymap#capitalize_line()
+	let pos = getpos('.')
+	norm! ^gUl
+	call setpos('.', pos)
+	return ''
+endfunction
+
+function! keymap#downcase_word()
+	let pos = getpos('.')
+	norm! guiw
+	call setpos('.', pos)
+	return ''
+endfunction
+
+function! keymap#downcase_line()
+	let pos = getpos('.')
+	norm! gu^
+	call setpos('.', pos)
+	return ''
+endfunction
+
+function! keymap#upcase_word()
+	let pos = getpos('.')
+	norm! gUiw
+	call setpos('.', pos)
+	return ''
+endfunction
+
+
+function! keymap#upcase_line()
+	let pos = getpos('.')
+	norm! gU^
+	call setpos('.', pos)
+	return ''
+endfunction

@@ -49,10 +49,10 @@ noremap <A-f> f<C-k>
 noremap <A-F> F<C-k>
 
 "Goto
-noremap gg M
+noremap G M
 noremap g<Up> H
 noremap g<Down> L
-noremap G gm
+noremap gg gm
 noremap g<Left> g0
 noremap g<Right> g$
 "gi gv
@@ -217,13 +217,17 @@ noremap <A-'> "0
 nnoremap ` <Nop>
 xnoremap ` u
 xnoremap ~ U
-"Upper
-nnoremap `u gU
-nnoremap `uu gUiw
-nnoremap `uU gUiW
-nnoremap `U gUgU
-nnoremap `<A-u> gU$
-nnoremap `<A-U> gU^
+"Capitalize
+nnoremap `cc guiwgUl
+nnoremap `cC guiWgUl
+nnoremap `C ^gUl
+"Higher
+nnoremap `h gU
+nnoremap `hh gUiw
+nnoremap `hH gUiW
+nnoremap `H gUgU
+nnoremap `<A-h> gU$
+nnoremap `<A-H> gU^
 "Lower
 nnoremap `l gu
 nnoremap `ll guiw
