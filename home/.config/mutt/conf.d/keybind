@@ -1,0 +1,125 @@
+#----- Law -----
+#x message
+#X pattern
+#A-x thread
+#----- Mnemonic -----
+#Add Alias
+#Bounce
+#Back
+#Change account
+#Capitalize
+#Delete
+#Edit
+#Forward
+#Goto mailbox
+#toggle Header
+#sync Inbox
+#
+#
+#Limit
+#Lower
+#Mark
+#Next
+#Order
+#Quit
+#Reply
+#Star
+#Skip
+#Tag
+#Undelete
+#Upper
+#View
+#Write new mail
+#Word
+#
+#
+#
+#/? Search
+bind generic,index,pager j noop
+bind generic,index,pager k noop
+bind generic H noop
+bind generic L noop
+bind generic M noop
+bind generic z noop
+bind generic Z noop
+bind generic * noop
+bind generic = noop
+bind generic < noop
+bind generic > noop
+bind generic [ noop
+bind generic ] noop
+#bind generic ; noop
+
+bind index,pager \ec noop #change-foldar-readonly
+bind index,pager C noop #copy-message
+bind index,pager \eC noop #decode-copy
+bind index,pager \Ce noop #edit-type
+bind index,pager F noop
+bind index,pager p noop #print-message
+bind index,pager P noop #parent-message
+bind index,pager \Cp noop #previous_thread
+bind index,pager \ep noop #previous_subthread
+bind index,pager Q noop
+bind index,pager \Cr noop #read-thread
+bind index,pager \es noop
+bind index,pager \Ct noop
+bind index,pager W noop
+bind index,pager \# noop #break-thread
+bind index,pager . noop
+bind index,pager & noop
+bind index,pager $ noop
+bind index,pager % noop
+bind index,pager ~ noop
+bind index,pager \Cn noop
+bind index,pager \en noop
+
+bind generic <up> previous-entry
+bind generic <down> next-entry
+bind generic g<up> top-page
+bind generic g<down> bottom-page
+bind generic G middle-page
+bind generic <home> first-entry
+bind generic <end> last-entry
+
+bind generic ? search-reverse
+bind generic,index,pager N search-opposite
+
+bind generic \e? help
+bind generic \Cv what-key
+
+
+#bind index,pager \ev collapse-thread
+#bind index,pager \eV collapse-all
+bind index,pager \ed delete-thread
+bind index,pager E edit-label
+#bind index,pager \ee resend-message
+macro index,pager L "<limit>all<enter>"
+set mark_macro_prefix=m
+bind index M mark-message
+bind index,pager R group-reply
+bind index,pager \er recall-message
+bind index,pager s flag-message #star
+bind index,pager \eu undelete-thread
+bind index,pager w mail
+#bind index,pager w set-flag
+bind index,pager x sync-mailbox
+#bind index,pager @ display-address
+#bind index,pager | pipe-message
+#bind index,pager <tab> next-new-then-unread
+#bind index,pager \e<tab> previous-new-then-unread
+bind index ^ parent-message
+
+#bind pager S skip-quoted
+
+
+macro index I "<shell-escape>mbsync inbox<enter>"
+
+bind editor \Ct noop
+bind editor <space> noop
+
+bind editor <home> bol
+#<A-b> backword-word
+bind editor \ew forward-word
+bind editor \ed kill-word
+bind editor \eD kill-line
+# vim:ft=muttrc

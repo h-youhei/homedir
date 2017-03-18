@@ -1,0 +1,103 @@
+source $XDG_CONFIG_HOME/mutt/conf.d/account
+source $XDG_CONFIG_HOME/mutt/conf.d/keybind
+source $XDG_CONFIG_HOME/mutt/conf.d/color
+
+#Path
+set mbox=$XDG_DATA_HOME/mail/archive
+set alias_file=$XDG_CONFIG_HOME/mutt/alias
+source $XDG_CONFIG_HOME/mutt/alias
+set certificate_file=$XDG_CONFIG_HOME/mutt/certificates
+#set smime_ca_location=
+#set smime_certificates=
+set history_file=$XDG_CONFIG_HOME/mutt/history
+set header_cache=$XDG_CACHE_HOME/mutt
+#set mailcap_path=
+set signature=$XDG_CONFIG_HOME/mutt/signature
+
+#ask =default
+set abort_nosubject=no
+set abort_unmodified=no
+set bounce=yes
+set delete=yes
+set include=yes
+#set mime_forward=no
+set postpone=yes
+#set print=ask-no
+#set recall=ask-yes
+#set reply_to=ask-yes
+
+#set confirmappend=yes
+#set confirmcreate=yes
+
+#encode
+set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+
+unset beep
+set mark_old=no
+set mbox_type=Maildir
+#set reflow_space_quotes=no
+set reflow_wrap=0
+set wrap=-1
+set reverse_alias=yes
+set sleep_time=0
+set realname="福光洋平"
+set sort=reverse-date
+set sort_aux=last-date
+
+# send in background process
+set sendmail_wait=-1
+set pager_index_lines=10
+set pager_context=5
+#set save_history=
+#set connect_timeout=
+#set timeout=
+set wait_key=no
+unset markers
+
+set mail_check_stats
+#set mail_check=60
+set auto_tag
+set fast_reply
+set include_onlyfirst
+set pager_stop
+#set print_command=
+#set hdr=no
+
+unset help
+
+set send_charset="us-ascii:utf-8"
+
+#format
+#set attach_format=
+set date_format="%_m/%d(%a) %Y"
+#set folder_format=
+#set forward_format=
+set index_format="%Z %4C %s%*  %-30.30n %D"
+#set message_format=
+#set mix_entry_format=
+#set query_format=
+set pager_format="%s %> %-30.30n %D (%P)"
+set sidebar_format="%B%* %?N?%N?"
+set status_format="%f [%r] Msg:%m%?u? New:%u?%?d? Del:%d?%?F? Flag:%F?%?p? Draft:%p? %> %2t (%P)"
+
+#regexp
+#set quote_regexg=
+#set reply_regexp=
+#set smileys
+
+#sidebar
+set sidebar_visible
+set sidebar_short_path
+set sidebar_width=20
+
+
+# can't understand
+# set bounce_delivered
+#set simple_search=
+#set implicit_autoview=yes
+# pgp
+# inc
+# smime
+
+#locate cursor first entry instead of first new-entry
+folder-hook * "exec first-entry"

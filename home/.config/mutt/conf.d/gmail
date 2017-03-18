@@ -1,0 +1,14 @@
+set spoolfile=+Inbox
+set postponed="+[Gmail]/.Drafts"
+#gmail itself already does this
+set copy=no
+#set record="+[Gmail]/.Sent Mail"
+
+macro index gi "<change-folder>+Inbox<enter>"
+macro index gd "<change-folder>+[Gmail]/.Drafts<enter>"
+macro index ga "<change-folder>+[Gmail]/.All<quote-char> Mail<enter>"
+macro index gst "<change-folder>+[Gmail]/.Starred<enter>"
+macro index gsn "<change-folder>+[Gmail]/.Sent<quote-char> Mail<enter>"
+macro index gsp "<change-folder>+[Gmail]/.Spam<enter>"
+macro index gt "<change-folder>+[Gmail]/.Trash<enter>"
+# vim:ft=muttrc
