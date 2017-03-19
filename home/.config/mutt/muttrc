@@ -69,7 +69,7 @@ set send_charset="us-ascii:utf-8"
 
 #format
 #set attach_format=
-set date_format="%_m/%d(%a) %Y"
+set date_format="%_m/%_d %a %Y"
 #set folder_format=
 #set forward_format=
 set index_format="%Z %4C %s%*  %-30.30n %D"
