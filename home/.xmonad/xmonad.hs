@@ -17,7 +17,9 @@
  -
  - -- launch and close --
  - M-Enter   Launch terminal
- - M-S-Enter Launch launcher
+ - M-S-Enter Launch terminal in focused window's cwd
+ - M-l       Launch launcher
+ - M-S-l     Launch oneshot shell
  - M-q       Close the focused window
  - M-S-q     Close all windows in current workspace
  -
@@ -26,6 +28,7 @@
  - M-S-f  Sink the focused window
  -
  - -- search --
+ - M-o              Open selected url
  - M-/              Search on google
  - M-s              Search on google with X11 selection
  - M-S-/ [Initial]  Search on selected search engine
@@ -83,14 +86,16 @@ import XMonad.Util.Dmenu(menuArgs)
 import XMonad.Util.Loggers(Logger, onLogger)
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.Types(Direction1D(..), Direction2D(..))
---import XMonad.Util.WindowProperties(getProp32s)
+--import XMonad.Util.WindowProperties(Property(..), hasProperty, getProp32s)
+import XMonad.Util.XSelection(promptSelection)
 
 import qualified Control.Exception as E
 import Control.Exception(IOException)
+import Control.Monad(liftM2)
 import Control.Monad.Fix(fix)
 
 import Data.Bits((.&.), shiftL)
-import Data.Char(isSpace)
+import Data.Char(isSpace, isNumber)
 import Data.Foldable(traverse_)
 import Data.List(find, any, init, concat, intersperse)
 import qualified Data.Map as M
@@ -98,9 +103,9 @@ import Data.Map(Map)
 import Data.Maybe(isJust, catMaybes)
 
 import GHC.IO.Handle.Types(Handle)
---jmport Foreign.C.Types(CLong)
 import Graphics.X11.ExtraTypes.XF86(xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute, xF86XK_AudioPlay)
 
+--import System.Posix(readSymbolicLink, ProcessID)
 import System.Directory(setCurrentDirectory, getCurrentDirectory)
 import System.Environment(getEnv)
 import System.Exit(exitSuccess)
@@ -116,7 +121,7 @@ main = do
         { workspaces = myWorkspaces
         , layoutHook = avoidStruts myLayout
         , modMask = mod4Mask
-        , terminal = "urxvt"
+        , terminal = "urxvtc"
         , keys = myKeys
         , logHook = dynamicLogWithPP (mkPP bar) >> updatePointer (0.1, 0.2) (0, 0)
         , startupHook = myStartup
@@ -168,8 +173,6 @@ myStartup = do
     if isExistAnyWindow ws then return ()
     else do
         io cdToMark
-        runInTerm "mutt"
-        runInTerm "weechat"
         spawnOn "4:Web" =<< io getBrowser
         launchTerminalOn "1:Edit"
         setScreenWith "1:Edit" "4:Web"
@@ -181,9 +184,12 @@ myManageHook :: ManageHook
 myManageHook = composeAll
     [ manageSpawn
     , isDialog --> doFloat
-    , title =? "mutt" --> doShift "5:Mail"
-    , title =? "weechat" --> doShift "6:Message"
+    , title =? "mutt" --> doShiftAndGo "5:Mail"
+    , title =? "weechat" --> doShiftAndGo "6:Message"
     ]
+
+doShiftAndGo :: WorkspaceId -> ManageHook
+doShiftAndGo = doF . liftM2 (.) view shift
 
 guiMask, altMask :: KeyMask
 -- win, super, command
@@ -208,6 +214,11 @@ myKeys conf = M.fromList $
     , ((guiMask, xK_m), windows focusMaster)
     , ((guiMask .|. shiftMask, xK_m), windows shiftMaster)
 
+    , ((guiMask, xK_l), launcher)
+    , ((guiMask .|. shiftMask, xK_l), shellPrompt $ mkPromptConfig (\c -> isSpace c || (c == '/')))
+
+    , ((guiMask, xK_o), promptSelection =<< io getBrowser)
+
     , ((guiMask, xK_q), kill)
     , ((guiMask .|. shiftMask, xK_q), killAll)
 
@@ -224,7 +235,7 @@ myKeys conf = M.fromList $
     , ((guiMask .|. shiftMask, xK_0), toggleTray)
 
     , ((guiMask, xK_Return), io cdToMark >> launchTerminal)
-    , ((guiMask .|. shiftMask, xK_Return), launcher)
+    --, ((guiMask .|. shiftMask, xK_Return), launchTermInFocusedCwd)
 
     , ((guiMask, xK_x), io cdToMark >> rescreen)
 
@@ -391,24 +402,68 @@ cdToMark = do
     mark <- getMark
     changeDir mark
 
+getFocusedWindow :: X (Maybe Window)
+getFocusedWindow = gets $ W.peek . windowset
+
 {-
-getPID :: Window -> X (Maybe [CLong])
-getPID = getProp32s "_NET_WM_PID"
+getPID :: Window -> X (Maybe ProcessID)
+getPID w = do
+    pid <- getProp32s "_NET_WM_PID" w
+    return $ case pid of
+        Just [p] -> Just $ fromIntegral p
+        _ -> Nothing
+
+getfocusedPID :: X (Maybe ProcessID)
+getfocusedPID = do
+    win <- getFocusedWindow
+    case win of
+        Nothing -> return Nothing
+        Just w -> getPID w
+
+focusedHasClassName :: String -> X Bool
+focusedHasClassName s = do
+    win <- getFocusedWindow
+    case win of
+        Nothing -> return False
+        Just w -> hasProperty (ClassName s) w
+
+iread :: String -> Integer
+iread = read
+
+termToShellPID :: Maybe ProcessID -> X (Maybe ProcessID)
+termToShellPID term = do
+    sh <- case term of
+        Nothing -> return Nothing
+        Just p -> do
+            sh <- io $ readFile ("/proc/" ++ show p ++ "/task/" ++ show p ++ "/children") `E.catch` econst (return "")
+            let sh' = takeWhile isNumber sh
+            return $ case sh of
+                "" -> Nothing
+                sh -> Just $ iread sh
+    return $ case sh of
+        Just p -> Just $ fromIntegral p
+        _ -> Nothing
 
 --it doesn't match to focused pid; probably to new window's pid
 --that's because its pid is always different but its cwd is always home dir
-runTermInFocusedCwd :: String -> X ()
-runTermInFocusedCwd term = do
-    focused <- gets $ W.peek . windowset
-    pid <- case focused of
-        Nothing -> return Nothing
-        Just f -> getPID f
-    case pid of
-        Nothing -> return ()
-        Just (p:_) -> do
-            sh <- io $ getEnv "SHELL"
-            safeSpawn term ["-title", term, "-e", "cd `readlink -e /proc/" ++ show p ++ "/cwd` && " ++ sh]
+launchTermInFocusedCwd :: X ()
+launchTermInFocusedCwd = do
+    cwd_saved <- io $ getCurrentDirectory
+    pid_focused <- getfocusedPID
+    term <- getTerminal
+    is_term <- focusedHasClassName term
+    pid_focused' <-
+        if is_term
+        then termToShellPID pid_focused
+        else return pid_focused
+    cwd_focused <- case pid_focused' of
+        Nothing -> io $ getEnv "HOME"
+        Just p -> io $ readSymbolicLink ("/proc/" ++ show p ++ "/cwd") `E.catch` econst (getEnv "HOME")
+    io $ setCurrentDirectory cwd_focused
+    launchTerminal
+    io $ setCurrentDirectory cwd_saved
 -}
+
 
 --After here. I'd like to add to Contrib
 {-
@@ -426,11 +481,14 @@ numberOfFloating :: X (Int)
 numberOfFloating = gets $ length . M.keys . floating . windowset
 -}
 
+
 --Prompt.Directory
 --example
 --cd = promptChangeDir $ mkPromptConfig (== '/')
+{-
 promptChangeDir :: XPConfig -> X ()
 promptChangeDir conf = directoryPrompt conf "cd: " (io . changeDir)
+-}
 
 emptyIsHome :: FilePath -> IO FilePath
 emptyIsHome "" = getEnv "HOME"
@@ -440,6 +498,7 @@ changeDir :: FilePath -> IO ()
 changeDir s = do
     dest <- emptyIsHome s
     catchIO $ setCurrentDirectory dest
+
 
 --Hooks.DinamicLog
 dirShorten :: Int -> Int -> String -> String
@@ -464,17 +523,19 @@ split c s = takeWhile (/= c) s : split c (dropWhile (== c) . dropWhile (/= c) $ 
 filterOutWorkspaces :: [String] -> [WindowSpace] -> [WindowSpace]
 filterOutWorkspaces out = filter (\(Workspace tag _ _) -> not (tag `elem` out))
 
+-- In order to read zshenv, "-e sh -c cmd" is required
 --Util.Run
-runInTerm' :: (String -> X ()) -> String -> String -> X ()
-runInTerm' f opt cmd = do
+runInTerm' :: (String -> X ()) -> String -> X ()
+runInTerm' f cmd = do
     t <- getTerminal
-    f $ t ++ " " ++ opt ++ " -e " ++ cmd
+    sh <- getShell
+    f $ t ++ " -title " ++ cmd  ++ " -e " ++ sh ++ " -c " ++ cmd
 
 runInTerm :: String -> X ()
-runInTerm = runInTerm' spawn ""
+runInTerm = runInTerm' spawn
 
 runInTermOn :: WorkspaceId -> String -> X ()
-runInTermOn ws = runInTerm' (spawnOn ws) ""
+runInTermOn ws = runInTerm' (spawnOn ws)
 
 launchTerminal :: X ()
 launchTerminal = spawn =<< getTerminal
@@ -482,11 +543,15 @@ launchTerminal = spawn =<< getTerminal
 launchTerminalOn :: WorkspaceId -> X ()
 launchTerminalOn ws = spawnOn ws =<< getTerminal
 
-commandInTerm :: String -> X ()
-commandInTerm cmd = do
+commandInTerm' :: (String -> X ()) -> String -> X ()
+commandInTerm' f cmd = do
+    t <- getTerminal
     sh <- getShell
     --terminal -title shell -e shell -c "command && shell"
-    runInTerm' spawn ("-title " ++ sh) (sh ++ " -c \"" ++ cmd ++ " && " ++ sh ++ "\"")
+    f $ t ++ " -title " ++ sh ++ " -e " ++ sh ++ " -c \"" ++ cmd ++ " && " ++ sh ++ "\""
+
+commandInTerm :: String -> X ()
+commandInTerm = commandInTerm' spawn
 
 --Util.Loggers
 logCwd :: Logger
