@@ -105,21 +105,20 @@ import System.Directory(setCurrentDirectory, getCurrentDirectory)
 import System.Environment(getEnv)
 import System.Exit(exitSuccess)
 
---require package: regex-compat
+--require package: haskell-regex-compat
 import Text.Regex(mkRegex, subRegex)
 
 
 main :: IO ()
 main = do
-    bar1 <- spawnPipe "xmobar -x 1"
-    bar2 <- spawnPipe "xmobar -x 2"
+    bar <- spawnPipe "xmobar"
     xmonad $ (ewmh . docks) def
         { workspaces = myWorkspaces
         , layoutHook = avoidStruts myLayout
         , modMask = mod4Mask
-        , terminal = "urxvtc"
+        , terminal = "urxvt"
         , keys = myKeys
-        , logHook = dynamicMultiLogWithPP mkPP [bar1, bar2] >> updatePointer (0.1, 0.2) (0, 0)
+        , logHook = dynamicLogWithPP (mkPP bar) >> updatePointer (0.1, 0.2) (0, 0)
         , startupHook = myStartup
         --, mouseBindings = myMouseBindings
         , manageHook = myManageHook
@@ -129,7 +128,7 @@ main = do
         }
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["1:Edit", "2:Term", "3:Ref", "4:Web", "5:Mail", "6:Media"] ++ map (: ":Any") ['7' .. '9'] ++ ["0:Tray"]
+myWorkspaces = ["1:Edit", "2:Term", "3:Ref", "4:Web", "5:Mail", "6:Message", "7:Media"] ++ map (: ":Any") ['8' .. '9'] ++ ["0:Tray"]
 
 myLayout =
     onWorkspace "0:Tray" trayLayout
@@ -149,13 +148,14 @@ mkPP bar = xmobarPP
     , ppVisible = xmobarColor "yellow" "" . wrap "<" ">"
     , ppHidden = xmobarColor "white" "" . wrap "(" ")"
     , ppHiddenNoWindows = xmobarColor "white" ""
+    , ppUrgent = xmobarColor "red" ""
     , ppSep = "   "
     , ppWsSep = "  "
-    , ppOrder = \(ws:_:_:cwd:_) -> [ws, cwd]
+    , ppOrder = \(ws:_:t:cwd:_) -> [ws, cwd, t]
     --, ppSort = fmap (. filterOutWorkspaces ["NSP"]) $ ppSort def
     , ppOutput = hPutStrLn bar
     , ppExtras =
-        [ onLogger (wrap "[" "]" . dirShorten 90 6 . homeToTilde) logCwd
+        [ onLogger (wrap "[" "]" . dirShorten 80 6 . homeToTilde) logCwd
         ]
     }
 
@@ -168,9 +168,11 @@ myStartup = do
     if isExistAnyWindow ws then return ()
     else do
         io cdToMark
-        setScreenWith "1:Edit" "4:Web"
+        runInTerm "mutt"
+        runInTerm "weechat"
         spawnOn "4:Web" =<< io getBrowser
         launchTerminalOn "1:Edit"
+        setScreenWith "1:Edit" "4:Web"
 
 isExistAnyWindow :: WindowSet -> Bool
 isExistAnyWindow ws = any (isJust . stack) (W.workspaces ws)
@@ -179,6 +181,8 @@ myManageHook :: ManageHook
 myManageHook = composeAll
     [ manageSpawn
     , isDialog --> doFloat
+    , title =? "mutt" --> doShift "5:Mail"
+    , title =? "weechat" --> doShift "6:Message"
     ]
 
 guiMask, altMask :: KeyMask
@@ -349,10 +353,10 @@ myApps =
     , ("v", vim)
     ]
     where
-        web = spawn "firefox -new-window"
+        web = spawn =<< io getBrowser
         vim = runInTerm "nvim"
-        mail = return ()
-        chat = return ()
+        mail = runInTerm "mutt"
+        chat = runInTerm "weechat"
 
 dmenuLaunchWithConf :: DmenuConfig -> Map String (X ()) -> X ()
 dmenuLaunchWithConf conf apps = do
