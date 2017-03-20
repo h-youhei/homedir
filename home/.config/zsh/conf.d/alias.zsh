@@ -2,10 +2,26 @@
 alias s='sudo ' sudo='sudo '
 
 alias c='cd' c-='cd -' cg='c `git rev-parse --show-toplevel 2> /dev/null`'
-alias cm='chmod' cmx='chmod 755'
+#normal, secure, secure dir
+alias cm='chmod' cmn='cm 644' cms='cm 600' cmsd='cm 700' cmx='chmod 755'
 alias f='find'
-alias g='git' ga='g add' gc='g commit' gca='gc --amend' gco='g checkout' gcl='xclip -o | xargs git clone' gm='g mv' grau='xclip -o | xargs git remote add upstream' grb='g rebase -i' grm='g rm' grs='g reset' gs='g status'
+
+#git
+alias g='git'
+alias ga='g add'
+alias gc='g commit' gca='gc --amend'
+alias gco='g checkout'
+alias gcl='xp X git clone'
+alias gd='g diff'
+alias gm='g mv'
+alias gra='xp X git remote add' grau='xp X git remote add upstream'
+alias grb='g rebase -i'
+alias grm='g rm'
+alias grs='g reset' grsh='grs --hard'
+alias grv='g revert'
+alias gs='g status'
 alias gh='hub' ghb='gh browse'
+
 alias h='man'
 alias ls='ls -F --group-directories-first' lsl='ls -l -h' l='ls -A' ll='lsl -A'
 alias m='mv'
@@ -24,10 +40,11 @@ alias t='urxvtc'
 #Gzip
 alias targ='tar zvcf' untar='tar xvf'
 #Readonly External
-alias v='nvim' vr='v -s -R -' vi='v -u NONE' cv='cvim' ve='urxvtc -e nvim'
+alias v='nvim' vi='v -u NONE' ve='urxvtc -e nvim'
 # save dir for xmonad
 alias x="pwd > $HOME/.xmonad/mark"
-alias xclip='xclip -selection clipboard' xp='xclip -o'
+alias xcl='xclip -selection clipboard' xpr='xclip -selection primary'
+alias xp='xcl -o' xpp='xpr -o'
 
 alias -g A='| awk'
 alias -g C='| cut'
