@@ -27,7 +27,7 @@ TriggerKey=HENKANMODE
 # Super+Right Ctrl
 # Disabled
 # Custom
-SwitchKey=Disabled
+#SwitchKey=L_SHIFT
 # Custom switch key
 #CustomSwitchKey=
 # Activate input method
@@ -50,7 +50,7 @@ IMSwitchKey=False
 # ALT_SUPER
 #IMSwitchHotkey=CTRL_SHIFT
 # Reload configuration
-ReloadConfig=
+ReloadConfig=CTRL_SHIFT_F
 # Interval of Two Key Input
 #TimeInterval=250
 # Switching Virtual Keyboard
@@ -72,19 +72,19 @@ SaveAllKey=
 # Switch Embeded Preedit
 SwitchPreedit=
 # Previous Candidate Word
-PrevWord=
+#PrevWord=SHIFT_TAB
 # Next Candidate Word
-NextWord=
+#NextWord=TAB
 
 [Program]
 # Seconds sleep before fcitx really start
-DelayStart=1
+#DelayStart=0
 # Share State Among Window
 # Available Value:
 # No
 # All
 # PerProgram
-ShareStateAmongWindow=All
+#ShareStateAmongWindow=No
 # Default Input Method State
 # Available Value:
 # Inactive
@@ -105,7 +105,7 @@ ShareStateAmongWindow=All
 # True False
 #SendTextWhenSwitchEng=True
 # Candidate Word Number
-CandidateWordNumber=10
+#CandidateWordNumber=5
 # Give the tips of Phrase
 # Available Value:
 # True False
@@ -113,7 +113,7 @@ PhraseTips=False
 # Do not commit preedit text when unfocus a window
 # Available Value:
 # True False
-DontCommitPreeditWhenUnfocus=True
+#DontCommitPreeditWhenUnfocus=False
 
 [Appearance]
 # Show Input Method Hint After Input method changed

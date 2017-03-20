@@ -6,4 +6,4 @@ cd $script_dir
 
 fcitx_from=$XDG_CONFIG_HOME/fcitx
 
-rsync -a -v --dry-run $fcitx_from/config $fcitx_from/conf $fcitx_from/addon ../init/fcitx
+rsync -a -v $fcitx_from/config $fcitx_from/conf $fcitx_from/addon ../init/fcitx
