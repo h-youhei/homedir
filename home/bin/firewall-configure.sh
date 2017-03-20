@@ -47,6 +47,13 @@ iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 
 #dns
 iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+
+#dhcp
+iptables -A OUTPUT -p udp --dport 67:68 -j ACCEPT
+
+#ntp
+iptables -A OUTPUT -p udp --dport 123 -j ACCEPT
 
 #http
 iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
@@ -54,6 +61,7 @@ iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 
 #imap
 iptables -A OUTPUT -p tcp --dport 993 -j ACCEPT
+
 #smtp
 iptables -A OUTPUT -p tcp --dport 465 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 587 -j ACCEPT
