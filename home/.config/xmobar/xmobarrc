@@ -6,10 +6,11 @@ Config
 	, lowerOnStart = True
 	, overrideRedirect = False
 	, commands =
-		[ Run Date "%_m/%_d (%a) %p%_H:%M" "date" 10
+		[ Run Date "%_m/%_d %a %_H:%M" "date" 10
+		, Run Mail [ ("MAIL", "~/.local/share/mail/gmail/hukumituyouhei/Inbox") ] "mail"
 		, Run StdinReader
 		]
 	, sepChar = "%"
 	, alignSep = "}{"
-	, template = "  %StdinReader% }{ %date%  "
+	, template = "  %StdinReader% }{ %mail% %date%  "
 	}
