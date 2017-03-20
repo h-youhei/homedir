@@ -27,6 +27,10 @@
  - M-f    Toggle fullscreen
  - M-S-f  Sink the focused window
  -
+ - -- Resize
+ - M-A-Up/Down    change the number of clients in the master pane.
+ - M-A-Left/Right change the size of the master pane
+ - M-=            reset window size
  - -- search --
  - M-o              Open selected url
  - M-/              Search on google
@@ -208,6 +212,13 @@ myKeys conf = M.fromList $
     , ((guiMask .|. shiftMask, xK_Down), windowSwap D False)
     , ((guiMask .|. shiftMask, xK_Left),  windowSwap L False)
     , ((guiMask .|. shiftMask, xK_Right), windowSwap R False)
+
+    , ((guiMask .|. altMask, xK_Up), sendMessage $ IncMasterN 1)
+    , ((guiMask .|. altMask, xK_Down), sendMessage $ IncMasterN (-1))
+    , ((guiMask .|. altMask, xK_Left), sendMessage Shrink)
+    , ((guiMask .|. altMask, xK_Right), sendMessage Expand)
+    -- it doesn't work
+    --, ((guiMask, xK_equal), refresh)
 
     , ((guiMask, xK_n), windows focusDown)
     , ((guiMask .|. shiftMask, xK_n), windows focusUp)
