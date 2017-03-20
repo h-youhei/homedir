@@ -39,7 +39,7 @@ icon_gravity NE
 
 # icon_size <int>
 # specifies dimensions of typical icon slot
-icon_size 22
+icon_size 20
 
 # log_level <level>
 # controls the amount of logging output
