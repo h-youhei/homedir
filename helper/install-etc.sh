@@ -1,5 +1,9 @@
 #!/usr/bin/sh
 
+#firewall
+systemctl enable iptables.service
+systemctl enable ip6tables.service
+
 #apach web server
 systemctl enable httpd.service
 
