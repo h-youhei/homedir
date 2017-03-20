@@ -22,7 +22,7 @@ nnoremap <Space>D :<C-u>windo diffoff<CR>
 nnoremap <Space>f gF
 
 "help
-nnoremap <Space>h :<C-u>call system('urxvt -e nvim "-c help" "-c only" &')<CR>
+nnoremap <Space>h :<C-u>call system('urxvtc -e nvim "-c help" "-c only"')<CR>
 
 "mimic
 nnoremap <Space>m :<C-u>split<CR>
@@ -50,7 +50,7 @@ noremap <silent> <Space>r :<C-u>edit<CR>
 "<Space>s
 
 "terminal
-nnoremap <Space>t :<C-u>call system('urxvt &')<CR>
+nnoremap <Space>t :<C-u>call system('urxvtc')<CR>
 
 "unload
 nnoremap <Space>u :<C-u>bdelete<CR>
@@ -58,7 +58,7 @@ nnoremap <Space>u :<C-u>bdelete<CR>
 "<CR>U
 
 "vim
-nnoremap <Space>v :<C-u>call system('urxvt -e  nvim &')<CR>
+nnoremap <Space>v :<C-u>call system('urxvtc -e  nvim')<CR>
 
 "update then quit
 nnoremap <Space>x :<C-u>update<CR>:bdelete<CR>
