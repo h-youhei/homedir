@@ -58,7 +58,7 @@
 
 import XMonad
 import qualified XMonad.StackSet as W
-import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), allWindows, view, greedyView, currentTag, findTag, shiftWin, focusWindow, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift, floating)
+import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), RationalRect(..), allWindows, view, greedyView, currentTag, findTag, shiftWin, focusWindow, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift, floating)
 
 import XMonad.Actions.CycleWS(nextScreen, shiftNextScreen, swapNextScreen, toggleOrDoSkip)
 import XMonad.Actions.Navigation2D(windowGo, windowSwap)
@@ -73,12 +73,13 @@ import XMonad.Actions.WithAll(killAll)
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
 import XMonad.Hooks.EwmhDesktops(ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks(docks, avoidStruts)
-import XMonad.Hooks.ManageHelpers(currentWs, isDialog)
+import XMonad.Hooks.ManageHelpers(isDialog, doRectFloat)
 import XMonad.Hooks.SetWMName(setWMName)
 import XMonad.Hooks.WorkspaceHistory(workspaceHistory)
 
 import XMonad.Layout.Grid(Grid(..))
 import XMonad.Layout.PerWorkspace(onWorkspace)
+import XMonad.Layout.Simplest(Simplest(..))
 import XMonad.Layout.Tabbed(simpleTabbed)
 
 import qualified XMonad.Prompt as P
@@ -140,11 +141,11 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["1:Edit", "2:Term", "3:Ref", "4:Web", "5:Mail", "6:Message", "7:Media"] ++ map (: ":Any") ['8' .. '9'] ++ ["0:Tray"]
 
 myLayout =
-    onWorkspace "0:Tray" trayLayout
-    defaultLayout
+    onWorkspace "0:Tray" Grid
+    $ onWorkspace "4:Web" Simplest
+    $ defaultLayout
     where
         defaultLayout = horizontal ||| simpleTabbed
-        trayLayout = Grid
         horizontal = Tall nmaster delta ratio
         vertical = Mirror horizontal
         nmaster = 1
@@ -184,12 +185,16 @@ myStartup = do
 isExistAnyWindow :: WindowSet -> Bool
 isExistAnyWindow ws = any (isJust . stack) (W.workspaces ws)
 
+-- appName: first entry of WM_CLASS
+-- className: second entry of WM_CLASS
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ manageSpawn
     , isDialog --> doFloat
     , title =? "mutt" --> doShiftAndGo "5:Mail"
     , title =? "weechat" --> doShiftAndGo "6:Message"
+    -- firefox bookmark window
+    , appName =? "Places" --> doRectFloat (RationalRect 0.4 0.3 0.58 0.68)
     ]
 
 doShiftAndGo :: WorkspaceId -> ManageHook
