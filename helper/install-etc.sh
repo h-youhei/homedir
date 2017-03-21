@@ -4,6 +4,9 @@
 systemctl enable iptables.service
 systemctl enable ip6tables.service
 
+#ntp sync
+timedatectl set-ntp true
+
 #apach web server
 systemctl enable httpd.service
 
