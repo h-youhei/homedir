@@ -35,12 +35,13 @@ alias q='exit'
 alias rmd='rmdir'
 alias rnm='rename'
 alias sa='ssh-add'
+alias sysc='systemctl'
 alias sln='ln -s'
 alias t='urxvtc'
 #Gzip
 alias targ='tar zvcf' untar='tar xvf'
-#Readonly External
-alias v='nvim' vi='v -u NONE' ve='urxvtc -e nvim'
+#Diff External
+alias v='nvim' vi='v -u NONE' vd='v -d' ve='urxvtc -e nvim'
 # save dir for xmonad
 alias x="pwd > $HOME/.xmonad/mark"
 alias xcl='xclip -selection clipboard' xpr='xclip -selection primary'
@@ -53,6 +54,7 @@ alias -g G='| grep'
 alias -g H='| head'
 alias -g J='| join'
 alias -g L='| less'
+alias -g LF='| less +F'
 alias -g O='| sort'
 alias -g P='| paste'
 alias -g R='| tr'
