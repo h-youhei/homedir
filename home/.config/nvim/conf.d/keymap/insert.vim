@@ -17,8 +17,9 @@ noremap! <A-D> <C-u>
 inoremap <A-f> <C-o>f
 inoremap <A-F> <C-o>F
 
-"go next by ultisnips in insert
-"insert <A-g> <A-G>
+"Get above word/line
+inoremap <A-g> <C-r>=keymap#get_above_word()<CR>
+inoremap <A-G> <C-r>=getline(line('.') - 1)<CR>
 
 "convert the word to higher case
 inoremap <A-h> <C-r>=keymap#upcase_word()<CR>
@@ -60,8 +61,8 @@ inoremap <A-V> <C-o>V
 noremap! <A-w> <S-Right>
 inoremap <A-W> <C-o>W
 
-"Yank from above/below line
-inoremap <A-y> <C-r>=getline(line('.') - 1)<CR>
+"Yank from below word/line
+inoremap <A-y> <C-r>=keymap#get_below_word()<CR>
 inoremap <A-Y> <C-r>=getline(line('.') + 1)<CR>
 
 "repeat find

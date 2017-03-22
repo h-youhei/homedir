@@ -77,6 +77,7 @@
 "Go to
 "Global
 "Grep
+"Get
 "---H---
 "History
 "Higher case

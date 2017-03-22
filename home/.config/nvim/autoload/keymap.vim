@@ -115,10 +115,34 @@ function! keymap#upcase_word()
 	return ''
 endfunction
 
-
 function! keymap#upcase_line()
 	let pos = getpos('.')
 	norm! gU^
 	call setpos('.', pos)
 	return ''
+endfunction
+
+"TODO: start with WORD char
+function! keymap#get_above_word()
+	let n_line = line('.')
+	let n_col = col('.')
+	if n_line == 1
+		return ''
+	endif
+	let cur_line = strpart(getline(n_line), 0, n_col)
+	let prev_line = getline(n_line - 1)
+	let word_count = util#match_count(cur_line, '\v<\S*') + 1
+	return matchstr(prev_line, '\v<\S*', 0, word_count)
+endfunction
+
+function! keymap#get_below_word()
+	let n_line = line('.')
+	let n_col = col('.')
+	if n_line == line('$')
+		return ''
+	endif
+	let cur_line = strpart(getline(n_line), 0, n_col)
+	let next_line = getline(n_line + 1)
+	let word_count = util#match_count(cur_line, '\v<\S*') + 1
+	return matchstr(next_line, '\v<\S*', 0, word_count)
 endfunction
