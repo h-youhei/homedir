@@ -63,11 +63,10 @@ iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 993 -j ACCEPT
 
 #smtp
-iptables -A OUTPUT -p tcp --dport 465 -j ACCEPT
 iptables -A OUTPUT -p tcp --dport 587 -j ACCEPT
 
-#irc
-iptables -A OUTPUT -p tcp --dport 194 -j ACCEPT
+#freenode
+iptables -A OUTPUT -p tcp --dport 6697 -j ACCEPT
 
 #git
 iptables -A OUTPUT -p tcp --dport 9418 -j ACCEPT
