@@ -9,6 +9,13 @@ If you want descriptions about each config, see Wiki(I haven't yet written).
 - etc/
 	- system config
 
+## Link
+[xmonad](https://github.com/h-youhei/myconfig/tree/master/home/.xmonad)
+
+[neovim](https://github.com/h-youhei/myconfig/tree/master/home/.config/nvim)
+
+[zsh](https://github.com/h-youhei/myconfig/tree/master/home/.config/zsh)
+
 ## Note
 You can see utility script progress [here](https://github.com/h-youhei/myconfig/issues/1).
 
