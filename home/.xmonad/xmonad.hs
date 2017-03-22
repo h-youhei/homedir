@@ -7,9 +7,9 @@
  - M-S-m    Set the focused window to the master window
  -
  - -- workspaces & screens --
- - M-[1..9]    Switch to workspace N on primary screen
- - M-[F1..F9]  Switch to workspace N on the other screen
- - M-S-[1..9]  Move the focused window to woekspace N
+ - M-[1..0]    Switch to workspace N on primary screen
+ - M-[F1..F10]  Switch to workspace N on the other screen
+ - M-S-[1..0]  Move the focused window to workspace N
  - M-Tab       Move focus to the other screen
  - M-S-Tab     Move the focused window to the other screen
  - M-Space     Toggle workspaces on the screen
@@ -52,17 +52,15 @@
  -
  - -- misc --
  - M-x    Change cwd to marked directory
- - M-0    Move the focused window to or from tray
- - M-S-0  Switch to or from tray
 -}
 
 import XMonad
 import qualified XMonad.StackSet as W
-import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), RationalRect(..), allWindows, view, greedyView, currentTag, findTag, shiftWin, focusWindow, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift, floating)
+import XMonad.StackSet(StackSet(..), Workspace(..), Screen(..), RationalRect(..), allWindows, view, currentTag, findTag, shiftWin, focusWindow, focusMaster, shiftMaster, focusUp, focusDown, swapDown, swapUp, sink, shift, floating)
 
 import XMonad.Actions.CycleWS(nextScreen, shiftNextScreen, swapNextScreen, toggleOrDoSkip)
 import XMonad.Actions.Navigation2D(windowGo, windowSwap)
-import XMonad.Actions.OnScreen(greedyViewOnScreen, viewOnScreen)
+import XMonad.Actions.OnScreen(viewOnScreen)
 import XMonad.Actions.PerWorkspaceKeys(bindOn)
 import XMonad.Actions.Search(SearchEngine(..), search, selectSearch, searchEngine, google, hoogle, images, wikipedia, youtube)
 --import XMonad.Actions.Submap(submap)
@@ -73,7 +71,7 @@ import XMonad.Actions.WithAll(killAll)
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
 import XMonad.Hooks.EwmhDesktops(ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks(docks, avoidStruts)
-import XMonad.Hooks.ManageHelpers(isDialog, doRectFloat)
+import XMonad.Hooks.ManageHelpers(isDialog, doRectFloat, doCenterFloat)
 import XMonad.Hooks.SetWMName(setWMName)
 import XMonad.Hooks.WorkspaceHistory(workspaceHistory)
 
@@ -195,6 +193,7 @@ myManageHook = composeAll
     , title =? "weechat" --> doShiftAndGo "6:Message"
     -- firefox bookmark window
     , appName =? "Places" --> doRectFloat (RationalRect 0.4 0.3 0.58 0.68)
+    , className =? "Fcitx-config-gtk3" --> doCenterFloat
     ]
 
 doShiftAndGo :: WorkspaceId -> ManageHook
@@ -247,9 +246,6 @@ myKeys conf = M.fromList $
     , ((guiMask, xK_Tab), nextScreen)
     , ((guiMask .|. shiftMask, xK_Tab), shiftNextScreen)
 
-    , ((guiMask, xK_0), onTray fromTray toTray)
-    , ((guiMask .|. shiftMask, xK_0), toggleTray)
-
     , ((guiMask, xK_Return), io cdToMark >> launchTerminal)
     --, ((guiMask .|. shiftMask, xK_Return), launchTermInFocusedCwd)
 
@@ -279,16 +275,10 @@ myKeys conf = M.fromList $
         , ((0, xK_l), logout)
         ])
     ]
-    ++ [((guiMask, k), windows $ greedyViewOnScreen 0 ws) | (ws, k) <- zip workspacesExceptTray [xK_1 .. xK_9]]
-    ++ [((guiMask, k), windows $ greedyViewOnScreen 1 ws) | (ws, k) <- zip workspacesExceptTray [xK_F1 .. xK_F9]]
-    ++ [((guiMask .|. shiftMask, k), windows $ shift ws) | (ws, k) <- zip workspacesExceptTray [xK_1 .. xK_9]]
+    ++ [((guiMask, k), toggleOrViewOnScreen 0 ws) | (ws, k) <- zip myWorkspaces ([xK_1 .. xK_9] ++ [xK_0])]
+    ++ [((guiMask, k), toggleOrViewOnScreen 1 ws) | (ws, k) <- zip myWorkspaces [xK_F1 .. xK_F10]]
+    ++ [((guiMask .|. shiftMask, k), windows $ shift ws) | (ws, k) <- zip myWorkspaces ([xK_1 .. xK_9] ++ [xK_0])]
     where
-        workspacesExceptTray = init myWorkspaces
-        toggleTray = toggleOrDoSkip [] view "0:Tray"
-        toTray = windows $ shift "0:Tray"
-        fromTray = shiftToLastViewed
-        onTray actionInTray defaultAction = bindOn [("0:Tray", actionInTray), ("", defaultAction)]
-
         myWsSwitch = perScreen (toggleBetween "1:Edit" "2:Term") (toggleBetween "4:Web" "3:Ref")
 
         raiseOnWeb = windows $ viewOnScreen 1 "4:Web"
@@ -336,6 +326,12 @@ myKeys conf = M.fromList $
                 japanese = searchEngine "japanese" "http://dictionary.goo.ne.jp/freewordsearcher.html?mode=1&kind=jn&MT="
 
 --myMouseBindings = M.fromlist
+
+toggleOrView :: WorkspaceId -> X ()
+toggleOrView = toggleOrDoSkip [] view
+
+toggleOrViewOnScreen :: ScreenId -> WorkspaceId -> X ()
+toggleOrViewOnScreen sid = toggleOrDoSkip [] (viewOnScreen sid)
 
 mkPromptConfig :: (Char -> Bool) -> XPConfig
 mkPromptConfig f = def
@@ -657,7 +653,7 @@ doBetween f def another = do
     else (windows . f) def
 
 toggleBetween :: WorkspaceId -> WorkspaceId -> X ()
-toggleBetween = doBetween greedyView
+toggleBetween = doBetween view
 
 --Util.?
 getCurrentScreen :: X (ScreenId)
@@ -700,9 +696,6 @@ perScreen actInMain actInSub = do
     case currentScreen of
         0 -> actInMain
         _ -> actInSub
-
-dynamicMultiLogWithPP :: (Handle -> PP) -> [Handle] -> X ()
-dynamicMultiLogWithPP mk = traverse_ (\bar -> dynamicLogWithPP $ mk bar)
 
 --Actions.Submap
 --add io $ sync d False
