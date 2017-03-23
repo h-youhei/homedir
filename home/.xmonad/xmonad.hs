@@ -62,7 +62,7 @@ import XMonad.Actions.CycleWS(nextScreen, shiftNextScreen, swapNextScreen, toggl
 import XMonad.Actions.Navigation2D(windowGo, windowSwap)
 import XMonad.Actions.OnScreen(viewOnScreen)
 import XMonad.Actions.PerWorkspaceKeys(bindOn)
-import XMonad.Actions.Search(SearchEngine(..), search, selectSearch, searchEngine, google, hoogle, images, wikipedia, youtube)
+import XMonad.Actions.Search(SearchEngine(..), search, selectSearch, searchEngine, google, hackage, images, wikipedia, youtube)
 --import XMonad.Actions.Submap(submap)
 import XMonad.Actions.SpawnOn(manageSpawn, spawnOn)
 import XMonad.Actions.UpdatePointer(updatePointer)
@@ -71,7 +71,7 @@ import XMonad.Actions.WithAll(killAll)
 import XMonad.Hooks.DynamicLog(dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
 import XMonad.Hooks.EwmhDesktops(ewmh, fullscreenEventHook)
 import XMonad.Hooks.ManageDocks(docks, avoidStruts)
-import XMonad.Hooks.ManageHelpers(isDialog, doRectFloat, doCenterFloat)
+import XMonad.Hooks.ManageHelpers(isDialog, doRectFloat, doCenterFloat, isFullscreen, doFullFloat, transience')
 import XMonad.Hooks.SetWMName(setWMName)
 import XMonad.Hooks.WorkspaceHistory(workspaceHistory)
 
@@ -80,14 +80,13 @@ import XMonad.Layout.PerWorkspace(onWorkspace)
 import XMonad.Layout.Simplest(Simplest(..))
 import XMonad.Layout.Tabbed(simpleTabbed)
 
-import qualified XMonad.Prompt as P
-import XMonad.Prompt(XPConfig, XP)
-import XMonad.Prompt.Directory(directoryPrompt)
-import XMonad.Prompt.Shell(shellPrompt, getBrowser)
+--import qualified XMonad.Prompt as P
+--import XMonad.Prompt(XPConfig, XP)
+import XMonad.Prompt.Shell(getBrowser)
 
 import XMonad.Util.Dmenu(menuArgs)
 import XMonad.Util.Loggers(Logger, onLogger)
-import XMonad.Util.Run(spawnPipe, hPutStrLn)
+import XMonad.Util.Run(safeSpawn, spawnPipe, hPutStrLn)
 import XMonad.Util.Types(Direction1D(..), Direction2D(..))
 --import XMonad.Util.WindowProperties(Property(..), hasProperty, getProp32s)
 import XMonad.Util.XSelection(promptSelection)
@@ -188,6 +187,8 @@ isExistAnyWindow ws = any (isJust . stack) (W.workspaces ws)
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ manageSpawn
+    , transience'
+    , isFullscreen --> doFullFloat
     , isDialog --> doFloat
     , title =? "mutt" --> doShiftAndGo "5:Mail"
     , title =? "weechat" --> doShiftAndGo "6:Message"
@@ -229,8 +230,8 @@ myKeys conf = M.fromList $
     , ((guiMask, xK_m), windows focusMaster)
     , ((guiMask .|. shiftMask, xK_m), windows shiftMaster)
 
-    , ((guiMask, xK_l), launcher)
-    , ((guiMask .|. shiftMask, xK_l), shellPrompt $ mkPromptConfig (\c -> isSpace c || (c == '/')))
+    , ((guiMask, xK_l), dmenuLaunch)
+    , ((guiMask .|. shiftMask, xK_l), dmenuRun)
 
     , ((guiMask, xK_o), promptSelection =<< io getBrowser)
 
@@ -275,16 +276,15 @@ myKeys conf = M.fromList $
         , ((0, xK_l), logout)
         ])
     ]
-    ++ [((guiMask, k), toggleOrViewOnScreen 0 ws) | (ws, k) <- zip myWorkspaces ([xK_1 .. xK_9] ++ [xK_0])]
-    ++ [((guiMask, k), toggleOrViewOnScreen 1 ws) | (ws, k) <- zip myWorkspaces [xK_F1 .. xK_F10]]
+    ++ [((guiMask, k), toggleOrView ws) | (ws, k) <- zip myWorkspaces ([xK_1 .. xK_9] ++ [xK_0])]
     ++ [((guiMask .|. shiftMask, k), windows $ shift ws) | (ws, k) <- zip myWorkspaces ([xK_1 .. xK_9] ++ [xK_0])]
     where
         myWsSwitch = perScreen (toggleBetween "1:Edit" "2:Term") (toggleBetween "4:Web" "3:Ref")
 
         raiseOnWeb = windows $ viewOnScreen 1 "4:Web"
         dmenuSearch = dmenuSearchWithConf' raiseOnWeb myDmenuConfig
-
-        launcher = dmenuLaunchWithConf myDmenuConfig myApps
+        dmenuRun = dmenuRunWithConf myDmenuConfig
+        dmenuLaunch = dmenuLaunchWithConf myDmenuConfig myApps
 
         screenshot = spawn "maim $HOME/Pictures/$(date +%F-%T).png"
         selectingScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
@@ -309,7 +309,7 @@ myKeys conf = M.fromList $
             [ ((0, xK_a), amazon)
             , ((0, xK_e), english)
             , ((0, xK_g), github)
-            , ((0, xK_h), hoogle)
+            , ((0, xK_h), hackage)
             , ((0, xK_i), images)
             , ((0, xK_j), japanese)
             , ((0, xK_l), archLinux)
@@ -333,6 +333,7 @@ toggleOrView = toggleOrDoSkip [] view
 toggleOrViewOnScreen :: ScreenId -> WorkspaceId -> X ()
 toggleOrViewOnScreen sid = toggleOrDoSkip [] (viewOnScreen sid)
 
+{-
 mkPromptConfig :: (Char -> Bool) -> XPConfig
 mkPromptConfig f = def
     { P.font = "xft:sans-serif:size=11"
@@ -361,6 +362,7 @@ mkPromptKeymap f = M.fromList $
     where
         moveWord dir = P.moveWord' f dir
         killWord dir = P.killWord' f dir
+-}
 
 myDmenuConfig :: DmenuConfig
 myDmenuConfig = def
@@ -386,7 +388,7 @@ dmenuLaunchWithConf conf apps = do
     (S currentScreen) <- getCurrentScreen
     let args = mkDmenuArgs $ conf
             { monitor = Just currentScreen
-            , prompt = "run:"
+            , prompt = "app:"
             }
     input <- menuArgs "dmenu" args $ M.keys apps
     if input == "" then return ()
@@ -394,6 +396,15 @@ dmenuLaunchWithConf conf apps = do
         case M.lookup input apps of
             Nothing -> return ()
             (Just x) -> x
+
+dmenuRunWithConf :: DmenuConfig -> X ()
+dmenuRunWithConf conf = do
+    (S currentScreen) <- getCurrentScreen
+    let args = mkDmenuArgs $ conf
+            { monitor = Just currentScreen
+            , prompt = "command:"
+            }
+    safeSpawn "dmenu_run" args
 
 homeToTilde :: String -> String
 homeToTilde p =
