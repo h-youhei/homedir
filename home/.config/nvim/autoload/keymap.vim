@@ -131,8 +131,8 @@ function! keymap#get_above_word()
 	endif
 	let cur_line = strpart(getline(n_line), 0, n_col)
 	let prev_line = getline(n_line - 1)
-	let word_count = util#match_count(cur_line, '\v<\S*') + 1
-	return matchstr(prev_line, '\v<\S*', 0, word_count)
+	let word_count = util#match_count(cur_line, '\v<\w*') + 1
+	return matchstr(prev_line, '\v<\w*', 0, word_count)
 endfunction
 
 function! keymap#get_below_word()
@@ -143,6 +143,6 @@ function! keymap#get_below_word()
 	endif
 	let cur_line = strpart(getline(n_line), 0, n_col)
 	let next_line = getline(n_line + 1)
-	let word_count = util#match_count(cur_line, '\v<\S*') + 1
-	return matchstr(next_line, '\v<\S*', 0, word_count)
+	let word_count = util#match_count(cur_line, '\v<\w*') + 1
+	return matchstr(next_line, '\v<\w*', 0, word_count)
 endfunction
