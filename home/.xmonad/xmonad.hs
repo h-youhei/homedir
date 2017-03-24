@@ -68,13 +68,14 @@ import XMonad.Actions.SpawnOn(manageSpawn, spawnOn)
 import XMonad.Actions.UpdatePointer(updatePointer)
 import XMonad.Actions.WithAll(killAll)
 
-import XMonad.Hooks.DynamicLog(dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
-import XMonad.Hooks.EwmhDesktops(ewmh, fullscreenEventHook)
+import XMonad.Hooks.DynamicLog(shorten, dynamicLogWithPP, PP(..), xmobarPP, xmobarColor, wrap, pad)
+import XMonad.Hooks.EwmhDesktops(ewmh)
 import XMonad.Hooks.ManageDocks(docks, avoidStruts)
-import XMonad.Hooks.ManageHelpers(isDialog, doRectFloat, doCenterFloat, isFullscreen, doFullFloat, transience')
+import XMonad.Hooks.ManageHelpers(isDialog, doRectFloat, doCenterFloat,doFullFloat)
 import XMonad.Hooks.SetWMName(setWMName)
 import XMonad.Hooks.WorkspaceHistory(workspaceHistory)
 
+import XMonad.Layout.Fullscreen(fullscreenSupport)
 import XMonad.Layout.Grid(Grid(..))
 import XMonad.Layout.PerWorkspace(onWorkspace)
 import XMonad.Layout.Simplest(Simplest(..))
@@ -119,7 +120,7 @@ import Text.Regex(mkRegex, subRegex)
 main :: IO ()
 main = do
     bar <- spawnPipe "xmobar"
-    xmonad $ (ewmh . docks) def
+    xmonad $ (ewmh . fullscreenSupport . docks) def
         { workspaces = myWorkspaces
         , layoutHook = avoidStruts myLayout
         , modMask = mod4Mask
@@ -129,7 +130,7 @@ main = do
         , startupHook = myStartup
         --, mouseBindings = myMouseBindings
         , manageHook = myManageHook
-        , handleEventHook = fullscreenEventHook
+        --, handleEventHook = fullscreenEventHook
         , focusFollowsMouse = True
         , clickJustFocuses = False
         }
@@ -155,15 +156,18 @@ mkPP bar = xmobarPP
     , ppVisible = xmobarColor "yellow" "" . wrap "<" ">"
     , ppHidden = xmobarColor "white" "" . wrap "(" ")"
     , ppHiddenNoWindows = xmobarColor "white" ""
+    , ppTitle = xmobarColor "lime" "" . shorten 80
     , ppUrgent = xmobarColor "red" ""
-    , ppSep = "   "
+    , ppSep = "     "
     , ppWsSep = "  "
-    , ppOrder = \(ws:_:t:cwd:_) -> [ws, cwd, t]
+    , ppOrder = \(ws:_:t:_) -> [ws, t]
     --, ppSort = fmap (. filterOutWorkspaces ["NSP"]) $ ppSort def
     , ppOutput = hPutStrLn bar
+    {-
     , ppExtras =
         [ onLogger (wrap "[" "]" . dirShorten 80 6 . homeToTilde) logCwd
         ]
+    -}
     }
 
 myStartup :: X ()
@@ -174,7 +178,6 @@ myStartup = do
     ws <- gets windowset
     if isExistAnyWindow ws then return ()
     else do
-        io cdToMark
         spawnOn "4:Web" =<< io getBrowser
         launchTerminalOn "1:Edit"
         setScreenWith "1:Edit" "4:Web"
@@ -187,8 +190,6 @@ isExistAnyWindow ws = any (isJust . stack) (W.workspaces ws)
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ manageSpawn
-    , transience'
-    , isFullscreen --> doFullFloat
     , isDialog --> doFloat
     , title =? "mutt" --> doShiftAndGo "5:Mail"
     , title =? "weechat" --> doShiftAndGo "6:Message"
@@ -223,15 +224,14 @@ myKeys conf = M.fromList $
     , ((guiMask .|. altMask, xK_Left), sendMessage Shrink)
     , ((guiMask .|. altMask, xK_Right), sendMessage Expand)
     -- it doesn't work
-    --, ((guiMask, xK_equal), refresh)
+    , ((guiMask, xK_equal), refresh)
 
     , ((guiMask, xK_n), windows focusDown)
     , ((guiMask .|. shiftMask, xK_n), windows focusUp)
     , ((guiMask, xK_m), windows focusMaster)
     , ((guiMask .|. shiftMask, xK_m), windows shiftMaster)
 
-    , ((guiMask, xK_l), dmenuLaunch)
-    , ((guiMask .|. shiftMask, xK_l), dmenuRun)
+    , ((guiMask, xK_l), dmenuRun)
 
     , ((guiMask, xK_o), promptSelection =<< io getBrowser)
 
@@ -247,10 +247,8 @@ myKeys conf = M.fromList $
     , ((guiMask, xK_Tab), nextScreen)
     , ((guiMask .|. shiftMask, xK_Tab), shiftNextScreen)
 
-    , ((guiMask, xK_Return), io cdToMark >> launchTerminal)
+    , ((guiMask, xK_Return), launchTerminal)
     --, ((guiMask .|. shiftMask, xK_Return), launchTermInFocusedCwd)
-
-    , ((guiMask, xK_x), io cdToMark >> rescreen)
 
     , ((0, xK_Print), screenshot)
     , ((shiftMask, xK_Print), selectingScreenshot)
@@ -273,18 +271,18 @@ myKeys conf = M.fromList $
         , ((0, xK_r), reboot)
         , ((0, xK_s), suspend)
         , ((0, xK_h), hibernate)
-        , ((0, xK_l), logout)
         ])
     ]
     ++ [((guiMask, k), toggleOrView ws) | (ws, k) <- zip myWorkspaces ([xK_1 .. xK_9] ++ [xK_0])]
     ++ [((guiMask .|. shiftMask, k), windows $ shift ws) | (ws, k) <- zip myWorkspaces ([xK_1 .. xK_9] ++ [xK_0])]
+    ++ [((guiMask .|. altMask .|. m, k), app) | (m, k, app) <- myApps]
     where
         myWsSwitch = perScreen (toggleBetween "1:Edit" "2:Term") (toggleBetween "4:Web" "3:Ref")
 
         raiseOnWeb = windows $ viewOnScreen 1 "4:Web"
         dmenuSearch = dmenuSearchWithConf' raiseOnWeb myDmenuConfig
         dmenuRun = dmenuRunWithConf myDmenuConfig
-        dmenuLaunch = dmenuLaunchWithConf myDmenuConfig myApps
+        --dmenuLaunch = dmenuLaunchWithConf myDmenuConfig myApps
 
         screenshot = spawn "maim $HOME/Pictures/$(date +%F-%T).png"
         selectingScreenshot = spawn "maim -s --nokeyboard $HOME/Pictures/$(date +%F-%T).png"
@@ -301,7 +299,6 @@ myKeys conf = M.fromList $
         --hibernate = spawn "systemctl hibernate"
         poweroff = spawn "systemctl poweroff"
         reboot = spawn "systemctl reboot"
-        logout = spawn "pkill -KILL -u $USERNAME"
 
         submapDmenuSearch = M.fromList $ [(k, dmenuSearch q) | (k, q) <- searchQuery]
         submapSelectSearch = M.fromList $ [(k, raiseOnWeb >> selectSearch q) | (k, q) <- searchQuery]
@@ -324,6 +321,18 @@ myKeys conf = M.fromList $
                 english = searchEngine "english" "http://www.oxfordlearnersdictionaries.com/search/english/?=english&q="
                 translation = searchEngine "translation" "http://eowpf.alc.co.jp/search?q="
                 japanese = searchEngine "japanese" "http://dictionary.goo.ne.jp/freewordsearcher.html?mode=1&kind=jn&MT="
+        myApps =
+            [ (0, xK_w, web)
+            , (0, xK_m, mail)
+            , (0, xK_c, chat)
+            , (0, xK_v, vim)
+            ]
+            where
+                web = spawn =<< io getBrowser
+                vim = runInTerm "nvim"
+                mail = runInTerm "mutt"
+                chat = runInTerm "weechat"
+
 
 --myMouseBindings = M.fromlist
 
@@ -370,33 +379,6 @@ myDmenuConfig = def
     , font = "sans-serif 11"
     }
 
-myApps =
-    M.fromList
-    [ ("w", web)
-    , ("m", mail)
-    , ("c", chat)
-    , ("v", vim)
-    ]
-    where
-        web = spawn =<< io getBrowser
-        vim = runInTerm "nvim"
-        mail = runInTerm "mutt"
-        chat = runInTerm "weechat"
-
-dmenuLaunchWithConf :: DmenuConfig -> Map String (X ()) -> X ()
-dmenuLaunchWithConf conf apps = do
-    (S currentScreen) <- getCurrentScreen
-    let args = mkDmenuArgs $ conf
-            { monitor = Just currentScreen
-            , prompt = "app:"
-            }
-    input <- menuArgs "dmenu" args $ M.keys apps
-    if input == "" then return ()
-    else
-        case M.lookup input apps of
-            Nothing -> return ()
-            (Just x) -> x
-
 dmenuRunWithConf :: DmenuConfig -> X ()
 dmenuRunWithConf conf = do
     (S currentScreen) <- getCurrentScreen
@@ -413,17 +395,6 @@ homeToTilde p =
 
 getTerminal :: X String
 getTerminal = asks $ terminal . config
-
-getMark :: IO FilePath
-getMark = do
-    confdir <- getXMonadDir
-    mark <- readFile (confdir ++ "/mark") `E.catch` econst (getEnv "HOME")
-    return $ filter (/= '\n') mark
-
-cdToMark :: IO ()
-cdToMark = do
-    mark <- getMark
-    changeDir mark
 
 getFocusedWindow :: X (Maybe Window)
 getFocusedWindow = gets $ W.peek . windowset
@@ -511,7 +482,6 @@ numberOfFloating = gets $ length . M.keys . floating . windowset
 {-
 promptChangeDir :: XPConfig -> X ()
 promptChangeDir conf = directoryPrompt conf "cd: " (io . changeDir)
--}
 
 emptyIsHome :: FilePath -> IO FilePath
 emptyIsHome "" = getEnv "HOME"
@@ -521,9 +491,10 @@ changeDir :: FilePath -> IO ()
 changeDir s = do
     dest <- emptyIsHome s
     catchIO $ setCurrentDirectory dest
-
+-}
 
 --Hooks.DinamicLog
+{-
 dirShorten :: Int -> Int -> String -> String
 dirShorten nWhole nDir s
     | length s < nWhole = s
@@ -545,6 +516,7 @@ split c s = takeWhile (/= c) s : split c (dropWhile (== c) . dropWhile (/= c) $ 
 
 filterOutWorkspaces :: [String] -> [WindowSpace] -> [WindowSpace]
 filterOutWorkspaces out = filter (\(Workspace tag _ _) -> not (tag `elem` out))
+-}
 
 -- In order to read zshenv, "-e sh -c cmd" is required
 --Util.Run
@@ -577,8 +549,10 @@ commandInTerm :: String -> X ()
 commandInTerm = commandInTerm' spawn
 
 --Util.Loggers
+{-
 logCwd :: Logger
 logCwd = io getCurrentDirectory >>= \cwd -> return $ Just cwd
+-}
 
 --Util.Dmenu
 data DmenuConfig = DmenuConfig
