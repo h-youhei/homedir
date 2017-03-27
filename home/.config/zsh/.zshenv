@@ -7,6 +7,8 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 typeset -U path fpath
 path=(
 	~/bin(N-/)
+	~/.cargo/bin(N-/)
+	$GOPATH/bin(N-/)
 	$path
 )
 fpath=(
