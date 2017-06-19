@@ -199,13 +199,13 @@ noremap <silent> <A-.> :&&<CR>
 noremap <silent> <A->> + :@:<CR>
 
 "search
-noremap <expr> / (fcitx#restore_state() . '/\V')
-noremap <expr> ? (fcitx#restore_state() . '?\V')
-noremap <expr> <A-/> (fcitx#restore_state() . '/\v')
-noremap <expr> <A-?> (fcitx#restore_state() . '?\v')
+noremap <expr> / (im#restore_state() . '/\V')
+noremap <expr> ? (im#restore_state() . '?\V')
+noremap <expr> <A-/> (im#restore_state() . '/\v')
+noremap <expr> <A-?> (im#restore_state() . '?\v')
 
-cnoremap <expr> <CR> (fcitx#inactivate_with_state() . '<CR>')
-cnoremap <expr> <Esc> (fcitx#inactivate_with_state() . '<C-u><BS>')
+cnoremap <expr> <CR> (im#inactivate_with_state() . '<CR>')
+cnoremap <expr> <Esc> (im#inactivate_with_state() . '<C-u><BS>')
 "Register
 "* + 0 a-z A-Z % # / :
 noremap ' "+
