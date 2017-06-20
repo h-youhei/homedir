@@ -1,4 +1,4 @@
-let g:ibus#layout = 'xkb::us::eng'
+let g:ibus#layout = 'xkb:us::eng'
 let g:ibus#engine = 'replace-with-kanji-python'
 
 let s:dein_dir = expand('$XDG_CACHE_HOME/dein')
