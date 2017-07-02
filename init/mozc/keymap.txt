@@ -1,14 +1,12 @@
 status	key	command
 Precomposition	Backspace	Revert
 Precomposition	Ctrl Backspace	Undo
-Precomposition	Muhenkan	InputModeFullKatakana
+Precomposition	Muhenkan	ToggleAlphanumericMode
 Precomposition	Ctrl Henkan	Reconvert
 Precomposition	Space	InsertSpace
 Precomposition	Shift Space	InsertAlternateSpace
-Precomposition	Ctrl Space	InsertSpace
-Precomposition	Ctrl Shift Space	InsertAlternateSpace
-Precomposition	Ctrl w	LaunchWordRegisterDialog
-Precomposition	Ctrl d	LaunchDictionaryTool
+Precomposition	Ctrl Henkan	LaunchWordRegisterDialog
+Precomposition	Ctrl Muhenkan	LaunchDictionaryTool
 Composition	Backspace	Backspace
 Composition	Delete	Delete
 Composition	Escape	Cancel
@@ -18,37 +16,33 @@ Composition	Home	MoveCursorToBeginning
 Composition	End	MoveCursorToEnd
 Composition	Ctrl Space	InsertSpace
 Composition	Ctrl Shift Space	InsertAlternateSpace
-Composition	Muhenkan	DisplayAsFullKatakana
-Composition	Shift Muhenkan	DisplayAsHiragana
+Composition	Hiragana	DisplayAsFullKatakana
+Composition	Katakana	DisplayAsHiragana
+Composition	Muhenkan	ToggleAlphanumericMode
 Composition	Space	Convert
-Suggestion	Shift Space	PredictAndConvert
 Composition	Enter	Commit
 Suggestion	Tab	CommitFirstSuggestion
 Prediction	Ctrl Delete	DeleteSelectedCandidate
 Conversion	Backspace	Cancel
 Conversion	Delete	Cancel
 Conversion	Escape	Cancel
-Conversion	Down	SegmentWidthShrink
-Conversion	Up	SegmentWidthExpand
-Conversion	Left	SegmentFocusLeft
-Conversion	Right	SegmentFocusRight
+Conversion	Left	SegmentWidthShrink
+Conversion	Right	SegmentWidthExpand
+Conversion	Ctrl Left	SegmentFocusLeft
+Conversion	Ctrl Right	SegmentFocusRight
 Conversion	Home	SegmentFocusFirst
 Conversion	End	SegmentFocusLast
 Conversion	Ctrl Space	InsertSpace
 Conversion	Ctrl Shift Space	InsertAlternateSpace
 Conversion	Tab	CommitOnlyFirstSegment
 Conversion	Enter	Commit
-Conversion	Shift Muhenkan	ConvertToHiragana
-Conversion	Muhenkan	ConvertToFullKatakana
+Conversion	Shift Henkan	ConvertToHiragana
+Conversion	Henkan	ConvertToFullKatakana
+Conversion	Muhenkan	ToggleAlphanumericMode
 Conversion	Space	ConvertNext
 Conversion	Shift Space	ConvertPrev
 Conversion	PageDown	ConvertNextPage
 Conversion	PageUp	ConvertPrevPage
-Precomposition	Shift Muhenkan	InputModeHiragana
-DirectInput	Henkan	IMEOn
-Precomposition	Henkan	IMEOff
-Composition	Henkan	IMEOff
-Conversion	Henkan	IMEOff
 Composition	ASCII	InsertCharacter
 Composition	OFF	IMEOff
 Composition	ON	IMEOn
