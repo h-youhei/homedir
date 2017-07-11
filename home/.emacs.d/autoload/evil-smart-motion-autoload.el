@@ -4,4 +4,4 @@
 (autoload 'evil-smart-end-of-line "evil-smart-motion" "" t)
 (autoload 'evil-smart-goto-last-line "evil-smart-motion" "" t)
 
-(provide 'autoload-evil-smart-motion)
+(provide 'evil-smart-motion-autoload)

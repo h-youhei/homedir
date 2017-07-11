@@ -5,4 +5,4 @@
 (autoload 'evil-surround-whole-word "evil-surround-plus" "" t)
 (autoload 'evil-surround-whole-WORD "evil-surround-plus" "" t)
 
-(provide 'autoload-evil-surround-plus)
+(provide 'evil-surround-plus-autoload)

@@ -1,13 +1,11 @@
 (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
 
-(require 'autoload-evil-start-insert)
-(require 'autoload-evil-operate-word)
-(require 'autoload-evil-smart-motion)
-(require 'autoload-evil-ex-interactive)
-(require 'autoload-misc)
+(require 'emacs-plus-autoload)
+(require 'evil-plus-autoload)
+(require 'evil-smart-motion-autoload)
 
-(require 'autoload-evil-surround-plus)
+(require 'evil-surround-plus-autoload)
 
-(require 'autoload-evil-exchange-plus)
+(require 'evil-exchange-plus-autoload)
 
 (provide 'init-autoload)

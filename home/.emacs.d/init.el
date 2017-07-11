@@ -140,20 +140,20 @@
   (if do-remove
 	(progn
 	  (when (and
-			evil-maybe-remove-spaces
-			(save-excursion
-			  (beginning-of-line)
-			  (looking-at "^\\s-*$"))
-		 (delete-region (line-beginning-position) (line-end-position))))
-		 (setq evil-maybe-remove-spaces nil))
-	  (setq evil-maybe-remove-spaces (memq this-command '(
-		 evil-open-above
-		 evil-open-below
-		 evil-append
-		 evil-append-line
-		newline
-		newline-and-indent
-		indent-and-newline)))))
+			  evil-maybe-remove-spaces
+			  (save-excursion
+				(beginning-of-line)
+				(looking-at "^\\s-*$")))
+		(delete-region (line-beginning-position) (line-end-position))
+		(setq evil-maybe-remove-spaces nil)))
+	(setq evil-maybe-remove-spaces
+		  (memq this-command '( evil-open-above
+								evil-open-below
+								evil-append
+								evil-append-line
+								newline
+								newline-and-indent
+								indent-and-newline)))))
 
 
 (advice-add #'evil-maybe-remove-spaces :override #'evil-maybe-remove-spaces-fix)
