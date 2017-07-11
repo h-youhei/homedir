@@ -155,7 +155,6 @@
 								newline-and-indent
 								indent-and-newline)))))
 
-
 (advice-add #'evil-maybe-remove-spaces :override #'evil-maybe-remove-spaces-fix)
 
 (evil-mode 1)
@@ -168,7 +167,6 @@
 
 (load (expand-file-name "theme" user-emacs-directory))
 
-; load major mode settings
 (add-to-list 'load-path (expand-file-name "mode" user-emacs-directory))
 (require 'init-mode)
 
