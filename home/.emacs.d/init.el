@@ -66,7 +66,11 @@
 (show-paren-mode 1)
 (save-place-mode 1)
 (setq-default tab-width 2)
-(setq tab-always-indent nil)
+(setq
+	backward-delete-char-untabify-method 'hungry
+	electric-indent-chars (remq ?\n electric-indent-chars)
+	)
+;(electric-indent-mode 0)
 (setq comment-style 'plain)
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -85,6 +89,7 @@
 			(mapc #'package-install not-installed))))
 
 ;evil
+(require 'evil)
 (setq
 	evil-move-cursor-back nil ;when leave insert. t is vim equivalent
 	evil-cross-lines t ;at line egde
@@ -100,8 +105,9 @@
 	evil-ex-substitute-global t
 	)
 (setq-default evil-shift-width tab-width)
-(require 'evil)
 ;(setq-global evil-surround-pairs-alist)
+
+(evil-declare-not-repeat #'evil-yank-line)
 
 (setq
 	undo-tree-auto-save-history t
@@ -126,10 +132,31 @@
 	company-tooltip-limit 5
 	company-tooltip-offset-display nil
 	)
-
 (global-company-mode 1)
 (add-to-list 'load-path (expand-file-name "autoload" user-emacs-directory))
 (require 'init-autoload)
+
+(defun evil-maybe-remove-spaces-fix (&optional do-remove)
+  (if do-remove
+	(progn
+	  (when (and
+			evil-maybe-remove-spaces
+			(save-excursion
+			  (beginning-of-line)
+			  (looking-at "^\\s-*$"))
+		 (delete-region (line-beginning-position) (line-end-position))))
+		 (setq evil-maybe-remove-spaces nil))
+	  (setq evil-maybe-remove-spaces (memq this-command '(
+		 evil-open-above
+		 evil-open-below
+		 evil-append
+		 evil-append-line
+		newline
+		newline-and-indent
+		indent-and-newline)))))
+
+
+(advice-add #'evil-maybe-remove-spaces :override #'evil-maybe-remove-spaces-fix)
 
 (evil-mode 1)
 

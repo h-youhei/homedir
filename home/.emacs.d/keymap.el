@@ -168,10 +168,20 @@
 (define-key nmap (kbd "SPC X") #'evil-exchange-whole-WORD)
 
 ;insert
-(define-key cmap [escape] #'(lambda () (interactive) (company-abort) (evil-normal-state)))
+(define-key imap [tab] #'tab-to-tab-stop)
 (define-key cmap [tab] #'company-complete-selection)
-(define-key cmap [return] #'(lambda () (interactive) (company-abort) (evil-ret)))
+(define-key imap [return] #'newline-and-indent)
+(define-key cmap [return] nil)
 (define-key cmap (kbd "C-n") #'company-select-next)
 (define-key cmap (kbd "C-p") #'company-select-previous)
 (define-key cmap [up] nil)
 (define-key cmap [down] nil)
+
+(add-hook 'company-completion-started-hook
+		  #'(lambda (_) (advice-add #'newline-and-indent :before #'company-abort)))
+(add-hook 'company-completion-started-hook
+		  #'(lambda (_) (advice-add #'evil-normal-state :before #'company-abort)))
+(add-hook 'company-completion-cancelled-hook
+		  #'(lambda (_) (advice-remove #'newline-and-indent #'company-abort)))
+(add-hook 'company-completion-cancelled-hook
+		  #'(lambda (_) (advice-remove #'evil-normal-state #'company-abort)))
