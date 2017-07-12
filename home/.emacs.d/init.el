@@ -1,9 +1,10 @@
-(defvar auto-install nil)
+(defvar auto-install t)
 (defconst favorite-packages '(evil
                               evil-surround
                               evil-exchange
                               linum-relative
                               ivy
+                              projectile
                               company
                               haskell-mode
                               ghc
@@ -68,6 +69,7 @@
  )
 (setq comment-style 'plain)
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq use-dialog-box nil)
 
 ;; packages
 ;; packape manager
