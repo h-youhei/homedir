@@ -8,23 +8,26 @@
                         (concat
                          " "
                          (mode-line-directories)
-                         ;; buffer name
                          (mode-line-buffer-name 12)
                          (if buffer-read-only " [RO]" "")
                          (if (buffer-modified-p) " [+]" "")
                          (mode-line-major-mode)
                          (mode-line-encoding)
+                         ;; (column,line/total line)
                          (format-mode-line " (%c,%l/")
                          (format "%d" (line-number-at-pos (point-max)))
                          ")")))))
 
 (defun mode-line-align (left right)
   (let ((available-width (- (window-total-width) (length left))))
+    ;; after evaluated inner format, if available-width were 80
+    ;; (format "%s%80s" left right)
     (format (format "%%s%%%ds" available-width) left right)))
 
 (defun mode-line-buffer-name (max-length)
   (let ((name (buffer-name)))
     (substring name 0 (min (length name) max-length))))
+
 (defun mode-line-directories ()
   (let ((parent
          (if (projectile-project-p)
@@ -35,12 +38,14 @@
     (concat parent mode-line-current-directory)))
 
 (defun mode-line-major-mode ()
+  ;; Ordinary case, show nothing.
   (if (string-match-p "Fundamental" mode-name)
       ""
     (concat " [" mode-name "]")))
 
 (defun mode-line-encoding ()
   (let ((enc (symbol-name buffer-file-coding-system)))
+    ;; Ordinary case, show nothing.
     (cond ((and (string-match-p "unix" enc)
                 (or (string-match-p "utf-8" enc)
                     (string-match-p "undecided" enc)))
