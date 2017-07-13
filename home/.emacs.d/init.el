@@ -1,4 +1,4 @@
-(defvar auto-install t)
+(defvar auto-install nil)
 (defconst favorite-packages '(evil
                               evil-surround
                               evil-exchange
@@ -108,7 +108,7 @@
 (setq undo-tree-auto-save-history t
       undo-tree-history-directory-alist `((".*" . ,(concat temp-emacs-dir "/undo")))
       ;;undo-tree-visualizer-diff t
- )
+      )
 
 
 ;; real number for current line
@@ -120,6 +120,15 @@
 
 (ivy-mode 1)
 
+;; projectile
+(setq projectile-completion-system 'ivy
+      projectile-keymap-prefix (kbd "C-p")
+      )
+(define-key evil-normal-state-map (kbd "C-p") nil)
+(projectile-mode 1)
+
+
+;; company
 (setq company-idle-delay 0
       company-minimum-prefix-length 2
       company-tooltip-minimum 3
@@ -157,11 +166,8 @@
 (evil-mode 1)
 
 (load (expand-file-name "alias" user-emacs-directory))
-
 (load (expand-file-name "keymap" user-emacs-directory))
-
 (load (expand-file-name "modeline" user-emacs-directory))
-
 (load (expand-file-name "theme" user-emacs-directory))
 
 (add-to-list 'load-path (expand-file-name "mode" user-emacs-directory))
