@@ -90,10 +90,11 @@
 (setq evil-move-cursor-back nil ;when leave insert. t is vim equivalent
       evil-cross-lines t ;at line egde
       evil-want-C-i-jump nil
-      ;;evil-disable-insert-state-bindings t
+      evil-want-C-d-scroll nil
+      evil-disable-insert-state-bindings t
+      evil-echo-state nil
       evil-text-object-change-visual-type nil
       evil-ex-visual-char-range t
-      evil-indent-convert-tabs nil
       evil-search-module "evil-search"
       evil-magic "very-nomagic"
       evil-ex-search-vim-style-regexp t
