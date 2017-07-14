@@ -14,7 +14,8 @@
 ;; to refresh window settings, M-x desktop-remove
 
 ;; appearence
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t
+      inhibit-startup-echo-area-message t)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
@@ -173,13 +174,11 @@
 
 (evil-mode 1)
 
+(load (expand-file-name "mode-specific" user-emacs-directory))
 (load (expand-file-name "alias" user-emacs-directory))
 (load (expand-file-name "keymap" user-emacs-directory))
 (load (expand-file-name "modeline" user-emacs-directory))
 (load (expand-file-name "theme" user-emacs-directory))
-
-(add-to-list 'load-path (expand-file-name "mode" user-emacs-directory))
-(require 'init-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
