@@ -18,8 +18,10 @@
                          (format "%d" (line-number-at-pos (point-max)))
                          ")")))))
 
+;; change window-width to window-total-width after the bug is fixed.
+;; http://emacs.1067599.n8.nabble.com/bug-19972-24-4-Font-size-change-doesn-t-update-window-total-width-td351021.html
 (defun mode-line-align (left right)
-  (let ((available-width (- (window-total-width) (length left))))
+  (let ((available-width (- (+ (window-width) 5) (length left))))
     ;; after evaluated inner format, if available-width were 80
     ;; (format "%s%80s" left right)
     (format (format "%%s%%%ds" available-width) left right)))

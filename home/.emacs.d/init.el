@@ -9,7 +9,9 @@
                               haskell-mode
                               ghc
                               company-ghc
+                              markdown-mode
                               ))
+;; to refresh window settings, M-x desktop-remove
 
 ;; appearence
 (setq inhibit-startup-screen t)
@@ -17,6 +19,11 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (blink-cursor-mode 0)
+
+(set-frame-font "Dejavu Sans Mono 11" nil t)
+;; https://ja.wikipedia.org/wiki/IPA%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88
+;; ... JIS X 0213:2004に準拠している。
+(set-fontset-font t 'japanese-jisx0213.2004-1 (font-spec :family "IPA Gothic"))
 
 (setq whitespace-style '(face
                          trailing
