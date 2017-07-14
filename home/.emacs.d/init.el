@@ -147,7 +147,7 @@
 (global-company-mode 1)
 
 (add-to-list 'load-path (expand-file-name "autoload" user-emacs-directory))
-(require 'init-autoload)
+(require 'autoload-init)
 
 (defun evil-maybe-remove-spaces-fix (&optional do-remove)
   (if do-remove

@@ -1,3 +1,5 @@
+(require 'emacs-plus)
+
 (defgroup ibus nil
   "ibus state controller"
   :prefix "ibus-")
@@ -19,10 +21,10 @@
 
 (defun ibus-activate ()
   (interactive)
-  (with-temp-buffer (shell-command (concat "ibus engine " ibus-engine) t)))
+  (shell-command-no-echo (concat "ibus engine " ibus-engine)))
 
 (defun ibus-inactivate ()
   (interactive)
-  (with-temp-buffer (shell-command (concat "ibus engine " ibus-direct) t)))
+  (shell-command-no-echo (concat "ibus engine " ibus-direct)))
 
 (provide 'ibus)

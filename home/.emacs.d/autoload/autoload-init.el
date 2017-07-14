@@ -10,4 +10,6 @@
 
 (require 'evil-exchange-plus-autoload)
 
-(provide 'init-autoload)
+(require 'projectile-plus-autoload)
+
+(provide 'autoload-init)
