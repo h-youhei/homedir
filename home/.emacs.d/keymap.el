@@ -24,6 +24,7 @@
 (global-set-key (kbd "C-b") #'switch-to-buffer)
 (global-set-key (kbd "C-S-b") #'buffer-menu)
 (define-key mmap "q" #'evil-delete-buffer)
+(define-key nmap "q" #'evil-delete-buffer)
 (define-key nmap "Q" #'evil-save-and-delete-buffer)
 (define-key nmap "+" #'save-buffer)
 
