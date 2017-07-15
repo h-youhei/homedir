@@ -155,8 +155,10 @@
 (define-key vmap (kbd "SPC <tab>") #'evil-align-left)
 (define-key nmap (kbd "SPC <backtab>") #'evil-align-right)
 (define-key vmap (kbd "SPC <backtab>") #'evil-align-right)
+(define-key nmap "=" #'evil-indent-line)
 (define-key nmap (kbd "SPC =") #'evil-align-center)
 (define-key vmap (kbd "SPC =") #'evil-align-center)
+
 
 ;; surround
 (define-key omap "s" #'evil-surround-edit)
