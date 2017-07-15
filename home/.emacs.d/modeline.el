@@ -18,13 +18,25 @@
                          (format "%d" (line-number-at-pos (point-max)))
                          ")")))))
 
-;; change window-width to window-total-width after the bug is fixed.
+;; wait fix the bug: window-total-width.
 ;; http://emacs.1067599.n8.nabble.com/bug-19972-24-4-Font-size-change-doesn-t-update-window-total-width-td351021.html
 (defun mode-line-align (left right)
-  (let ((available-width (- (+ (window-width) 5) (length left))))
+  (let ((available-width (- (window-total-width-workaround) (length left))))
     ;; after evaluated inner format, if available-width were 80
     ;; (format "%s%80s" left right)
     (format (format "%%s%%%ds" available-width) left right)))
+
+(defun window-total-width-workaround ()
+  ;; 2 is fringe
+  (+ (window-width) 2 nlinum--width))
+
+(defun digit (number)
+  ;; return digit number of NUMBER
+  (let ((count 0))
+    (while (> number 0)
+      (setq number (/ number 10))
+      (setq count (1+ count)))
+    count))
 
 (defun mode-line-buffer-name (max-length)
   (let ((name (buffer-name)))
@@ -57,7 +69,7 @@
 
 (defun mode-line-evil-state ()
   (let ((s
-         (cond ((or (evil-normal-state-p) (evil-motion-state-p))
+         (cond ((evil-normal-state-p)
                 "")
                ((evil-insert-state-p)
                 "--Insert--")
@@ -65,8 +77,10 @@
                 "--Visual--")
                ((evil-replace-state-p)
                 "--Replace--")
+               ((evil-motion-state-p)
+                "--Motion--")
                ((evil-emacs-state-p)
-                "--Emacs-- ")
+                "--Emacs--")
                (t
                 "Waiting"))))
     (format "%-11s" s)))
@@ -87,14 +101,14 @@ HIERARCHY is max number of path hierarchies from current directory"
     (setq current (substring current 0 (min (length current) cur-max-len)))
     (setq current (concat current "/"))
 
-    (setq count 0)
-    (while (and path (< count hierarchy))
-      (let ((this (car path)))
-        (setq parent (concat (substring this 0 (min per (length this)))
-                             "/"
-                             parent)))
-      (setq path (cdr path))
-      (setq count (1+ count)))
+    (let ((count 0))
+      (while (and path (< count hierarchy))
+        (let ((this (car path)))
+          (setq parent (concat (substring this 0 (min per (length this)))
+                               "/"
+                               parent)))
+        (setq path (cdr path))
+        (setq count (1+ count))))
     (when path
       (setq parent (concat "../" parent)))
     (list parent current)))

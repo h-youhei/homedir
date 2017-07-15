@@ -1,8 +1,8 @@
-(defvar auto-install nil)
+(defvar auto-install t)
 (defconst favorite-packages '(evil
                               evil-surround
                               evil-exchange
-                              linum-relative
+                              nlinum-relative
                               ivy
                               projectile
                               company
@@ -125,10 +125,9 @@
 
 ;; real number for current line
 ;; relative number for the other line
-(setq linum-relative-current-symbol "")
-(require 'linum-relative)
-(global-linum-mode 1)
-(linum-relative-on)
+(setq nlinum-relative-redisplay-delay 0.02)
+(global-nlinum-mode 1)
+(nlinum-relative-on)
 
 (ivy-mode 1)
 
