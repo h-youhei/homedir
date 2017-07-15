@@ -7,16 +7,16 @@
 (defvaralias 'wmap 'evil-window-map)
 (defvaralias 'smap 'evil-ex-search-keymap)
 (defvaralias 'rmap 'evil-read-key-map)
-(defvaralias 'cmap 'company-active-map)
-(defvaralias 'pmap 'projectile-command-map)
 
 ;; to use as prefix key
 (define-key mmap (kbd "SPC") nil)
 
+(global-set-key [escape] #'keyboard-quit)
+(define-key nmap [escape] #'keyboard-quit)
+
 ;; window
 (global-set-key (kbd "M-t") #'open-terminal)
 (global-set-key (kbd "M-<return>") #'make-frame-command)
-(define-key pmap "t" #'projectile-open-terminal)
 (define-key mmap (kbd "M-SPC") #'evil-window-next)
 
 ;; buffer
@@ -179,18 +179,33 @@
 (define-key nmap (kbd "SPC X") #'evil-exchange-whole-WORD)
 
 ;; insert mode
-(define-key cmap [escape] #'(lambda () (interactive) (company-abort) (evil-normal-state)))
 ;(define-key imap [tab] #'tab-to-tab-stop)
-(define-key cmap [tab] #'company-complete-selection)
 (define-key imap [return] #'newline-and-indent)
-(define-key cmap [return] nil)
-(define-key cmap (kbd "C-n") #'company-select-next)
-(define-key cmap (kbd "C-p") #'company-select-previous)
-(define-key cmap [up] nil)
-(define-key cmap [down] nil)
 
+(let ((map company-active-map))
+  (define-key map [escape] #'(lambda () (interactive) (company-abort) (evil-normal-state)))
+  (define-key map [return] nil)
+  (define-key map [tab] #'company-complete-selection)
+  (define-key map (kbd "C-n") #'company-select-next)
+  (define-key map (kbd "C-p") #'company-select-previous)
+  (define-key map [up] nil)
+  (define-key map [down] nil)
+  )
 ;; to integrate evil-maybe-remove-spaces
 (add-hook 'company-completion-started-hook
           #'(lambda (_) (advice-add #'newline-and-indent :before #'company-abort)))
 (add-hook 'company-completion-cancelled-hook
           #'(lambda (_) (advice-remove #'newline-and-indent #'company-abort)))
+
+(let ((map minibuffer-local-map))
+  (define-key map [escape] 'minibuffer-keyboard-quit)
+  )
+
+(let ((map ivy-minibuffer-map))
+  (define-key map [escape] 'minibuffer-keyboard-quit)
+  (define-key map (kbd "S-<return>") 'ivy-immediate-done)
+  )
+
+(let ((map projectile-command-map))
+  (define-key map "t" #'projectile-open-terminal)
+  )
