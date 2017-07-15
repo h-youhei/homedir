@@ -1,4 +1,4 @@
-(defvar auto-install t)
+(defvar auto-install nil)
 (defconst favorite-packages '(evil
                               evil-surround
                               evil-exchange
@@ -51,11 +51,11 @@
 ;; history
 (defconst temp-emacs-dir (expand-file-name (format "emacs%d" (user-uid))
                                            temporary-file-directory))
-(setq backup-directory-alist `((".*" . ,(concat temp-emacs-dir "/backup")))
-      ;; auto-save/'s trailing slash is important
-      auto-save-file-name-transforms `((".*"
-                                        ,(expand-file-name "auto-save/"
-                                                           user-emacs-directory)
+(setq backup-directory-alist `((".*" . ,(expand-file-name "backup" temp-emacs-dir))))
+
+;; auto-save/'s trailing slash is important
+(setq auto-save-file-name-transforms `((".*"
+                                        ,(locate-user-emacs-file ".auto-save/")
                                         t))
       auto-save-timeout 60
       auto-save-interval 50)
@@ -68,14 +68,17 @@
       )
 (desktop-save-mode 1)
 
-;(setq recentf-max-saved-items 30
+(setq recentf-save-file (locate-user-emacs-file ".recentf")
+      ;recentf-max-saved-items 30
       ;recentf-exclude '("/TAGS$" "/var/tmp/" "/tmp/")
-
+      )
 (recentf-mode 1)
+
+(setq save-place-file (locate-user-emacs-file ".places"))
+(save-place-mode 1)
 
 ;; misc
 (show-paren-mode 1)
-(save-place-mode 1)
 (setq-default tab-width 4)
 (setq backward-delete-char-untabify-method 'hungry
       electric-indent-chars (remq ?\n electric-indent-chars)
@@ -123,7 +126,7 @@
 (evil-declare-not-repeat #'evil-yank-line)
 
 (setq undo-tree-auto-save-history t
-      undo-tree-history-directory-alist `((".*" . ,(concat temp-emacs-dir "/undo")))
+      undo-tree-history-directory-alist `((".*" . ,(locate-user-emacs-file ".undo-tree" )))
       ;;undo-tree-visualizer-diff t
       )
 
@@ -139,6 +142,9 @@
 ;; projectile
 (setq projectile-completion-system 'ivy
       projectile-keymap-prefix (kbd "C-p")
+      projectile-known-projects-file (locate-user-emacs-file ".projectile/bookmarks.eld")
+      projectile-cache-file (locate-user-emacs-file ".projectile/projectile.cache")
+      projectile-idle-timer-seconds 60
       )
 (define-key evil-normal-state-map (kbd "C-p") nil)
 (projectile-mode 1)
@@ -153,7 +159,7 @@
       )
 (global-company-mode 1)
 
-(add-to-list 'load-path (expand-file-name "autoload" user-emacs-directory))
+(add-to-list 'load-path (locate-user-emacs-file "autoload"))
 (require 'autoload-init)
 
 (defun evil-maybe-remove-spaces-fix (&optional do-remove)
@@ -181,11 +187,11 @@
 
 (evil-mode 1)
 
-(load (expand-file-name "mode-specific" user-emacs-directory))
-(load (expand-file-name "alias" user-emacs-directory))
-(load (expand-file-name "keymap" user-emacs-directory))
-(load (expand-file-name "modeline" user-emacs-directory))
-(load (expand-file-name "theme" user-emacs-directory))
+(load (locate-user-emacs-file "mode-specific"))
+(load (locate-user-emacs-file "alias"))
+(load (locate-user-emacs-file "keymap"))
+(load (locate-user-emacs-file "modeline"))
+(load (locate-user-emacs-file "theme"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
