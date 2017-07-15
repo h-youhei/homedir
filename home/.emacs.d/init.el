@@ -68,6 +68,11 @@
       )
 (desktop-save-mode 1)
 
+;(setq recentf-max-saved-items 30
+      ;recentf-exclude '("/TAGS$" "/var/tmp/" "/tmp/")
+
+(recentf-mode 1)
+
 ;; misc
 (show-paren-mode 1)
 (save-place-mode 1)

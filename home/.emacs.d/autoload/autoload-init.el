@@ -12,4 +12,6 @@
 
 (require 'projectile-plus-autoload)
 
+(require 'ivy-plus-autoload)
+
 (provide 'autoload-init)

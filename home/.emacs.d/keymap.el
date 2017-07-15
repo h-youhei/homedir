@@ -32,6 +32,8 @@
 (define-key mmap (kbd "C-f") nil)
 (global-set-key (kbd "C-f") #'find-file)
 (global-set-key (kbd "C-S-f") #'(lambda () (interactive) (dired "./")))
+(define-key nmap (kbd "C-r") nil)
+(global-set-key (kbd "C-r") #'ivy-recentf)
 
 ;; start insert
 (define-key nmap (kbd "SPC i") #'evil-insert-word)
