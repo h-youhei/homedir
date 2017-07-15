@@ -79,6 +79,9 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq use-dialog-box nil)
 
+;; use clipboard only explicitly
+(setq select-enable-clipboard nil)
+
 ;; packages
 ;; packape manager
 (require 'package)

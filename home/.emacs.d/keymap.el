@@ -23,7 +23,7 @@
 (define-key mmap (kbd "C-b") nil)
 (global-set-key (kbd "C-b") #'switch-to-buffer)
 (global-set-key (kbd "C-S-b") #'buffer-menu)
-(define-key nmap "q" #'evil-delete-buffer)
+(define-key mmap "q" #'evil-delete-buffer)
 (define-key nmap "Q" #'evil-save-and-delete-buffer)
 (define-key nmap "+" #'save-buffer)
 
@@ -115,7 +115,7 @@
 (define-key nmap "!" #'shell-command)
 (define-key vmap "!" #'evil-shell-command)
 
-(define-key nmap "'" #'(lambda () (interactive) (evil-use-register "+")))
+(define-key nmap "'" #'evil-use-clipboard)
 (define-key mmap [up] #'evil-smart-previous-line)
 (define-key imap [up] #'evil-previous-visual-line)
 (define-key mmap [down] #'evil-smart-next-line)

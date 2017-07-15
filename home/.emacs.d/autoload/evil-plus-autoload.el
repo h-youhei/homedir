@@ -14,6 +14,7 @@
 (autoload 'evil-break-line "evil-plus" "" t)
 (autoload 'evil-backward-substitute "evil-plus" "" t)
 
+(autoload 'evil-use-clipboard "evil-plus" "" t)
 (autoload 'evil-repeat-macro "evil-plus" "" t)
 (autoload 'evil-rectangle-number-lines "evil-plus" "" t)
 (autoload 'evil-save-and-delete-buffer "evil-plus" "" t)
