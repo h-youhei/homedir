@@ -202,6 +202,10 @@
 (add-hook 'company-completion-cancelled-hook
           #'(lambda (_) (advice-remove #'newline-and-indent #'company-abort)))
 
+(let ((map undo-tree-visualizer-mode-map))
+  (define-key map [escape] #'undo-tree-visualizer-quit)
+  )
+
 (let ((map minibuffer-local-map))
   (define-key map [escape] 'minibuffer-keyboard-quit)
   )

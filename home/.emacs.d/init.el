@@ -127,7 +127,16 @@
 
 (setq undo-tree-auto-save-history t
       undo-tree-history-directory-alist `((".*" . ,(locate-user-emacs-file ".undo-tree" )))
-      ;;undo-tree-visualizer-diff t
+      undo-tree-visualizer-diff t
+      )
+
+(setq
+      evil-motion-state-modes (delete 'undo-tree-visualizer-mode
+                                      evil-motion-state-modes)
+      evil-emacs-state-modes (cons 'undo-tree-visualizer-mode
+                                   (append evil-emacs-state-modes
+                                           evil-insert-state-modes))
+      evil-insert-state-modes '()
       )
 
 
