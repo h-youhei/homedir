@@ -14,6 +14,8 @@
 (global-set-key [escape] #'keyboard-quit)
 (define-key nmap [escape] #'keyboard-quit)
 
+(global-set-key (kbd "C-u") #'ivy-resume)
+
 ;; window
 (global-set-key (kbd "M-t") #'open-terminal)
 (global-set-key (kbd "M-<return>") #'make-frame-command)
