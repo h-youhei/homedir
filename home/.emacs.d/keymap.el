@@ -136,8 +136,10 @@
 
 ;; jump
 (define-key mmap "g" #'evil-goto-first-line)
+;; get rid of predefined keys
 (define-key nmap "g" #'evil-goto-first-line)
 (define-key mmap "G" #'evil-smart-goto-last-line)
+(define-key mmap (kbd "SPC g") #'mark-whole-buffer)
 (define-key mmap "j" #'evil-jump-item)
 (define-key mmap (kbd "SPC SPC") #'evil-window-middle)
 (define-key mmap (kbd "S-SPC") #'evil-middle-of-visual-line)
