@@ -15,16 +15,13 @@
   :group 'ibus)
 
 (defun get-ibus-state ()
-  (interactive)
   (let ((state (shell-command-to-string "ibus engine")))
     (string-match-p ibus-engine state)))
 
-(defun ibus-activate ()
-  (interactive)
+(defun ibus-turn-on ()
   (shell-command-no-echo (concat "ibus engine " ibus-engine)))
 
-(defun ibus-inactivate ()
-  (interactive)
+(defun ibus-turn-off ()
   (shell-command-no-echo (concat "ibus engine " ibus-direct)))
 
 (provide 'ibus)

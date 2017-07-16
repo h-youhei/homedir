@@ -6,14 +6,12 @@
 Non-nil means ibus is running.
 nil means ibus is not running.")
 
-(defun evil-ibus-inactivate ()
-  (interactive)
+(defun evil-ibus-backup ()
   (setq evil-ibus-state (get-ibus-state))
-  (ibus-inactivate))
+  (ibus-turn-off))
 
 (defun evil-ibus-restore ()
-  (interactive)
   (when evil-ibus-state
-    (ibus-activate)))
+    (ibus-turn-on)))
 
 (provide 'evil-ibus)
