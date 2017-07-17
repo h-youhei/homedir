@@ -1,0 +1,126 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'machakann/vim-textobj-delimited'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+lazy = 1
+on_ft = 'rust'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+lazy = 1
+on_cmd = 'Denite'
+hook_add = '''
+	nnoremap <silent> <Space>b :<C-u>Denite buffer<CR>
+	nnoremap <silent> <Space>U :<C-u>Denite -default-action='delete' buffer<CR>
+	nnoremap <silent> <Space>e :<C-u>Denite file_rec<CR>
+	nnoremap <silent> <Space>E :<C-u>Denite file_old<CR>
+	nnoremap <silent> cd :<C-u>Denite directory_rec<CR>
+	nnoremap <silent> ;h :<C-u>Denite jump<CR>
+	nnoremap <silent> ;H :<C-u>Denite change<CR>
+	nnoremap <silent> \ :<C-u>Denite help<CR>
+	nnoremap <silent> ;: :<C-u>Denite command<CR>
+'''
+hook_post_source = '''
+	call denite#custom#map('insert', '<UP>', '<denite:move_to_previous_line>', 'noremap')
+	call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
+	call denite#custom#map('insert', '<S-Up>', '<denite:move_to_first_line>', 'noremap')
+	call denite#custom#map('insert', '<S-Down>', '<denite:move_to_last_line>', 'noremap')
+	call denite#custom#map('insert', '<A-a>', '<denite:toggle_select_all>', 'noremap')
+	call denite#custom#map('insert', '<A-s>', '<denite:toggle_select_down>', 'noremap')
+	call denite#custom#map('insert', '<A-S>', '<denite:toggle_select_up>', 'noremap')
+
+'''
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+lazy = 1
+on_event = 'InsertEnter'
+hook_add = '''
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#max_list = 7
+	"issue #440
+	let g:deoplete#auto_complete_delay=50
+	inoremap <expr> <A-u> (pumvisible() ? keymap#abort_popup() : deoplete#undo_completion())
+'''
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+lazy = 1
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'zchee/deoplete-zsh'
+lazy = 1
+on_ft = 'zsh'
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+lazy = 1
+on_ft = 'python'
+
+[[plugins]]
+repo = 'eagletmt/neco-ghc'
+lazy = 1
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+	let g:openbrowser_browser_commands = [
+		\{ "name": "firefox"
+		\, "args": ["{browser}", "{uri}"] }]
+
+	map <Space>s <Plug>(openbrowser-smart-search)
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+	let g:sandwich_no_default_key_mappings = 1
+	let g:operator_sandwich_no_default_key_mappings = 1
+	let g:textobj_sandwich_no_default_key_mappings = 1
+
+	omap ib <Plug>(textobj-sandwich-auto-i)
+	xmap ib <Plug>(textobj-sandwich-auto-i)
+	omap ab <Plug>(textobj-sandwich-auto-a)
+	xmap ab <Plug>(textobj-sandwich-auto-a)
+	omap if <Plug>(textobj-sandwich-query-i)
+	xmap if <Plug>(textobj-sandwich-query-i)
+	omap af <Plug>(textobj-sandwich-query-a)
+	xmap af <Plug>(textobj-sandwich-query-a)
+
+	map <silent> e <Plug>(operator-sandwich-add)
+	nmap <silent> ee <Plug>(operator-sandwich-add)iw
+	nmap <silent> eE <Plug>(operator-sandwich-add)iW
+	nmap <silent> E <Home><Plug>(operator-sandwich-add)<End>
+	nmap <silent> <A-e> <Plug>(operator-sandwich-add)<End>
+	nmap <silent> <A-E> <Plug>(operator-sandwich-add)<Home>
+
+	nmap <silent> ce <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+	nmap <silent> cE <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+	nmap <silent> de <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+	nmap <silent> dE <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+
+	xmap <silent> C <Plug>(operator-sandwich-replace)
+	xmap <silent> D <Plug>(opecator-sandwich-delete)
+
+	nmap . <Plug>(operator-sandwich-dot)
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+lazy = 0
+hook_add = '''
+	let g:neosnippet#disable_runtime_snippets = { '_' : 1 }
+	let g:neosnippet#snippets_directory = expand('$XDG_CONFIG_HOME/nvim/snips')
+
+	nnoremap Zs :NeoSnippetEdit<CR>
+	imap <A-s> <Plug>(neosnippet_expand_or_jump)
+	xmap <A-x> <Plug>(neosnippet_expand_target)
+'''
