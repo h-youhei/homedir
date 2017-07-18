@@ -40,9 +40,21 @@ If COUNT is given, go to COUNT column from end of the line on the current line."
       (let ((end (- (line-end-position) (line-beginning-position))))
         (evil-goto-column (max 0 (- end count))))
     (let ((oldpos (point)))
-      (evil-end-of-line count)
+      (evil-end-of-line-fix nil)
       (when (= oldpos (point))
         (evil-last-non-blank nil)))))
+
+;; handle insert mode
+(evil-define-motion evil-end-of-line-fix (count)
+  (move-end-of-line count)
+  (when evil-track-eol
+    (setq temporary-goal-column most-positive-fixnum
+          this-command 'next-line))
+  (unless (or (evil-visual-state-p)
+              (evil-insert-state-p))
+    (evil-adjust-cursor)
+    (when (eolp)
+      (setq evil-this-type 'exclusive))))
 
 (evil-define-motion evil-smart-goto-last-line (count)
   "Go to the first non-blank character of the last line.
