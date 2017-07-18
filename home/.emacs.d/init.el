@@ -84,6 +84,7 @@
       scroll-step 1)
 
 ;; misc
+(setq help-window-select t)
 (show-paren-mode 1)
 (setq-default tab-width 4)
 (setq backward-delete-char-untabify-method 'hungry
