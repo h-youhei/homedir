@@ -115,7 +115,6 @@
 (setq evil-cross-lines t ;at line egde
       evil-want-C-i-jump nil
       evil-want-C-d-scroll nil
-      evil-disable-insert-state-bindings t
       evil-echo-state nil
       evil-text-object-change-visual-type nil
       evil-ex-visual-char-range t
@@ -197,8 +196,17 @@
                                indent-and-newline
                                haskell-indentation-newline-and-indent
                                )))))
-
 (advice-add #'evil-maybe-remove-spaces :override #'evil-maybe-remove-spaces-fix)
+
+;; don't use register when delete a char
+(defun evil-without-register (orig-fn beg end type register &rest args)
+  (if (evil-visual-state-p)
+      (apply orig-fn beg end type register args)
+    (apply orig-fn beg end type ?_ args)))
+(advice-add #'evil-delete-char :around #'evil-without-register)
+(advice-add #'evil-delete-backward-char :around #'evil-without-register)
+(advice-add #'evil-substitute :around #'evil-without-register)
+(advice-add #'evil-backward-substitute :around #'evil-without-register)
 
 (evil-mode 1)
 
