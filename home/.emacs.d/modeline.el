@@ -4,11 +4,11 @@
               '((:eval (mode-line-align
                         (concat
                          (format-mode-line " %e")
-                         (mode-line-evil-state))
+                         (propertize (mode-line-evil-state) 'face 'bold))
                         (concat
                          " "
                          (mode-line-directories)
-                         (mode-line-buffer-name 12)
+                         (propertize (mode-line-buffer-name 12) 'face 'bold)
                          (if buffer-read-only " [RO]" "")
                          (if (buffer-modified-p) " [+]" "")
                          (mode-line-major-mode)
@@ -72,15 +72,20 @@
          (cond ((evil-normal-state-p)
                 "")
                ((evil-insert-state-p)
-                "--Insert--")
+                "-- INSERT --")
                ((evil-visual-state-p)
-                "--Visual--")
+                (cond ((eq evil-visual-selection 'block)
+                       "-- V-BLOCK --")
+                      ((eq evil-visual-selection 'line)
+                       "-- V-LINE --")
+                      (t
+                       "-- VISUAL --")))
                ((evil-replace-state-p)
-                "--Replace--")
+                "-- REPLACE --")
                ((evil-motion-state-p)
-                "--Motion--")
+                "-- MOTION --")
                ((evil-emacs-state-p)
-                "--Emacs--")
+                "-- EMACS --")
                (t
                 "Waiting"))))
     (format "%-11s" s)))
