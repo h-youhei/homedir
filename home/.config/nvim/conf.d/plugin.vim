@@ -26,3 +26,4 @@ endif
 
 command! Recache call dein#recache_runtimepath()
 command! Update call dein#update()
+command! RPlug call dein#remote_plugins()
