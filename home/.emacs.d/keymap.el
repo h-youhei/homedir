@@ -42,12 +42,12 @@
 (define-key nmap (kbd "SPC I") #'evil-insert-WORD)
 (define-key nmap (kbd "SPC a") #'evil-append-word)
 (define-key nmap (kbd "SPC A") #'evil-append-WORD)
-(define-key nmap (kbd "SPC o") #'evil-break-line)
-(define-key nmap (kbd "SPC O") #'evil-insert-resume)
+(define-key nmap (kbd "SPC o") #'evil-insert-resume)
 
 ;; start visual
-(define-key mmap (kbd "SPC v") #'evil-visual-block)
-(define-key mmap (kbd "SPC V") #'evil-visual-restore)
+(define-key mmap (kbd "SPC v") #'evil-visual-restore)
+(define-key mmap (kbd "SPC g") #'mark-whole-buffer)
+(advice-add #'mark-whole-buffer :before #'evil-set-jump)
 
 ;; operator
 (define-key nmap "C" #'evil-change-whole-line)
@@ -65,8 +65,12 @@
 (define-key vmap "+" #'evil-rectangle-number-lines)
 
 ;; comment
-(define-key nmap "#" #'comment-line)
-(define-key vmap "#" #'comment-or-uncomment-region)
+(define-key nmap ";" #'comment-line)
+(define-key vmap ";" #'comment-or-uncomment-region)
+
+;; joint
+(define-key nmap "j" #'evil-join)
+(define-key nmap "J" #'evil-split)
 
 ;; delete char
 (define-key omap (kbd "<delete>") #'evil-forward-char)
@@ -76,6 +80,7 @@
 (define-key vmap (kbd "<backspace>") #'evil-delete-backward-char)
 (define-key nmap (kbd "S-<backspace>") #'evil-backward-substitute)
 
+;; undo
 (define-key nmap "U" #'undo-tree-redo)
 (define-key nmap (kbd "SPC u") #'undo-tree-visualize)
 
@@ -84,41 +89,43 @@
 (define-key mmap "m" #'evil-goto-mark)
 (define-key mmap "M" #'evil-goto-mark-line)
 
-;; macro
+;; key macro
 (define-key nmap "&" #'evil-record-macro)
-(define-key nmap "l" #'evil-execute-macro)
-(define-key nmap "L" #'evil-repeat-macro)
+(define-key nmap "k" #'evil-execute-macro)
+(define-key nmap "K" #'evil-repeat-macro)
+
+;;command
+(define-key nmap "!" #'shell-command)
+(define-key vmap "!" #'evil-shell-command)
+(define-key nmap ":" #'eval-expression)
+(define-key nmap (kbd "SPC :") #'ielm)
 
 ;; history
 (define-key mmap "h" #'evil-jump-backward)
 (define-key mmap "H" #'evil-jump-forward)
-(define-key nmap "\\" nil)
-(define-key mmap "\\" #'goto-last-change)
-(define-key mmap "|" #'goto-last-change-reverse)
-
-;; motion
-(define-key mmap "][" #'evil-forward-section-begin)
-(define-key mmap "[[" #'evil-backward-section-begin)
-(define-key mmap "]]" #'evil-forward-section-end)
-(define-key mmap "[]" #'evil-backward-section-begin)
-
-(define-key mmap (kbd "SPC e") #'evil-backward-word-end)
-(define-key mmap (kbd "SPC E") #'evil-backward-WORD-end)
+(define-key nmap "l" #'goto-last-change)
+(define-key nmap "L" #'goto-last-change-reverse)
 
 ;; search
-(define-key mmap "%" #'evil-search-word-forward)
-(define-key mmap "^" #'evil-search-word-backward)
+(define-key mmap "#" #'evil-search-word-forward)
+(define-key mmap "*" #'evil-search-word-backward)
 
+;; find
+(define-key mmap "," #'evil-repeat-find-char)
+(define-key mmap "<" #'evil-repeat-find-char-reverse)
+
+;; substitute
 (define-key nmap "-" #'evil-ex-interactive-substitute)
 (define-key vmap "-" #'evil-ex-interactive-substitute)
 (define-key nmap "_" #'(lambda () (interactive) (evil-ex "%s/")))
 (define-key nmap ">" #'evil-ex-repeat-substitute)
-(define-key mmap "," #'evil-repeat-find-char)
-(define-key mmap "<" #'evil-repeat-find-char-reverse)
 
+;; motion
+(define-key mmap "][" #'evil-forward-section-begin)
+(define-key mmap "]]" #'evil-forward-section-end)
 
-(define-key nmap "!" #'shell-command)
-(define-key vmap "!" #'evil-shell-command)
+(define-key mmap (kbd "SPC e") #'evil-backward-word-end)
+(define-key mmap (kbd "SPC E") #'evil-backward-WORD-end)
 
 (define-key nmap "'" #'evil-use-clipboard)
 (define-key mmap [up] #'evil-smart-previous-line)
@@ -144,10 +151,8 @@
 ;; get rid of predefined keys
 (define-key nmap "g" #'evil-goto-first-line)
 (define-key mmap "G" #'evil-smart-goto-last-line)
-(define-key mmap (kbd "SPC g") #'mark-whole-buffer)
-(define-key mmap "j" #'evil-jump-item)
-(define-key mmap (kbd "SPC SPC") #'evil-window-middle)
 (define-key mmap (kbd "S-SPC") #'evil-middle-of-visual-line)
+(define-key mmap (kbd "SPC SPC") #'evil-window-middle)
 (define-key mmap (kbd "SPC <up>") #'evil-window-top)
 (define-key mmap (kbd "SPC <down>") #'evil-window-bottom)
 (define-key mmap (kbd "SPC <left>") #'evil-beginning-of-visual-line)
@@ -166,13 +171,21 @@
 (define-key nmap (kbd "SPC =") #'evil-align-center)
 (define-key vmap (kbd "SPC =") #'evil-align-center)
 
+;; zap tag
+;; (define-key nmap "z" #')
+;; (define-key vmap "z" #')
+;; (define-key mmap "z" #')
+;; (define-key nmap "Z" #')
+;; (define-key vmap "Z" #')
+;; (define-key mmap "Z" #')
 
 ;; surround
 (define-key omap "s" #'evil-surround-edit)
 (define-key nmap "s" #'evil-surround-region)
 (define-key vmap "s" #'evil-surround-region)
 (define-key nmap "S" #'evil-surround-whole-line)
-(define-key vmap "S" #'evil-Surround-region)
+;; (define-key vmap "D" #'evil-surround-delete-region)
+;; (define-key vmap "C" #'evil-surround-change-region)
 (define-key nmap (kbd "SPC s") #'evil-surround-whole-word)
 (define-key nmap (kbd "SPC S") #'evil-surround-whole-WORD)
 
@@ -183,9 +196,22 @@
 (define-key nmap (kbd "SPC x") #'evil-exchange-whole-word)
 (define-key nmap (kbd "SPC X") #'evil-exchange-whole-WORD)
 
+;; flip boolean
+;; (define-key nmap "`" #')
+
 ;; insert mode
-;(define-key imap [tab] #'tab-to-tab-stop)
+;; (define-key imap [tab] #'tab-to-tab-stop)
 (define-key imap [return] #'newline-and-indent)
+(define-key imap (kbd "S-<return>") #'newline)
+(define-key imap (kbd "C-b") #'evil-backward-word-begin)
+(define-key imap (kbd "C-d") #'evil-delete-backward-word)
+(define-key imap (kbd "C-w") #'evil-forward-word-begin)
+;; (define-key imap (kbd "C-u") #'evil-backward-kill-line)
+(define-key imap (kbd "C-j") #'evil-join)
+;; (define-key imap (kbd "C-y") #'evil-copy-previous-line)
+;; (define-key imap (kbd "C-p") #'evil-copy-next-line)
+;;(define-key imap (kbd "C-{"))
+;;(define-key imap (kbd "C-}"))
 
 (let ((map company-active-map))
   (define-key map [escape] #'(lambda () (interactive) (company-abort) (evil-normal-state)))
@@ -196,6 +222,7 @@
   (define-key map [up] nil)
   (define-key map [down] nil)
   )
+
 ;; to integrate evil-maybe-remove-spaces
 (add-hook 'company-completion-started-hook
           #'(lambda (_) (advice-add #'newline-and-indent :before #'company-abort)))
@@ -218,3 +245,6 @@
 (let ((map projectile-command-map))
   (define-key map "t" #'projectile-open-terminal)
   )
+
+;; snippet
+;; define-key map (kbd "C-<tab>") expand-or-jump

@@ -17,24 +17,22 @@ repo = 'Shougo/denite.nvim'
 lazy = 1
 on_cmd = 'Denite'
 hook_add = '''
-	nnoremap <silent> <Space>b :<C-u>Denite buffer<CR>
-	nnoremap <silent> <Space>U :<C-u>Denite -default-action='delete' buffer<CR>
-	nnoremap <silent> <Space>e :<C-u>Denite file_rec<CR>
-	nnoremap <silent> <Space>E :<C-u>Denite file_old<CR>
-	nnoremap <silent> cd :<C-u>Denite directory_rec<CR>
-	nnoremap <silent> ;h :<C-u>Denite jump<CR>
-	nnoremap <silent> ;H :<C-u>Denite change<CR>
-	nnoremap <silent> \ :<C-u>Denite help<CR>
-	nnoremap <silent> ;: :<C-u>Denite command<CR>
+	nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
+	nnoremap <silent> <C-d> :<C-u>Denite -default-action='delete' buffer<CR>
+	nnoremap <silent> <C-f> :<C-u>Denite filec<CR>
+	nnoremap <silent> <C-r> :<C-u>Denite file_old<CR>
+	nnoremap <silent> <C-h> :<C-u>Denite help<CR>
+	nnoremap <silent> <A-x> :<C-u>Denite command<CR>
 '''
 hook_post_source = '''
 	call denite#custom#map('insert', '<UP>', '<denite:move_to_previous_line>', 'noremap')
 	call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
-	call denite#custom#map('insert', '<S-Up>', '<denite:move_to_first_line>', 'noremap')
-	call denite#custom#map('insert', '<S-Down>', '<denite:move_to_last_line>', 'noremap')
-	call denite#custom#map('insert', '<A-a>', '<denite:toggle_select_all>', 'noremap')
-	call denite#custom#map('insert', '<A-s>', '<denite:toggle_select_down>', 'noremap')
-	call denite#custom#map('insert', '<A-S>', '<denite:toggle_select_up>', 'noremap')
+	call denite#custom#map('insert', '<PageDown>', '<denite:scroll_page_forwards', 'noremap')
+	call denite#custom#map('insert', '<PageUp>', '<denite:scroll_page_backwards', 'noremap')
+	call denite#custom#map('insert', '<C-b>', '<denite:move_caret_to_one_word_left>', 'noremap')
+	call denite#custom#map('insert', '<C-w>', '<denite:move_caret_to_one_word_right>', 'noremap')
+	call denite#custom#map('insert', '<C-d>', '<denite:delete_word_before_care>t', 'noremap')
+	call denite#custom#map('insert', '<C-a>', '<denite:toggle_select_all>', 'noremap')
 
 '''
 [[plugins]]
@@ -44,9 +42,6 @@ on_event = 'InsertEnter'
 hook_add = '''
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#max_list = 7
-	"issue #440
-	let g:deoplete#auto_complete_delay=50
-	inoremap <expr> <A-u> (pumvisible() ? keymap#abort_popup() : deoplete#undo_completion())
 '''
 
 [[plugins]]
@@ -76,7 +71,7 @@ hook_add = '''
 		\{ "name": "firefox"
 		\, "args": ["{browser}", "{uri}"] }]
 
-	map <Space>s <Plug>(openbrowser-smart-search)
+	map <Space>/ <Plug>(openbrowser-smart-search)
 '''
 
 [[plugins]]
@@ -95,17 +90,13 @@ hook_add = '''
 	omap af <Plug>(textobj-sandwich-query-a)
 	xmap af <Plug>(textobj-sandwich-query-a)
 
-	map <silent> e <Plug>(operator-sandwich-add)
-	nmap <silent> ee <Plug>(operator-sandwich-add)iw
-	nmap <silent> eE <Plug>(operator-sandwich-add)iW
-	nmap <silent> E <Home><Plug>(operator-sandwich-add)<End>
-	nmap <silent> <A-e> <Plug>(operator-sandwich-add)<End>
-	nmap <silent> <A-E> <Plug>(operator-sandwich-add)<Home>
+	map <silent> s <Plug>(operator-sandwich-add)
+	nmap <silent> <Space>s <Plug>(operator-sandwich-add)iw
+	nmap <silent> <Space>S <Plug>(operator-sandwich-add)iW
+	nmap <silent> S <Home><Plug>(operator-sandwich-add)<End>
 
-	nmap <silent> ce <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-	nmap <silent> cE <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
-	nmap <silent> de <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-	nmap <silent> dE <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+	nmap <silent> cs <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+	nmap <silent> ds <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
 
 	xmap <silent> C <Plug>(operator-sandwich-replace)
 	xmap <silent> D <Plug>(opecator-sandwich-delete)
@@ -120,7 +111,13 @@ hook_add = '''
 	let g:neosnippet#disable_runtime_snippets = { '_' : 1 }
 	let g:neosnippet#snippets_directory = expand('$XDG_CONFIG_HOME/nvim/snips')
 
-	nnoremap Zs :NeoSnippetEdit<CR>
-	imap <A-s> <Plug>(neosnippet_expand_or_jump)
-	xmap <A-x> <Plug>(neosnippet_expand_target)
+	nnoremap <Bar>s :NeoSnippetEdit<CR>
+	imap <C-Tab> <Plug>(neosnippet_expand_or_jump)
+'''
+
+[[plugins]]
+repo = 'tomtom/tcomment_vim'
+hook_add = '''
+	let g:tcommentMaps = 0
+	nmap ; <Plug>TComment_<c-_><c-_>
 '''

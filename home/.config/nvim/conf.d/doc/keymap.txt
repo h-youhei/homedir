@@ -1,0 +1,141 @@
+----------Law----------
+---Motion---
+<Space>x word
+<Space>X WORD
+X line
+
+---Object range---
+i inner
+a all
+s surround
+
+---Object---
+w word
+W WORD
+s sentence
+p paragraph
+b autoblock
+d delimiter
+f find
+t tag
+
+---Cursor---
+x logical
+
+---Direction---
+x forward
+X backward
+
+---History---
+x old
+X new
+
+---Prefix
+<Space> some flavor
+<A-> command that affects windows
+
+----------Mnemonic----------
+---A---
+Append
+All
+Accept
+---B---
+Back
+Buffer
+---C---
+Change
+---D---
+Delete
+---E---
+End
+---F---
+Find
+File
+---G---
+Go to
+Grep
+---H---
+History
+Help
+Horizon
+---I---
+Insert
+Inner
+---J---
+Joint
+---K---
+Key macro
+---l---
+last change
+---M---
+Mark
+---N---
+Next
+---O---
+Open
+Once
+Obtain
+---P---
+Paste
+Push
+Project
+---Q---
+Quit
+---R---
+Replace
+---S---
+Substitute
+Snippet
+---T---
+Take
+Terminal
+---U---
+Undo
+Upper case
+---V---
+Visual
+---W---
+Word
+---X---
+eXchange
+---Y---
+Yank
+---Z---
+zap tag
+--- .> ---
+. is repeating command by default
+--- ,< ---
+, is repeating find backward by default
+--- /? ---
+/? is searching by default
+--- : ---
+: is commandline by default
+--- '" ---
+" is register by default
+--- ~ ---
+toggling case by default
+--- ` ---
+topple boolean
+~ is toggle
+--- + ---
+save buffer
+[+] mark is showed in status line when buffer is modified
+--- -_ ---
+-_ looks like substitute
+--- = ---
+adjusting indent by default
+adjust window size
+--- % ---
+moving cursor to match paren by default
+--- ^ ---
+fold like appearence
+--- ()[]{} ---
+parens has direction
+() sentence
+{} paragraph
+--- \| ---
+settings
+---Tab---
+Tab is used for indent
+---Insert
+insert a char

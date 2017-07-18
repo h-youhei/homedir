@@ -5,8 +5,10 @@ set wildmode=list:longest,full
 set diffopt& dip+=vertical
 
 set clipboard=unnamed
+set mouse=a
 
 "fold
+set nofoldenable
 set foldmethod=marker
 set foldcolumn=1
 "set foldopen
@@ -73,10 +75,7 @@ set shortmess=aoOtTI
 "when to open new buffer in same window
 set bufhidden=hide
 
-"increment
-set nrformats=alpha,bin,hex
-
-"set imcomdline
+"set imcmdline
 set iminsert=0
 set imsearch=0
 
@@ -84,9 +83,13 @@ set imsearch=0
 set textwidth=0
 
 "Allowed left/right keys to move prev/next line at start/end of the line
-set whichwrap=
+set whichwrap=<,>,[,]
+
+set scrolloff=3
 
 set complete=k,i,t
+
+set autochdir
 
 augroup my
 	au FileType * setlocal formatoptions& fo+=rnmM fo-=tc

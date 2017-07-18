@@ -57,6 +57,7 @@
 (setq auto-save-file-name-transforms `((".*"
                                         ,(locate-user-emacs-file ".auto-save/")
                                         t))
+      auto-save-list-file-prefix nil
       auto-save-timeout 60
       auto-save-interval 50)
 
@@ -68,6 +69,8 @@
       )
 (desktop-save-mode 1)
 
+(setq create-lockfiles nil)
+
 (setq recentf-save-file (locate-user-emacs-file ".recentf")
       ;recentf-max-saved-items 30
       ;recentf-exclude '("/TAGS$" "/var/tmp/" "/tmp/")
@@ -76,6 +79,9 @@
 
 (setq save-place-file (locate-user-emacs-file ".places"))
 (save-place-mode 1)
+
+(setq scroll-margin 3
+      scroll-step 1)
 
 ;; misc
 (show-paren-mode 1)
@@ -106,8 +112,7 @@
 
 ;;evil
 (require 'evil)
-(setq evil-move-cursor-back nil ;when leave insert. t is vim equivalent
-      evil-cross-lines t ;at line egde
+(setq evil-cross-lines t ;at line egde
       evil-want-C-i-jump nil
       evil-want-C-d-scroll nil
       evil-disable-insert-state-bindings t
@@ -126,6 +131,8 @@
 (evil-declare-not-repeat #'evil-yank-line)
 
 (setq undo-tree-auto-save-history t
+      undo-limit 100000
+      undo-strong-limit 150000
       undo-tree-history-directory-alist `((".*" . ,(locate-user-emacs-file ".undo-tree" )))
       undo-tree-visualizer-diff t
       )
@@ -157,7 +164,6 @@
       )
 (define-key evil-normal-state-map (kbd "C-p") nil)
 (projectile-mode 1)
-
 
 ;; company
 (setq company-idle-delay 0
