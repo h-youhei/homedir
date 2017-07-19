@@ -52,3 +52,15 @@
 	:foreground nil
 	:background nil
 	:inherit 'match)
+
+(let ((default-bg-color (face-attribute 'default :background)))
+  (set-face-attribute 'whitespace-trailing nil
+                      :background default-bg-color
+                      :foreground "Red"
+                      :underline t)
+  (set-face-attribute 'whitespace-tab nil
+                      :background default-bg-color
+                      :foreground "LightSkyBlue"
+                      :underline t)
+  (set-face-attribute 'whitespace-space nil
+                      :background "LightSkyBlue"))

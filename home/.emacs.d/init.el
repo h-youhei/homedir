@@ -11,20 +11,10 @@
                               company-ghc
                               markdown-mode
                               ))
-;; to refresh window settings, M-x desktop-remove
 
 ;; appearence
 (setq inhibit-startup-screen t
       inhibit-startup-echo-area-message t)
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-(blink-cursor-mode 0)
-
-(set-frame-font "Dejavu Sans Mono 11" nil t)
-;; https://ja.wikipedia.org/wiki/IPA%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88
-;; ... JIS X 0213:2004に準拠している。
-(set-fontset-font t 'japanese-jisx0213.2004-1 (font-spec :family "IPA Gothic"))
 
 (setq whitespace-style '(face
                          trailing
@@ -35,18 +25,6 @@
                          ))
 (setq whitespace-display-mappings '((tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t]))
       whitespace-space-regexp "\\(\u3000+\\)")
-(global-whitespace-mode 1)
-(let ((default-bg-color (face-attribute 'default :background)))
-  (set-face-attribute 'whitespace-trailing nil
-                      :background default-bg-color
-                      :foreground "Red"
-                      :underline t)
-  (set-face-attribute 'whitespace-tab nil
-                      :background default-bg-color
-                      :foreground "LightSkyBlue"
-                      :underline t)
-  (set-face-attribute 'whitespace-space nil
-                      :background "LightSkyBlue"))
 
 ;; history
 (defconst temp-emacs-dir (expand-file-name (format "emacs%d" (user-uid))
@@ -63,11 +41,11 @@
 
 (setq desktop-load-locked-desktop nil
       desktop-save 'if-exists ;to not save if locked
-      desktop-restore-eager 5
-      desktop-lazy-idle-delay 2
+      desktop-restore-frames nil
+      desktop-restore-eager 1
+      desktop-lazy-idle-delay 0
       desktop-locals-to-save '()
       )
-(desktop-save-mode 1)
 
 (setq create-lockfiles nil)
 
@@ -75,10 +53,8 @@
       ;recentf-max-saved-items 30
       ;recentf-exclude '("/TAGS$" "/var/tmp/" "/tmp/")
       )
-(recentf-mode 1)
 
 (setq save-place-file (locate-user-emacs-file ".places"))
-(save-place-mode 1)
 
 (setq scroll-margin 3
       scroll-step 1)
@@ -149,11 +125,8 @@
 
 ;; real number for current line
 ;; relative number for the other line
-(setq nlinum-relative-redisplay-delay 0.02)
-(global-nlinum-mode 1)
-(nlinum-relative-on)
+(setq nlinum-relative-redisplay-delay 0.01)
 
-(ivy-mode 1)
 
 ;; projectile
 (setq projectile-completion-system 'ivy
@@ -163,7 +136,6 @@
       projectile-idle-timer-seconds 60
       )
 (define-key evil-normal-state-map (kbd "C-p") nil)
-(projectile-mode 1)
 
 ;; company
 (setq company-idle-delay 0
@@ -172,7 +144,6 @@
       company-tooltip-limit 5
       company-tooltip-offset-display nil
       )
-(global-company-mode 1)
 
 (add-to-list 'load-path (locate-user-emacs-file "autoload"))
 (require 'autoload-init)
@@ -209,11 +180,29 @@
 (advice-add #'evil-substitute :around #'evil-without-register)
 (advice-add #'evil-backward-substitute :around #'evil-without-register)
 
+;; order is important
+(ivy-mode 1)
 (evil-mode 1)
+(save-place-mode 1)
+(recentf-mode 1)
+(projectile-mode 1)
+(desktop-save-mode 1)
+(global-company-mode 1)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+(blink-cursor-mode 0)
+(set-frame-font "Dejavu Sans Mono 11" nil t)
+;; https://ja.wikipedia.org/wiki/IPA%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88
+;; ... JIS X 0213:2004に準拠している。
+(set-fontset-font t 'japanese-jisx0213.2004-1 (font-spec :family "IPA Gothic"))
+(global-whitespace-mode 1)
+(global-nlinum-mode 1)
+(nlinum-relative-on)
 
-(load (locate-user-emacs-file "mode-specific"))
 (load (locate-user-emacs-file "alias"))
 (load (locate-user-emacs-file "keymap"))
+(load (locate-user-emacs-file "mode-specific"))
 (load (locate-user-emacs-file "modeline"))
 (load (locate-user-emacs-file "theme"))
 

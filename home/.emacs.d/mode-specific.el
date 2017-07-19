@@ -5,9 +5,13 @@
   (setq-mode-local haskell-mode
                    tab-width 2
                    evil-shift-width 2)
+
   (add-to-list 'company-backends 'company-ghc)
+
   (evil-define-key 'insert haskell-indentation-mode-map
     [return] #'haskell-indentation-newline-and-indent)
+
+  ;; to integrate evil-maybe-remove-spaces
   (add-hook 'company-completion-started-hook
             #'(lambda (_) (advice-add #'haskell-indentation-newline-and-indent
                                       :before
