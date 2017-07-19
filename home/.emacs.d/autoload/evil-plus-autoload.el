@@ -11,7 +11,7 @@
 (autoload 'evil-insert-WORD "evil-plus" "" t)
 (autoload 'evil-append-word "evil-plus" "" t)
 (autoload 'evil-append-WORD "evil-plus" "" t)
-(autoload 'evil-break-line "evil-plus" "" t)
+(autoload 'evil-split "evil-plus" "" t)
 (autoload 'evil-backward-substitute "evil-plus" "" t)
 
 (autoload 'evil-use-clipboard "evil-plus" "" t)

@@ -95,12 +95,12 @@ The insertion will be repeated COUNT times."
   (add-hook 'post-command-hook #'evil-maybe-remove-spaces))
 
 ;;;###autoload
-(defun evil-break-line(count)
-  "Break current line, insert COUNT empty lines, then start insert mode."
-  (interactive "p")
-  (unless (eq evil-want-fine-undo t) (evil-start-undo-step))
-  (newline)
-  (evil-open-above count))
+(defun evil-split()
+  "Split current line"
+  (interactive)
+  (save-excursion
+    (newline)
+    (indent-according-to-mode)))
 
 ;;;###autoload
 (evil-define-operator evil-backward-substitute (beg end type register)
