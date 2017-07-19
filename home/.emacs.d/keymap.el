@@ -201,7 +201,13 @@
 
 ;; insert mode
 ;; (define-key imap [tab] #'tab-to-tab-stop)
-(define-key imap [return] #'newline-and-indent)
+;; (define-key imap [return] #'newline-and-indent)
+;; (defun newline-and-indent-fix ()
+;;   (interactive)
+;;   (insert "\n")
+;;   (back-to-indentation))
+;;   (indent-according-to-mode))
+(define-key imap [return] #'evil-ret-and-indent)
 (define-key imap (kbd "S-<return>") #'newline)
 (define-key imap (kbd "C-b") #'evil-backward-word-begin)
 (define-key imap (kbd "C-d") #'evil-delete-backward-word)
@@ -215,7 +221,6 @@
 
 (with-eval-after-load 'company
 (let ((map company-active-map))
-  (define-key map [escape] #'(lambda () (interactive) (company-abort) (evil-normal-state)))
   (define-key map [return] nil)
   (define-key map [tab] #'company-complete-selection)
   (define-key map (kbd "C-n") #'company-select-next)
@@ -223,12 +228,6 @@
   (define-key map [up] nil)
   (define-key map [down] nil)
   ))
-
-;; to integrate evil-maybe-remove-spaces
-(add-hook 'company-completion-started-hook
-          #'(lambda (_) (advice-add #'newline-and-indent :before #'company-abort)))
-(add-hook 'company-completion-cancelled-hook
-          #'(lambda (_) (advice-remove #'newline-and-indent #'company-abort)))
 
 (let ((map undo-tree-visualizer-mode-map))
   (define-key map [escape] #'undo-tree-visualizer-quit)

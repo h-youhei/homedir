@@ -152,7 +152,7 @@
     (setq loaded-company t)
     (global-company-mode 1)))
 (add-hook 'evil-insert-state-entry-hook #'company-turn-on-lazy)
-
+(add-hook 'evil-insert-state-exit-hook #'company-abort)
 
 (add-to-list 'load-path (locate-user-emacs-file "autoload"))
 (require 'autoload-init)
@@ -175,7 +175,7 @@
                                newline
                                newline-and-indent
                                indent-and-newline
-                               haskell-indentation-newline-and-indent
+                               evil-ret-and-indent
                                )))))
 (advice-add #'evil-maybe-remove-spaces :override #'evil-maybe-remove-spaces-fix)
 
