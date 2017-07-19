@@ -7,6 +7,7 @@
   (ivy-read "Recentf: " (mapcar #'substring-no-properties recentf-list)
             :action (lambda (f)
                       (with-ivy-window (find-file f)))
+            :re-builder 'ivy--regex-fuzzy
             :caller 'counsel-recentf))
 
 ;;;###autoload

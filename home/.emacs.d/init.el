@@ -118,15 +118,22 @@
 (setq
       evil-motion-state-modes (delete 'undo-tree-visualizer-mode
                                       evil-motion-state-modes)
-      evil-emacs-state-modes (cons 'undo-tree-visualizer-mode
-                                   (append evil-emacs-state-modes
-                                           evil-insert-state-modes))
+      evil-emacs-state-modes (append '(undo-tree-visualizer-mode
+                                       )
+                                     evil-emacs-state-modes
+                                     evil-insert-state-modes)
       evil-insert-state-modes '()
       )
 
 ;; real number for current line
 ;; relative number for the other line
 (setq nlinum-relative-redisplay-delay 0.01)
+
+;; ivy
+(setq ivy-wrap t
+      ivy-extra-directories '()
+      ;; ivy-ignore-buffers '("\\` ")
+      )
 
 ;; projectile
 (setq projectile-completion-system 'ivy
@@ -206,8 +213,8 @@
 (global-nlinum-mode 1)
 (nlinum-relative-on)
 
-(load (locate-user-emacs-file "alias"))
 (load (locate-user-emacs-file "keymap"))
+(load (locate-user-emacs-file "alias"))
 (load (locate-user-emacs-file "mode-specific"))
 (load (locate-user-emacs-file "modeline"))
 (load (locate-user-emacs-file "theme"))
