@@ -213,6 +213,7 @@
 ;;(define-key imap (kbd "C-{"))
 ;;(define-key imap (kbd "C-}"))
 
+(with-eval-after-load 'company
 (let ((map company-active-map))
   (define-key map [escape] #'(lambda () (interactive) (company-abort) (evil-normal-state)))
   (define-key map [return] nil)
@@ -221,7 +222,7 @@
   (define-key map (kbd "C-p") #'company-select-previous)
   (define-key map [up] nil)
   (define-key map [down] nil)
-  )
+  ))
 
 ;; to integrate evil-maybe-remove-spaces
 (add-hook 'company-completion-started-hook

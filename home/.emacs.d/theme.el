@@ -43,15 +43,16 @@
                     :background nil
                     :inherit 'ivy-minibuffer-match-face-2)
 
-(set-face-attribute 'company-tooltip nil
-                    :foreground nil
-                    :background nil
-                    :inherit 'menu)
+(with-eval-after-load 'company
+  (set-face-attribute 'company-tooltip nil
+                      :foreground nil
+                      :background nil
+                      :inherit 'menu)
 
-(set-face-attribute 'company-tooltip-selection nil
-                    :foreground nil
-                    :background nil
-                    :inherit 'match)
+  (set-face-attribute 'company-tooltip-selection nil
+                      :foreground nil
+                      :background nil
+                      :inherit 'match))
 
 (let ((default-bg-color (face-attribute 'default :background)))
   (set-face-attribute 'whitespace-trailing nil

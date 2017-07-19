@@ -144,6 +144,15 @@
       company-tooltip-limit 5
       company-tooltip-offset-display nil
       )
+(eval-after-load 'company '(add-to-list 'company-backends 'company-ghc))
+
+(defvar loaded-company nil)
+(defun company-turn-on-lazy ()
+  (unless loaded-company
+    (setq loaded-company t)
+    (global-company-mode 1)))
+(add-hook 'evil-insert-state-entry-hook #'company-turn-on-lazy)
+
 
 (add-to-list 'load-path (locate-user-emacs-file "autoload"))
 (require 'autoload-init)
@@ -187,7 +196,6 @@
 (recentf-mode 1)
 (projectile-mode 1)
 (desktop-save-mode 1)
-(global-company-mode 1)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
