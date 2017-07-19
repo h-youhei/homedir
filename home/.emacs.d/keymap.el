@@ -35,7 +35,11 @@
 (global-set-key (kbd "C-f") #'find-file)
 (global-set-key (kbd "C-S-f") #'(lambda () (interactive) (dired "./")))
 (define-key nmap (kbd "C-r") nil)
-(global-set-key (kbd "C-r") #'ivy-recentf)
+(global-set-key (kbd "C-r") #'counsel-recentf)
+(global-set-key (kbd "C-m") #'counsel-bookmark)
+(global-set-key (kbd "C-S-m") #'bookmark-bmenu-list)
+(define-key mmap (kbd "C-m") nil)
+(define-key mmap [return] 'evil-ret)
 
 ;; start insert
 (define-key nmap (kbd "SPC i") #'evil-insert-word)
@@ -239,6 +243,7 @@
 
 (let ((map ivy-minibuffer-map))
   (define-key map [escape] 'minibuffer-keyboard-quit)
+  (define-key map [backtab] 'ivy-dispatching-call)
   (define-key map (kbd "S-<return>") 'ivy-immediate-done)
   )
 
