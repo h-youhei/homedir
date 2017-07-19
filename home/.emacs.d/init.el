@@ -90,20 +90,21 @@
       (mapc #'package-install not-installed))))
 
 ;;evil
-(require 'evil)
 (setq evil-cross-lines t ;at line egde
       evil-want-C-i-jump nil
       evil-want-C-d-scroll nil
       evil-echo-state nil
       evil-text-object-change-visual-type nil
+      evil-ex-substitute-case 'sensitive
+      evil-search-module 'evil-search
+      evil-magic 'very-nomagic
       evil-ex-visual-char-range t
-      evil-search-module "evil-search"
-      evil-magic "very-nomagic"
       evil-ex-search-vim-style-regexp t
-      evil-ex-substitute-case "sensitive"
       evil-ex-substitute-global t
       )
 (setq-default evil-shift-width tab-width)
+(require 'evil)
+
 ;;(setq-global evil-surround-pairs-alist)
 
 (evil-declare-not-repeat #'evil-yank-line)
