@@ -134,16 +134,20 @@ The insertion will be repeated COUNT times."
   (evil-last-non-blank)
   (let ((count (count-lines beg end))
         (uncomment (evil-in-comment-p))
-        uncomment-next)
+        uncomment-next ln)
     (while (> count 0)
+      (setq ln (line-number-at-pos))
       (save-excursion
         (evil-next-line)
-        (evil-last-non-blank)
-        (when (setq uncomment-next (evil-in-comment-p))
-          (when uncomment (comment-line nil))))
-    (join-line 1)
-    (setq count (1- count)
-          uncomment uncomment-next))))
+        ;; check if it was in last line
+        (if (= (line-number-at-pos) ln)
+            (setq count 0)
+          (evil-last-non-blank)
+          (when (setq uncomment-next (evil-in-comment-p))
+            (when uncomment (comment-line nil)))
+          (setq count (1- count)
+                uncomment uncomment-next)))
+      (join-line 1))))
 
 ;;;###autoload
 (evil-define-command evil-use-clipboard ()
