@@ -86,7 +86,7 @@
 (setq backward-delete-char-untabify-method 'hungry
       electric-indent-chars (remq ?\n electric-indent-chars)
  )
-(setq comment-style 'plain)
+(setq comment-style 'indent)
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq use-dialog-box nil)
 
