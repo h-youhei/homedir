@@ -154,6 +154,7 @@
       ivy-extra-directories '()
       ;; ivy-ignore-buffers '("\\` ")
       )
+(setq enable-recursive-minibuffers t)
 
 ;; projectile
 (setq projectile-completion-system 'ivy

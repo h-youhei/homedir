@@ -42,7 +42,7 @@
 ;;;###autoload
 (defun counsel-switch-buffer ()
   (interactive)
-  (ivy-read "Switch to buffer: " 'internal-complete-buffer
+  (ivy-read "Switch to buffer: " #'internal-complete-buffer
             :matcher #'counsel--switch-buffer-matcher
             :preselect (buffer-name (other-buffer (current-buffer)))
             :action #'ivy--switch-buffer-action
@@ -60,7 +60,7 @@
 ;;;###autoload
 (defun counsel-find-file ()
   (interactive)
-  (ivy-read "Find file: " 'read-file-name-internal
+  (ivy-read "Find file: " #'read-file-name-internal
             :matcher #'counsel--find-file-matcher
             :action
             (lambda (x)
@@ -102,9 +102,24 @@
                                (bookmark-set x)))))
             :caller 'counsel-bookmark))
 
+;; How to reflect bookmark status?
+(defun counsel--bookmark-delete-action (bm)
+  (let ((inhibit-message t))
+    (bookmark-delete bm)))
+  ;; (cl-flet ((ivy-state-collection (_) (bookmark-all-names))
+  ;;           (ivy-state-initial-input (_) (car (bookmark-all-names))))
+  ;;   (ivy--reset-state ivy-last)))
+
+(defun counsel--bookmark-rename-action (bm)
+  (let ((inhibit-message t))
+    (bookmark-rename bm)))
+  ;; (cl-flet ((ivy-state-collection (&rest args) (bookmark-all-names)))
+  ;;   (ivy--reset-state ivy-last)))
+
+
 (ivy-set-actions
  'counsel-bookmark
- '(("d" bookmark-delete "delete")
-   ("r" bookmark-rename "rename")))
+ '(("d" counsel--bookmark-delete-action "delete")
+   ("r" counsel--bookmark-rename-action "rename")))
 
 (provide 'ivy-plus)
