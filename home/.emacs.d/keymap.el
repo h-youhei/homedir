@@ -77,7 +77,7 @@
 (define-key vmap ";" #'comment-or-uncomment-region)
 
 ;; joint
-(define-key nmap "j" #'evil-join)
+(define-key nmap "j" #'evil-join-comment)
 (define-key nmap "J" #'evil-split)
 
 ;; delete char

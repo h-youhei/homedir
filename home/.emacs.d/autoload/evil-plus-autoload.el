@@ -13,6 +13,7 @@
 (autoload 'evil-append-WORD "evil-plus" "" t)
 (autoload 'evil-split "evil-plus" "" t)
 (autoload 'evil-backward-substitute "evil-plus" "" t)
+(autoload 'evil-join-comment "evil-plus" "" t)
 
 (autoload 'evil-use-clipboard "evil-plus" "" t)
 (autoload 'evil-repeat-macro "evil-plus" "" t)

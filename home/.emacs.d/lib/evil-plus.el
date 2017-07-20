@@ -95,14 +95,6 @@ The insertion will be repeated COUNT times."
   (add-hook 'post-command-hook #'evil-maybe-remove-spaces))
 
 ;;;###autoload
-(defun evil-split()
-  "Split current line"
-  (interactive)
-  (save-excursion
-    (newline)
-    (indent-according-to-mode)))
-
-;;;###autoload
 (evil-define-operator evil-backward-substitute (beg end type register)
   "Change backward character"
   :motion evil-backward-char
@@ -122,6 +114,36 @@ The insertion will be repeated COUNT times."
   :motion evil-a-word
   (interactive "<R>")
   (evil-downcase beg end type))
+
+;;;###autoload
+(defun evil-split()
+  "Split current line"
+  (interactive)
+  (let ((comment (evil-in-comment-p)))
+  (save-excursion
+    (newline)
+    (if comment
+        (comment-line nil)
+    (indent-according-to-mode)))))
+
+;;;###autoload
+(evil-define-operator evil-join-comment (beg end)
+  "Join the selected lines."
+  :motion evil-line
+  (goto-char beg)
+  (evil-last-non-blank)
+  (let ((count (count-lines beg end))
+        (uncomment (evil-in-comment-p))
+        uncomment-next)
+    (while (> count 0)
+      (save-excursion
+        (evil-next-line)
+        (evil-last-non-blank)
+        (when (setq uncomment-next (evil-in-comment-p))
+          (when uncomment (comment-line nil))))
+    (join-line 1)
+    (setq count (1- count)
+          uncomment uncomment-next))))
 
 ;;;###autoload
 (evil-define-command evil-use-clipboard ()
