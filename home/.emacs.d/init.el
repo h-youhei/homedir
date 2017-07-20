@@ -152,7 +152,7 @@
 ;; ivy
 (setq ivy-wrap t
       ivy-extra-directories '()
-      ;; ivy-ignore-buffers '("\\` ")
+      ivy-ignore-buffers '("\\` " "\\`\\*")
       )
 (setq enable-recursive-minibuffers t)
 
