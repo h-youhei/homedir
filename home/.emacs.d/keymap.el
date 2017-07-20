@@ -23,7 +23,7 @@
 
 ;; buffer
 (define-key mmap (kbd "C-b") nil)
-(global-set-key (kbd "C-b") #'switch-to-buffer)
+(global-set-key (kbd "C-b") #'counsel-switch-buffer)
 (global-set-key (kbd "C-S-b") #'buffer-menu)
 (define-key mmap "q" #'evil-delete-buffer)
 (define-key nmap "q" #'evil-delete-buffer)
@@ -32,7 +32,7 @@
 
 ;; filer
 (define-key mmap (kbd "C-f") nil)
-(global-set-key (kbd "C-f") #'find-file)
+(global-set-key (kbd "C-f") #'counsel-find-file)
 (global-set-key (kbd "C-S-f") #'(lambda () (interactive) (dired "./")))
 (define-key nmap (kbd "C-r") nil)
 (global-set-key (kbd "C-r") #'counsel-recentf)
@@ -40,6 +40,10 @@
 (global-set-key (kbd "C-S-m") #'bookmark-bmenu-list)
 (define-key mmap (kbd "C-m") nil)
 (define-key mmap [return] 'evil-ret)
+(with-eval-after-load 'dired
+  (let ((map dired-mode-map))
+    (define-key map [return] #'dired-find-file)
+    (define-key map (kbd "C-m") nil)))
 
 ;; start insert
 (define-key nmap (kbd "SPC i") #'evil-insert-word)
@@ -254,6 +258,10 @@
     (define-key map (kbd "C-u") #'ivy-kill-line)
     (define-key map (kbd "C-/") #'ivy-reverse-i-search)
     )
+(ivy-set-actions
+ t
+ '(("i" (lambda (x) (insert (if (stringp x) x (car x)))) "insert")
+   ("y" (lambda (x) (kill-new (if (stringp x) x (car x)))) "copy")))
 
 (let ((map projectile-command-map))
   (define-key map "t" #'projectile-open-terminal)
