@@ -48,14 +48,20 @@
             :action #'ivy--switch-buffer-action
             :caller 'counsel-switch-buffer))
 
-(defun ivy--kill-buffer-action (buf)
-  (kill-buffer buf)
+(defun ivy--kill-buffer-action (buffer)
+  (kill-buffer buffer)
+  (ivy--reset-state ivy-last))
+
+(defun ivy--rename-buffer-action-refresh (buffer)
+  (let ((new-name (read-string "Rename buffer (to new name): ")))
+    (with-current-buffer buffer
+      (rename-buffer new-name)))
   (ivy--reset-state ivy-last))
 
 (ivy-set-actions
  'counsel-switch-buffer
  '(("k" ivy--kill-buffer-action "kill")
-   ("r" ivy--rename-buffer-action "rename")))
+   ("r" ivy--rename-buffer-action-refresh "rename")))
 
 ;;;###autoload
 (defun counsel-find-file ()
@@ -80,12 +86,15 @@
             :re-builder 'ivy--regex-fuzzy
             :caller 'counsel-recentf))
 
+(defun counsel-bookmark-function (&optional _pred &rest _u)
+  (bookmark-all-names))
+
 ;;;###autoload
 (defun counsel-bookmark ()
   "Forward to 'bookmark-jump' or 'bookmark-set' if bookmark doesn't exist."
   (interactive)
   (require 'bookmark)
-  (ivy-read "Bookmark: " (bookmark-all-names)
+  (ivy-read "Bookmark: " #'counsel-bookmark-function
             :action (lambda (x)
                       (let ((exist (member x (bookmark-all-names))))
                         (cond ((and exist
@@ -102,19 +111,15 @@
                                (bookmark-set x)))))
             :caller 'counsel-bookmark))
 
-;; How to reflect bookmark status?
 (defun counsel--bookmark-delete-action (bm)
   (let ((inhibit-message t))
-    (bookmark-delete bm)))
-  ;; (cl-flet ((ivy-state-collection (_) (bookmark-all-names))
-  ;;           (ivy-state-initial-input (_) (car (bookmark-all-names))))
-  ;;   (ivy--reset-state ivy-last)))
+    (bookmark-delete bm))
+    (ivy--reset-state ivy-last))
 
 (defun counsel--bookmark-rename-action (bm)
   (let ((inhibit-message t))
-    (bookmark-rename bm)))
-  ;; (cl-flet ((ivy-state-collection (&rest args) (bookmark-all-names)))
-  ;;   (ivy--reset-state ivy-last)))
+    (bookmark-rename bm))
+    (ivy--reset-state ivy-last))
 
 
 (ivy-set-actions
