@@ -59,6 +59,24 @@
 
 (setq save-place-file (locate-user-emacs-file ".places"))
 
+(setq bookmark-save-flag 1
+      bookmark-default-file (locate-user-emacs-file ".bookmarks")
+      )
+
+;; Put last selected bookmark on top
+(setq bookmark-sort-flag nil)
+(defvar bookmark-order-changed nil)
+(advice-add #'bookmark-save :after
+            #'(lambda () (setq bookmark-order-changed nil)))
+(defun bookmark-put-last-use-on-top ()
+  (let ((last (bookmark-get-bookmark bookmark-current-bookmark)))
+    (setq bookmark-alist (delq last bookmark-alist))
+    (add-to-list 'bookmark-alist last)
+    (setq bookmark-order-changed t)))
+(add-hook 'bookmark-after-jump-hook #'bookmark-put-last-use-on-top)
+(add-hook 'bookmark-exit-hook
+          #'(lambda () (when bookmark-order-changed (bookmark-save))))
+
 (setq scroll-margin 3
       scroll-step 1)
 
@@ -120,6 +138,7 @@
       evil-motion-state-modes (delete 'undo-tree-visualizer-mode
                                       evil-motion-state-modes)
       evil-emacs-state-modes (append '(undo-tree-visualizer-mode
+                                       dired-mode
                                        )
                                      evil-emacs-state-modes
                                      evil-insert-state-modes)
