@@ -7,7 +7,7 @@
                               evil-surround
                               evil-exchange
                               nlinum-relative
-                              ivy
+                              counsel
                               projectile
                               company
                               haskell-mode
@@ -116,6 +116,7 @@
       evil-ex-substitute-case 'sensitive
       evil-search-module 'evil-search
       evil-magic 'very-nomagic
+      evil-ex-search-persistent-highlight nil
       evil-ex-visual-char-range t
       evil-ex-search-vim-style-regexp t
       evil-ex-substitute-global t

@@ -23,7 +23,7 @@
 
 ;; buffer
 (define-key mmap (kbd "C-b") nil)
-(global-set-key (kbd "C-b") #'counsel-switch-buffer)
+(global-set-key (kbd "C-b") #'ivy-plus-switch-buffer)
 (global-set-key (kbd "C-S-b") #'buffer-menu)
 (define-key mmap "q" #'evil-delete-buffer)
 (define-key nmap "q" #'evil-delete-buffer)
@@ -32,11 +32,11 @@
 
 ;; filer
 (define-key mmap (kbd "C-f") nil)
-(global-set-key (kbd "C-f") #'counsel-find-file)
+(global-set-key (kbd "C-f") #'ivy-plus-find-file)
 (global-set-key (kbd "C-S-f") #'(lambda () (interactive) (dired "./")))
 (define-key nmap (kbd "C-r") nil)
-(global-set-key (kbd "C-r") #'counsel-recentf)
-(global-set-key (kbd "C-m") #'counsel-bookmark)
+(global-set-key (kbd "C-r") #'ivy-plus-recentf)
+(global-set-key (kbd "C-m") #'ivy-plus-bookmark)
 (global-set-key (kbd "C-S-m") #'bookmark-bmenu-list)
 (define-key mmap (kbd "C-m") nil)
 (define-key mmap [return] 'evil-ret)
@@ -44,6 +44,9 @@
   (let ((map dired-mode-map))
     (define-key map [return] #'dired-find-file)
     (define-key map (kbd "C-m") nil)))
+
+;; grep
+(global-set-key (kbd "C-s") #'ivy-plus-ag-with-find-directory)
 
 ;; start insert
 (define-key nmap (kbd "SPC i") #'evil-insert-word)
