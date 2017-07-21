@@ -7,7 +7,7 @@
                          (propertize (mode-line-evil-state) 'face 'bold))
                         (concat
                          " "
-                         (mode-line-directories)
+                         (mode-line-current-project-and-directory)
                          (propertize (mode-line-buffer-name 12) 'face 'bold)
                          (if buffer-read-only " [RO]" "")
                          (if (buffer-modified-p) " [+]" "")
@@ -42,14 +42,20 @@
   (let ((name (buffer-name)))
     (substring name 0 (min (length name) max-length))))
 
-(defun mode-line-directories ()
-  (let ((parent
-         (if (projectile-project-p)
-             (if buffer-file-name ;not special buffer, e.g. *scratch*
-                 (concat  "<" (projectile-project-name) ">/")
-               "")
-            mode-line-parent-directories)))
-    (concat parent mode-line-current-directory)))
+(defvar-local mode-line-current-project-and-directory-cache nil)
+(put 'mode-line-current-project-and-directory-cache 'permanent-local t)
+(defun mode-line-current-project-and-directory ()
+  (if mode-line-current-project-and-directory-cache
+      mode-line-current-project-and-directory-cache
+    (setq mode-line-current-project-and-directory-cache
+          (if (null buffer-file-name) ;not special buffer, e.g. *scratch*
+              ""
+            (if (projectile-project-p)
+                (concat "<"
+                        (projectile-project-name)
+                        ">/"
+                        (mode-line-current-directory 1 12))
+              (mode-line-current-directory 3 7 t))))))
 
 (defun mode-line-major-mode ()
   ;; Ordinary case, show nothing.
@@ -90,43 +96,34 @@
                 "Waiting"))))
     (format "%-11s" s)))
 
-(defun shorten-directory (dir per hierarchy cur-max-len)
-  "Cut parent directory and shorten current directory.
-PER is max number of characters per hierarchy.
-HIERARCHY is max number of path hierarchies from current directory"
-  (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
-        (current "")
-        (parent ""))
+(defun shorten-string (string max-length)
+  (substring string 0 (min max-length (length string))))
+
+(defun split-path (directory)
+  (let ((path (reverse (split-string
+                        (abbreviate-file-name directory)
+                        "/"))))
     ;; If there's trailing slash,
     ;; empty string is created by split-string
     (when (and path (equal "" (car path)))
       (setq path (cdr path)))
+    path))
 
-    (setq current (pop path))
-    (setq current (substring current 0 (min (length current) cur-max-len)))
-    (setq current (concat current "/"))
-
-    (let ((count 0))
-      (while (and path (< count hierarchy))
-        (let ((this (car path)))
-          (setq parent (concat (substring this 0 (min per (length this)))
-                               "/"
-                               parent)))
-        (setq path (cdr path))
-        (setq count (1+ count))))
-    (when path
-      (setq parent (concat "../" parent)))
-    (list parent current)))
-
-(defvar-local mode-line-current-directory nil)
-(put 'mode-line-current-directory 'permanent-local t)
-(defvar-local mode-line-parent-directories nil)
-(put 'mode-line-parent-directories 'permanent-local t)
-
-(defun set-current-buffer-directory ()
-  (when buffer-file-name ;not special buffer, e.g. *scratch*
-    (let ((dirs (shorten-directory default-directory 3 3 8)))
-      (setq mode-line-parent-directories (pop dirs))
-      (setq mode-line-current-directory (pop dirs)))))
-
-(add-hook 'find-file-hook #'set-current-buffer-directory)
+(defun mode-line-current-directory (&optional hierarchy max-length show-omitted?)
+  (let* ((dirs (split-path default-directory))
+         (ln (length dirs))
+         (head "") (output ""))
+    (if (null hierarchy)
+        (setq hierarchy ln)
+      (if (> hierarchy ln)
+          (setq hierarchy ln)
+        (when show-omitted?
+          (setq head "../"))))
+    (let (dir)
+      (while (> hierarchy 0)
+        (setq dir (pop dirs))
+        (when max-length
+          (setq dir (shorten-string dir max-length)))
+        (setq output (concat dir "/" output)
+              hierarchy (1- hierarchy))))
+    (concat head output)))
