@@ -2,7 +2,7 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-(defvar auto-install nil)
+(defvar auto-install t)
 (defconst favorite-packages '(evil
                               evil-surround
                               evil-exchange
@@ -10,6 +10,7 @@
                               counsel
                               projectile
                               company
+                              bool-flip
                               haskell-mode
                               ghc
                               company-ghc

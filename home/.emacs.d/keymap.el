@@ -210,7 +210,7 @@
 (define-key nmap (kbd "SPC X") #'evil-exchange-whole-WORD)
 
 ;; flip boolean
-;; (define-key nmap "`" #')
+(define-key nmap "`" #'bool-flip-do-flip)
 
 ;; insert mode
 ;; (define-key imap [tab] #'tab-to-tab-stop)

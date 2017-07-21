@@ -18,5 +18,10 @@
                  evil-shift-width 2
                  )
 
+(defun setup-lisp-bool-flip ()
+  (require 'bool-flip)
+  (make-local-variable 'bool-flip-alist)
+  (push '("t" . "nil") bool-flip-alist))
+(add-hook 'emacs-lisp-mode-hook #'setup-lisp-bool-flip)
 
 (setq python-indent-offset 4)
