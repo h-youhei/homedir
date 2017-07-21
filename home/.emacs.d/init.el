@@ -114,9 +114,9 @@
       evil-echo-state nil
       evil-text-object-change-visual-type nil
       evil-ex-substitute-case 'sensitive
+      evil-ex-search-persistent-highlight nil
       evil-search-module 'evil-search
       evil-magic 'very-nomagic
-      evil-ex-search-persistent-highlight nil
       evil-ex-visual-char-range t
       evil-ex-search-vim-style-regexp t
       evil-ex-substitute-global t
@@ -154,8 +154,25 @@
 (setq ivy-wrap t
       ivy-extra-directories '()
       ivy-ignore-buffers '("\\` " "\\`\\*")
+      ivy-minibuffer-faces '(ivy-minibuffer-match-face-1
+                             ivy-minibuffer-match-face-2)
       )
+(setq swiper-faces '(swiper-match-face-1
+                     swiper-match-face-2)
+      swiper-goto-start-of-match t
+      swiper-action-recenter t)
+
 (setq enable-recursive-minibuffers t)
+(evil-declare-not-repeat #'ivy-plus-bookmark)
+(evil-declare-not-repeat #'ivy-plus-find-file)
+(evil-declare-not-repeat #'ivy-plus-recentf)
+(evil-declare-not-repeat #'ivy-plus-switch-buffer)
+(evil-declare-not-repeat #'ivy-plus-with-find-directory)
+(evil-declare-not-repeat #'counsel-imenu)
+(evil-declare-not-repeat #'ivy-plus-git)
+(evil-declare-not-repeat #'counsel-git-grep)
+(evil-declare-not-repeat #'swiper)
+(evil-declare-motion #'swiper)
 
 ;; projectile
 (setq projectile-completion-system 'ivy

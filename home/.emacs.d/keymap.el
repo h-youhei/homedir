@@ -11,8 +11,8 @@
 ;; to use as prefix key
 (define-key mmap (kbd "SPC") nil)
 
-(global-set-key [escape] #'keyboard-quit)
-(define-key nmap [escape] #'keyboard-quit)
+(global-set-key [escape] #'evil-escape)
+(define-key nmap [escape] #'evil-escape)
 
 (global-set-key (kbd "C-u") #'ivy-resume)
 
@@ -35,7 +35,7 @@
 (global-set-key (kbd "C-f") #'ivy-plus-find-file)
 (global-set-key (kbd "C-S-f") #'(lambda () (interactive) (dired "./")))
 (define-key nmap (kbd "C-r") nil)
-(global-set-key (kbd "C-r") #'ivy-plus-recentf)
+(global-set-key (kbd "C-r") #'counsel-recentf)
 (global-set-key (kbd "C-m") #'ivy-plus-bookmark)
 (global-set-key (kbd "C-S-m") #'bookmark-bmenu-list)
 (define-key mmap (kbd "C-m") nil)
@@ -45,8 +45,10 @@
     (define-key map [return] #'dired-find-file)
     (define-key map (kbd "C-m") nil)))
 
-;; grep
-(global-set-key (kbd "C-s") #'ivy-plus-ag-with-find-directory)
+;; search
+(global-set-key (kbd "C-s") #'swiper)
+(global-set-key (kbd "C-S-s") #'ivy-plus-ag-with-find-directory)
+(global-set-key (kbd "C-i") #'counsel-imenu)
 
 ;; start insert
 (define-key nmap (kbd "SPC i") #'evil-insert-word)
@@ -267,7 +269,9 @@
    ("y" (lambda (x) (kill-new (if (stringp x) x (car x)))) "copy")))
 
 (let ((map projectile-command-map))
+  (define-key map [escape] #'keyboard-quit)
   (define-key map "t" #'projectile-open-terminal)
+  (define-key map "s" #'counsel-git-grep)
   )
 
 ;; snippet

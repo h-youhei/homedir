@@ -8,8 +8,7 @@
                     :background "dimgray")
 
 (set-face-attribute 'isearch nil
-                    :foreground nil
-                    :distant-foreground "black"
+                    :foreground "black"
                     :background "white"
                     :weight 'bold)
 
@@ -26,22 +25,23 @@
                     :foreground nil
                     :background nil
                     :inherit 'match)
+
 (set-face-attribute 'ivy-minibuffer-match-face-1 nil
                     :foreground nil
                     :background nil
                     :inherit 'highlight)
+
 (set-face-attribute 'ivy-minibuffer-match-face-2 nil
                     :foreground nil
                     :background nil
                     :inherit 'isearch)
-(set-face-attribute 'ivy-minibuffer-match-face-3 nil
-                    :foreground nil
-                    :background nil
+
+(set-face-attribute 'swiper-match-face-1 nil
+                    :inherit 'ivy-minibuffer-match-face-1)
+
+(set-face-attribute 'swiper-match-face-2 nil
                     :inherit 'ivy-minibuffer-match-face-2)
-(set-face-attribute 'ivy-minibuffer-match-face-4 nil
-                    :foreground nil
-                    :background nil
-                    :inherit 'ivy-minibuffer-match-face-2)
+
 
 (with-eval-after-load 'company
   (set-face-attribute 'company-tooltip nil
