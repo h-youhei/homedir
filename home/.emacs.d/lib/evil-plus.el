@@ -116,7 +116,14 @@ The insertion will be repeated COUNT times."
   (evil-downcase beg end type))
 
 ;;;###autoload
-(defun evil-split()
+(defun evil-escape ()
+  "escape"
+  (interactive)
+  (evil-ex-nohighlight)
+  (keyboard-quit))
+
+;;;###autoload
+(defun evil-split ()
   "Split current line"
   (interactive)
   (let ((comment (evil-in-comment-p)))
