@@ -7,6 +7,7 @@
                               evil-surround
                               evil-exchange
                               nlinum-relative
+                              save-visited-files
                               counsel
                               projectile
                               company
@@ -42,14 +43,6 @@
       auto-save-list-file-prefix nil
       auto-save-timeout 60
       auto-save-interval 50)
-
-(setq desktop-load-locked-desktop nil
-      desktop-save 'if-exists ;to not save if locked
-      desktop-restore-frames nil
-      desktop-restore-eager 1
-      desktop-lazy-idle-delay 0
-      desktop-locals-to-save '()
-      )
 
 (setq create-lockfiles nil)
 
@@ -151,6 +144,10 @@
 ;; relative number for the other line
 (setq nlinum-relative-redisplay-delay 0.01)
 
+(setq save-visited-files-location (locate-user-emacs-file ".visited-files")
+      ;; save-visited-files-ignore-directories nil
+      )
+
 ;; ivy
 (setq ivy-wrap t
       ivy-extra-directories '()
@@ -236,13 +233,12 @@
 (advice-add #'evil-substitute :around #'evil-without-register)
 (advice-add #'evil-backward-substitute :around #'evil-without-register)
 
-;; order is important
 (ivy-mode 1)
 (evil-mode 1)
 (save-place-mode 1)
 (recentf-mode 1)
 (projectile-mode 1)
-(desktop-save-mode 1)
+(save-visited-files-mode 1)
 (show-paren-mode 1)
 (blink-cursor-mode 0)
 (set-frame-font "Dejavu Sans Mono 11" nil t)
