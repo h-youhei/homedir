@@ -16,4 +16,6 @@
 
 (require 'ivy-plus-autoload)
 
+(require 'save-current-buffer-autoload)
+
 (provide 'autoload-init)

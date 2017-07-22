@@ -239,6 +239,7 @@
 (recentf-mode 1)
 (projectile-mode 1)
 (save-visited-files-mode 1)
+(save-current-buffer-mode 1)
 (show-paren-mode 1)
 (blink-cursor-mode 0)
 (set-frame-font "Dejavu Sans Mono 11" nil t)
