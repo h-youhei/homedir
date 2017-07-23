@@ -12,6 +12,7 @@
                               projectile
                               company
                               yasnippet
+                              mmm-mode
                               bool-flip
                               haskell-mode
                               ghc
@@ -244,6 +245,25 @@
 (advice-add #'evil-delete-backward-char :around #'evil-without-register)
 (advice-add #'evil-substitute :around #'evil-without-register)
 (advice-add #'evil-backward-substitute :around #'evil-without-register)
+
+(require 'mmm-auto)
+(setq mmm-global-mode 'maybe
+      mmm-parse-when-idle t)
+
+(defun  mmm-add-markdown-class (lang &optional mode)
+  ""
+  (let ((class (intern (concat "markdown-" lang)))
+        (mode (or mode (intern (concat lang "-mode"))))
+        (front (concat "^```" lang "[\n\r]+")))
+      (mmm-add-classes
+        (list (list class
+                    :submode mode
+                    :front front
+                    :back "^```$")))
+      (mmm-add-mode-ext-class 'markdown-mode nil class)))
+
+(mmm-add-markdown-class "emacs-lisp")
+(mmm-add-markdown-class "haskell")
 
 (ivy-mode 1)
 (evil-mode 1)

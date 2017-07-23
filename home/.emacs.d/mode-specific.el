@@ -25,3 +25,5 @@
 (add-hook 'emacs-lisp-mode-hook #'setup-lisp-bool-flip)
 
 (setq python-indent-offset 4)
+
+(setq markdown-fontify-code-blocks-natively t)
