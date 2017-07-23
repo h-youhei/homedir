@@ -51,6 +51,12 @@
       ;recentf-exclude '("/TAGS$" "/var/tmp/" "/tmp/")
       )
 
+(setq savehist-save-minibuffer-history nil
+      savehist-file (locate-user-emacs-file ".history")
+      savehist-additional-variables '(kill-ring
+                                      evil-ex-search-history
+                                      ))
+
 (setq save-place-file (locate-user-emacs-file ".places"))
 
 (setq bookmark-save-flag 1
@@ -238,6 +244,7 @@
 (save-place-mode 1)
 (recentf-mode 1)
 (projectile-mode 1)
+(savehist-mode 1)
 (save-visited-files-mode 1)
 (save-current-buffer-mode 1)
 (show-paren-mode 1)
