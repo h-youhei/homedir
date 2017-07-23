@@ -18,4 +18,6 @@
 
 (require 'save-current-buffer-autoload)
 
+(require 'yasnippet-plus-autoload)
+
 (provide 'autoload-init)

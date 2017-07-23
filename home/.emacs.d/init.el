@@ -2,7 +2,7 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-(defvar auto-install nil)
+(defvar auto-install t)
 (defconst favorite-packages '(evil
                               evil-surround
                               evil-exchange
@@ -11,6 +11,7 @@
                               counsel
                               projectile
                               company
+                              yasnippet
                               bool-flip
                               haskell-mode
                               ghc
@@ -196,13 +197,18 @@
       )
 (eval-after-load 'company '(add-to-list 'company-backends 'company-ghc))
 
-(defvar loaded-company nil)
-(defun company-turn-on-lazy ()
-  (unless loaded-company
-    (setq loaded-company t)
-    (global-company-mode 1)))
-(add-hook 'evil-insert-state-entry-hook #'company-turn-on-lazy)
+(add-hook 'evil-insert-state-entry-hook #'(lambda () (global-company-mode 1)))
 (add-hook 'evil-insert-state-exit-hook #'company-abort)
+
+(setq yas-wrap-around-region t)
+;; share fundamental-mode snippet among all modes
+(with-eval-after-load 'yasnippet
+  ;; diable pre-defined snippet
+  (setq yas-snippet-dirs (list yas--default-user-snippets-dir))
+  (add-hook 'yas-minor-mode-hook
+            #'(lambda ()
+              (yas-activate-extra-mode 'fundamental-mode)))
+  (add-hook 'evil-insert-state-exit-hook #'yas-abort-snippet))
 
 (add-to-list 'load-path (locate-user-emacs-file "autoload"))
 (require 'autoload-init)
