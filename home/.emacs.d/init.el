@@ -151,6 +151,7 @@
 ;; real number for current line
 ;; relative number for the other line
 (setq nlinum-relative-redisplay-delay 0.01)
+(add-hook 'evil-emacs-state-entry-hook #'(lambda () (nlinum-mode 0)))
 
 (setq save-visited-files-location (locate-user-emacs-file ".visited-files")
       ;; save-visited-files-ignore-directories nil
