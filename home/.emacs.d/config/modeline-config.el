@@ -26,6 +26,7 @@
     ;; (format "%s%80s" left right)
     (format (format "%%s%%%ds" available-width) left right)))
 
+(require 'nlinum)
 (defun window-total-width-workaround ()
   ;; 2 is fringe
   (+ (window-width) 2 nlinum--width))
@@ -42,6 +43,7 @@
   (let ((name (buffer-name)))
     (substring name 0 (min (length name) max-length))))
 
+(require 'projectile)
 (defvar-local mode-line-current-project-and-directory-cache nil)
 (put 'mode-line-current-project-and-directory-cache 'permanent-local t)
 (defun mode-line-current-project-and-directory ()
@@ -73,6 +75,7 @@
           (t
            (concat " [" enc "]")))))
 
+(require 'evil)
 (defun mode-line-evil-state ()
   (let ((s
          (cond ((evil-normal-state-p)
@@ -127,3 +130,5 @@
         (setq output (concat dir "/" output)
               hierarchy (1- hierarchy))))
     (concat head output)))
+
+(provide 'modeline-config)

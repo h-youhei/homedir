@@ -65,3 +65,5 @@
                       :underline t)
   (set-face-attribute 'whitespace-space nil
                       :background "LightSkyBlue"))
+
+(provide 'theme-config)
