@@ -12,6 +12,7 @@
                               swiper
                               counsel
                               projectile
+                              magit
                               company
                               yasnippet
                               flycheck
@@ -298,6 +299,12 @@
 (advice-add #'flycheck-option-emacs-lisp-package-initialize
             :around
             #'flycheck-option-emacs-lisp-package-initialize-edit)
+
+(eval-when-compile (require 'magit))
+(declare-function magit-restore-window-configuration "magit-mode")
+;; kill buffer when I quit from magit
+(setq magit-bury-buffer-function #'(lambda (_)
+                                     (magit-restore-window-configuration t)))
 
 (ivy-mode 1)
 (evil-mode 1)

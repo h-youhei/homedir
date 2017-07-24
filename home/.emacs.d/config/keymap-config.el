@@ -321,6 +321,10 @@
     (define-key map [escape] #'keyboard-quit)
     (define-key map "t" #'projectile-open-terminal)
     (define-key map "s" #'counsel-git-grep)
-    ))
+    )
+
+  (global-set-key (kbd "C-g") #'magit-status)
+
+  )
 
 (provide 'keymap-config)
