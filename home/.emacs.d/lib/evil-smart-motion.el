@@ -42,7 +42,8 @@ If COUNT is given, go to COUNT column from end of the line on the current line."
     (let ((oldpos (point)))
       (evil-end-of-line-fix nil)
       (when (= oldpos (point))
-        (evil-last-non-blank nil)))))
+        (evil-last-non-blank nil))))
+  (setq this-command #'evil-end-of-line))
 
 ;; handle insert mode
 (evil-define-motion evil-end-of-line-fix (count)
@@ -52,7 +53,7 @@ If COUNT is given, go to COUNT column from end of the line on the current line."
           this-command 'next-line))
   (unless (or (evil-visual-state-p)
               (evil-insert-state-p))
-    (evil-adjust-cursor)
+    (evil-adjust-cursor t)
     (when (eolp)
       (setq evil-this-type 'exclusive))))
 
