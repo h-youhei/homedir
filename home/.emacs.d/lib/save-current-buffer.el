@@ -7,6 +7,8 @@
   :group 'save-current-buffer)
 
 (defun save-current-buffer-get ()
+  (when (minibufferp (current-buffer))
+    (other-window 1))
   (buffer-name (current-buffer)))
 
 (defun save-current-buffer-ignore-p (buffer)
@@ -28,8 +30,7 @@
       (let ((buffer-name (buffer-substring-no-properties (line-beginning-position)
                                                          (line-end-position))))
         (unless (save-current-buffer-ignore-p buffer-name)
-          (switch-to-buffer buffer-name nil 'force-same-window)
-          (setq save-currnt-buffer-already-restored t))))))
+          (switch-to-buffer buffer-name nil 'force-same-window))))))
 
 ;;;###autoload
 (define-minor-mode save-current-buffer-mode
