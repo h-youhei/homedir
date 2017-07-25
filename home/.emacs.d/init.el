@@ -178,7 +178,6 @@
 ;; for ivy action that prompt me
 (setq enable-recursive-minibuffers t)
 
-(eval-when-compile (require 'swiper))
 (setq swiper-faces '(swiper-match-face-1
                      swiper-match-face-2)
       swiper-goto-start-of-match t
@@ -207,8 +206,7 @@
 (define-key evil-normal-state-map (kbd "C-p") nil)
 
 
-(eval-when-compile (require 'company))
-(declare-function company-abort "company")
+(declare-function company-abort 'company)
 (setq company-idle-delay 0
       company-minimum-prefix-length 2
       company-tooltip-minimum 3
@@ -221,9 +219,8 @@
 (add-hook 'evil-insert-state-exit-hook #'company-abort)
 
 
-(eval-when-compile (require 'yasnippet))
-(declare-function yas-activate-extra-mode "yasnippet")
-(declare-function yas-abort-snippet "yasnippet")
+(declare-function yas-activate-extra-mode 'yasnippet)
+(declare-function yas-abort-snippet 'yasnippet)
 (setq yas-wrap-around-region t)
 ;; share fundamental-mode snippet among all modes
 (with-eval-after-load 'yasnippet
@@ -299,8 +296,7 @@
             #'flycheck-option-emacs-lisp-package-initialize-edit)
 
 
-(eval-when-compile (require 'magit))
-(declare-function magit-restore-window-configuration "magit-mode")
+(declare-function magit-restore-window-configuration 'magit-mode)
 ;; kill buffer when I quit from magit
 (setq magit-bury-buffer-function #'(lambda (_)
                                      (magit-restore-window-configuration t))

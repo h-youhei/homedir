@@ -17,17 +17,14 @@
                  tab-width 2
                  evil-shift-width 2
                  )
-
 (require 'bool-flip)
 (defun setup-lisp-bool-flip ()
   (make-local-variable 'bool-flip-alist)
   (push '("t" . "nil") bool-flip-alist))
 (add-hook 'emacs-lisp-mode-hook #'setup-lisp-bool-flip)
 
-(eval-when-compile (require 'python))
 (setq python-indent-offset 4)
 
-(eval-when-compile (require 'markdown-mode))
 (setq markdown-fontify-code-blocks-natively t)
 
 (provide 'mode-specific-config)
