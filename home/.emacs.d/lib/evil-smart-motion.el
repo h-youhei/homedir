@@ -63,7 +63,10 @@ If COUNT is given, go to COUNT line from the last line."
   :jump t
   :type line
   (with-no-warnings (end-of-buffer))
-  (when count (previous-line (1- count))))
+  (when (looking-at-p "^$")
+    (evil-previous-line))
+  (when count (evil-previous-line (1- count)))
+  (evil-first-non-blank))
 
 ;;;###autoload
 (provide 'evil-smart-motion)
