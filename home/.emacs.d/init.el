@@ -303,6 +303,13 @@
 ;; kill buffer when I quit from magit
 (setq magit-bury-buffer-function #'(lambda (_)
                                      (magit-restore-window-configuration t)))
+(defun git-commit-evil-maybe-start-insert ()
+  "Start insert when gitcommit except amend."
+  (let ((first-line (buffer-substring-no-properties (line-beginning-position)
+                                                    (line-end-position))))
+    (when (string-match-p "^$" first-line)
+      (evil-insert-state))))
+(add-hook 'git-commit-mode-hook #'git-commit-evil-maybe-start-insert)
 
 (ivy-mode 1)
 (evil-mode 1)
