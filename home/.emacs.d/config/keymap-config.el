@@ -317,6 +317,8 @@
     )
 
   (global-set-key (kbd "C-g") #'magit-status)
+  (with-eval-after-load 'magit-popup
+    (define-key magit-popup-mode-map [escape] 'magit-popup-quit))
 
   )
 
