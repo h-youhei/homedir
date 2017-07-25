@@ -3,10 +3,8 @@
 
 (defun git-commit-evil-maybe-start-insert ()
   "Start insert when gitcommit except amend."
-  (let ((first-line (buffer-substring-no-properties (line-beginning-position)
-                                                    (line-end-position))))
-    (when (string-match-p "^$" first-line)
-      (evil-insert-state))))
+  (when (looking-at-p "^$")
+    (evil-insert-state)))
 
 (defun magit-status-init ()
   "set cursor to Unstaged or Untracked section"
