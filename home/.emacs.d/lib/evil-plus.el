@@ -29,6 +29,13 @@
   (evil-delete beg end type register yank-handler))
 
 ;;;###autoload
+(evil-define-operator evil-backward-delete-line (beg end type register yank-handler)
+  "Delete backward to first-non-blank"
+  :motion evil-first-non-blank
+  (interactive "<R><x>")
+  (evil-delete beg end type register yank-handler))
+
+;;;###autoload
 (evil-define-operator evil-yank-whole-word (beg end type register yank-handler)
   "Yank whole word"
   :motion evil-inner-word
@@ -45,6 +52,34 @@
   :repeat nil
   (interactive "<R><x>")
   (evil-yank beg end type register yank-handler))
+
+;;;###autoload
+(evil-define-operator evil-upcase-whole-word (beg end type register)
+  "Upcase whole word"
+  :motion evil-a-word
+  (interactive "<r>")
+  (evil-upcase beg end type))
+
+;;;###autoload
+(evil-define-operator evil-downcase-whole-word (beg end type register)
+  "Downcase whole word"
+  :motion evil-a-word
+  (interactive "<R>")
+  (evil-downcase beg end type))
+
+;;;###autoload
+(evil-define-command evil-copy-word-from-above ()
+  (interactive)
+  (unless (= 1 (line-number-at-pos (point)))
+    (let (beg end)
+      (save-excursion
+        (evil-previous-line)
+        (setq beg (point))
+        (evil-forward-word-begin)
+        (setq end (point)))
+      (evil-copy-from-above (- end beg))
+      ;; (evil--self-insert-string (evil-copy-chars-from-line (- end beg) -1))
+      (evil-forward-char))))
 
 (defun evil-simple-insert (count)
   (setq
@@ -100,20 +135,6 @@ The insertion will be repeated COUNT times."
   :motion evil-backward-char
   (interactive "<R><x>")
   (evil-change beg end type register))
-
-;;;###autoload
-(evil-define-operator evil-upcase-whole-word (beg end type register)
-  "Upcase whole word"
-  :motion evil-a-word
-  (interactive "<r>")
-  (evil-upcase beg end type))
-
-;;;###autoload
-(evil-define-operator evil-downcase-whole-word (beg end type register)
-  "Howncase whole word"
-  :motion evil-a-word
-  (interactive "<R>")
-  (evil-downcase beg end type))
 
 ;;;###autoload
 (defun evil-escape ()
@@ -226,4 +247,3 @@ The insertion will be repeated COUNT times."
   (evil-ex (concat range "s/")))
 
 (provide 'evil-plus)
-

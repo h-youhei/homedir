@@ -2,10 +2,12 @@
 (autoload #'evil-change-whole-WORD "evil-plus" "" t)
 (autoload #'evil-delete-whole-word "evil-plus" "" t)
 (autoload #'evil-delete-whole-WORD "evil-plus" "" t)
+(autoload #'evil-backward-delete-line "evil-plus" "" t)
 (autoload #'evil-yank-whole-word "evil-plus" "" t)
 (autoload #'evil-yank-whole-WORD "evil-plus" "" t)
 (autoload #'evil-upcase-whole-word "evil-plus" "" t)
 (autoload #'evil-downcase-whole-word "evil-plus" "" t)
+(autoload #'evil-copy-word-from-above "evil-plus" "" t)
 
 (autoload #'evil-insert-word "evil-plus" "" t)
 (autoload #'evil-insert-WORD "evil-plus" "" t)

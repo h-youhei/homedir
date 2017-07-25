@@ -25,7 +25,7 @@
   ;; window
   (global-set-key (kbd "C-t") #'open-terminal)
   (global-set-key (kbd "M-<return>") #'make-frame-command)
-  (define-key mmap (kbd "M-SPC") #'evil-window-next)
+  (global-set-key (kbd "M-SPC") #'evil-window-next)
 
   ;; buffer
   (define-key mmap (kbd "C-b") nil)
@@ -205,8 +205,6 @@
   (define-key nmap "s" #'evil-surround-region)
   (define-key vmap "s" #'evil-surround-region)
   (define-key nmap "S" #'evil-surround-whole-line)
-  ;; (define-key vmap "D" #'evil-surround-delete-region)
-  ;; (define-key vmap "C" #'evil-surround-change-region)
   (define-key nmap (kbd "SPC s") #'evil-surround-whole-word)
   (define-key nmap (kbd "SPC S") #'evil-surround-whole-WORD)
 
@@ -233,10 +231,10 @@
   (define-key imap (kbd "C-b") #'evil-backward-word-begin)
   (define-key imap (kbd "C-d") #'evil-delete-backward-word)
   (define-key imap (kbd "C-w") #'evil-forward-word-begin)
-  ;; (define-key imap (kbd "C-u") #'evil-backward-kill-line)
+  (define-key imap (kbd "C-u") #'evil-backward-delete-line)
   (define-key imap (kbd "C-j") #'evil-join)
-  ;; (define-key imap (kbd "C-y") #'evil-copy-previous-line)
-  ;; (define-key imap (kbd "C-p") #'evil-copy-next-line)
+  (define-key imap (kbd "C-y") #'evil-copy-word-from-above)
+  ;; (define-key imap (kbd "C-p") #'evil-copy-word-from-next-line)
   ;;(define-key imap (kbd "C-{"))
   ;;(define-key imap (kbd "C-}"))
 
