@@ -20,4 +20,6 @@
 
 (require 'yasnippet-plus-autoload)
 
+(require 'magit-plus-autoload)
+
 (provide 'autoload-init)

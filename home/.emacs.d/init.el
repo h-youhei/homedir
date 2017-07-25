@@ -298,17 +298,14 @@
             :around
             #'flycheck-option-emacs-lisp-package-initialize-edit)
 
+
 (eval-when-compile (require 'magit))
 (declare-function magit-restore-window-configuration "magit-mode")
 ;; kill buffer when I quit from magit
 (setq magit-bury-buffer-function #'(lambda (_)
-                                     (magit-restore-window-configuration t)))
-(defun git-commit-evil-maybe-start-insert ()
-  "Start insert when gitcommit except amend."
-  (let ((first-line (buffer-substring-no-properties (line-beginning-position)
-                                                    (line-end-position))))
-    (when (string-match-p "^$" first-line)
-      (evil-insert-state))))
+                                     (magit-restore-window-configuration t))
+      magit-commit-show-diff nil)
+(advice-add #'magit-status :after #'magit-status-init)
 (add-hook 'git-commit-mode-hook #'git-commit-evil-maybe-start-insert)
 
 (ivy-mode 1)
