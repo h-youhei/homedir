@@ -121,7 +121,6 @@
 (defvar evil-search-module 'evil-search)
 (require 'evil)
 (setq evil-cross-lines t ;at line egde
-      evil-move-cursor-back nil
       evil-want-C-i-jump nil
       evil-want-C-d-scroll nil
       evil-echo-state nil
