@@ -38,9 +38,7 @@
       whitespace-space-regexp "\\(\u3000+\\)")
 
 ;; history
-(defconst temp-emacs-dir (expand-file-name (format "emacs%d" (user-uid))
-                                           temporary-file-directory))
-(setq backup-directory-alist `((".*" . ,(expand-file-name "backup" temp-emacs-dir))))
+(setq make-backup-files nil)
 
 ;; auto-save/'s trailing slash is important
 (setq auto-save-file-name-transforms `((".*"
