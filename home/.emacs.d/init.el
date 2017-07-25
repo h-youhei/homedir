@@ -151,7 +151,8 @@
       evil-emacs-state-modes (append '(undo-tree-visualizer-mode
                                        dired-mode
                                        )
-                                     evil-emacs-state-modes
+                                     (delete 'magit-diff-mode
+                                             evil-emacs-state-modes)
                                      evil-insert-state-modes)
       evil-insert-state-modes '()
       )
