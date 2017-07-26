@@ -8,6 +8,7 @@
 (autoload #'evil-upcase-whole-word "evil-plus" "" t)
 (autoload #'evil-downcase-whole-word "evil-plus" "" t)
 (autoload #'evil-copy-word-from-above "evil-plus" "" t)
+(autoload #'evil-copy-word-from-below "evil-plus" "" t)
 
 (autoload #'evil-insert-word "evil-plus" "" t)
 (autoload #'evil-insert-WORD "evil-plus" "" t)

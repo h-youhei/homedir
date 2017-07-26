@@ -20,8 +20,6 @@
   (global-set-key [escape] #'evil-escape)
   (define-key nmap [escape] #'evil-escape)
 
-  (global-set-key (kbd "C-u") #'ivy-resume)
-
   ;; window
   (global-set-key (kbd "C-t") #'open-terminal)
   (global-set-key (kbd "M-<return>") #'make-frame-command)
@@ -52,12 +50,6 @@
     (let ((map dired-mode-map))
       (define-key map [return] #'dired-find-file)
       (define-key map (kbd "C-m") nil)))
-
-  ;; search
-  (global-set-key (kbd "C-s") #'swiper)
-  (global-set-key (kbd "C-S-s") #'ivy-plus-ag-with-find-directory)
-  (global-set-key [tab] #'indent-for-tab-command)
-  (global-set-key (kbd "C-i") #'counsel-imenu)
 
   ;; start insert
   (define-key nmap (kbd "SPC i") #'evil-insert-word)
@@ -220,13 +212,7 @@
   (define-key nmap "`" #'bool-flip-do-flip)
 
   ;; insert mode
-  ;; (define-key imap [tab] #'tab-to-tab-stop)
-  ;; (define-key imap [return] #'newline-and-indent)
-  ;; (defun newline-and-indent-fix ()
-  ;;   (interactive)
-  ;;   (insert "\n")
-  ;;   (back-to-indentation))
-  ;;   (indent-according-to-mode))
+  (define-key imap [tab] #'indent-for-tab-command)
   (define-key imap [return] #'evil-ret-and-indent)
   (define-key imap (kbd "S-<return>") #'newline)
   (define-key imap (kbd "C-b") #'evil-backward-word-begin)
@@ -234,10 +220,43 @@
   (define-key imap (kbd "C-w") #'evil-forward-word-begin)
   (define-key imap (kbd "C-u") #'evil-backward-delete-line)
   (define-key imap (kbd "C-j") #'evil-join)
+  ;; yank
   (define-key imap (kbd "C-y") #'evil-copy-word-from-above)
-  ;; (define-key imap (kbd "C-p") #'evil-copy-word-from-next-line)
+  ;; float
+  (define-key imap (kbd "C-f") #'evil-copy-word-from-below)
+  (define-key imap (kbd "C-s") #'counsel-company)
   ;;(define-key imap (kbd "C-{"))
   ;;(define-key imap (kbd "C-}"))
+
+  ;; ivy
+  (let ((map minibuffer-local-map))
+    (define-key map [escape] #'minibuffer-keyboard-quit)
+    )
+
+  (global-set-key (kbd "C-u") #'ivy-resume)
+  (global-set-key (kbd "C-s") #'swiper)
+  (global-set-key (kbd "C-S-s") #'ivy-plus-ag-with-find-directory)
+  (global-set-key (kbd "C-i") #'counsel-imenu)
+  (define-key mmap (kbd "C-y") nil)
+  (global-set-key (kbd "C-y") #'counsel-yank-pop)
+
+  (let ((map ivy-minibuffer-map))
+    (define-key map [escape] #'minibuffer-keyboard-quit)
+    (define-key map [return] #'ivy-done)
+    (define-key map (kbd "S-<return>") #'ivy-immediate-done)
+    (define-key map (kbd "C-<return>") #'ivy-call)
+    (define-key map [backtab] #'ivy-dispatching-call)
+    (define-key map (kbd "C-<tab>") #'ivy-read-action)
+    (define-key map (kbd "C-f") #'ivy-toggle-fuzzy)
+    (define-key map (kbd "C-d") #'ivy-backward-kill-word)
+    (define-key map (kbd "C-i") #'ivy-insert-current)
+    (define-key map (kbd "C-u") #'ivy-kill-line)
+    (define-key map (kbd "C-s") #'ivy-reverse-i-search)
+    )
+  (ivy-set-actions
+   t
+   '(("i" (lambda (x) (insert (if (stringp x) x (car x)))) "insert")
+     ("y" (lambda (x) (kill-new (if (stringp x) x (car x)))) "copy")))
 
 
   (with-eval-after-load 'company
@@ -289,28 +308,6 @@
     (define-key map [return] #'undo-tree-visualizer-quit)
     (define-key map [escape] #'undo-tree-visualizer-abort)
     )
-
-  (let ((map minibuffer-local-map))
-    (define-key map [escape] #'minibuffer-keyboard-quit)
-    )
-
-  (let ((map ivy-minibuffer-map))
-    (define-key map [escape] #'minibuffer-keyboard-quit)
-    (define-key map [return] #'ivy-done)
-    (define-key map (kbd "S-<return>") #'ivy-immediate-done)
-    (define-key map (kbd "C-<return>") #'ivy-call)
-    (define-key map [backtab] #'ivy-dispatching-call)
-    (define-key map (kbd "C-a") #'ivy-read-action)
-    (define-key map (kbd "C-f") #'ivy-toggle-fuzzy)
-    (define-key map (kbd "C-d") #'ivy-backward-kill-word)
-    (define-key map (kbd "C-i") #'ivy-insert-current)
-    (define-key map (kbd "C-u") #'ivy-kill-line)
-    (define-key map (kbd "C-/") #'ivy-reverse-i-search)
-    )
-  (ivy-set-actions
-   t
-   '(("i" (lambda (x) (insert (if (stringp x) x (car x)))) "insert")
-     ("y" (lambda (x) (kill-new (if (stringp x) x (car x)))) "copy")))
 
   (setq projectile-keymap-prefix nil)
   (define-key nmap (kbd "C-p") nil)

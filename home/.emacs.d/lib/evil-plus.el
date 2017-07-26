@@ -68,7 +68,7 @@
   (evil-downcase beg end type))
 
 ;;;###autoload
-(evil-define-command evil-copy-word-from-above ()
+(defun evil-copy-word-from-above ()
   (interactive)
   (unless (= 1 (line-number-at-pos (point)))
     (let (beg end)
@@ -78,8 +78,25 @@
         (evil-forward-word-begin)
         (setq end (point)))
       (evil-copy-from-above (- end beg))
-      ;; (evil--self-insert-string (evil-copy-chars-from-line (- end beg) -1))
-      (evil-forward-char))))
+      ;; If not having these lines, cursor point doesn't update properly.
+      (ignore-errors
+        (evil-forward-char)))))
+
+;;;###autoload
+(defun evil-copy-word-from-below ()
+  (interactive)
+  (unless (eq (line-number-at-pos (point))
+              (line-number-at-pos (point-max)))
+    (let (beg end)
+      (save-excursion
+        (evil-next-line)
+        (setq beg (point))
+        (evil-forward-word-begin)
+        (setq end (point)))
+      (evil-copy-from-below (- end beg))
+      ;; If not having these lines, cursor point doesn't update properly.
+      (ignore-errors
+        (evil-forward-char)))))
 
 (defun evil-simple-insert (count)
   (setq
