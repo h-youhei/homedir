@@ -3,20 +3,19 @@
 (setq-default mode-line-format
               '((:eval (mode-line-align
                         (concat
-                         (format-mode-line " %e")
+                         (format-mode-line "%e")
+                         ;; column number
+                         (format-mode-line "%3c ")
                          (propertize (mode-line-evil-state) 'face 'bold))
                         (concat
                          " "
                          (mode-line-current-project-and-directory)
-                         (propertize (mode-line-buffer-name 12) 'face 'bold)
+                         (propertize (mode-line-buffer-name 15) 'face 'bold)
                          (if buffer-read-only " [RO]" "")
                          (if (buffer-modified-p) " [+]" "")
-                         (mode-line-major-mode)
                          (mode-line-encoding)
-                         ;; (column,line/total line)
-                         (format-mode-line " (%c,%l/")
-                         (format "%d" (line-number-at-pos (point-max)))
-                         ")")))))
+                         (mode-line-major-mode)
+                         )))))
 
 ;; wait fix the bug: window-total-width.
 ;; http://emacs.1067599.n8.nabble.com/bug-19972-24-4-Font-size-change-doesn-t-update-window-total-width-td351021.html
