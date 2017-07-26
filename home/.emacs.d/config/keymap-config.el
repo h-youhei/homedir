@@ -25,7 +25,7 @@
   ;; window
   (global-set-key (kbd "C-t") #'open-terminal)
   (global-set-key (kbd "M-<return>") #'make-frame-command)
-  (global-set-key (kbd "M-SPC") #'evil-window-next)
+  (global-set-key (kbd "M-SPC") #'smart-switch-window)
 
   ;; buffer
   (define-key mmap (kbd "C-b") nil)

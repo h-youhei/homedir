@@ -23,4 +23,11 @@ This value is used by open-terminal"
   (interactive)
   (diff-buffer-with-file (current-buffer)))
 
+(defun smart-switch-window ()
+  "Switch to other window. If there's only one window, switch to other buffer"
+  (interactive)
+  (if (> (length (window-list)) 1)
+      (other-window 1)
+    (switch-to-buffer (other-buffer (current-buffer)))))
+
 (provide 'emacs-plus)
