@@ -207,14 +207,12 @@
 
 (require 'projectile)
 (setq projectile-completion-system 'ivy
-      projectile-keymap-prefix (kbd "C-p")
       projectile-known-projects-file (locate-user-emacs-file
                                       ".projectile/bookmarks.eld")
       projectile-cache-file (locate-user-emacs-file
                              ".projectile/projectile.cache")
       projectile-idle-timer-seconds 60
       )
-(define-key evil-normal-state-map (kbd "C-p") nil)
 
 
 (declare-function company-abort 'company)

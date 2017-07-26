@@ -311,6 +311,9 @@
    '(("i" (lambda (x) (insert (if (stringp x) x (car x)))) "insert")
      ("y" (lambda (x) (kill-new (if (stringp x) x (car x)))) "copy")))
 
+  (setq projectile-keymap-prefix nil)
+  (define-key nmap (kbd "C-p") nil)
+  (global-set-key (kbd "C-p") #'projectile-command-map)
   (let ((map projectile-command-map))
     (define-key map [escape] #'keyboard-quit)
     (define-key map "t" #'projectile-open-terminal)
