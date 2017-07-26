@@ -37,7 +37,7 @@
   ;; filer
   (define-key mmap (kbd "C-f") nil)
   (global-set-key (kbd "C-f") #'ivy-plus-find-file)
-  (global-set-key (kbd "C-S-f") #'(lambda () (interactive) (dired "./")))
+  (global-set-key (kbd "C-S-f") (lambda () (interactive) (dired "./")))
   (define-key nmap (kbd "C-r") nil)
   (global-set-key (kbd "C-r") #'counsel-recentf)
   (global-set-key (kbd "C-m") #'ivy-plus-bookmark)
@@ -45,7 +45,7 @@
   (define-key mmap (kbd "C-m") nil)
   (define-key mmap [return] #'evil-ret)
 
-  (declare-function dired-find-file "dired")
+  (declare-function dired-find-file 'dired)
   (with-eval-after-load 'dired
     (let ((map dired-mode-map))
       (define-key map [return] #'dired-find-file)
@@ -131,7 +131,7 @@
   ;; substitute
   (define-key nmap "-" #'evil-ex-interactive-substitute)
   (define-key vmap "-" #'evil-ex-interactive-substitute)
-  (define-key nmap "_" #'(lambda () (interactive) (evil-ex "%s/")))
+  (define-key nmap "_" (lambda () (interactive) (evil-ex "%s/")))
   (define-key nmap ">" #'evil-ex-repeat-substitute)
 
   ;; motion
@@ -319,6 +319,25 @@
     )
 
   (global-set-key (kbd "C-g") #'magit-status)
+
+  (declare-function with-editor-finish 'with-editor)
+  (declare-function with-editor-cansel 'with-editor)
+  (with-eval-after-load 'with-editor
+    (let ((map with-editor-mode-map))
+      (evil-define-key 'normal map "q!" #'with-editor-cancel)
+      (evil-define-key 'normal map "Q" #'with-editor-finish)
+    ))
+
+  (with-eval-after-load 'git-commit
+    (let ((map git-commit-mode-map))
+      (evil-define-key 'normal map
+        "q!" (lambda () (interactive)
+              (with-editor-cancel nil) (magit-mode-bury-buffer)))
+      (evil-define-key 'normal map
+        "Q" (lambda () (interactive)
+              (with-editor-finish nil) (magit-mode-bury-buffer)))
+      ))
+
   (with-eval-after-load 'magit-popup
     (define-key magit-popup-mode-map [escape] 'magit-popup-quit))
   (with-eval-after-load 'magit
