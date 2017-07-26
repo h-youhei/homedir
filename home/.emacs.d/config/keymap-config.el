@@ -56,6 +56,7 @@
   ;; search
   (global-set-key (kbd "C-s") #'swiper)
   (global-set-key (kbd "C-S-s") #'ivy-plus-ag-with-find-directory)
+  (global-set-key [tab] #'indent-for-tab-command)
   (global-set-key (kbd "C-i") #'counsel-imenu)
 
   ;; start insert

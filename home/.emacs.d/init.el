@@ -120,10 +120,10 @@
 
 ;; this variable should set before loading evil
 (defvar evil-search-module 'evil-search)
+(defvar evil-want-C-i-jump nil)
+(defvar evil-want-C-d-scroll nil)
 (require 'evil)
 (setq evil-cross-lines t ;at line egde
-      evil-want-C-i-jump nil
-      evil-want-C-d-scroll nil
       evil-echo-state nil
       evil-text-object-change-visual-type nil
       evil-ex-substitute-case 'sensitive
