@@ -21,6 +21,7 @@
                               haskell-mode
                               company-ghc
                               markdown-mode
+                              undohist
                               ))
 
 ;; appearence
@@ -139,11 +140,13 @@
 (evil-declare-not-repeat #'evil-yank-line)
 
 (require 'undo-tree)
-(setq undo-tree-auto-save-history t
-      undo-limit 100000
-      undo-strong-limit 150000
-      undo-tree-history-directory-alist `((".*" . ,(locate-user-emacs-file ".undo-tree" )))
-      undo-tree-visualizer-diff t
+(require 'undohist)
+(setq undohist-directory (locate-user-emacs-file ".undohist")
+      )
+(undohist-initialize)
+(setq undo-tree-visualizer-diff t
+      ;; undo-tree-auto-save-history t
+      ;; undo-tree-history-directory-alist `((".*" . ,(locate-user-emacs-file ".undo-tree" )))
       )
 
 (setq evil-motion-state-modes (delete 'undo-tree-visualizer-mode
