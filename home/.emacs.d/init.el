@@ -142,7 +142,14 @@
 (require 'undo-tree)
 (require 'undohist)
 (setq undohist-directory (locate-user-emacs-file ".undohist")
+      undohist-ignored-files '("/tmp/" "EDITMSG")
       )
+(defun undohist-save-1-around (orig-fun)
+  "Don't save ignored files."
+  (when (undohist-recover-file-p (buffer-file-name (current-buffer)))
+    (funcall orig-fun)))
+(advice-add #'undohist-save-1 :around #'undohist-save-1-around)
+
 (undohist-initialize)
 (setq undo-tree-visualizer-diff t
       ;; undo-tree-auto-save-history t
