@@ -331,8 +331,26 @@
 (require 'keymap-config)
 (require 'alias-config)
 (require 'mode-specific-config)
-(require 'modeline-config)
 (require 'theme-config)
+
+(column-number-mode 1)
+(require 'mode-line-plus)
+(setq-default mode-line-format
+              '((:eval (mode-line-align
+                        (concat
+                         (format-mode-line "%e")
+                         ;; column number
+                         (format-mode-line "%3c ")
+                         (propertize (mode-line-evil-state) 'face 'bold))
+                        (concat
+                         " "
+                         (mode-line-current-project-and-directory)
+                         (propertize (mode-line-buffer-name 15) 'face 'bold)
+                         (if buffer-read-only " [RO]" "")
+                         (if (buffer-modified-p) " [+]" "")
+                         (mode-line-encoding)
+                         (mode-line-major-mode)
+                         )))))
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 

@@ -1,22 +1,3 @@
-(column-number-mode 1)
-
-(setq-default mode-line-format
-              '((:eval (mode-line-align
-                        (concat
-                         (format-mode-line "%e")
-                         ;; column number
-                         (format-mode-line "%3c ")
-                         (propertize (mode-line-evil-state) 'face 'bold))
-                        (concat
-                         " "
-                         (mode-line-current-project-and-directory)
-                         (propertize (mode-line-buffer-name 15) 'face 'bold)
-                         (if buffer-read-only " [RO]" "")
-                         (if (buffer-modified-p) " [+]" "")
-                         (mode-line-encoding)
-                         (mode-line-major-mode)
-                         )))))
-
 ;; wait fix the bug: window-total-width.
 ;; http://emacs.1067599.n8.nabble.com/bug-19972-24-4-Font-size-change-doesn-t-update-window-total-width-td351021.html
 (defun mode-line-align (left right)
@@ -29,14 +10,6 @@
 (defun window-total-width-workaround ()
   ;; 2 is fringe
   (+ (window-width) 2 nlinum--width))
-
-(defun digit (number)
-  ;; return digit number of NUMBER
-  (let ((count 0))
-    (while (> number 0)
-      (setq number (/ number 10))
-      (setq count (1+ count)))
-    count))
 
 (defun mode-line-buffer-name (max-length)
   (let ((name (buffer-name)))
@@ -131,4 +104,4 @@
               hierarchy (1- hierarchy))))
     (concat head output)))
 
-(provide 'modeline-config)
+(provide 'mode-line-plus)

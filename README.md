@@ -16,6 +16,8 @@ If you want descriptions about each config, see Wiki(I haven't yet written).
 
 [zsh](https://github.com/h-youhei/myconfig/tree/master/home/.config/zsh)
 
+[emacs](https://github.com/h-youhei/myconfig/tree/master/home/.emacs.d)
+
 ## Note
 You can see utility script progress [here](https://github.com/h-youhei/myconfig/issues/1).
 
