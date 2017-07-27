@@ -169,6 +169,7 @@
 ;; relative number for the other line
 (setq nlinum-relative-redisplay-delay 0.01)
 (add-hook 'evil-emacs-state-entry-hook #'(lambda () (nlinum-mode 0)))
+(add-hook 'evil-emacs-state-exit-hook #'(lambda () (nlinum-mode 1)))
 
 (require 'save-visited-files)
 (setq save-visited-files-location (locate-user-emacs-file ".visited-files")
