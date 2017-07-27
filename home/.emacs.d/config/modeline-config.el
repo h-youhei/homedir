@@ -60,9 +60,10 @@
 
 (defun mode-line-major-mode ()
   ;; Ordinary case, show nothing.
-  (if (string-match-p "Fundamental" mode-name)
-      ""
-    (concat " [" mode-name "]")))
+  (let ((mode (format-mode-line mode-name)))
+    (if (string-match-p "Fundamental" mode)
+        ""
+      (concat " [" mode "]"))))
 
 (defun mode-line-encoding ()
   (let ((enc (symbol-name buffer-file-coding-system)))
