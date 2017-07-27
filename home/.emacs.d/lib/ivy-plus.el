@@ -12,7 +12,9 @@
 
 (defcustom ivy-ignore-files '("\\`\\.")
   "List of regexps or functions matching file names to ignore."
-  :type '(repeat (choice regexp function)))
+  :type '(repeat (choice regexp function))
+  :group 'ivy)
+
 
 ;;;###autoload
 (defun ivy-plus-switch-buffer ()
@@ -106,6 +108,7 @@
            res)
           res))))
 
+(require 'bookmark)
 ;;;###autoload
 (defun ivy-plus-bookmark ()
   "Forward to 'bookmark-jump' or 'bookmark-set' if bookmark doesn't exist."

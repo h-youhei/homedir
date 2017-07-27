@@ -2,7 +2,7 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-(defvar auto-install t)
+(defvar auto-install nil)
 (defconst favorite-packages '(evil
                               evil-surround
                               evil-exchange
@@ -116,6 +116,7 @@
       (mapc #'package-install not-installed))))
 
 (add-to-list 'load-path (locate-user-emacs-file "autoload"))
+(add-to-list 'load-path (locate-user-emacs-file "lib"))
 (require 'autoload-init)
 
 ;; this variable should set before loading evil
@@ -330,6 +331,8 @@
 (global-whitespace-mode 1)
 (global-nlinum-mode 1)
 (nlinum-relative-on)
+(evil-ibus-auto-switch-mode 1)
+(evil-capslock-auto-switch-mode 1)
 
 (add-to-list 'load-path (locate-user-emacs-file "config"))
 (require 'keymap-config)

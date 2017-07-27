@@ -1,3 +1,9 @@
+(autoload 'evil-smart-previous-line "evil-plus" "" t)
+(autoload 'evil-smart-next-line "evil-plus" "" t)
+(autoload 'evil-smart-beginning-of-line "evil-plus" "" t)
+(autoload 'evil-smart-end-of-line "evil-plus" "" t)
+(autoload 'evil-smart-goto-last-line "evil-plus" "" t)
+
 (autoload #'evil-change-whole-word "evil-plus" "" t)
 (autoload #'evil-change-whole-WORD "evil-plus" "" t)
 (autoload #'evil-delete-whole-word "evil-plus" "" t)
