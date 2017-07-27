@@ -275,7 +275,7 @@
   (define-key imap (kbd "C-S-e") #'load-yas-insert-snippet)
   (global-set-key (kbd "M-e s") #'load-yas-visit-snippet-file)
   (global-set-key (kbd "M-a s") #'load-yas-new-snippet)
-  (with-eval-after-load 'yassnippet
+  (with-eval-after-load 'yasnippet
     (declare-function yas-expand 'yasnippet)
     (declare-function yas-insert-snippet 'yasnippet)
     (declare-function yas-visit-snippet-file 'yasnippet)
