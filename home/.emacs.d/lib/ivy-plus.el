@@ -41,8 +41,10 @@
   (kill-buffer buffer)
   (ivy--reset-state ivy-last))
 
-(defun ivyplus--rename-buffer-action (buffer)
-  (let ((new-name (read-string "Rename buffer (to new name): ")))
+(defun ivy-plus--rename-buffer-action (buffer)
+  (let* ((enable-recursive-minibuffers t)
+         (new-name (read-string "Rename buffer (to new name): ")))
+
     (with-current-buffer buffer
       (rename-buffer new-name)))
   (ivy--reset-state ivy-last))
@@ -140,7 +142,8 @@
     (ivy--reset-state ivy-last))
 
 (defun ivy-plus--bookmark-rename-action (bm)
-  (let ((inhibit-message t))
+  (let ((enable-recursive-minibuffers t)
+        (inhibit-message t))
     (bookmark-rename bm))
     (ivy--reset-state ivy-last))
 

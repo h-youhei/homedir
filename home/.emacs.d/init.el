@@ -183,9 +183,6 @@
                              ivy-minibuffer-match-face-2)
       )
 
-;; for ivy action that prompt me
-(setq enable-recursive-minibuffers t)
-
 (setq swiper-faces '(swiper-match-face-1
                      swiper-match-face-2)
       swiper-goto-start-of-match t

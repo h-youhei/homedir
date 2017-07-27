@@ -230,7 +230,7 @@
 
   ;; ivy
   (let ((map minibuffer-local-map))
-    (define-key map [escape] #'minibuffer-keyboard-quit)
+    (define-key map [escape] #'abort-recursive-edit)
     )
 
   (global-set-key (kbd "C-u") #'ivy-resume)
@@ -241,7 +241,7 @@
   (global-set-key (kbd "C-y") #'counsel-yank-pop)
 
   (let ((map ivy-minibuffer-map))
-    (define-key map [escape] #'minibuffer-keyboard-quit)
+    (define-key map [escape] #'abort-recursive-edit)
     (define-key map [return] #'ivy-done)
     (define-key map (kbd "S-<return>") #'ivy-immediate-done)
     (define-key map (kbd "C-<return>") #'ivy-call)
