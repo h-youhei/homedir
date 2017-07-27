@@ -271,7 +271,10 @@
       (define-key map [up] nil)
       (define-key map [down] nil)))
 
-
+  (define-key imap (kbd "C-e") #'load-yas-expand)
+  (define-key imap (kbd "C-S-e") #'load-yas-insert-snippet)
+  (global-set-key (kbd "M-e s") #'load-yas-visit-snippet-file)
+  (global-set-key (kbd "M-a s") #'load-yas-new-snippet)
   (with-eval-after-load 'yassnippet
     (declare-function yas-expand 'yasnippet)
     (declare-function yas-insert-snippet 'yasnippet)
@@ -281,11 +284,6 @@
     (declare-function yas-prev-field 'yasnippet)
     (declare-function yas-skip-and-clear-or-delete-char 'yasnippet)
     (declare-function yas-tryout-snippet 'yasnippet)
-
-    (define-key imap (kbd "C-e") #'load-yas-expand)
-    (define-key imap (kbd "C-S-e") #'load-yas-insert-snippet)
-    (global-set-key (kbd "M-e s") #'load-yas-visit-snippet-file)
-    (global-set-key (kbd "M-a s") #'load-yas-new-snippet)
 
     (let ((map yas-minor-mode-map))
       (evil-define-key 'insert map (kbd "C-e") #'yas-expand)
