@@ -2,27 +2,40 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-(defvar auto-install nil)
-(defconst favorite-packages '(evil
-                              evil-surround
-                              evil-exchange
-                              nlinum-relative
-                              save-visited-files
-                              ivy
-                              swiper
-                              counsel
-                              projectile
-                              magit
-                              company
-                              yasnippet
-                              flycheck
-                              mmm-mode
-                              bool-flip
-                              haskell-mode
-                              company-ghc
-                              markdown-mode
-                              undohist
-                              ))
+(defvar auto-install t)
+(require 'package)
+(setq package-selected-packages '(evil
+                                  evil-surround
+                                  evil-exchange
+                                  undohist
+                                  nlinum-relative
+                                  save-visited-files
+                                  ivy
+                                  swiper
+                                  counsel
+                                  projectile
+                                  magit
+                                  company
+                                  yasnippet
+                                  flycheck
+                                  mmm-mode
+                                  bool-flip
+                                  haskell-mode
+                                  company-ghc
+                                  markdown-mode
+                                  gitignore-mode
+                                  easy-hugo
+                                  ))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+
+(add-to-list 'load-path (locate-user-emacs-file "autoload"))
+(add-to-list 'load-path (locate-user-emacs-file "lib"))
+(require 'autoload-init)
+
+(require 'package-plus)
+(when auto-install
+  (package-auto-install))
 
 ;; appearence
 (setq inhibit-startup-screen t)
@@ -101,23 +114,6 @@
 
 ;; use clipboard only explicitly
 (setq select-enable-clipboard nil)
-
-
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(package-initialize)
-
-;;auto install
-(when auto-install
-  (require 'cl-lib)
-  (let ((not-installed (cl-remove-if #'package-installed-p favorite-packages)))
-    (when not-installed
-      (package-refresh-contents)
-      (mapc #'package-install not-installed))))
-
-(add-to-list 'load-path (locate-user-emacs-file "autoload"))
-(add-to-list 'load-path (locate-user-emacs-file "lib"))
-(require 'autoload-init)
 
 ;; this variable should set before loading evil
 (defvar evil-search-module 'evil-search)
@@ -344,6 +340,5 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (setq custom-file (locate-user-emacs-file ".custom.el"))
-(load custom-file)
 
 (provide 'init)

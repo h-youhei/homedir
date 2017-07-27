@@ -2,7 +2,7 @@
 (defun reload-config ()
   "reload config file"
   (interactive)
-  (load-file (expand-file-name "init.el" user-emacs-directory)))
+  (load-file (locate-user-emacs-file "init.el")))
 
 (defun shell-command-no-echo (command)
   (with-temp-buffer (shell-command command t)))

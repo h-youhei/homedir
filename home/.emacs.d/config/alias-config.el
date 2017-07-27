@@ -5,6 +5,7 @@
 (defalias 'pd #'package-delete)
 (defalias 'pl #'package-list-packages)
 (defalias 'par #'package-autoremove)
+(defalias 'pu #'package-update)
 
 (require 'flycheck)
 ;;; Error List

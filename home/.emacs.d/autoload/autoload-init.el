@@ -1,4 +1,5 @@
 (require 'emacs-plus-autoload)
+(require 'package-plus-autoload)
 
 (require 'evil-ibus-autoload)
 (require 'evil-capslock-autoload)
