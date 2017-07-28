@@ -88,8 +88,7 @@
 ;; Put last selected bookmark on top
 (setq bookmark-sort-flag nil)
 (defvar bookmark-order-changed nil)
-(advice-add #'bookmark-save :after
-            #'(lambda () (setq bookmark-order-changed nil)))
+(advice-add #'bookmark-save :after (lambda () (setq bookmark-order-changed nil)))
 (defun bookmark-put-last-use-on-top ()
   (let ((last (bookmark-get-bookmark bookmark-current-bookmark)))
     (setq bookmark-alist (delq last bookmark-alist))
@@ -97,7 +96,7 @@
     (setq bookmark-order-changed t)))
 (add-hook 'bookmark-after-jump-hook #'bookmark-put-last-use-on-top)
 (add-hook 'bookmark-exit-hook
-          #'(lambda () (when bookmark-order-changed (bookmark-save))))
+          (lambda () (when bookmark-order-changed (bookmark-save))))
 
 (setq scroll-margin 3
       scroll-step 1)
@@ -115,10 +114,10 @@
 ;; use clipboard only explicitly
 (setq select-enable-clipboard nil)
 
-;; this variable should set before loading evil
-(defvar evil-search-module 'evil-search)
-(defvar evil-want-C-i-jump nil)
-(defvar evil-want-C-d-scroll nil)
+;; these variable should set before loading evil
+(setq evil-search-module 'evil-search
+      evil-want-C-i-jump nil
+      evil-want-C-d-scroll nil)
 (require 'evil)
 (setq evil-cross-lines t ;at line egde
       evil-echo-state nil
@@ -168,8 +167,8 @@
 ;; real number for current line
 ;; relative number for the other line
 (setq nlinum-relative-redisplay-delay 0.01)
-(add-hook 'evil-emacs-state-entry-hook #'(lambda () (nlinum-mode 0)))
-(add-hook 'evil-emacs-state-exit-hook #'(lambda () (nlinum-mode 1)))
+(add-hook 'evil-emacs-state-entry-hook (lambda () (nlinum-mode 0)))
+(add-hook 'evil-emacs-state-exit-hook (lambda () (nlinum-mode 1)))
 
 (require 'save-visited-files)
 (setq save-visited-files-location (locate-user-emacs-file ".visited-files")
@@ -219,12 +218,13 @@
       )
 (eval-after-load 'company '(add-to-list 'company-backends 'company-ghc))
 
-(add-hook 'evil-insert-state-entry-hook #'(lambda () (global-company-mode 1)))
+(add-hook 'evil-insert-state-entry-hook (lambda () (global-company-mode 1)))
 (add-hook 'evil-insert-state-exit-hook #'company-abort)
 
 
 (declare-function yas-activate-extra-mode 'yasnippet)
 (declare-function yas-abort-snippet 'yasnippet)
+(declare-function yas-new-snippet 'yasnippet)
 (setq yas-wrap-around-region t
       yas-triggers-in-field t
       )
@@ -232,9 +232,8 @@
 (with-eval-after-load 'yasnippet
   ;; diable pre-defined snippet
   (setq yas-snippet-dirs (list yas--default-user-snippets-dir))
-  (add-hook 'yas-minor-mode-hook
-            #'(lambda ()
-              (yas-activate-extra-mode 'fundamental-mode)))
+  (add-hook 'yas-minor-mode-hook (lambda ()
+                                   (yas-activate-extra-mode 'fundamental-mode)))
   (advice-add #'yas-new-snippet :after (lambda (&optional _) (evil-insert nil))))
   ;; (add-hook 'evil-insert-state-exit-hook #'yas-abort-snippet))
 
@@ -305,8 +304,8 @@
 
 (declare-function magit-restore-window-configuration 'magit-mode)
 ;; kill buffer when I quit from magit
-(setq magit-bury-buffer-function #'(lambda (_)
-                                     (magit-restore-window-configuration t))
+(setq magit-bury-buffer-function (lambda (_)
+                                   (magit-restore-window-configuration t))
       magit-commit-show-diff nil)
 (advice-add #'magit-status :after #'magit-status-init)
 (add-hook 'git-commit-mode-hook #'git-commit-evil-maybe-start-insert)
