@@ -161,8 +161,7 @@
                                      (delete 'magit-diff-mode
                                              evil-emacs-state-modes)
                                      evil-insert-state-modes)
-      evil-insert-state-modes '(snippet-mode
-                                )
+      evil-insert-state-modes '()
       )
 
 (require 'nlinum-relative)
@@ -236,7 +235,8 @@
   (add-hook 'yas-minor-mode-hook
             #'(lambda ()
               (yas-activate-extra-mode 'fundamental-mode)))
-  (add-hook 'evil-insert-state-exit-hook #'yas-abort-snippet))
+  (advice-add #'yas-new-snippet :after (lambda (&optional _) (evil-insert nil))))
+  ;; (add-hook 'evil-insert-state-exit-hook #'yas-abort-snippet))
 
 
 
