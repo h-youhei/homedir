@@ -226,7 +226,9 @@
 
 (declare-function yas-activate-extra-mode 'yasnippet)
 (declare-function yas-abort-snippet 'yasnippet)
-(setq yas-wrap-around-region t)
+(setq yas-wrap-around-region t
+      yas-triggers-in-field t
+      )
 ;; share fundamental-mode snippet among all modes
 (with-eval-after-load 'yasnippet
   ;; diable pre-defined snippet
