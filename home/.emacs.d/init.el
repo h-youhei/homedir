@@ -161,7 +161,8 @@
                                      (delete 'magit-diff-mode
                                              evil-emacs-state-modes)
                                      evil-insert-state-modes)
-      evil-insert-state-modes '()
+      evil-insert-state-modes '(snippet-mode
+                                )
       )
 
 (require 'nlinum-relative)
