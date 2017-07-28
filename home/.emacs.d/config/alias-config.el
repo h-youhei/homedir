@@ -15,7 +15,7 @@
 (defalias 'vm #'quick-diff)
 
 ;;; Delete Auto Save
-(defalias 'das #'(lambda () (delete-auto-save-file-if-necessary t)))
+(defalias 'das '(lambda () (interactive) (delete-file buffer-auto-save-file-name)))
 ;;; View diff between current buffer and Auto Save
 (defalias 'ras #'recover-this-file)
 
