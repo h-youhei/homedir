@@ -1,11 +1,10 @@
 (require 'mode-local)
 (require 'evil)
 
-(with-eval-after-load 'haskell-mode
-  (setq-mode-local haskell-mode
-                   tab-width 2
-                   evil-shift-width 2)
-  )
+(setq-mode-local haskell-mode
+                 tab-width 2
+                 evil-shift-width 2)
+
 
 (setq-mode-local lisp-interaction-mode
                  indent-tabs-mode nil
@@ -23,8 +22,15 @@
   (push '("t" . "nil") bool-flip-alist))
 (add-hook 'emacs-lisp-mode-hook #'setup-lisp-bool-flip)
 
+
 (setq python-indent-offset 4)
 
+
 (setq markdown-fontify-code-blocks-natively t)
+
+
+(setq-mode-local sgml-mode
+                 tab-width 2
+                 evil-shift-width 2)
 
 (provide 'mode-specific-config)
