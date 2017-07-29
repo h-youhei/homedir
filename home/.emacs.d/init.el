@@ -223,7 +223,7 @@
 (declare-function yas-activate-extra-mode 'yasnippet)
 (declare-function yas-abort-snippet 'yasnippet)
 (declare-function yas-new-snippet 'yasnippet)
-(setq yas-wrap-around-region t
+(setq yas-snippet-revival nil
       yas-triggers-in-field t
       )
 ;; share fundamental-mode snippet among all modes
@@ -233,7 +233,6 @@
   (add-hook 'yas-minor-mode-hook (lambda ()
                                    (yas-activate-extra-mode 'fundamental-mode)))
   (advice-add #'yas-new-snippet :after (lambda (&optional _) (evil-insert nil))))
-  ;; (add-hook 'evil-insert-state-exit-hook #'yas-abort-snippet))
 
 
 
