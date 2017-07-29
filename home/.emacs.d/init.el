@@ -156,6 +156,7 @@
                                       evil-motion-state-modes)
       evil-emacs-state-modes (append '(undo-tree-visualizer-mode
                                        dired-mode
+                                       easy-hugo-mode
                                        )
                                      (delete 'magit-diff-mode
                                              evil-emacs-state-modes)
@@ -297,6 +298,9 @@
 (advice-add #'flycheck-option-emacs-lisp-package-initialize
             :around
             #'flycheck-option-emacs-lisp-package-initialize-edit)
+
+(setq easy-hugo-basedir "~/workspace/blog/"
+      easy-hugo-postdir "content/posts")
 
 
 (declare-function magit-restore-window-configuration 'magit-mode)
