@@ -225,6 +225,8 @@ The insertion will be repeated COUNT times."
   "escape"
   (interactive)
   (evil-ex-nohighlight)
+  (when (fboundp 'yas-abort-snippet)
+    (yas-abort-snippet))
   (keyboard-quit))
 
 ;;;###autoload
