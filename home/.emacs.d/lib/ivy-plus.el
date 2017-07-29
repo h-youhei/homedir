@@ -159,4 +159,34 @@
    "where to start grep: "
    #'(lambda (x) (counsel-ag nil x))))
 
+(defun ivy-plus--directory-matcher (regexp candidates)
+  (let ((res (ivy--re-filter regexp candidates)))
+    (setq res (cl-remove-if-not (lambda (x) (string-match-p "/$" x)) res))
+    (if (or (null ivy-use-ignore)
+            (null ivy-ignore-files)
+            (string-match "\\`\\." ivy-text))
+        res
+      (or (cl-remove-if
+           (lambda (buf)
+             (ivy-plus--match-string-by-func-or-regexp-p ivy-ignore-files buf))
+           res)
+          res))))
+
+(defun ivy-plus-completing-directory (prompt collection &rest _)
+  (ivy-read (replace-regexp-in-string "%" "%%" prompt)
+            collection
+            :matcher #'ivy-plus--directory-matcher
+            :keymap nil
+            :sort t
+            :caller (cond ((called-interactively-p 'any)
+                           this-command)
+                          ((and collection (symbolp collection))
+                           collection))))
+
+;;;###autoload
+(defun ivy-plus-with-completing-directory (orig-fun &rest args)
+  (let ((completing-read-function
+         #'ivy-plus-completing-directory))
+    (apply orig-fun args)))
+
 (provide 'ivy-plus)

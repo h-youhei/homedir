@@ -179,13 +179,9 @@
 (setq ivy-wrap t
       ivy-extra-directories '()
       ivy-ignore-buffers '("\\` " "\\`\\*")
-      ivy-minibuffer-faces '(ivy-minibuffer-match-face-1
-                             ivy-minibuffer-match-face-2)
       )
 
-(setq swiper-faces '(swiper-match-face-1
-                     swiper-match-face-2)
-      swiper-goto-start-of-match t
+(setq swiper-goto-start-of-match t
       swiper-action-recenter t)
 
 (evil-declare-not-repeat #'ivy-plus-bookmark)
@@ -198,6 +194,8 @@
 (evil-declare-not-repeat #'counsel-git-grep)
 (evil-declare-not-repeat #'swiper)
 (evil-declare-motion #'swiper)
+
+(advice-add #'save-buffer :around #'ivy-plus-with-completing-directory)
 
 (require 'projectile)
 (setq projectile-completion-system 'ivy
