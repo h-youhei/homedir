@@ -11,8 +11,10 @@
 
 ;;;###autoload
 (defun package-update ()
+  (interactive)
+  (package-refresh-contents)
   (save-window-excursion
-    (package-list-packages)
+    (package-list-packages t)
     (package-menu-mark-upgrades)
     (package-menu-execute t)))
 
