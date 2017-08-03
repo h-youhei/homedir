@@ -33,4 +33,7 @@
                  tab-width 2
                  evil-shift-width 2)
 
+(setq-mode-local toml-mode
+                 indent-tabs-mode t)
+
 (provide 'mode-specific-config)
