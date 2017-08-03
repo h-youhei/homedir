@@ -305,6 +305,8 @@
       )
     )
 
+  (define-key undo-tree-map (kbd "C-/") nil)
+
   (let ((map undo-tree-visualizer-mode-map))
     (define-key map [return] #'undo-tree-visualizer-quit)
     (define-key map [escape] #'undo-tree-visualizer-abort)

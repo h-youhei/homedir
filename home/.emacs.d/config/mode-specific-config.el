@@ -29,9 +29,11 @@
 (setq markdown-fontify-code-blocks-natively t)
 
 
-(setq-mode-local sgml-mode
-                 tab-width 2
-                 evil-shift-width 2)
+(with-eval-after-load 'sgml-mode
+  (setq-mode-local sgml-mode
+                   tab-width 2
+                   evil-shift-width 2)
+  (evil-define-key 'insert sgml-mode-map (kbd "C-/") #'sgml-close-tag))
 
 (setq-mode-local toml-mode
                  indent-tabs-mode t)
