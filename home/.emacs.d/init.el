@@ -21,7 +21,6 @@
                                   mmm-mode
                                   bool-flip
                                   haskell-mode
-                                  company-ghc
                                   markdown-mode
                                   gitignore-mode
                                   easy-hugo
@@ -215,7 +214,6 @@
       company-tooltip-limit 5
       company-tooltip-offset-display nil
       )
-(eval-after-load 'company '(add-to-list 'company-backends 'company-ghc))
 
 (add-hook 'evil-insert-state-entry-hook (lambda () (global-company-mode 1)))
 (add-hook 'evil-insert-state-exit-hook #'company-abort)
