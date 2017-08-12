@@ -9,9 +9,6 @@ setopt ignore_eof
 # load special key
 source $ZDOTDIR/kbd/urxvt.zsh
 
-# load plugin
-source /usr/share/fzf/key-bindings.zsh
-
 KEYTIMEOUT=10
 
 function capitalize-whole-word () {
@@ -59,11 +56,6 @@ function cd-parent () {
 zle -N cd-parent
 
 bindkey -e
-
-bindkey '^[/' fzf-history-widget
-bindkey '^[g' fzf-cd-widget
-bindkey '^[e' fzf-file-widget
-
 
 bindkey '\t' expand-or-complete-prefix
 bindkey "${key[S-Tab]}" reverse-menu-complete
