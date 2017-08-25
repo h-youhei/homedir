@@ -45,7 +45,8 @@ iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
 iptables -A OUTPUT -p icmp -j ACCEPT
 
 #ftp
-iptables -A OUTPUT -p tcp --dport 20:21 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 21 -j ACCEPT
+iptables -A INPUT -p tcp --sport 20 -j ACCEPT
 
 #ssh
 iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
