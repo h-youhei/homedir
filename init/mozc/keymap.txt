@@ -1,8 +1,7 @@
 status	key	command
 Precomposition	Backspace	Revert
 Precomposition	Ctrl Backspace	Undo
-Precomposition	Muhenkan	ToggleAlphanumericMode
-Precomposition	Ctrl Henkan	Reconvert
+Precomposition	Henkan	Reconvert
 Precomposition	Space	InsertSpace
 Precomposition	Shift Space	InsertAlternateSpace
 Precomposition	Ctrl Henkan	LaunchWordRegisterDialog
@@ -16,9 +15,9 @@ Composition	Home	MoveCursorToBeginning
 Composition	End	MoveCursorToEnd
 Composition	Ctrl Space	InsertSpace
 Composition	Ctrl Shift Space	InsertAlternateSpace
-Composition	Hiragana	DisplayAsFullKatakana
-Composition	Katakana	DisplayAsHiragana
-Composition	Muhenkan	ToggleAlphanumericMode
+Composition	Muhenkan	DisplayAsFullKatakana
+Composition	Shift Muhenkan	DisplayAsHiragana
+Composition	Shift Henkan	ConvertToFullAlphanumeric
 Composition	Space	Convert
 Composition	Enter	Commit
 Suggestion	Tab	CommitFirstSuggestion
@@ -26,7 +25,6 @@ Prediction	Ctrl Delete	DeleteSelectedCandidate
 Conversion	Backspace	Cancel
 Conversion	Delete	Cancel
 Conversion	Escape	Cancel
-Conversion	Left	SegmentWidthShrink
 Conversion	Right	SegmentWidthExpand
 Conversion	Ctrl Left	SegmentFocusLeft
 Conversion	Ctrl Right	SegmentFocusRight
@@ -36,13 +34,16 @@ Conversion	Ctrl Space	InsertSpace
 Conversion	Ctrl Shift Space	InsertAlternateSpace
 Conversion	Tab	CommitOnlyFirstSegment
 Conversion	Enter	Commit
-Conversion	Shift Henkan	ConvertToHiragana
-Conversion	Henkan	ConvertToFullKatakana
-Conversion	Muhenkan	ToggleAlphanumericMode
+Conversion	Shift Muhenkan	ConvertToHiragana
+Conversion	Muhenkan	ConvertToFullKatakana
+Conversion	Henkan	ConvertToHalfAlphanumeric
 Conversion	Space	ConvertNext
 Conversion	Shift Space	ConvertPrev
 Conversion	PageDown	ConvertNextPage
 Conversion	PageUp	ConvertPrevPage
+Conversion	Left	SegmentWidthShrink
+Composition	Henkan	DisplayAsHalfAlphanumeric
+Conversion	Shift Henkan	ConvertToFullAlphanumeric
 Composition	ASCII	InsertCharacter
 Composition	OFF	IMEOff
 Composition	ON	IMEOn
