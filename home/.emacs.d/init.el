@@ -2,7 +2,7 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-(defvar auto-install t)
+(defvar auto-install nil)
 (require 'package)
 (setq package-selected-packages '(evil
                                   evil-surround
@@ -21,9 +21,10 @@
                                   mmm-mode
                                   bool-flip
                                   haskell-mode
+                                  php-mode
+                                  toml-mode
                                   markdown-mode
                                   gitignore-mode
-                                  easy-hugo
                                   ))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
@@ -155,7 +156,6 @@
                                       evil-motion-state-modes)
       evil-emacs-state-modes (append '(undo-tree-visualizer-mode
                                        dired-mode
-                                       easy-hugo-mode
                                        )
                                      (delete 'magit-diff-mode
                                              evil-emacs-state-modes)
@@ -296,10 +296,6 @@
 (advice-add #'flycheck-option-emacs-lisp-package-initialize
             :around
             #'flycheck-option-emacs-lisp-package-initialize-edit)
-
-(setq easy-hugo-basedir "~/workspace/blog/"
-      easy-hugo-postdir "content/posts")
-
 
 (declare-function magit-restore-window-configuration 'magit-mode)
 ;; kill buffer when I quit from magit
