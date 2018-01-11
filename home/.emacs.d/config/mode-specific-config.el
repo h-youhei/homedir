@@ -22,9 +22,10 @@
   (push '("t" . "nil") bool-flip-alist))
 (add-hook 'emacs-lisp-mode-hook #'setup-lisp-bool-flip)
 
-
-(setq python-indent-offset 4)
-
+(setq c-default-style '((java-mode . "java")
+                        (awk-mode . "awk")
+                        (other . "stroustrup")
+                        ))
 
 (setq markdown-fontify-code-blocks-natively t)
 
@@ -32,10 +33,12 @@
 (with-eval-after-load 'sgml-mode
   (setq-mode-local sgml-mode
                    tab-width 2
-                   evil-shift-width 2)
+                   evil-shift-width 2
+                   )
   (evil-define-key 'insert sgml-mode-map (kbd "C-/") #'sgml-close-tag))
 
 (setq-mode-local toml-mode
-                 indent-tabs-mode t)
+                 indent-tabs-mode t
+                 )
 
 (provide 'mode-specific-config)
