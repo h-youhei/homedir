@@ -262,7 +262,6 @@
   (if (evil-visual-state-p)
       (apply orig-fn beg end type register args)
     (apply orig-fn beg end type ?_ args)))
-(advice-add #'evil-delete-char :around #'evil-without-register)
 (advice-add #'evil-delete-backward-char :around #'evil-without-register)
 (advice-add #'evil-substitute :around #'evil-without-register)
 (advice-add #'evil-backward-substitute :around #'evil-without-register)
