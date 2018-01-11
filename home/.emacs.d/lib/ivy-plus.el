@@ -172,10 +172,20 @@
            res)
           res))))
 
-(defun ivy-plus-completing-directory (prompt collection &rest _)
+(defun ivy-plus-completing-directory (prompt collection _x _y initial-input
+                                             history &rest _z)
+  (when (consp history)
+    (when (numberp (cdr history))
+      (setq initial-input (nth (1- (cdr history))
+                               (symbol-value (car history)))))
+    (setq history (car history)))
   (ivy-read (replace-regexp-in-string "%" "%%" prompt)
             collection
             :matcher #'ivy-plus--directory-matcher
+            :initial-input (cond ((consp initial-input)
+                                  (car initial-input))
+                                 (t initial-input))
+            :history history
             :keymap nil
             :sort t
             :caller (cond ((called-interactively-p 'any)
