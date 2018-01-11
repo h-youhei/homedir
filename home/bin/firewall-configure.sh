@@ -46,7 +46,10 @@ iptables -A OUTPUT -p icmp -j ACCEPT
 
 #ftp
 iptables -A OUTPUT -p tcp --dport 21 -j ACCEPT
-iptables -A INPUT -p tcp --sport 20 -j ACCEPT
+#active
+# iptables -A INPUT -p tcp --dport 20 -j ACCEPT
+#passive
+iptables -A OUTPUT -p tcp --dport 1024: -j ACCEPT
 
 #ssh
 iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
