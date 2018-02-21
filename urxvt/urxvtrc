@@ -46,7 +46,6 @@ URxvt*visualBell: false
 URxvt*mapAlert: true
 
 ! Input Method
-URxvt*inputMethod: fcitx
 URxvt*preeditType: OverTheSpot
 URxvt*imLocale: ja_JP.UTF-8
 

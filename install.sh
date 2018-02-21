@@ -1,13 +1,19 @@
-#!/usr/bin/sh
-
-test -z "$SUDO_USER" && exit
+#!/bin/sh
 
 script_path=`readlink -f $0`
 script_dir=`dirname $script_path`
 cd $script_dir
 
-./update.sh
+xdg/install.sh
+zsh/install.sh
+X11/install.sh 
+xmonad/install.sh
+stalontray/install.sh
+urxvt/install.sh
+fcitx/install.sh
+mozc/install.sh
 
-cd helper
-./install-etc.sh
-sudo -u $SUDO_USER ./install-home.sh
+[ -d $HOME/bin ] || mkdir $HOME/bin
+bin() {
+	ln -s "$script_dir/bin/$1" $HOME/bin/.
+}

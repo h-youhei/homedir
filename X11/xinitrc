@@ -1,0 +1,34 @@
+#!/bin/sh
+
+sys_xinit_dir=/etc/X11/xinit
+sys_resources=/etc/X11/xinit/Xresources
+
+[ -z $XDG_CONFIG_HOME ] && XDG_CONFIG_HOME=$HOME/.config
+user_xinit_dir=$XDG_CONFIG_HOME/X11
+user_resources=$user_xinit_dir/Xresources
+
+# merge xresources
+[ -f $sys_resources ] && xrdb -merge $sys_resources
+[ -f $user_resources ] && xrdb -merge $user_resources
+
+if [ -d $user_resources.d ] ; then
+	for f in $user_resources.d/* ; do
+		[ -f "$f" ] && xrdb -merge "$f"
+	done
+	unset f
+fi
+
+# start some nice programs
+if [ -d $sys_xinit_dir/xinitrc.d ] ; then
+	for f in $sys_xinit_dir/xinitrc.d/?*.sh ; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
+fi
+
+if [ -d $user_xinit_dir/xinitrc.d ] ; then
+	for f in $user_xinit_dir/xinitrc.d/?*.sh ; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
+fi

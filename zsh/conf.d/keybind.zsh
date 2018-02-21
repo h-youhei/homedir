@@ -1,13 +1,13 @@
 #man zshzle
 ##/STANDARD WIDGETS
 
-# control io (stop<C-s> restart<C-q>)
+# disable control io (stop<C-s> restart<C-q>)
 unsetopt flow_control
-# deactivate push <C-d> to end zsh
+# disable <C-d> (exit zsh)
 setopt ignore_eof
 
 # load special key
-source $ZDOTDIR/kbd/urxvt.zsh
+source $ZDOTDIR/integration/urxvt-key.zsh
 
 KEYTIMEOUT=10
 
