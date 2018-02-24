@@ -1,0 +1,19 @@
+logging_msg = false
+
+use_ctl = false
+input_method = ibus
+fontsize = 14
+font_size_range = 14-14
+use_scrollbar = false
+
+depth = 24
+fg_color = white
+bg_color = black
+mod_meta_key = mod1
+mod_meta_mode = esc
+static_backscroll_mode = true
+
+#word_separators = " ,./@;"
+
+#To use this feature correctly, it has to be configured other application too.
+#col_size_of_width_a = 2

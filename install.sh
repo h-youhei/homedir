@@ -10,7 +10,7 @@ X11/install.sh
 fontconfig/install.sh
 xmonad/install.sh
 stalontray/install.sh
-urxvt/install.sh
+mlterm/install.sh
 ibus/install.sh
 mozc/install.sh
 

@@ -5,7 +5,7 @@ URxvt*override-redirect: false
 URxvt*hold: false
 URxvt*print-pipe: cat > /tmp/urxvt_$(date +%Y-%m-%d_%H:%M:%S)
 URxvt*secondaryScreen: true
-URxvt*secondaryScroll: false
+URxvt*secondaryScroll: true
 URxvt*pastableTabs: false
 !URxvt*cutchars: string
 
@@ -28,8 +28,7 @@ URxvt*iconName: urxvt
 
 ! charaster appearence
 URxvt*depth: 24
-URxvt*font: xft:DejaVu Sans Mono:size=11,xft:IPAGothic:size=11
-!URxvt*imFont: fontname
+URxvt*font: xft:Source Code Pro:size=10,xft:Source Han Sans JP:size=10
 URxvt*intensityStyles: false
 URxvt*lineSpace: 0
 URxvt*letterSpace: 0
@@ -46,12 +45,15 @@ URxvt*visualBell: false
 URxvt*mapAlert: true
 
 ! Input Method
+URxvt*inputMethod: ibus
 URxvt*preeditType: OverTheSpot
 URxvt*imLocale: ja_JP.UTF-8
+URxvt*imFont: xft:Source Han Sans JP:size=10
 
 ! perl
 URxvt*perl-lib:
-URxvt*perl-ext-common:
+URxvt*perl-ext-common: 
+URxvt*perl-ext:
 
 ! mouse
 URxvt*mouseWheelScrollPage: false
