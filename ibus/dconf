@@ -1,0 +1,11 @@
+[general]
+engines-order=['xkb:us::eng', 'mozc-jp']
+use-system-keyboard-layout=true
+preload-engines=['xkb:us::eng', 'mozc-jp']
+version='1.5.16'
+
+[general/hotkey]
+triggers=['Hiragana_Katakana']
+
+[panel]
+use-custom-font=false

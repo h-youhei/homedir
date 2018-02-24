@@ -7,10 +7,11 @@ cd $script_dir
 xdg/install.sh
 zsh/install.sh
 X11/install.sh 
+fontconfig/install.sh
 xmonad/install.sh
 stalontray/install.sh
 urxvt/install.sh
-fcitx/install.sh
+ibus/install.sh
 mozc/install.sh
 
 [ -d $HOME/bin ] || mkdir $HOME/bin
