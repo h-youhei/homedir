@@ -11,3 +11,4 @@ x11_dir=$XDG_CONFIG_HOME/X11
 
 ln -s $script_dir/color $XDG_CONFIG_HOME/X11/Xresources.d/.
 ln -s $script_dir/xinitrc $HOME/.xinitrc
+ln -s $script_dir/xserverrc $HOME/.xserverrc
