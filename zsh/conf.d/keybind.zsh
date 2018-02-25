@@ -7,7 +7,10 @@ unsetopt flow_control
 setopt ignore_eof
 
 # load special key
-source $ZDOTDIR/integration/urxvt-key.zsh
+for f in  $ZDOTDIR/terminal/?*.zsh ; do
+	source $f
+done
+unset f
 
 KEYTIMEOUT=10
 
@@ -58,7 +61,7 @@ zle -N cd-parent
 bindkey -e
 
 bindkey '\t' expand-or-complete-prefix
-bindkey "${key[S-Tab]}" reverse-menu-complete
+[ -z "$key[BackTab]" ] || bindkey "${key[BackTab]}" reverse-menu-complete
 bindkey "${key[Down]}" history-beginning-search-forward
 bindkey "${key[Up]}" history-beginning-search-backward
 bindkey "${key[Left]}" backward-char
@@ -68,34 +71,34 @@ bindkey "${key[End]}" end-of-line
 bindkey '\b' backward-delete-char
 bindkey "${key[Delete]}" delete-char
 bindkey "${key[Insert]}" overwrite-mode
-bindkey '^[b' backward-word
-bindkey '^[c' capitalize-whole-word
-bindkey '^[d' backward-kill-word
-bindkey '^[D' backward-kill-line
-bindkey '^[f' vi-find-next-char
-bindkey '^[F' vi-find-prev-char
-bindkey '^[h' upcase-whole-word
-bindkey '^[i' insert-last-word
-bindkey '^[l' downcase-whole-word
-bindkey '^[p' yank
-bindkey '^[P' get-line
-bindkey '^[r' transpose-words
-bindkey '^[t' vi-find-next-char-skip
-bindkey '^[T' vi-find-prev-char-skip
-bindkey '^[u' undo
-bindkey '^[U' redo
-bindkey '^[v' insert-to-visual
-bindkey '^[V' insert-to-visual-line
-bindkey '^[w' forward-word
-bindkey '^[y' copy-prev-word
-bindkey '^[Y' push-line
-bindkey '^[~' vi-swap-case
-bindkey '^[,' vi-repeat-find
-bindkey '^[<' vi-rev-repeat-find
-bindkey "^['" vi-set-buffer
-bindkey '^[%' vi-match-bracket
-bindkey '^[:' execute-named-cmd
-bindkey '^[^' cd-parent
+bindkey '\eb' backward-word
+bindkey '\ec' capitalize-whole-word
+bindkey '\ed' backward-kill-word
+bindkey '\eD' backward-kill-line
+bindkey '\ef' vi-find-next-char
+bindkey '\eF' vi-find-prev-char
+bindkey '\eh' upcase-whole-word
+bindkey '\ei' insert-last-word
+bindkey '\el' downcase-whole-word
+bindkey '\ep' yank
+bindkey '\eP' get-line
+bindkey '\er' transpose-words
+bindkey '\et' vi-find-next-char-skip
+bindkey '\eT' vi-find-prev-char-skip
+bindkey '\eu' undo
+bindkey '\eU' redo
+bindkey '\ev' insert-to-visual
+bindkey '\eV' insert-to-visual-line
+bindkey '\ew' forward-word
+bindkey '\ey' copy-prev-word
+bindkey '\eY' push-line
+bindkey '\e~' vi-swap-case
+bindkey '\e,' vi-repeat-find
+bindkey '\e<' vi-rev-repeat-find
+bindkey "\e'" vi-set-buffer
+bindkey '\e%' vi-match-bracket
+bindkey '\e:' execute-named-cmd
+bindkey '\e^' cd-parent
 bindkey '\e' kill-whole-line
 
 #visual

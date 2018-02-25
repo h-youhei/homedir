@@ -7,3 +7,4 @@ script_dir=`dirname $script_path`
 
 rm $XDG_CONFIG_HOME/X11/Xresources.d/urxvtrc
 rm $XDG_CONFIG_HOME/X11/xinitrc.d/50-urxvtd.sh 
+rm $XDG_CONFIG_HOME/zsh/terminal/urxvt.zsh
