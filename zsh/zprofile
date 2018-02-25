@@ -1,1 +1,3 @@
-startx
+export FPATH=$ZDOTDIR/functions:$ZDOTDIR/completions:$FPATH
+
+[ -e ~/.profile ] && emulate sh -c '. ~/.profile'

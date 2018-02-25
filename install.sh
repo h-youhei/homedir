@@ -5,6 +5,8 @@ script_dir=`dirname $script_path`
 cd $script_dir
 
 xdg/install.sh
+sh-common/install.sh
+bash/install.sh
 zsh/install.sh
 X11/install.sh 
 fontconfig/install.sh

@@ -1,0 +1,19 @@
+export PATH="$HOME/bin:$PATH"
+export TMPDIR='/tmp'
+
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+
+export EDITOR='kak'
+export PAGER='less'
+export MANPAGER='manpager'
+#incsearch verbose_prompt color sidescroll
+export LESS='-i -M -R --shift 5'
+export LESSHISTFILE=$TMPDIR/less_history-$UID
+
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# [ -z $DISPLAY ] prevents to duplicate xserver
+# [ $(tty) = /dev/tty1 ] allow you to start console session by changing tty
+[ -z $DISPLAY ] && [ $(tty) = /dev/tty1 ] && exec startx

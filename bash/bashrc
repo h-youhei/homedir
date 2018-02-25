@@ -1,0 +1,5 @@
+# Test for an interactive shell.  There is no need to set anything
+[[ $- != *i* ]] && return
+
+[ -z $TMPDIR ] && TMPDIR=/tmp
+HISTFILE=$TMPDIR/bash_history-$UID
