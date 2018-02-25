@@ -20,7 +20,8 @@ setopt list_types
 
 # command history
 #--------------------
-HISTFILE=$ZDOTDIR/history
+[ -z $TMPDIR ] && TMPDIR=/tmp
+HISTFILE=$TMPDIR/zsh_history-$UID
 # save history to memory
 HISTSIZE=1000
 # save history to file
