@@ -8,6 +8,7 @@ xdg/install.sh
 sh-common/install.sh
 bash/install.sh
 zsh/install.sh
+tmux/install.sh
 X11/install.sh 
 fontconfig/install.sh
 xmonad/install.sh
