@@ -1,0 +1,22 @@
+if has('vim_starting')
+	set encoding=utf-8
+endif
+
+let s:conf_dir = expand('$HOME/.vim/conf.d')
+
+filetype plugin indent on
+syntax on
+
+exe 'source' s:conf_dir . '/option.vim'
+exe 'source' s:conf_dir . '/keymap.vim'
+"exe 'source' s:conf_dir . '/line.vim'
+
+augroup vimrc
+	autocmd!
+	autocmd BufNewFile * startinsert
+	autocmd BufReadPost * call vimrc#restore_cursor()
+	"use function in case git commit ammend
+	autocmd FileType gitcommit call vimrc#startinsert_if_first_line_is_empty()
+	autocmd CmdLineEnter * set hlsearch
+	autocmd CmdLineLeave * set nohlsearch
+augroup END
