@@ -3,3 +3,7 @@
 
 [ -z $TMPDIR ] && TMPDIR=/tmp
 HISTFILE=$TMPDIR/bash_history-$UID
+
+alias_file=$XDG_CONFIG_HOME/sh-common/alias.sh
+[ -e $alias_file ] && . $alias_file
+unset alias_file
