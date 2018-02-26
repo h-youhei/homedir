@@ -17,7 +17,7 @@ alias c='cd' c-='cd -' cg='c `git rev-parse --show-toplevel 2> /dev/null`'
 alias cm='chmod' cmn='cm 644' cmd='cm 755' cmx='cm 744' cms='cm 600' cmsd='cm 700'
 
 alias f='find'
-alias grep='prep --color=auto'
+alias grep='grep --color=auto'
 alias h='man'
 alias ls='ls -F --color=auto --group-directories-first' l='ls' ll='ls -l -h' la='ls -A' lal='ll -A'
 alias m='mv'
