@@ -1,0 +1,5 @@
+#compdef sh
+
+_sh() {
+	_files
+}
