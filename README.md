@@ -15,3 +15,28 @@ sh install.sh
 ```
 
 You can install setting individually to run install.sh under each directory.
+
+## Is it maintained?
+### Daily use so actively maintained
+- X11
+- fontconfig
+- git
+- ibus
+- mlterm
+- mozc
+- stalonetray
+- xdg
+- xmonad
+- zsh also sh-common
+
+### Rarely use
+- bash
+- vim
+- tmux
+
+### Abondoned
+- emacs
+- fcitx
+- neovim
+- urxvt
+- vimfx
