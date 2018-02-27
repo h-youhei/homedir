@@ -2,7 +2,7 @@
 
 typeset -A key
 key=(
-	Delete '^[[~'
+	Delete '^[[3~'
 	Insert '^[[2~'
 	BackTab  ''
 	Up '^[[A'
