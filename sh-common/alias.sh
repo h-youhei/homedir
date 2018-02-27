@@ -13,9 +13,10 @@ alias pcl='xcl -o' psl='xsl -o'
 
 alias c='cd' c-='cd -' cg='c `git rev-parse --show-toplevel 2> /dev/null`'
 
-#normal, dir, exe, secure, secure dir
+#Normal, Dir, eXe, Secure, SecureDir
 alias cm='chmod' cmn='cm 644' cmd='cm 755' cmx='cm 744' cms='cm 600' cmsd='cm 700'
 
+alias e='kak'
 alias f='find'
 alias grep='grep --color=auto'
 alias h='man'
@@ -30,14 +31,12 @@ alias rnm='rename'
 alias sa='ssh-add'
 alias sysc='systemctl'
 alias sln='ln -s'
-#alias t='urxvtc'
 alias t='mlterm'
 #Gzip
 alias targ='tar zvcf' untar='tar xvf'
-#Diff External
-alias v='nvim' vi='v -u NONE' vd='v -d' ve='urxvtc -e nvim'
+alias v='vim' vi='v -u NONE'
 
-#git
+### git ###
 alias g='git'
 alias ga='g add'
 alias gc='g commit' gca='gc --amend'
