@@ -62,7 +62,18 @@ gb() {
 	command git branch
 }
 
-#arch linux
+### package manager ###
+## gentoo linux ##
+#Config, Delete, fetch
+alias pm='emerge' pmc='dispatch-conf' pmd='pm --deselect' pmD='pm --depclean' pmf='pm -f'
+#Install, Oneshot, sYnc, Update
+alias pmi='pm -av' pmo='pm -1av' pmy='eix-sync' pmu= 'pm -uDNav' pmU='pmu @world'
+# Query #
+#Belonged_file, Depend, dependGraph Changelog
+alias pq='eix' pqb='equery belongs' pqc='equery change'  pqd='equery depend' pqg='equery depgraph'
+#File Installed New Use UseGlobal
+alias pqf='equery change'  pqi='equery list' pqn='eix-diff' pqu='equery uses' pqug='euse -i -g' 
+## arch linux ##
 #alias pd='pacdiff'
 #alias pm='pacman' pmi='pm -S' pms='pm -Ss' pmr='pm -Rsn' pmu='pm -Syu' pmq='pm -Qe'
 #alias pma='aura' pmai='pma -A' pmas='pma -Aas' pmar='pma -Rsn' pmau='pma -Ayu' pmau='pm -Qem' pmad='pma -Aw'
