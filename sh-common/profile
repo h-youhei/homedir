@@ -12,6 +12,13 @@ export MANPAGER='manpager'
 export LESS='-i -M -R --shift 5'
 export LESSHISTFILE=$TMPDIR/less_history-$UID
 
+#export LS_COLORS via dircolors
+if [ -e $HOME/.dircolors ] ; then
+	eval `dircolors $HOME/.dircolors`
+else
+	eval `dircolors /etc/DIR_COLORS`
+fi
+
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # [ -z $DISPLAY ] prevents to duplicate xserver

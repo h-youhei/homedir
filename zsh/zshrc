@@ -13,11 +13,15 @@ LISTMAX=0
 setopt auto_remove_slash
 # show list with compact
 setopt list_packed
-# similar ls -F
-setopt list_types
 # smartcase
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 setopt automenu
+
+# emulate "ls -F --color=auto --group-directory-first"
+setopt list_types
+#TODO: this doesn't work, what's wrong?
+#zstyle ':completion:*' list-dirs-first true
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 
 # command history
