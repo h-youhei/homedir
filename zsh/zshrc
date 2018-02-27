@@ -17,6 +17,7 @@ setopt list_packed
 setopt list_types
 # smartcase
 #zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+setopt automenu
 
 
 # command history
