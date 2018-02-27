@@ -8,7 +8,8 @@ autoload -Uz compinit
 compinit
 # only when it overflows the window size, ask me to see all possibilities
 LISTMAX=0
-# don't keep slash
+# remove completed slash after input delimeter(space, return, etc)
+# if you do want to put slash, input slash explicitly, slash is replaced by real slash.
 setopt auto_remove_slash
 # show list with compact
 setopt list_packed
@@ -27,7 +28,7 @@ HISTSIZE=1000
 # save history to file
 SAVEHIST=1000
 setopt share_history
-# ignore dupplicated command
+# ignore duplicated command
 setopt hist_find_no_dups
 setopt hist_ignore_dups
 setopt hist_ignore_all_dups
@@ -47,10 +48,10 @@ setopt hist_reduce_blanks
 setopt auto_pushd
 # ls after cd
 function chpwd() {
-	command ls -F -A --group-directories-first
+	command ls -F --color=auto --group-directories-first
 }
 
-# ignore dupplicated direcory
+# ignore duplicated direcory
 setopt pushd_ignore_dups
 
 
