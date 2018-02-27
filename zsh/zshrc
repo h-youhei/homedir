@@ -47,11 +47,6 @@ setopt hist_reduce_blanks
 #--------------------
 # push to directory stack with cd
 setopt auto_pushd
-# ls after cd
-function chpwd() {
-	command ls -F --color=auto --group-directories-first
-}
-
 # ignore duplicated direcory
 setopt pushd_ignore_dups
 
@@ -93,6 +88,14 @@ setopt interactive_comments
 # complex setting
 #--------------------
 source $ZDOTDIR/conf.d/alias.zsh
+# ls after cd
+function chpwd() {
+	ls
+}
 source $ZDOTDIR/conf.d/keybind.zsh
 source $ZDOTDIR/conf.d/prompt.zsh
 source $ZDOTDIR/conf.d/bookmark.zsh
+
+# startup hook
+echo
+ls
