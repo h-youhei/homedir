@@ -1,5 +1,4 @@
 #compdef sh
 
-_sh() {
-	_files
-}
+_files -g '*\.sh'
+
