@@ -11,18 +11,26 @@ alias ycl='xcl -i <' ysl='xsl -i <'
 #paste
 alias pcl='xcl -o' psl='xsl -o'
 
-alias c='cd' c-='cd -' cg='c `git rev-parse --show-toplevel 2> /dev/null`'
+alias c='cd' pd='cd -' cg='c `git rev-parse --show-toplevel 2> /dev/null`'
 
 #Normal, Dir, eXe, Secure, SecureDir
 alias cm='chmod' cmn='cm 644' cmd='cm 755' cmx='cm 744' cms='cm 600' cmsd='cm 700'
 
-alias e='kak'
-alias f='find'
-alias grep='grep -E--color=auto'
+alias df='df -h'
+#Edit, EditDirectory
+alias e='kak' ed='vidir'
+alias f='fd'
+alias grep='grep -E -R --color=auto'
+#Help
 alias h='man'
 alias ls='ls -F --color=auto --group-directories-first' l='ls' ll='ls -l -h' la='ls -A' lal='ll -A'
 alias m='mv'
-alias mkdir='mkdir -p' md='mkdir' mf='touch'
+alias mkdir='mkdir -p' md='mkdir'
+#MakeFile
+mf='touch'
+mdc() {
+	mkdir -p "$@" && cd "$_"
+}
 alias p='cp'
 alias py='python'
 alias q='exit'
@@ -32,8 +40,8 @@ alias sa='ssh-add'
 alias sysc='systemctl'
 alias sln='ln -s'
 alias t='mlterm'
-#Gzip
-alias targ='tar zvcf' untar='tar xvf'
+#Bzip Gzip Xz
+alias tarb='tar cvf --bzip2' targ='tar cvf --gzip' tarx='tar cvf --xz' untar='tar xvf'
 alias v='vim' vi='v -u NONE'
 
 ### git ###
