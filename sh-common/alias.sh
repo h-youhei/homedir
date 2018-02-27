@@ -67,8 +67,8 @@ gb() {
 ## gentoo linux ##
 #Config, Delete, fetch
 alias pm='emerge' pmc='dispatch-conf' pmd='pm --deselect' pmD='pm --depclean' pmf='pm -f'
-#Install, Oneshot, sYnc, Update
-alias pmi='pm -av' pmo='pm -1av' pmy='eix-sync' pmu='pm -uDNav' pmU='pmu @world'
+#Install, Log, Oneshot, sYnc, Update
+alias pmi='pm -av' pml='eread' pmo='pm -1av' pmy='eix-sync' pmu='pm -uDNav' pmU='pmu @world'
 # Query #
 #Belonged_file, Changelog, Depend, dependGraph
 alias pq='eix' pqb='equery belongs' pqc='equery change' pqd='equery depends' pqg='equery depgraph'
