@@ -1,5 +1,5 @@
 alias_file=$XDG_CONFIG_HOME/sh-common/alias.sh
-[ -e $alias_file ] && emulate sh -c ". $alias_file"
+[ -f $alias_file ] && emulate sh -c ". $alias_file"
 unset alias_file
 
 alias -g A='| awk'
