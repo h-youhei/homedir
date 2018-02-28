@@ -1,5 +1,5 @@
 define-command _select-surround -hidden -params 1 %{ execute-keys "<a-a>%arg{1}<a-S>" }
-define-command _delegate-surround -hidden -params 2 %! evaluate-commands %sh@
+define-command _delegate-surround -hidden -params 2 %! %sh@
 	command=$1
 	case $2 in
 	'('|')') open='('; close=')' ;;
