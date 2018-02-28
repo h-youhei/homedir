@@ -1,3 +1,6 @@
 [user]
 	name = h-youhei
 	email = hukumitu.youhei@gmail.com
+[grep]
+	patternType = extended
+	lineNumber = true
