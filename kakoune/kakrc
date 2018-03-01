@@ -251,6 +251,19 @@ hook global InsertCompletionHide .* %{
 #s^\s+d
 
 source "%val{config}/plugin/each-line-selection.kak"
+
+### filetype ###
+define-command git-commit-start-insert-but-amend -hidden %{
+	try %{
+		execute-keys 's[^\n]<ret>'
+	} catch %{ 
+		execute-keys ia
+	}
+}
+hook global WinSetOption filetype=git-commit %{
+	git-commit-start-insert-but-amend
+}
+
 %sh{
 	autoload_directory() {
 		find -L "$1" -type f -name '*\.kak' \
