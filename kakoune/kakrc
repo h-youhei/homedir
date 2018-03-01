@@ -47,6 +47,11 @@ hook global InsertChar \n %{ try %{ execute-keys -draft  \;K<a-&> } }
 set-option global grepcmd 'rg --with-filename'
 set-option global termcmd 'mlterm -e sh -c'
 
+define-command open-terminal %{ %sh{
+	mlterm > /dev/null 2>&1 &
+}} -docstring 'open new terminal in current directory'
+alias global t open-terminal
+
 ### git ###
 define-command git-edit -params 1 %{
 	edit %arg{1}
