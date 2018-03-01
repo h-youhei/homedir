@@ -1,5 +1,6 @@
 # space at the end accepts aliases for following command
 alias s='sudo ' sudo='sudo '
+alias se='sudoedit'
 
 ### clipboard selection ###
 alias xsel='xsel -n -l /dev/null'
