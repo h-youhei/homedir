@@ -44,9 +44,17 @@ hook global BufWritePre .* %{ nop %sh{
 hook global InsertChar \n %{ try %{ execute-keys -draft  \;K<a-&> } }
 
 ### external tools ###
-set-option global grepcmd 'rg --with-filename'
+set-option global grepcmd 'rg --with-filename --column'
 set-option global termcmd 'mlterm -e sh -c'
 
+set-option global jumpclient main
+set-option global toolsclient tools
+set-option global docsclient docs
+
+define-command ide %{
+	rename-client main
+	new rename-client tools
+}
 define-command open-terminal %{ %sh{
 	mlterm > /dev/null 2>&1 &
 }} -docstring 'open new terminal in current directory'
