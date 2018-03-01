@@ -76,7 +76,7 @@ gb() {
 ### package manager ###
 ## gentoo linux ##
 #Config, Delete, fetch
-alias pm='emerge' pmc='dispatch-conf' pmd='pm --deselect' pmD='pm --depclean' pmf='pm -f'
+alias pm='emerge' pmc='dispatch-conf' pmd='pm --deselect' pmD='pm -a --depclean' pmf='pm -f'
 #Install, Log, Oneshot, sYnc, Update
 alias pmi='pm -av' pml='eread' pmo='pm -1av' pmy='eix-sync' pmu='pm -uDNav' pmU='pmu @world'
 # Query #
