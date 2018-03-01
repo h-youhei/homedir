@@ -28,7 +28,7 @@ alias ls='ls -F --color=auto --group-directories-first' l='ls' ll='ls -l -h' la=
 alias m='mv'
 alias mkdir='mkdir -p' md='mkdir'
 #MakeFile
-mf='touch'
+alias mf='touch'
 mdc() {
 	mkdir -p "$@" && cd "$_"
 }
