@@ -43,6 +43,10 @@ hook global BufWritePre .* %{ nop %sh{
 ### auto indent ###
 hook global InsertChar \n %{ try %{ execute-keys -draft  \;K<a-&> } }
 
+### external tools ###
+set-option global grepcmd 'rg --with-filename'
+set-option global termcmd 'mlterm -e sh -c'
+
 ### my keybord layout is not qwerty ###
 map global normal t j # 'move cursor downward'
 map global normal T J # 'expand cursor downward'
