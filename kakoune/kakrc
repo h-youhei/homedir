@@ -32,7 +32,7 @@ set-face Whitespace blue,default
 # add-highlighter shared/mix_tab_and_space regex ^\u0020+\t
 
 ### status line ###
-set-option global modelinefmt '{{context_info}} {{mode_info}} %val{bufname} (%val{cursor_char_column},%val{cursor_line}) @%val{client}'
+set-option global modelinefmt '{{context_info}} {{mode_info}} %val{bufname} (%val{cursor_char_column},%val{cursor_line}/%val{buf_line_count}) %val{client}@%val{session}'
 
 ### auto mkdir ###
 hook global BufWritePre .* %{ nop %sh{
