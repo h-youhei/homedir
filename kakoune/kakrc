@@ -68,6 +68,11 @@ define-command git-edit -params 1 %{
 } -docstring 'edit selected file in the git repository'
 alias global ge git-edit
 
+define-command git-open-terminal %{ %sh{
+	mlterm --working-directory=`git rev-parse --show-toplevel` > /dev/null 2>&1 &
+}} -docstring 'open new terminal in the git root'
+alias global gt git-open-terminal
+
 ### my keybord layout is not qwerty ###
 map global normal t j # 'move cursor downward'
 map global normal T J # 'expand cursor downward'
