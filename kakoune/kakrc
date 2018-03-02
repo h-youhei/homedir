@@ -280,16 +280,14 @@ hook global InsertCompletionHide .* %{
 #map global insert '' '<ret><esc>i'
 #s^\s+d
 
-source "%val{config}/plugin/each-line-selection.kak"
-
 %sh{
 	autoload_directory() {
 		find -L "$1" -type f -name '*\.kak' \
 			-exec printf 'try %%{ source "%s" } catch %%{ echo -debug Autoload; could not load "%s" }\n' '{}' '{}'
 	}
 	
-	if [ -d "$kak_config/under-develop" ]; then
-		autoload_directory "$kak_config/under-develop"
+	if [ -d "$kak_config/develop" ]; then
+		autoload_directory "$kak_config/develop"
 	fi
 	if [ -d "$kak_config/autoload-after" ]; then
 		autoload_directory "$kak_config/autoload-after"
