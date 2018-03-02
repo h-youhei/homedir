@@ -14,4 +14,8 @@ ln -s $script_dir/plugin $kak_dir/.
 plugin_dir=$HOME/workspace/kakoune-plugin
 [ -d $kak_dir/develop ] || mkdir $kak_dir/develop
 
-ln -s $plugin_dir/each-line-selection/each-line-selection.kak $kak_dir/develop/.
+plugin() {
+	ln -s $plugin_dir/$1/$1.kak $kak_dir/develop/.
+}
+plugin each-line-selection
+plugin ibus

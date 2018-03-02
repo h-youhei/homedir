@@ -283,7 +283,7 @@ hook global InsertCompletionHide .* %{
 %sh{
 	autoload_directory() {
 		find -L "$1" -type f -name '*\.kak' \
-			-exec printf 'try %%{ source "%s" } catch %%{ echo -debug Autoload; could not load "%s" }\n' '{}' '{}'
+			-exec printf 'try %%{ source "%s" } catch %%{ echo -debug Autoload: could not load "%s" }\n' '{}' '{}' \;
 	}
 	
 	if [ -d "$kak_config/develop" ]; then
@@ -293,3 +293,6 @@ hook global InsertCompletionHide .* %{
 		autoload_directory "$kak_config/autoload-after"
 	fi
 }
+### input method
+set-option global ibus_on 'mozc-jp'
+setup-ibus-auto-switch
