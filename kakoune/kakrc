@@ -55,22 +55,24 @@ define-command ide %{
 	rename-client main
 	new rename-client tools
 }
-define-command open-terminal %{ %sh{
+define-command -docstring 'open new terminal in current directory' \
+open-terminal %{ %sh{
 	mlterm > /dev/null 2>&1 &
-}} -docstring 'open new terminal in current directory'
+}} 
 alias global t open-terminal
 
 ### git ###
-define-command git-edit -params 1 %{
+define-command -docstring 'edit selected file in the git repository' -params 1 \
+-shell-candidates %{ git ls-files `git rev-parse --show-toplevel` } \
+git-edit %{
 	edit %arg{1}
-} -shell-candidates %{
-	git ls-files `git rev-parse --show-toplevel`
-} -docstring 'edit selected file in the git repository'
+} 
 alias global ge git-edit
 
-define-command git-open-terminal %{ %sh{
+define-command -docstring 'open new terminal in the git root' \
+git-open-terminal %{ %sh{
 	mlterm --working-directory=`git rev-parse --show-toplevel` > /dev/null 2>&1 &
-}} -docstring 'open new terminal in the git root'
+}} 
 alias global gt git-open-terminal
 
 ### my keybord layout is not qwerty ###
@@ -144,7 +146,7 @@ map global normal '<esc>' '<backspace><space>;' -docstring 'deselect'
 #map global normal \; '<a-;>' -docstring 'flip the selections direction'
 #map global normal '<a-;>' \' -docstring 'reduce selections to their cursor'
 
-define-command split-with-char -hidden %{ on-key %{ execute-keys %sh{
+define-command -hidden split-with-char %{ on-key %{ execute-keys %sh{
 	case $kak_key in
 	'<ret>') pattern='\n' ;;
 	'<tab>') pattern='\t' ;;
@@ -208,15 +210,15 @@ map global normal m z # 'restore Mark'
 map global normal M Z # 'save Mark'
 
 # acceptable argument: <a-z> <a-Z>
-define-command _fold-mark-delegate -hidden -params 1 %{ execute-keys  -save-regs '' %sh{
+define-command -hidden -params 1 _fold-mark-delegate %{ execute-keys  -save-regs '' %sh{
 	if [ $kak_reg_caret ]; then
 		echo "$1"a
 	else
 		echo $1
 	fi
 }}
-define-command fold-mark-then-restore -hidden %{ evaluate-commands -save-regs ''  %{ _fold-mark-delegate <a-z> } }
-define-command fold-mark-then-save -hidden %{ evaluate-commands -save-regs '' %{ _fold-mark-delegate <a-Z> } }
+define-command -hidden fold-mark-then-restore %{ evaluate-commands -save-regs ''  %{ _fold-mark-delegate <a-z> } }
+define-command -hidden fold-mark-then-save %{ evaluate-commands -save-regs '' %{ _fold-mark-delegate <a-Z> } }
 map global normal z ':fold-mark-then-restore<ret>'
 map global normal Z ':fold-mark-then-save<ret>'
 
@@ -281,7 +283,7 @@ hook global InsertCompletionHide .* %{
 #s^\s+d
 
 ### filetype ###
-define-command git-commit-start-insert-but-amend -hidden %{
+define-command -hidden _git-commit-start-insert-but-amend %{
 	try %{
 		execute-keys 's[^\n]<ret>'
 	} catch %{ 
@@ -289,7 +291,7 @@ define-command git-commit-start-insert-but-amend -hidden %{
 	}
 }
 hook global WinDisplay .* %{ %sh{
-	[ $kak_opt_filetype = git-commit ] && echo git-commit-start-insert-but-amend
+	[ $kak_opt_filetype = git-commit ] && echo _git-commit-start-insert-but-amend
 }}
 
 %sh{
