@@ -26,6 +26,7 @@ You can install setting individually to run install.sh under each directory.
 - mlterm
 - mozc
 - stalonetray
+- systemd
 - xdg
 - xmonad
 - zsh also sh-common

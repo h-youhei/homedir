@@ -8,6 +8,7 @@ xdg/install.sh
 sh-common/install.sh
 bash/install.sh
 zsh/install.sh
+systemd/install.sh
 tmux/install.sh
 vim/install.sh
 X11/install.sh 
