@@ -19,7 +19,7 @@ alias cm='chmod' cmn='cm 644' cmd='cm 755' cmx='cm 744' cms='cm 600' cmsd='cm 70
 
 alias df='df -h'
 #Edit, EditDirectory
-alias e='kak' ed='vidir'
+alias e='kak-git' ed='vidir'
 alias f='fd'
 alias grep='grep -E -R --color=auto'
 #Help

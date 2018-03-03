@@ -1,0 +1,10 @@
+#!/bin/sh
+
+project=`git rev-parse --show-toplevel 2> /dev/null | xargs basename 2> /dev/null`
+if [ $? -ne 0 ] ; then
+	kak -c default $@
+else
+	socket=`kak -l | grep $project`
+	[ -z $socket ] && kak -d -s $project
+	kak -c $project $@
+fi

@@ -1,0 +1,9 @@
+[Unit]
+Description=Kakoune daemon default session
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/kak -d -s default
+
+[Install]
+WantedBy=multi-user.target
