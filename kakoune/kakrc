@@ -280,6 +280,18 @@ hook global InsertCompletionHide .* %{
 #map global insert '' '<ret><esc>i'
 #s^\s+d
 
+### filetype ###
+define-command git-commit-start-insert-but-amend -hidden %{
+	try %{
+		execute-keys 's[^\n]<ret>'
+	} catch %{ 
+		execute-keys i
+	}
+}
+hook global WinDisplay .* %{ %sh{
+	[ $kak_opt_filetype = git-commit ] && echo git-commit-start-insert-but-amend
+}}
+
 %sh{
 	autoload_directory() {
 		find -L "$1" -type f -name '*\.kak' \
