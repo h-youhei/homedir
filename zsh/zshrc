@@ -116,9 +116,10 @@ RPROMPT='[%?]'
 
 # complex setting
 #--------------------
+# source here to apply ls alias
 source $ZDOTDIR/conf.d/alias.zsh
-# ls after cd
-#this is called before showing prompt
+
+#precmd() is called before showing prompt
 precmd() {
 	echo
 	ls
