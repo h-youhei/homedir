@@ -67,6 +67,7 @@ zstyle ':zle:*' word-style unspecified
 #--------------------
 # command only
 #setopt correct
+#SPROMPT='correct to %r? [y,n,(a)bort,(e)dit]'
 
 
 # * expand
@@ -88,17 +89,45 @@ setopt interactive_comments
 # setopt rc_expand_param
 
 
+# prompt
+#--------------------
+#http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+setopt prompt_subst
+
+if [ "$SSH_CONNECTION" ] ; then
+	prompt_host='@%m'
+else
+	prompt_host=''
+fi
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' formats '%c%u(%b) '
+zstyle ':vcs_info:*' actionformats '%u%c(%b|%a) '
+
+PROMPT='${vcs_info_msg_0_}[%~]
+%n$prompt_host%#'
+
+# while, for, etc...
+PROMPT2='%_>'
+
+# right
+RPROMPT='[%?]'
+
 # complex setting
 #--------------------
 source $ZDOTDIR/conf.d/alias.zsh
 # ls after cd
-function chpwd() {
+#this is called before showing prompt
+precmd() {
+	echo
 	ls
+	vcs_info
 }
+
 source $ZDOTDIR/conf.d/keybind.zsh
-source $ZDOTDIR/conf.d/prompt.zsh
 source $ZDOTDIR/conf.d/bookmark.zsh
 
 # startup hook
-echo
-ls
+#echo
+#ls
