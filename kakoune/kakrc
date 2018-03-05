@@ -166,10 +166,10 @@ map global normal r \;r # 'replace a char with the next entered one'
 map global normal '<a-r>' r # 'replace each character with the next entered one'
 map global normal '<a-`>' ';<a-`>' # 'swap case a char'
 source "%val{config}/plugin/insert-with-count.kak"
-map global normal i '\;:insert-with-count<ret>' # 'start insert before cursor'
-map global normal a '\;:append-with-count<ret>' # 'start insert after cursor'
-map global normal ( ':insert-with-count<ret>' # 'start insert before selection'
-map global normal ) ':append-with-count<ret>' # 'start insert after selection'
+map global normal i ':insert-here-with-count<ret>' # 'start insert before cursor'
+map global normal a ':append-here-with-count<ret>' # 'start insert after cursor'
+map global normal ( i # 'start insert before selection'
+map global normal ) a # 'start insert after selection'
 
 ### line-wise ###
 map global normal '<minus>' 'X<a-x>' # 'expand line downward'
