@@ -7,16 +7,18 @@ export XDG_DATA_HOME=$HOME/.local/share
 
 export EDITOR='kak'
 export PAGER='less'
-export MANPAGER='manpager'
-#incsearch verbose_prompt color sidescroll
+#export MANPAGER='manpager'
+#ignorecase verbose_prompt color sidescroll
 export LESS='-i -M -R --shift 5'
 export LESSHISTFILE=$TMPDIR/less_history-$UID
 
 #export LS_COLORS via dircolors
 if [ -f $HOME/.dircolors ] ; then
 	eval `dircolors $HOME/.dircolors`
-else
+elif [ -f /etc/DIR_COLORS ] ; then
 	eval `dircolors /etc/DIR_COLORS`
+else
+	eval `dircolors`
 fi
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
