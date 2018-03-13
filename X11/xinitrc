@@ -18,6 +18,8 @@ if [ -d $user_resources.d ] ; then
 	unset f
 fi
 
+xrandr --output HDMI1 --primary
+
 # start some nice programs
 if [ -d $sys_xinit_dir/xinitrc.d ] ; then
 	for f in $sys_xinit_dir/xinitrc.d/?*.sh ; do
