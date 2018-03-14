@@ -105,6 +105,12 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' formats '%c%u(%b) '
 zstyle ':vcs_info:*' actionformats '%u%c(%b|%a) '
 
+#precmd() is called before showing prompt
+precmd() {
+	echo
+	vcs_info
+}
+
 PROMPT='${vcs_info_msg_0_}[%~]
 %n$prompt_host%#'
 
@@ -118,12 +124,9 @@ RPROMPT='[%?]'
 #--------------------
 # source here to apply ls alias
 source $ZDOTDIR/conf.d/alias.zsh
-
-#precmd() is called before showing prompt
-precmd() {
-	echo
+# ls after cd
+chpwd() {
 	ls
-	vcs_info
 }
 
 source $ZDOTDIR/conf.d/keybind.zsh
