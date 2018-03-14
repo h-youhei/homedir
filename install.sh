@@ -18,6 +18,7 @@ stalontray/install.sh
 mlterm/install.sh
 ibus/install.sh
 mozc/install.sh
+pacman/install.sh
 
 [ -d $HOME/bin ] || mkdir $HOME/bin
 bin() {

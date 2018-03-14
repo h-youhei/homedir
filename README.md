@@ -25,6 +25,7 @@ You can install setting individually to run install.sh under each directory.
 - kakoune
 - mlterm
 - mozc
+- pacman
 - stalonetray
 - systemd
 - xdg
@@ -40,5 +41,6 @@ You can install setting individually to run install.sh under each directory.
 - emacs
 - fcitx
 - neovim
+- portage
 - urxvt
 - vimfx

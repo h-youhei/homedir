@@ -9,5 +9,6 @@ ln -s $script_dir/profile $HOME/.profile
 
 sh_common_dir=$XDG_CONFIG_HOME/sh-common
 [ -d $sh_common_dir ] || mkdir -p $sh_common_dir
+[ -d $sh_common_dir/alias.d ] || mkdir $sh_common_dir/alias.d
 
 ln -s $script_dir/alias.sh $sh_common_dir/.

@@ -43,7 +43,6 @@ alias sln='ln -s'
 alias t='mlterm'
 #Bzip Gzip Xz
 alias tarb='tar cvf --bzip2' targ='tar cvf --gzip' tarx='tar cvf --xz' untar='tar xvf'
-alias v='vim' vi='v -u NONE'
 
 ### git ###
 alias g='git'
@@ -73,18 +72,10 @@ gb() {
 	command git branch
 }
 
-### package manager ###
-## gentoo linux ##
-#Config, Delete, fetch
-alias pm='emerge' pmc='dispatch-conf' pmd='pm --deselect' pmD='pm -a --depclean' pmf='pm -f'
-#Install, Log, Oneshot, sYnc, Update
-alias pmi='pm -av' pml='eread' pmo='pm -1av' pmy='eix-sync' pmu='pm -uDNav' pmU='pmu @world'
-# Query #
-#Belonged_file, Changelog, Depend, dependGraph
-alias pq='eix' pqb='equery belongs' pqc='equery change' pqd='equery depends' pqg='equery depgraph'
-#File, Installed, New, Use, UseGlobal
-alias pqf='equery files'  pqi='equery list' pqn='eix-diff' pqu='equery uses' pqug='euse -i -g' 
-## arch linux ##
-#alias pd='pacdiff'
-#alias pm='pacman' pmi='pm -S' pms='pm -Ss' pmr='pm -Rsn' pmu='pm -Syu' pmq='pm -Qe'
-#alias pma='aura' pmai='pma -A' pmas='pma -Aas' pmar='pma -Rsn' pmau='pma -Ayu' pmau='pm -Qem' pmad='pma -Aw'
+[ -z $XDG_CONFIG_HOME ] && XDG_CONFIG_HOME=$HOME/.config 
+if [ -d $XDG_CONFIG_HOME/sh-common/alias.d ] ; then
+	for f in $XDG_CONFIG_HOME/sh-common/alias.d/?*.sh ; do
+		[ -f $f ] && source $f
+	done
+	unset f
+fi
