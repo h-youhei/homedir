@@ -3,11 +3,11 @@ alias s='sudo ' sudo='sudo '
 alias se='sudoedit'
 
 ### clipboard selection ###
-alias xsel='xsel -n -l /dev/null'
+alias xsel='xsel -l /dev/null'
 alias xcl='xsel --clipboard' xsl='xsel --primary'
 #alias xcl='xclip -selection clipboard' xsl='xclip -selection primary'
 #yank
-#alias ycl='xclip --srlection clipboard -i' ysl='xclip --selection primary -i'
+#alias ycl='xclip --selection clipboard -i' ysl='xclip --selection primary -i'
 alias ycl='xcl -i <' ysl='xsl -i <'
 #paste
 alias pcl='xcl -o' psl='xsl -o'

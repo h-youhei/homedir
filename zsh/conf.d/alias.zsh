@@ -27,4 +27,4 @@ alias -g W='| less +F'
 alias -g X='| xargs '
 alias -g X@='| xargs -I @@ '
 #yank
-alias -g Y='| xclip'
+alias -g Y='| xcl -i'
