@@ -21,7 +21,7 @@ alias df='df -h'
 #Edit, EditDirectory
 alias e='kak-git' ed='vidir'
 alias f='fd'
-alias grep='grep -E -R --color=auto'
+alias grep='grep -E --color=auto'
 #Help
 alias h='man'
 alias ls='ls -F --color=auto --group-directories-first' l='ls' ll='ls -l -h' la='ls -A' lal='ll -A'

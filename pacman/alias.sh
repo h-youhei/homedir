@@ -11,4 +11,9 @@ alias pq='pm -Ss'
 #AUR, Belonged file, AUR Installed File
 alias pqa='pm -Qem' pqb='pm -Fo' pqi='pm -Qe' pqf='pm -F -l'
 #Depends, Required
-alias pqd='pm -Qi | grep "Depends On"' pqr='pm -Qi | grep "Required By"'
+pqd() {
+	pm -Qi $1 | grep 'Depends On'
+}
+pqr() {
+	pm -Qi $1 | grep 'Required By'
+}
