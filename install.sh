@@ -15,8 +15,8 @@ X11/install.sh
 fontconfig/install.sh
 xmonad/install.sh
 stalontray/install.sh
-mlterm/install.sh
-ibus/install.sh
+xterm/install.sh
+fcitx/install.sh
 mozc/install.sh
 pacman/install.sh
 

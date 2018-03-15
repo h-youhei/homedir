@@ -1,4 +1,4 @@
-[ $TERM = xterm ] || return
+[ ${TERM%%-256color} = xterm ] || return
 
 typeset -A key
 key=(

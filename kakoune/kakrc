@@ -45,7 +45,7 @@ hook global InsertChar \n %{ try %{ execute-keys -draft  \;K<a-&> } }
 
 ### external tools ###
 set-option global grepcmd 'rg --with-filename --column'
-set-option global termcmd 'mlterm -e sh -c'
+set-option global termcmd 'xterm -e sh -c'
 
 set-option global jumpclient main
 set-option global toolsclient tools
@@ -57,7 +57,7 @@ define-command ide %{
 }
 define-command -docstring 'open new terminal in current directory' \
 open-terminal %{ %sh{
-	mlterm > /dev/null 2>&1 &
+	xterm > /dev/null 2>&1 &
 }} 
 alias global t open-terminal
 
@@ -71,7 +71,8 @@ alias global ge git-edit
 
 define-command -docstring 'open new terminal in the git root' \
 git-open-terminal %{ %sh{
-	mlterm --working-directory=`git rev-parse --show-toplevel` > /dev/null 2>&1 &
+	cd `git rev-parse --show-toplevel`
+	xterm > /dev/null 2>&1 &
 }} 
 alias global gt git-open-terminal
 

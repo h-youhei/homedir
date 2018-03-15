@@ -1,0 +1,48 @@
+XTerm*locale: true
+XTerm*cjkWidth: true
+XTerm*renderFont: true
+XTerm*faceSize: 10
+XTerm*faceName: Source Code Pro
+XTerm*faceNameDoublesize: Source Han Sans JP
+!XTerm*ximFont: Source Han Sans JP
+!XTerm*preeditType: OnTheSpot,OverTheSpot,Root
+
+!XTerm*jumpScroll: true
+XTerm*fastScroll: true
+XTerm*scrollTtyOutput: false
+XTerm*scrollKey: true
+XTerm*saveLines: 1024
+XTerm*allowScrollLock: true
+!XTerm*alternateScroll: true
+
+XTerm*boldMode: false
+XTerm.ToolBar: false
+!XTerm*logFile
+
+XTerm*selectToClipboard: true
+! word char
+! number you want to treat as word char:48,repeat ...
+! !  "  #  $  %  &  '  (  )  *  +  ,  -  .  /  _
+! 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48
+! :  ;  <  =  >  ?  @     [  \  ]  ^     `  {   |   }   ~
+! 58 59 60 61 62 63 64    91 92 93 94    96 123 124 125 126
+XTerm*charClass: 33:48,35-38:48,42-47:48,58-59:48,61:48,63-64:48,92:48,94:48,124:48,126:48
+XTerm*on3Clicks: regex ((http(s)?:\/\/)|(www\.))([[:alnum:]!#+,./=?@_~-]|(%[[:xdigit:]][[:xdigit:]]))+
+
+XTerm*metaSendsEscape: true
+XTerm.backarrowKey: false
+XTerm.ttyModes: erase ^?
+
+XTerm*translation: #override \n\
+	Shift <KeyPress> Insert: insert-selection(CLIPBOARD)
+	
+!exec-formatted("luakit '%t'", CLIPBOARD)
+!exec-selectable("xterm -e less %s", all)
+!xurls
+!exec-selectable(command,page)
+!grep less etc
+!exec-selectable(command,all)
+!insert-selectable
+!insert-selection
+!spawn-new-terminal
+!set-logging

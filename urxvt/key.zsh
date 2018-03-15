@@ -1,4 +1,4 @@
-[ $TERM = rxvt-unicode ] || return
+[ ${TERM%%-256color} = rxvt-unicode ] || return
 
 typeset -A key
 key=(

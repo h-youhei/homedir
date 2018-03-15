@@ -20,16 +20,16 @@ You can install setting individually to run install.sh under each directory.
 ### Daily use so actively maintained
 - X11
 - fontconfig
+- fcitx
 - git
-- ibus
 - kakoune
-- mlterm
 - mozc
 - pacman
 - stalonetray
 - systemd
 - xdg
 - xmonad
+- xterm
 - zsh also sh-common
 
 ### Rarely use
@@ -39,8 +39,9 @@ You can install setting individually to run install.sh under each directory.
 
 ### Abondoned
 - emacs
-- fcitx
+- ibus
 - neovim
 - portage
 - urxvt
+- mlterm
 - vimfx

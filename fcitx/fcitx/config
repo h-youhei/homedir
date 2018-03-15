@@ -1,6 +1,6 @@
 [Hotkey]
 # Trigger Input Method
-TriggerKey=HENKANMODE
+TriggerKey=HIRAGANAKATAKANA
 # Use extra trigger key only after using it to inactivate
 # Available Value:
 # True False
@@ -27,7 +27,7 @@ TriggerKey=HENKANMODE
 # Super+Right Ctrl
 # Disabled
 # Custom
-#SwitchKey=L_SHIFT
+SwitchKey=Disabled
 # Custom switch key
 #CustomSwitchKey=
 # Activate input method
@@ -50,11 +50,11 @@ IMSwitchKey=False
 # ALT_SUPER
 #IMSwitchHotkey=CTRL_SHIFT
 # Reload configuration
-ReloadConfig=CTRL_SHIFT_F
+ReloadConfig=
 # Interval of Two Key Input
-#TimeInterval=250
+TimeInterval=200
 # Switching Virtual Keyboard
-VKSwitchKey=
+VKSwitchKey=BACKSPACE
 # Switching Remind Mode
 #RemindSwitchKey=
 # Switching Full Width Character Mode
@@ -69,12 +69,12 @@ NextPageKey=
 #SecondThirdCandWordKey=
 # Saving All Config and Input History
 SaveAllKey=
-# Switch Embeded Preedit
-SwitchPreedit=
+# Switch Embedded Preedit
+#SwitchPreedit=CTRL_ALT_P
 # Previous Candidate Word
-#PrevWord=SHIFT_TAB
+PrevWord=
 # Next Candidate Word
-#NextWord=TAB
+NextWord=
 
 [Program]
 # Seconds sleep before fcitx really start
@@ -84,7 +84,7 @@ SwitchPreedit=
 # No
 # All
 # PerProgram
-#ShareStateAmongWindow=No
+ShareStateAmongWindow=All
 # Default Input Method State
 # Available Value:
 # Inactive
