@@ -6,5 +6,3 @@ script_dir=`dirname $script_path`
 [ -z $XDG_CONFIG_HOME ] && XDG_CONFIG_HOME=$HOME/.config
 
 ln -s $script_dir/xtermrc $XDG_CONFIG_HOME/X11/Xresources.d/
-#ln -s $script_dir/xinit.sh $XDG_CONFIG_HOME/X11/xinitrc.d/50-urxvtd.sh 
-#ln -s $script_dir/key.zsh $XDG_CONFIG_HOME/zsh/terminal/urxvt.zsh
