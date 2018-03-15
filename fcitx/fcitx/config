@@ -54,7 +54,7 @@ ReloadConfig=
 # Interval of Two Key Input
 TimeInterval=200
 # Switching Virtual Keyboard
-VKSwitchKey=BACKSPACE
+VKSwitchKey=
 # Switching Remind Mode
 #RemindSwitchKey=
 # Switching Full Width Character Mode
@@ -70,7 +70,7 @@ NextPageKey=
 # Saving All Config and Input History
 SaveAllKey=
 # Switch Embedded Preedit
-#SwitchPreedit=CTRL_ALT_P
+SwitchPreedit=
 # Previous Candidate Word
 PrevWord=
 # Next Candidate Word
