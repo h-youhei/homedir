@@ -131,3 +131,6 @@ chpwd() {
 
 source $ZDOTDIR/conf.d/keybind.zsh
 source $ZDOTDIR/conf.d/bookmark.zsh
+
+# startup
+ls
