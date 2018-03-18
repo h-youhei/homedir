@@ -19,7 +19,13 @@ alias cm='chmod' cmn='cm 644' cmd='cm 755' cmx='cm 744' cms='cm 600' cmsd='cm 70
 
 alias df='df -h'
 #Edit, EditDirectory
-alias e='kak-git' ed='vidir'
+alias ed='vidir'
+e() {
+	if [ $TERM = linux ]
+	then ; kak $@
+	else ; kak-git $@
+	fi
+}
 alias f='fd'
 alias grep='grep -E --color=auto'
 #Help

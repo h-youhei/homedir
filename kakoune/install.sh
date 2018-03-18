@@ -12,10 +12,6 @@ ln -s $script_dir/color.kak $kak_dir/
 ln -s $script_dir/autoload $kak_dir/
 ln -s $script_dir/plugin $kak_dir/
 
-systemd_dir=$XDG_CONFIG_HOME/systemd/user
-[ -d $systemd_dir ] || mkdir -p $systemd_dir
-ln -s $script_dir/kakoune.service $systemd_dir/
-
 [ -d $HOME/bin ] || mkdir $HOME/bin
 ln -s $script_dir/bin/kak-git $HOME/bin/
 
