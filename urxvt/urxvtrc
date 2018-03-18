@@ -25,6 +25,8 @@ URxvt.internalBorder: 1
 URxvt.externalBorder: 1
 URxvt.transparent: false
 URxvt.iconName: urxvt
+URxvt*reverseVideo: false
+
 
 ! charaster appearence
 URxvt.depth: 24

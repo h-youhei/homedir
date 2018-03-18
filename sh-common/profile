@@ -13,8 +13,8 @@ export LESS='-i -M -R --shift 5'
 export LESSHISTFILE=$TMPDIR/less_history-$UID
 
 #export LS_COLORS via dircolors
-if [ -f $HOME/.dircolors ] ; then
-	eval `dircolors $HOME/.dircolors`
+if [ -f $XDG_CONFIG_HOME/sh-common/dir_colors ] ; then
+	eval `dircolors $XDG_CONFIG_HOME/sh-common/dir_colors`
 elif [ -f /etc/DIR_COLORS ] ; then
 	eval `dircolors /etc/DIR_COLORS`
 else

@@ -1,51 +1,59 @@
+! Base Color
 #define BLACK #000000
-#define RED #FF6677
-#define GREEN #AAFF88
-#define YELLOW #FFBB55
-#define BLUE #99BBFF
-#define MAGENTA #FFAAFF
-#define CYAN #44FFFF
-#define WHITE #FFFFFF
+#define WHITE #cccccc
 
-#define D_GRAY #555555
-#define HI_RED #FF2233
-#define HI_GREEN #00CC55
-#define HI_YELLOW #FFFF00
-#define HI_BLUE #1155FF
-#define B_GRAY #333366
-#define G_GRAY #336633
-#define L_GRAY #CCCCCC
+! Base Color2
+#define DARK #112244
+#define LIGHT #ddccaa
+
+! Highlight
+#define BG_MAGENTA #330044
+#define BG_GREEN #005500
+#define HL_WHITE #ffffff
+
+! Caution
+#define BG_RED #880000
+
+! Coloring characters
+#define GRAY #888888
+#define RED #ff3333
+#define GREEN #00dd00
+#define BROWN #eeaa00
+#define BLUE #2299ff
+#define YELLOW #ffff00
+#define PINK #ff66ff
+#define CYAN #44eeff
 
 *background: BLACK
 *foreground: WHITE
+*cursorColor: WHITE
+*highlightColor: LIGHT
+*highlightTextColor: DARK
 
 *color0: BLACK
-*color8: D_GRAY
+*color8: GRAY
 
 *color1: RED
-*color9: HI_RED
+*color9: BG_RED
 
 *color2: GREEN
-*color10: HI_GREEN
+*color10: BG_GREEN
 
-*color3: YELLOW
-*color11: HI_YELLOW
+*color3: BROWN
+*color11: YELLOW
 
 *color4: BLUE
-*color12: HI_BLUE
+*color12: DARK
 
-*color5: MAGENTA
-*color13: B_GRAY
+*color5: PINK
+*color13: BG_MAGENTA
 
 *color6: CYAN
-*color14: G_GRAY
+*color14: LIGHT
 
 *color7: WHITE
-*color15: L_GRAY
+*color15: HL_WHITE
 
-*underlineColor: HI_GREEN
-*colorUL: HI_GREEN
-
-*reverseVideo: false
+*underlineColor: CYAN
 
 ! vim:ft=xdefaults

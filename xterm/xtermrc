@@ -1,3 +1,4 @@
+XTerm.termName: xterm-256color
 XTerm*locale: true
 XTerm*cjkWidth: true
 XTerm*renderFont: true
@@ -7,7 +8,7 @@ XTerm*faceNameDoublesize: Source Han Sans JP
 !XTerm*ximFont: Source Han Sans JP
 !XTerm*preeditType: OnTheSpot,OverTheSpot,Root
 
-!XTerm*jumpScroll: true
+XTerm*jumpScroll: true
 XTerm*fastScroll: true
 XTerm*scrollTtyOutput: false
 XTerm*scrollKey: true
@@ -15,14 +16,18 @@ XTerm*saveLines: 1024
 XTerm*allowScrollLock: true
 !XTerm*alternateScroll: true
 
-XTerm*boldMode: false
+XTerm*AlwaysHighlight: true
+XTerm*boldColors: false
+XTerm*highlightColorMode: true
+XTerm*highlightReverse: false
+XTerm*highlightSelection: true
 XTerm.ToolBar: false
 !XTerm*logFile
 
 XTerm*selectToClipboard: true
 ! word char
 ! number you want to treat as word char:48,repeat ...
-! !  "  #  $  %  &  '  (  )  *  +  ,  -  .  /  _
+! !  "  #  $  %  &  '  (  )  *  +  ,  -  .  /  _    "
 ! 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48
 ! :  ;  <  =  >  ?  @     [  \  ]  ^     `  {   |   }   ~
 ! 58 59 60 61 62 63 64    91 92 93 94    96 123 124 125 126
@@ -35,7 +40,7 @@ XTerm.ttyModes: erase ^?
 
 XTerm*translation: #override \n\
 	Shift <KeyPress> Insert: insert-selection(CLIPBOARD)
-	
+
 !exec-formatted("luakit '%t'", CLIPBOARD)
 !exec-selectable("xterm -e less %s", all)
 !xurls
