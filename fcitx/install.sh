@@ -7,4 +7,4 @@ script_dir=`dirname $script_path`
 
 ln -sf $script_dir/xinit.sh $XDG_CONFIG_HOME/X11/xinitrc.d/20-input-method.sh
 
-$script_dir/import.sh
+[ -d $XDG_CONFIG_HOME/fcitx ] || $script_dir/import.sh
