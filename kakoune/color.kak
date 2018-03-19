@@ -36,7 +36,7 @@ face LineNumbers bright-black
 face LineNumberCursor bright-white,bright-blue
 face MenuForeground bright-blue,bright-cyan+b
 face MenuBackground bright-cyan,bright-blue
-face MenuInfo default+i
+face MenuInfo bright-black+i
 face Information bright-yellow
 face Error bright-white,bright-red
 face StatusLine default
