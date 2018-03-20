@@ -23,6 +23,7 @@ alias cm='chmod' cmn='cm 644' cmd='cm 755' cmx='cm 744' cms='cm 600' cmsd='cm 70
 alias df='df -h'
 #Edit, EditDirectory
 alias ed='vidir'
+#workaround to use differnt color between console and X
 e() {
 	if [ $TERM = linux ]
 	then ; kak $@
@@ -70,6 +71,8 @@ alias grv='g revert'
 alias gs='g status'
 alias gh='hub' ghb='gh browse'
 
+# no param: show branch list
+# with param: create branch
 gb() {
 	if test "$#" -gt 0
 	then

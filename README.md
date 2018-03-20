@@ -25,11 +25,13 @@ You can install setting individually to run install.sh under each directory.
 - kakoune
 - mozc
 - pacman
+- ripgrep
 - stalonetray
 - systemd
+- tig
 - xdg
 - xmonad
-- xterm
+- mlterm
 - zsh also sh-common
 
 ### Rarely use
