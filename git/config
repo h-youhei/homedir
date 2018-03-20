@@ -1,6 +1,30 @@
 [user]
 	name = h-youhei
 	email = hukumitu.youhei@gmail.com
+
 [grep]
 	patternType = extended
 	lineNumber = true
+
+[log]
+	abbrevCommit = true
+
+[color.branch]
+	remote = magenta
+	upstream = magenta
+
+[color.decorate]
+	stash = cyan
+	branch = cyan
+	remoteBranch = magenta
+	HEAD = white
+	tag = red
+
+[color.grep]
+	filename = white
+	linenumber = yellow
+	separator = 8
+	match = green
+
+[color.status]
+	untracked = blue
