@@ -112,10 +112,10 @@ precmd() {
 }
 
 PROMPT='${vcs_info_msg_0_}[%~]
-%n$prompt_host%#'
+%n$prompt_host%# '
 
 # while, for, etc...
-PROMPT2='%_>'
+PROMPT2='%_> '
 
 # right
 RPROMPT='[%?]'
