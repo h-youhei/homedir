@@ -7,11 +7,13 @@ COLOR tty
 #1 bold
 
 ##color##
-#30-37 fgcolor
-#40-47 bgcolor
+#30-37 foreground color 0-7
+#40-47 background color 0-7
+#90-97 foreground color 8-15
+#100-107 background color 8-15
 #_0    _1  _2    _3     _4   _5     _6   _7
 #black red green yellow blue purple cyan white
-#To use 16 or 256 color
+#To use 256 color
 #38;5;COLOR_TABLE
 #48;5;COLOR_TABLE
 
@@ -20,9 +22,9 @@ FILE 0
 DIR 32
 OTHER_WRITABLE 32
 STICKY_OTHER_WRITABLE 32
-EXEC 36
+EXEC 35
 LINK target
-ORPHAN 38;5;15;48;5;9
+ORPHAN 97;101
 FIFO 33
 SOCK 33
 BLK 33

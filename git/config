@@ -21,9 +21,9 @@
 	tag = red
 
 [color.grep]
-	filename = white
+	filename = magenta
 	linenumber = yellow
-	separator = 8
+	separator = white
 	match = green
 
 [color.status]

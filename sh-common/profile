@@ -6,6 +6,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 
 export EDITOR='kak'
+
 export PAGER='less'
 #export MANPAGER='manpager'
 #ignorecase verbose_prompt color sidescroll
@@ -20,6 +21,24 @@ elif [ -f /etc/DIR_COLORS ] ; then
 else
 	eval `dircolors`
 fi
+
+export GREP_COLORS='sl=:cx=:mt=32:fn=35:ln=33:bn=32:se='
+#sl: matched line
+#cx: lines arround matched line
+#mt: matched text
+#fn: file name
+#ln: line number
+#bn: related --byte-offset
+#se: separator
+#01;color: bold
+#3_: foreground color 0-7
+#4_: background color 0-7
+#9_: foreground color 8-15
+#10_: background color 8-15
+#_0    _1  _2    _3     _4   _5      _6   _7
+#black red green yellow blue magenta cyan white
+
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/ripgrep/ripgreprc
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 

@@ -3,6 +3,7 @@ set ignore-case = smart-case
 set history-size = 0
 set split-view-height = 99%
 set vertical-split = horizontal
+set line-graphics = ascii
 
 set main-view = \
 	line-number:no,interval=1 \

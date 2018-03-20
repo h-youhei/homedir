@@ -9,7 +9,7 @@ alias -g C='| cut'
 alias -g E='| sed'
 alias -g F='| fzf'
 #grep
-alias -g G='| rg'
+alias -g G='| _grep-option'
 alias -g H='| head'
 alias -g J='| join'
 alias -g L='| less'

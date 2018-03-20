@@ -2,6 +2,9 @@
 alias s='sudo ' sudo='sudo '
 alias se='sudoedit'
 
+alias _grep-option='command grep --extended-regexp --color=auto --line-number'
+alias grep='_grep-option --recursive'
+
 ### clipboard selection ###
 alias xsel='xsel -l /dev/null'
 alias xcl='xsel --clipboard' xsl='xsel --primary'
@@ -27,7 +30,6 @@ e() {
 	fi
 }
 alias f='fd'
-alias grep='grep -E --color=auto'
 #Help
 alias h='man'
 alias ls='ls -F --color=auto --group-directories-first' l='ls' ll='ls -l -h' la='ls -A' lal='ll -A'
@@ -54,7 +56,7 @@ alias tarb='tar cvf --bzip2' targ='tar cvf --gzip' tarx='tar cvf --xz' untar='ta
 alias g='git'
 alias ga='g add'
 alias gc='g commit' gca='gc --amend'
-alias gg='g grep'
+alias gg='tig grep'
 alias gco='g checkout'
 alias gcl='pcl | xargs git clone'
 alias gd='g diff'
