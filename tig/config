@@ -1,0 +1,64 @@
+set tab-size = 4
+set ignore-case = smart-case
+set history-size = 0
+set split-view-height = 99%
+set vertical-split = horizontal
+
+set main-view = \
+	line-number:no,interval=1 \
+	date:relative-compact \
+	author:abbreviated \
+	id:yes \
+	commit-title:yes,graph,refs,overflow=no
+set status-view-status = long
+
+bind main <Esc>a :set main-view-author = full
+bind main <Esc>A :set main-view-author = abbreviated
+bind main <Esc>m :set main-view-author = email
+bind main <Esc>d :set main-view-date = default
+bind main <Esc>D :set main-view-date = relative-compact
+bind generic <Esc>w :set ignore-space = all
+bind generic <Esc>W :set ignore-space = no
+
+bind stage [ :?^@@
+bind stage ] :/^@@
+bind stage { :?^diff --
+bind stage } :/^diff --
+bind diff [ :?^@@
+bind diff ] :/^@@
+bind diff { :?^diff --
+bind diff } :/^diff --
+
+color author default default
+color cursor 15 10
+color title-focus 14 12
+color section yellow default
+color title-blur 8 12
+color search-result 12 14 bold
+color status default default
+
+color mode default default
+color directory green default
+
+color delimiter 8 default
+
+color id cyan default
+color diff-index cyan default
+
+color diff-stat default default
+color diff-chunk yellow default
+color "--- " default default
+color "+++ " default default
+
+color status.header default default
+color stat-staged green default
+color stat-unstaged red default
+color stat-untracked blue default
+
+color help-group cyan default
+color help-action green default
+
+color "Author: " default default
+color "AuthorDate: " default default
+color "Commit: " default default
+color "CommitDate: " default default
