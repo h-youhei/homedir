@@ -25,9 +25,10 @@ alias df='df -h'
 alias ed='vidir'
 #workaround to use differnt color between console and X
 e() {
-	if [ $TERM = linux ]
-	then ; kak $@
-	else ; kak-git $@
+	if [ $TERM = linux ] ; then
+		kak $@
+	else
+		kak-git $@
 	fi
 }
 alias f='fd'
