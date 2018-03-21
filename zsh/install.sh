@@ -11,11 +11,13 @@ zsh_dir=$XDG_CONFIG_HOME/zsh
 
 ln -s $script_dir/zshrc $zsh_dir/.zshrc
 ln -s $script_dir/zprofile $zsh_dir/.zprofile
-ln -s $script_dir/conf.d $zsh_dir/.
-ln -s $script_dir/completions $zsh_dir/.
+ln -s $script_dir/alias.zsh $zsh_dir/
+ln -s $script_dir/bookmark.zsh $zsh_dir/
+ln -s $script_dir/keybind.zsh $zsh_dir/
+ln -s $script_dir/completions $zsh_dir/
 
 [ -d $zsh_dir/terminal ] || mkdir $zsh_dir/terminal
-ln -s $script_dir/terminal/linux.zsh $zsh_dir/terminal/.
-ln -s $script_dir/terminal/xterm.zsh $zsh_dir/terminal/.
+ln -s $script_dir/terminal/linux.zsh $zsh_dir/terminal/
+ln -s $script_dir/terminal/xterm.zsh $zsh_dir/terminal/
 
 chsh -s /bin/zsh

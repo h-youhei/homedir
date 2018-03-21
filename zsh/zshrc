@@ -123,14 +123,14 @@ RPROMPT='[%?]'
 # complex setting
 #--------------------
 # source here to apply ls alias
-source $ZDOTDIR/conf.d/alias.zsh
+source $ZDOTDIR/alias.zsh
 # ls after cd
 chpwd() {
 	ls
 }
 
-source $ZDOTDIR/conf.d/keybind.zsh
-source $ZDOTDIR/conf.d/bookmark.zsh
+source $ZDOTDIR/keybind.zsh
+source $ZDOTDIR/bookmark.zsh
 
 # startup
 ls
