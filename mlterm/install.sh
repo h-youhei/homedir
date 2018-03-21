@@ -6,3 +6,4 @@ script_dir=`dirname $script_path`
 ln -s $script_dir/main $HOME/.mlterm/
 ln -s $script_dir/aafont $HOME/.mlterm/
 ln -s $script_dir/color $HOME/.mlterm/
+ln -s $script_dir/key $HOME/.mlterm/
