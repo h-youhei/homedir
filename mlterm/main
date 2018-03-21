@@ -3,7 +3,7 @@ logging_msg = false
 
 use_ctl = false
 input_method = fcitx
-fontsize = 13
+fontsize = 14
 
 use_mdi = false
 use_scrollbar = false
@@ -15,7 +15,7 @@ cursor_fg_color = black
 cursor_bg_color =white
 mod_meta_key = mod1
 mod_meta_mode = esc
-#static_backscroll_mode = true
+static_backscroll_mode = true
 
 word_separators = " ()[]{}\""
 regard_uri_as_word = true
