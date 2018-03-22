@@ -2,8 +2,9 @@
 alias s='sudo ' sudo='sudo '
 alias se='sudoedit'
 
-alias _grep-option='command grep --extended-regexp --color=auto --line-number'
-alias grep='_grep-option --recursive'
+# to use different option by global alias
+alias _grep-option='command grep --extended-regexp --color=auto'
+alias grep='_grep-option --recursive --line-number'
 
 ### clipboard selection ###
 alias xsel='xsel -l /dev/null'
