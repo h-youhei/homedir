@@ -15,6 +15,8 @@ cursor_fg_color = black
 cursor_bg_color =white
 mod_meta_key = mod1
 mod_meta_mode = esc
+
+logsize = 512
 static_backscroll_mode = true
 
 word_separators = " ()[]{}\""
