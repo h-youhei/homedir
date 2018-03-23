@@ -1,13 +1,19 @@
 [general]
-engines-order=['xkb:us::eng', 'mozc-jp']
-embed-preedit-text=true
 use-system-keyboard-layout=true
+embed-preedit-text=true
+enable-by-default=true
 use-global-engine=true
-preload-engines=['xkb:us::eng', 'mozc-jp']
 version='1.5.17'
+engines-order=['xkb:us::eng', 'mozc-jp']
+preload-engines=['xkb:us::eng', 'mozc-jp']
 
 [general/hotkey]
 triggers=['Hiragana_Katakana']
 
+[panel/emoji]
+hotkey=@as []
+
 [panel]
-use-custom-font=false
+custom-font='Source Han Serif JP 11'
+use-custom-font=true
+xkb-icon-rgba='#cccccc'

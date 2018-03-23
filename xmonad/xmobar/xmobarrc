@@ -1,16 +1,17 @@
 Config
-	{ font = "xft:IPAPGothic:size=11"
+	{ font = "xft:Source Han Serif JP:size=11"
 	, bgColor = "black"
 	, fgColor = "white"
-	, position = Top
+	, position = TopW L 98
 	, lowerOnStart = True
 	, overrideRedirect = False
 	, commands =
 		[ Run Date "%_m/%_d %a %_H:%M" "date" 10
-		, Run Mail [ ("MAIL", "~/.local/share/mail/gmail/hukumituyouhei/Inbox") ] "mail"
+		--, Run Mail [ ("MAIL", "~/.local/share/mail/gmail/hukumituyouhei/Inbox") ] "mail"
 		, Run StdinReader
 		]
 	, sepChar = "%"
 	, alignSep = "}{"
-	, template = "  %StdinReader% }{ %mail% %date%  "
+	--, template = " %date% %StdinReader% }{ %mail%"
+	, template = " %date%    %StdinReader% }{ "
 	}
