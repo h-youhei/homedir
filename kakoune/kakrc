@@ -310,4 +310,5 @@ hook global WinDisplay .* %{ %sh{
 source "%val{config}/color.kak"
 
 ### input method
-#setup-fcitx-auto-switch
+set-option global ibus_on 'mozc-jp'
+setup-ibus-auto-switch

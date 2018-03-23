@@ -1,11 +1,6 @@
-URxvt.insecure: false
-URxvt.loginShell: false
 URxvt.utmpInhibit: false
-URxvt.override-redirect: false
-URxvt.hold: false
 URxvt.print-pipe: cat > /tmp/urxvt_$(date +%Y-%m-%d_%H:%M:%S)
-URxvt.secondaryScreen: true
-URxvt.secondaryScroll: true
+!URxvt.secondaryScroll: true
 URxvt.pastableTabs: false
 !URxvt.cutchars: string
 
@@ -25,15 +20,14 @@ URxvt.internalBorder: 1
 URxvt.externalBorder: 1
 URxvt.transparent: false
 URxvt.iconName: urxvt
-URxvt*reverseVideo: false
 
 
 ! charaster appearence
 URxvt.depth: 24
-URxvt.font: xft:Source Code Pro:size=10,xft:Source Han Sans JP:size=10
+URxvt.font: xft:Source Code Pro:size=11,xft:Source Han Sans JP:size=11
 URxvt.intensityStyles: false
-URxvt.lineSpace: 0
-URxvt.letterSpace: 0
+!URxvt.lineSpace: 0
+!URxvt.letterSpace: 0
 URxvt.skipBuiltinGlyphs: true
 
 ! cursor appearence
@@ -47,10 +41,11 @@ URxvt.visualBell: false
 URxvt.mapAlert: true
 
 ! Input Method
-URxvt.inputMethod: fcitx
+!URxvt.inputMethod: fcitx
 URxvt.preeditType: OverTheSpot
-URxvt.imLocale: ja_JP.UTF-8
-URxvt.imFont: xft:Source Han Sans JP:size=10
+URxvt.imLocale: en_JP.UTF-8
+! should set XLFD
+URxvt.imFont: fixed
 
 ! perl
 !URxvt.perl-lib:
@@ -58,7 +53,6 @@ URxvt.imFont: xft:Source Han Sans JP:size=10
 !URxvt.perl-ext:
 
 ! mouse
-URxvt.mouseWheelScrollPage: false
 URxvt.multiClickTime: 500
 URxvt.tripleclickwords: true
 

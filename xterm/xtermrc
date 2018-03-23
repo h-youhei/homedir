@@ -1,8 +1,8 @@
 XTerm.termName: xterm-256color
 XTerm*locale: true
-XTerm*cjkWidth: true
+!XTerm*cjkWidth: true
 XTerm*renderFont: true
-XTerm*faceSize: 10
+XTerm*faceSize: 11
 XTerm*faceName: Source Code Pro
 XTerm*faceNameDoublesize: Source Han Sans JP
 !XTerm*ximFont: Source Han Sans JP
@@ -39,9 +39,8 @@ XTerm.backarrowKey: false
 XTerm.ttyModes: erase ^?
 
 XTerm*translation: #override \n\
-	Shift <KeyPress> Insert: insert-selection(CLIPBOARD)
-
-!exec-formatted("luakit '%t'", CLIPBOARD)
+	Shift <KeyPress> Insert: insert-selection(CLIPBOARD)　\n\
+	Shift <Btn1Up>: exec-formatted("luakit '%t'", CLIPBOARD)
 !exec-selectable("xterm -e less %s", all)
 !xurls
 !exec-selectable(command,page)

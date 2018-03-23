@@ -2,7 +2,7 @@ termtype = xterm-256color
 logging_msg = false
 
 use_ctl = false
-input_method = fcitx
+input_method = ibus
 fontsize = 14
 
 use_mdi = false

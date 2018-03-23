@@ -22,4 +22,4 @@ plugin() {
 	ln -s $plugin_dir/$1/$1.kak $kak_dir/develop/
 }
 plugin each-line-selection
-plugin fcitx
+plugin ibus
