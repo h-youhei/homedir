@@ -1,5 +1,5 @@
 Config
-	{ font = "xft:Source Han Serif JP:size=11"
+	{ font = "xft:sans-serif:size=11"
 	, bgColor = "black"
 	, fgColor = "white"
 	, position = TopW L 98
