@@ -20,6 +20,8 @@ fi
 
 xrandr --output HDMI1 --primary
 
+export QT_QPA_PLATFORMTHEME="qt5ct"
+
 # start some nice programs
 if [ -d $sys_xinit_dir/xinitrc.d ] ; then
 	for f in $sys_xinit_dir/xinitrc.d/?*.sh ; do
