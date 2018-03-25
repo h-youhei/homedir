@@ -1,0 +1,57 @@
+// matcher color attribute
+// color is color name or "escape sequence"
+// To get color name, see Colors and Styles in `info source-highlight`
+
+// escape sequence
+// 3_ foreground
+// 4_ background
+// 9_ foreground bright
+// 10_ background bright
+// _0    _1  _2    _3     _4   _5     _6   _7
+// black red green yellow blue purple cyan white
+
+keyword "33" ;
+comment "36" ;
+type, classname "32" ;
+variable "32" ;
+//value
+number "31" ;
+cbracket "31";
+string "31" ;
+regexp "31" ;
+specialchar "34" ;
+preproc "34" ;
+// symbol default ;
+// function default;
+
+// line numbers
+linenum "90";
+
+// other elements for ChangeLog and Log files
+date "34" ;
+time "34" ;
+//ip "35" ;
+file "36" ;
+//name default ;
+
+// Internet related
+//url "35" u;
+
+// for diffs
+oldfile "31";
+newfile "32";
+difflines "33"; 
+
+// for css
+//selector default;
+property "32";
+value "31";
+
+// for feature (Cucumber) files
+cuketag green ;
+gherken blue ;
+given red ;
+when cyan ;
+then yellow ;
+and_but pink ;
+table white ;

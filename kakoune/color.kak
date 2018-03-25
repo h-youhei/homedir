@@ -2,7 +2,7 @@ define-command gui-color %{
 # For Code
 face value red
 face type green
-face variable default
+face variable green
 face module magenta
 face function default
 face string red

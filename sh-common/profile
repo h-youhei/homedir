@@ -11,6 +11,7 @@ export PAGER='less'
 #export MANPAGER='manpager'
 #ignorecase verbose_prompt color sidescroll
 export LESS='-i -M -R --shift 5'
+export LESSOPEN='| src-hilite-lesspipe.sh %s'
 export LESSHISTFILE=$TMPDIR/less_history-$UID
 
 #export LS_COLORS via dircolors

@@ -14,3 +14,8 @@ sh_common_dir=$XDG_CONFIG_HOME/sh-common
 
 ln -s $script_dir/alias.sh $sh_common_dir/
 ln -s $script_dir/dir_colors $sh_common_dir/
+
+[ -d $HOME/.source-highlight ] || echo n | source-highlight-settings
+ln -s $script_dir/source-highlight/esc.style $HOME/.source-highlight/
+[ -d $HOME/bin ] || mkdir $HOME/bin
+ln -s $script_dir/source-highlight/src-hilite-lesspipe.sh $HOME/bin/
