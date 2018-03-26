@@ -1,0 +1,43 @@
+$include /etc/inputrc
+
+#To bind C-w C-u manually, set to off
+#set bind-tty-special-chars off
+#complete common prefix and list available candidate
+set show-all-if-ambiguous on
+set menu-complete-display-prefix on
+set colored-stats on
+set colored-completion-prefix
+set completion-ignore-case on
+set completion-map-case on
+set keyseq-timeout 10
+set match-hidden-files off
+set mark-symlinked-directories on
+
+"\e":abort
+"\t":menu-complete
+#backtab(shift+tab)
+"\e[Z":menu-complete-backward
+#up
+"\e[A":history-search-backward
+#down
+"\e[B":history-search-forward
+#insert
+"\e[2~":overwrite-mode
+"\ef":forward-word
+"\eb":backward-word
+"\ew":backward-kill-word
+"\eW":unix-word-rubout
+"\ed":kill-word
+"\el":backward-kill-line
+"\ee":kill-line
+"\ek":kill-whole-line
+#hierarchy
+"\eh":unix-filename-rubout
+"\eu":undo
+#"\er":how to redo?
+"\e%":vi-match
+"\et":transpose-chars
+"\e]":character-search
+"\e[":character-search-backward
+"\ep":yank
+"\eP":yank-pop
