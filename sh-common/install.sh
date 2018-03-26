@@ -19,3 +19,5 @@ ln -s $script_dir/dir_colors $sh_common_dir/
 ln -s $script_dir/source-highlight/esc.style $HOME/.source-highlight/
 [ -d $HOME/bin ] || mkdir $HOME/bin
 ln -s $script_dir/source-highlight/src-hilite-lesspipe.sh $HOME/bin/
+
+[ -f $HOME/.less ] || $script_dir/lesskey.sh
