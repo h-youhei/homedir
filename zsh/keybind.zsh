@@ -42,7 +42,6 @@ zle -N cd-parent
 
 bindkey -e
 
-bindkey '\t' expand-or-complete-prefix
 [ -z "$key[BackTab]" ] || bindkey "${key[BackTab]}" reverse-menu-complete
 bindkey "${key[Down]}" history-beginning-search-forward
 bindkey "${key[Up]}" history-beginning-search-backward

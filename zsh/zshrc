@@ -14,15 +14,20 @@ setopt auto_remove_slash
 # show list with compact
 setopt list_packed
 # smartcase
-#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-setopt automenu
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]} m:[-_]=[_-]'
+#show sign where to type
+zstyle ':completion:*' show-ambiguity "1;93"
+
+#if ambiguous, insert common prefix and list available candidate
+#if list is shown, select next candidate
+unsetopt listambiguous
+zstyle ':completion:*' menu
 
 # emulate "ls -F --color=auto --group-directory-first"
 setopt list_types
-#TODO: this doesn't work, what's wrong?
-#zstyle ':completion:*' list-dirs-first true
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
+#TODO: this doesn't work, what's wrong?
+#zstyle ':completion:*' list-dirs-first
 
 # command history
 #--------------------
