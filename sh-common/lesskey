@@ -9,8 +9,8 @@
 	\ed word-delete
 	\ew word-backspace
 	#kill-line-backward
-	\el word-backspace \ew\ew\ew\ew\ew\ew\ew\ew\ew
+	\eh word-backspace \ew\ew\ew\ew\ew\ew\ew\ew\ew
 	#kill-line-forward
 	\ee word-delete \ed\ed\ed\ed\ed\ed\ed\ed\ed
-	\ek kill-line
+	\el kill-line
 	^q literal

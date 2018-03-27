@@ -28,11 +28,9 @@ set mark-symlinked-directories on
 "\ew":backward-kill-word
 "\eW":unix-word-rubout
 "\ed":kill-word
-"\el":backward-kill-line
+"\eh":backward-kill-line
 "\ee":kill-line
-"\ek":kill-whole-line
-#hierarchy
-"\eh":unix-filename-rubout
+"\el":kill-whole-line
 "\eu":undo
 #"\er":how to redo?
 "\e%":vi-match
