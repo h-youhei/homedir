@@ -3,7 +3,7 @@ logging_msg = false
 
 use_ctl = false
 input_method = ibus
-fontsize = 14
+fontsize = 16
 
 use_mdi = false
 use_scrollbar = false
