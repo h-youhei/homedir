@@ -1,3 +1,13 @@
+map global prompt '<a-f>' '<c-w>' #Forward word
+map global prompt '<a-F>' '<c-a-w>' #Forward WORD
+map global prompt '<a-b>' '<c-b>' #Backward word
+map global prompt '<a-B>' '<c-a-b>' #Backward WORD
+map global prompt '<a-w>' '<c-b><c-k>' #delete Word
+map global prompt '<a-e>' '<c-k>' #delete to End
+map global prompt '<a-h>' '<c-u>' #delete to Home
+map global prompt '<a-l>' '<home><c-k>' #delete Line
+map global prompt '<c-q>' '<c-v>' #insert literal
+
 ### my keybord layout is not qwerty ###
 map global normal t j # 'move cursor downward'
 map global normal T J # 'expand cursor downward'
