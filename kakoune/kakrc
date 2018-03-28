@@ -106,3 +106,6 @@ source "%val{config}/color.kak"
 ### input method
 set-option global ibus_on 'mozc-jp'
 setup-ibus-auto-switch
+
+source "%val{config}/plugin/capslock.kak"
+setup-capslock-auto-switch
