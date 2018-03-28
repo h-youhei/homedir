@@ -83,7 +83,7 @@ define-command -hidden _git-commit-start-insert-but-amend %{
 	}
 }
 hook global WinDisplay .* %{ %sh{
-	[ $kak_opt_filetype = git-commit ] && echo _git-commit-start-insert-but-amend
+	[ "$kak_opt_filetype" = git-commit ] && echo _git-commit-start-insert-but-amend
 }}
 
 %sh{
