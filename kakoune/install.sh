@@ -9,6 +9,7 @@ kak_dir=$XDG_CONFIG_HOME/kak
 
 ln -s $script_dir/kakrc $kak_dir/
 ln -s $script_dir/color.kak $kak_dir/
+ln -s $script_dir/keymap.kak $kak_dir/
 ln -s $script_dir/autoload $kak_dir/
 ln -s $script_dir/plugin $kak_dir/
 
