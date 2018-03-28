@@ -98,7 +98,7 @@ map global normal '<c-c>' '<backspace>' # 'cansel count'
 map global normal r \;r # 'replace a char with the next entered one'
 map global normal '<a-r>' r # 'replace each character with the next entered one'
 map global normal '<a-`>' ';<a-`>' # 'swap case a char'
-source "%val{config}/plugin/multiple-insert.kak"
+plug multiple-insert
 map global normal i ':start-insert-before-cursor<ret>'
 map global normal a ':start-insert-after-cursor<ret>'
 map global normal ( i # 'start insert before selection'
@@ -192,7 +192,7 @@ map global user y "<a-|>%opt{clipboard} -i<ret>:echo 'copied selection to clipbo
 map global user Y "<a-x><a-|>%opt{clipboard} -i<ret>:echo 'copied line to clipboard'<ret>" -docstring 'Yank line to clipboard'
 
 ### surround ###
-source "%val{config}/plugin/surround.kak"
+plug surround
 map global normal '<a-s>' ':surround<ret>' # 'surround selection'
 map global normal '<a-d>' ':delete-surround<ret>' # 'delete surround'
 map global normal '<a-c>' ':change-surround<ret>' # 'change surround'
