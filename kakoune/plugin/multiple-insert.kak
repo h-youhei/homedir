@@ -49,19 +49,19 @@ define-command  -hidden _multiple-insert-on-eol %{ %sh{
 	echo "execute-keys \"i.<esc>y${decremented}P${decremented}Hs.<ret>c\""
 }}
 
-define-command -docstring 'Start insert mode before selection.
-If count is given, multiple inserted text count times.' \
-start-insert-before-selection %{
-	execute-keys '<a-:><a-;>'
-	start-insert-before-cursor
-}
+#define-command -docstring 'Start insert mode before selection.
+#If count is given, multiple inserted text count times.' \
+#start-insert-before-selection %{
+	#execute-keys '<a-:><a-;>'
+	#start-insert-before-cursor
+#}
 
-define-command -docstring 'Start insert mode after selection.
-If count is given, multiple inserted text count times.' \
-start-insert-after-selection %{
-	execute-keys  '<a-:>'
-	start-insert-after-cursor
-}
+#define-command -docstring 'Start insert mode after selection.
+#If count is given, multiple inserted text count times.' \
+#start-insert-after-selection %{
+	#execute-keys  '<a-:>'
+	#start-insert-after-cursor
+#}
 
 define-command -docstring 'Inject next typed char before cursor.
 If count is given, multiple typed char count times.' \
