@@ -1,7 +1,7 @@
-#TODO: doesn/t work correctly under multiple selection + count
+#TODO: doesn't work correctly under multiple selection + count
 
 define-command  -docstring 'Start insert mode before cursor.
-If count is given, imultiple inserted text count times.' \
+If count is given, multiple inserted text count times.' \
 start-insert-before-cursor %{
 	execute-keys \;
 	%sh{
@@ -26,21 +26,6 @@ start-insert-after-cursor %{
 	}
 }
 
-define-command -docstring 'Start insert mode before selection.
-If count is given, multiple inserted text count times.' \
-start-insert-before-selection %{
-	execute-keys '<a-:><a-;>'
-	start-insert-before-cursor
-}
-
-define-command -docstring 'Start insert mode after selection.
-If count is given, multiple inserted text count times.' \
-start-insert-after-selection %{
-	execute-keys  '<a-:>'
-	start-insert-after-cursor
-}
-	
-
 define-command -hidden _multiple-insert %{
 	try %{
 		execute-keys -draft 's[^\n]<ret>'
@@ -63,3 +48,49 @@ define-command  -hidden _multiple-insert-on-eol %{ %sh{
 	decremented=$(($kak_count - 1))
 	echo "execute-keys \"i.<esc>y${decremented}P${decremented}Hs.<ret>c\""
 }}
+
+define-command -docstring 'Start insert mode before selection.
+If count is given, multiple inserted text count times.' \
+start-insert-before-selection %{
+	execute-keys '<a-:><a-;>'
+	start-insert-before-cursor
+}
+
+define-command -docstring 'Start insert mode after selection.
+If count is given, multiple inserted text count times.' \
+start-insert-after-selection %{
+	execute-keys  '<a-:>'
+	start-insert-after-cursor
+}
+
+define-command -docstring 'Inject next typed char before cursor.
+If count is given, multiple typed char count times.' \
+inject-char-before-cursor %{
+	execute-keys \;
+	info -title 'insert next char' 'enter char to inject before cursor'
+	_impl-inject-char i
+}
+
+define-command -docstring 'Inject next typed char after cursor.
+If count is given, multiple typed char count times.' \
+inject-char-after-cursor %{
+	execute-keys \;
+	info -title 'append next char' 'enter char to inject after cursor'
+	_impl-inject-char a
+}
+
+define-command -hidden -params 1 _impl-inject-char %{
+	on-key %{ %sh{
+		if [ $kak_count -eq 0 ] ; then
+			echo "execute-keys $1$kak_key<esc>"
+		else
+			i=0
+			accum=
+			while [ $i -lt $kak_count ] ; do
+				accum=$kak_key$accum
+				i=$(($i+1))
+			done
+			echo "execute-keys $1$accum<esc>"
+		fi
+	}}
+}

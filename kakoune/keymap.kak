@@ -1,3 +1,4 @@
+### readline ###
 map global prompt '<a-f>' '<c-w>' #Forward word
 map global prompt '<a-F>' '<c-a-w>' #Forward WORD
 map global prompt '<a-b>' '<c-b>' #Backward word
@@ -8,86 +9,95 @@ map global prompt '<a-h>' '<c-u>' #delete to Home
 map global prompt '<a-l>' '<home><c-k>' #delete Line
 map global prompt '<c-q>' '<c-v>' #insert literal
 
-### my keybord layout is not qwerty ###
-map global normal t j # 'move cursor downward'
-map global normal T J # 'expand cursor downward'
-map global normal '<a-t>' C # 'copy the current selection downward'
-map global normal e k # 'move cursor upward'
-map global normal E K # 'expand cursor upward'
-map global normal '<a-e>' '<a-C>' # 'copy the current selection upward'
-map global normal g h # 'move cursor to left'
-map global normal G H # 'expand cursor to left'
-map global normal '<a-g>' '<c-o>' # 'jump backward'
-map global normal u l  # 'move cursor to right'
-map global normal U L  # 'expand cursor to right'
-map global normal '<a-u>' '<c-i>' # 'jump forward'
-map global normal j g # 'Jump'
-map global normal J G # 'Jump'
-map global normal l e # 'select to Last char of the word'
-map global normal L '<a-e>' # 'select to Last char of the WORD'
-map global normal '<a-l>' E # 'expand to Last char af the word'
-map global normal '<a-L>' '<a-E>' # 'expand to Last char af the WORD'
-map global normal h u # 'backward to History (Undo)'
-map global normal H U # 'forward in History (Redo)'
-map global normal '<a-h>' '<a-u>' # 'backward to History (Undo)'
-map global normal '<a-H>' '<a-U>' # 'forward in History (Redo)'
-map global normal k t # 'select on to a entered character forward (Knock)'
-map global normal K '<a-t>' # 'select to before a entered charcter backward (Knock)'
-map global normal '<a-k>' T # 'expand to a entered charcter forward (Knock)'
-map global normal '<a-K>' '<a-T>' # 'expand to a entered char backward (Knock)'
-#unmap global goto g
-#unmap global goto k
+### cursor ###
+map global normal ^ '<home>' # 'move cursor line begin'
+map global normal '<home>' ';Gi' # 'move cursor indent'
+map global normal '<left>' H # 'expand cursor to left'
+map global normal '<right>' L # 'expand cursor to right'
+
+### goto ###
 map global goto '<down>' j -docstring 'buffer bottom'
 map global goto '<up>' k -docstring 'buffer top'
 map global goto '<left>' h -docstring 'line begin'
 map global goto '<right>' l -docstring 'line end'
-map global goto j g -docstring 'buffer top'
-map global goto J b -docstring 'buffer bottom'
-map global goto s k -docstring 'buffer start'
+#unmap global goto h
+#unmap global goto j
+#unmap global goto k
+#unmap global goto l
+
+map global normal '<a-g>' '<c-o>' # 'jump backward'
+map global normal '<a-G>' '<tab>' # 'jump forward'
+
+### view ###
+# don't escape view mode with cursor keys
+# escape view mode immediately with other keys
+map global normal v V 
+map global view v 'v<esc>' -docstring 'cursor center (vertically)'
+map global view c 'c<esc>' -docstring 'cursor center (vertically)'
+map global view m 'm<esc>' -docstring 'cursor center (horizontally)'
+map global view t 't<esc>' -docstring 'cursor on top'
+map global view b 'b<esc>' -docstring 'cursor on buttom'
+map global view '<left>' h -docstring 'scroll left'
+map global view '<down>' j -docstring 'scroll down'
+map global view '<up>' k -docstring 'scroll up'
+map global view '<right>' l -docstring 'scroll right'
 #unmap global view h
 #unmap global view j
 #unmap global view k
 #unmap global view l
-map global view '<down>' j -docstring 'scroll down'
-map global view '<up>' k -docstring 'scroll up'
-map global view '<left>' h -docstring 'scroll left'
-map global view '<right>' l -docstring 'scroll right'
 
 ### use alt for expand
 map global normal W '<a-w>' # 'select to the next WORD'
 map global normal '<a-w>' W # 'expand to the next word'
 map global normal B '<a-b>' # 'select to the prev WORD (Back)'
 map global normal '<a-b>' B # 'expand to the prev word (Back)'
-map global normal '"' '<a-\'>' # 'select previous selection'
-map global normal '<a-\'>' '<a-">' # 'exchange selections'
-map global normal '<a-">' '"' # 'choose register'
+map global normal E '<a-e>' # 'select to Last char of the WORD'
+map global normal '<a-e>' E # 'expand to Last char af the word'
 map global normal F '<a-f>' # 'Find a char backward'
 map global normal '<a-f>' F # 'expand to a char'
+map global normal T '<a-t>' # 'select to before a entered charcter backward'
+map global normal '<a-t>' T # 'expand to a entered charcter forward'
 map global normal ? '<a-/>' # 'search backward'
 map global normal '<a-/>' ? # 'expand with search'
-map global normal N '<a-n>' # '
-map global normal '<a-n>' N # '
+map global normal N '<a-n>' # 'select prev search'
+map global normal '<a-n>' N # 'add a new selection with next match'
+map global normal '<a-[>' { # 'expand text object backward'
+map global normal '<a-]>' } # 'expand text object forward'
 
 ### comment ###
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 
 ### selection ###
-map global normal '<a-x>' '<a-K>' -docstring 'eXclude matched selects'
-map global normal '<a-X>' '<a-k>' -docstring 'keep matched selects'
-map global normal '<esc>' '<backspace><space>;' -docstring 'deselect'
-#map global normal \; '<a-;>' -docstring 'flip the selections direction'
-#map global normal '<a-;>' \' -docstring 'reduce selections to their cursor'
+map global normal k '<a-k>' # 'Keep matched selects'
+map global normal K '<a-K>' # 'drop matched selects'
+plug each-line-selection
+map global normal '<a-k>' ':keep-selection-each-line<ret>'
+map global normal '<a-K>' ':drop-selection-each-line<ret>'
+# use execute-keys to get rid of count
+map global normal '<esc>' ":execute-keys '<space>;'<ret>" # 'deselect all'
+#map global normal '<space>' '<a-space>' # 'remove current selection'
+#map global normal '<a-space>' '<space>' # 'select only current selection'
+ 
+map global normal * '%' # 'select whole buffer'
+map global normal '%' m # 'select to matching character'
+map global normal '<a-%>' M # 'extend selection to matching character'
+map global normal $ * # 'put current selection on search register'
+map global normal '<a-|>' $ # 'pipe each selection. then keep selections the command return 0'
 
-define-command -hidden split-with-char %{ on-key %{ execute-keys %sh{
-	case $kak_key in
-	'<ret>') pattern='\n' ;;
-	'<tab>') pattern='\t' ;;
-	'<space>') pattern='\s+' ;;
-	*) pattern='\Q'$kak_key'\E' ;;
-	esac
-	echo "S$pattern<ret>"
-}}}
+define-command -hidden split-with-char %{
+	info -title 'split with next char' 'enter char to split selection'
+	on-key %{ %sh{
+		case $kak_key in
+		#use execute-keys to close infomation area
+		"<esc>" | "<backspace>") echo "execute-keys :nop<ret>" ;;
+		'<ret>') echo "execute-keys $kak_count<a-s>" ;;
+		'<tab>') echo "execute-keys S\t<ret>" ;;
+		'<space>') echo "execute-keys S\s+<ret>" ;;
+		*) echo "execute-keys S\Q$kak_key\E<ret>" ;;
+		esac
+	}}
+}
 map global normal S ':split-with-char<ret>' # 'split selection with the next entered character'
 map global normal '<a-S>' S # 'split selection with regex'
 
@@ -101,15 +111,27 @@ map global normal '<a-`>' ';<a-`>' # 'swap case a char'
 plug multiple-insert
 map global normal i ':start-insert-before-cursor<ret>'
 map global normal a ':start-insert-after-cursor<ret>'
-map global normal ( i # 'start insert before selection'
-map global normal ) a # 'start insert after selection'
+map global normal h i # 'start insert before selection'
+map global normal H a # 'start insert after selection'
+map global normal j ':inject-char-before-cursor<ret>' # 'inJect a character before cursor'
+map global normal J ':inject-char-after-cursor<ret>' # 'inJect a character after cursor'
 
 ### line-wise ###
-map global normal '<minus>' 'X<a-x>' # 'expand line downward'
-map global normal _ 'K<a-x>' # 'expand line upward'
+map global normal l 'X<a-x>' # 'expand line downward'
+map global normal L 'K<a-x>' # 'expand line upward'
 map global normal D '<a-x>d'  # 'delete line'
 map global normal C '<a-s>gi<a-l>c' # 'change line'
 map global normal Y '<a-x>y' # 'yank line'
+map global normal '<a-j>' '<a-J>' # 'join line
+plug copy-or-shrink
+map global normal '<a-l>' ':copy-or-shrink-downward<ret>' # 'copy the current selection downward'
+map global normal '<a-L>' ':copy-or-shrink-upward<ret>' # 'copy the current selection upward'
+
+### paragraph ###
+map global normal { [p # 'select paragraph backward'
+map global normal } ]p # 'select paragroph forward'
+map global normal '<a-{>' {p # 'expand paragroph backward'
+map global normal '<a-}>' }p # 'expand paragraph forward'
 
 ### text object ###
 map global object a u -docstring 'argument'
@@ -122,49 +144,46 @@ map global object : 'c\s|:+,\s|:+<ret>' -docstring 'colon (namespace etc)'
 map global object q c -docstring 'query for custom object'
 map global object _ 'c_|\W,_|\W<ret>' -docstring 'snake_case'
 # this doesn't work
-# map global object A 'c\W|[a-z](?=[A-Z]),\W|[A-Z] -docstring 'camelCase'
+#map global object A 'c\W|[a-z](?=[A-Z]),\W|[A-Z]<ret>' -docstring 'camelCase'
 #unmap global object b
 #unmap global object Q
 #unmap global object g
 #unmap global object c
-map global normal [ [p # 'select paragraph backward'
-map global normal ] ]p # 'select paragroph forward'
-map global normal '<a-[>' {p # 'expand paragroph backward'
-map global normal '<a-]>' }p # 'expand paragraph forward'
-map global normal { [ # 'select text object backward'
-map global normal } ] # 'select text object forward'
-map global normal '<a-{>' { # 'expand text object backward'
-map global normal '<a-}>' } # 'expand text object forward'
-map global normal '<a-m>' m # 'move cursor to matched paren'
-add-highlighter global show_matching
 
 ### mark ###
 map global normal m z # 'restore Mark'
 map global normal M Z # 'save Mark'
-
-# acceptable argument: <a-z> <a-Z>
-define-command -hidden -params 1 _fold-mark-delegate %{ execute-keys  -save-regs '' %sh{
-	if [ $kak_reg_caret ]; then
-		echo "$1"a
+# If nothing is marked, <a-z> and <a-Z> behave like z and Z.
+# So <a-z>a and <a-Z>a start insert mode accidentally.
+# These wrappers prevent it.
+define-command -hidden fold-mark-restore %{ %sh{
+	if [ $kak_reg_caret ] ; then
+		echo "execute-keys -save-regs '' <a-z>a"
 	else
-		echo $1
+		echo "fail 'Register ^ does not contain a selection desc'"
 	fi
 }}
-define-command -hidden fold-mark-then-restore %{ evaluate-commands -save-regs ''  %{ _fold-mark-delegate <a-z> } }
-define-command -hidden fold-mark-then-save %{ evaluate-commands -save-regs '' %{ _fold-mark-delegate <a-Z> } }
-map global normal z ':fold-mark-then-restore<ret>'
-map global normal Z ':fold-mark-then-save<ret>'
+define-command -hidden fold-mark-save %{ execute-keys -save-regs '' %sh{
+	if [ $kak_reg_caret ] ; then
+		echo "<a-Z>a"
+	else
+		echo "<a-Z>"
+	fi
+}}
+map global normal z ':fold-mark-restore<ret>'
+map global normal Z ':fold-mark-save<ret>'
 
 ### macro ###
 map global normal x q # 'eXecute macro'
 map global normal X Q # 'start or stop recording macro'
 
-### client ###
+### quit ###
 map global normal q ':quit<ret>' # 'Quit client'
+map global normal Q ':kill<ret>' # 'Quit server'
 
 ### buffer ###
 map global normal '<c-b>' ':buffer<space>' # 'switch Buffer'
-map global normal Q ':delete-buffer<ret>' # 'Quit buffer'
+map global normal '<a-q>' ':delete-buffer<ret>' # 'Quit buffer'
 map global normal '<plus>' ':write<ret>' # 'save buffer'
 
 ### file system ###
@@ -177,19 +196,15 @@ map global normal '<c-d>' ':cd<space>' # 'change Directory'
 # map global normal '<c-p>' # 'fzf in project'
 # map global normal '<c->' # 'open terminal in project root'
 
-### leader ###
-map global normal '<space>' , # 'user mode'
-map global normal ',' '<a-space>' # 'remove current selection'
-map global normal '<a-,>' '<space>' # 'keep only current selection'
-#unmap global normal '<a-space>'
-
 ### clipboard ###
+declare-user-mode clipboard
+map global normal '\'' ':enter-user-mode clipboard<ret>'
 declare-option str clipboard 'xsel --clipboard -n -l /dev/null'
-map global user p "<a-!>%opt{clipboard} -o<ret>" -docstring 'Paste after current selection from clipboard'
-map global user P "!%opt{clipboard} -o<ret>" -docstring 'Paste before current selection from clipboard'
-map global user R "|%opt{clipboard} -o<ret>" -docstring 'Replace current selection with clipboard'
-map global user y "<a-|>%opt{clipboard} -i<ret>:echo 'copied selection to clipboard'<ret>" -docstring 'Yank selection to clipboard'
-map global user Y "<a-x><a-|>%opt{clipboard} -i<ret>:echo 'copied line to clipboard'<ret>" -docstring 'Yank line to clipboard'
+map global clipboard p "<a-!>%opt{clipboard} -o<ret>" -docstring 'Paste after current selection from clipboard'
+map global clipboard P "!%opt{clipboard} -o<ret>" -docstring 'Paste before current selection from clipboard'
+map global clipboard R "|%opt{clipboard} -o<ret>" -docstring 'Replace current selection with clipboard'
+map global clipboard y "<a-|>%opt{clipboard} -i<ret>:echo 'copied selection to clipboard'<ret>" -docstring 'Yank selection to clipboard'
+map global clipboard Y "<a-x><a-|>%opt{clipboard} -i<ret>:echo 'copied line to clipboard'<ret>" -docstring 'Yank line to clipboard'
 
 ### surround ###
 plug surround
@@ -198,7 +213,7 @@ map global normal '<a-d>' ':delete-surround<ret>' # 'delete surround'
 map global normal '<a-c>' ':change-surround<ret>' # 'change surround'
 
 ### overwrite ###
-#source "%val{config}/overwrite.kak"
+#plug overwrite
 #map global normal '<insert>' ':overwrite<ret>' -docstring 'overwrite mode'
 
 ### completion ###
@@ -211,7 +226,9 @@ hook global InsertCompletionHide .* %{
 	unmap window insert <backtab> <c-p>
 }
 
-### reset indent ###
-#map global insert '' '<ret><esc>i'
-#s^\s+d
+### indent ###
+map global insert '<a-ret>' '<a-;><a-o><down>' # 'newline without indent'
+#TODO: also delete comment
+map global normal '<a-lt>' '<a-x>s^\s+<ret>d' # 'remove all indent'
+map global normal & '<a-:><a-;>&' # 'left alignment'
 

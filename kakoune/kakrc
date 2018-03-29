@@ -5,13 +5,12 @@ set-face LineNumbers yellow,default
 ### format ###
 set-option global tabstop 4
 set-option global indentwidth 0
-map global normal ^ '<home>' # move cursor line begin
-map global normal '<home>' '<a-:>Gi' # move cursor indent
-map global normal & '<a-:><a-;>&' # left alignment
 
 ### screen ###
 set-option global ui_options ncurses_assistant=none
 set-option global scrolloff 3,5
+
+add-highlighter global show_matching
 
 ### hlsearch
 # add-highlighter global dynregex '%reg{/}' 0:default,+r
