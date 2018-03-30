@@ -227,8 +227,13 @@ hook global InsertCompletionHide .* %{
 }
 
 ### indent ###
-map global insert '<a-ret>' '<a-;><a-o><down>' # 'newline without indent'
-#TODO: also delete comment
-map global normal '<a-lt>' '<a-x>s^\s+<ret>d' # 'remove all indent'
 map global normal & '<a-:><a-;>&' # 'left alignment'
-
+map global insert '<a-ret>' '<a-;><a-o><down>' # 'newline without indent'
+define-command remove-all-indent %{
+	try %{
+		execute-keys -draft "<a-x>s^\Q%opt{comment_line}\E*\s+<ret>"
+		execute-keys "<a-x>s^\Q%opt{comment_line}\E*\s+<ret>"
+		execute-keys 's\s+<ret>d'
+	}
+}
+map global normal '<a-lt>' ':remove-all-indent<ret>'
