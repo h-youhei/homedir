@@ -1,5 +1,5 @@
-define-command _select-surround -hidden -params 1 %{ execute-keys "<a-a>%arg{1}<a-S>" }
-define-command _delegate-surround -hidden -params 2 %! %sh@
+define-command -hidden -params 1 _select-surround %{ execute-keys "<a-a>%arg{1}<a-S>" }
+define-command -hidden -params 2 _impl-surround %! %sh@
 	command=$1
 	case $2 in
 	'('|')') open='('; close=')' ;;
@@ -13,7 +13,7 @@ define-command _delegate-surround -hidden -params 2 %! %sh@
 	echo "$command $open $close"
 @!
 
-define-command _surrounding-object-info -hidden %{
+define-command -hidden _surrounding-object-info %{
 	info -title 'select surrounding object' \
 '() [] {} <> \' " ` surrounded by the pair
 w word
@@ -30,28 +30,28 @@ q custom object
 _ . : separated by the char or whitespace
 ' }
 
-define-command _surround-info -hidden %{ info -title 'select surrounder' \
+define-command -hidden _surround-info %{ info -title 'select surrounder' \
 '() [] {} <> surround with the pair
 characters surround with the charactr
 ' }
 
-define-command delete-surround -hidden %{
+define-command -hidden delete-surround %{
 	_surrounding-object-info
 	on-key %{
 		_select-surround %val{key}
 		execute-keys 'd<space>'
 }}
 
-define-command _change-surround -hidden -params 2 %{ execute-keys "r%arg{1}<space>r%arg{2}<space>;" } 
-define-command change-surround -hidden %{
+define-command -hidden -params 2 _change-surround %{ execute-keys "r%arg{1}<space>r%arg{2}<space>;" } 
+define-command -hidden change-surround %{
 	_surrounding-object-info
 	on-key %{
 	_select-surround %val{key}
 	_surround-info
-	on-key %{ _delegate-surround "_change-surround" %val{key} }
+	on-key %{ _impl-surround "_change-surround" %val{key} }
 }}
 
-define-command _surround -hidden -params 2 %{ execute-keys "i%arg{1}<esc>a%arg{2}<esc>" }
-define-command surround -hidden %{
+define-command -hidden -params 2 _surround %{ execute-keys "i%arg{1}<esc>a%arg{2}<esc>" }
+define-command -hidden surround %{
 	_surround-info
-	on-key %{ _delegate-surround "_surround" %val{key} } }
+	on-key %{ _impl-surround "_surround" %val{key} } }
