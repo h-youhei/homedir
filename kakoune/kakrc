@@ -13,21 +13,29 @@ set-option global scrolloff 3,5
 add-highlighter global show_matching
 
 ### hlsearch
-# add-highlighter global dynregex '%reg{/}' 0:default,+r
- 
+#add-highlighter global dynregex '%reg{/}' 0:default,+r
+
 ### hidden characters ###
 add-highlighter global show_whitespaces -lf ' ' -tab '>' -tabpad '_' -spc ' '
-#add-highlighter shared/ group trailing_spaces
-#add-highlighter shared/trailing_spaces regex \h+$ 0:Error
+add-highlighter shared/ group space_warning
+#'trailing space'
+add-highlighter shared/space_warning regex \h+$ 0:Error
 # execute-keys -draft '%s\h+$<ret>d' # trim-whitespace
-#add-highlighter shared/ group fullwidth_spaces
-#add-highlighter shared/fullwidth_spaces regex \u3000
+#'mix tab and space
+add-highlighter shared/space_warning regex ^\t+\u0020+ 0:Error
+add-highlighter shared/space_warning regex ^\u0020+\t+ 0:Error
+#'fullwidth space'
+add-highlighter shared/space_warning regex \u3000 0:Error
 # execute-keys -draft '%s\u3000<ret>r<space>' # replace full-width space to half-width
-# add-highlighter shared/tab_in_middle
-# add-highlighter shared/ group tab_in_middel regex \S+\t
-# add-highlighter shared/ group mix_tab_and_space
-# add-highlighter shared/mix_tab_and_space regex ^\t+\u0020
-# add-highlighter shared/mix_tab_and_space regex ^\u0020+\t
+
+# don't highlight in insert mode
+add-highlighter global ref space_warning
+hook global ModeChange normal:insert %{
+	remove-highlighter global/space_warning
+}
+hook global  ModeChange insert:normal %{
+	add-highlighter global ref space_warning
+}
 
 ### status line ###
 set-option global modelinefmt '{{context_info}} {{mode_info}} %val{bufname} (%val{cursor_char_column},%val{cursor_line}/%val{buf_line_count}) %val{client}@%val{session}'
