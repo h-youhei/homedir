@@ -56,13 +56,6 @@ define-command gui-color %{
 	face MatchingChar bright-white+b
 	face BufferPadding bright-black
 	face Whitespace bright-black
-
-	hook global ModeChange normal:insert %{
-		set-face PrimarySelection default
-	}
-	hook global ModeChange insert:normal %{
-		set-face PrimarySelection bright-white,bright-green
-	}
 }
 
 define-command console-color %{
