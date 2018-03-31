@@ -57,6 +57,9 @@ set-option global jumpclient main
 set-option global toolsclient tools
 set-option global docsclient docs
 
+define-command view %{
+	new rename-client docs
+}
 define-command ide %{
 	rename-client main
 	new rename-client tools
