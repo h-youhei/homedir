@@ -200,11 +200,16 @@ map global normal '<c-d>' ':cd<space>' # 'change Directory'
 declare-user-mode clipboard
 map global normal '\'' ':enter-user-mode clipboard<ret>'
 declare-option str clipboard 'xsel --clipboard -n -l /dev/null'
-map global clipboard p "<a-!>%opt{clipboard} -o<ret>" -docstring 'Paste after current selection from clipboard'
-map global clipboard P "!%opt{clipboard} -o<ret>" -docstring 'Paste before current selection from clipboard'
-map global clipboard R "|%opt{clipboard} -o<ret>" -docstring 'Replace current selection with clipboard'
-map global clipboard y "<a-|>%opt{clipboard} -i<ret>:echo 'copied selection to clipboard'<ret>" -docstring 'Yank selection to clipboard'
-map global clipboard Y "<a-x><a-|>%opt{clipboard} -i<ret>:echo 'copied line to clipboard'<ret>" -docstring 'Yank line to clipboard'
+map -docstring 'Paste after current selection from clipboard' \
+	global clipboard p "<a-!>%opt{clipboard} -o<ret>"
+map -docstring 'Paste before current selection from clipboard' \
+	global clipboard P "!%opt{clipboard} -o<ret>"
+map -docstring 'Replace current selection with clipboard' \
+	global clipboard R "|%opt{clipboard} -o<ret>"
+map -docstring 'Yank selection to clipboard' \
+	global clipboard y "<a-|>%opt{clipboard} -i<ret>:echo 'copied selection to clipboard'<ret>"
+map -docstring 'Yank line to clipboard' \
+	global clipboard Y "<a-x><a-|>%opt{clipboard} -i<ret>:echo 'copied line to clipboard'<ret>"
 
 ### surround ###
 plug surround
@@ -243,5 +248,5 @@ declare-user-mode format
 map global normal = ':enter-user-mode format<ret>'
 map -docstring 'trim trailing spaces' \
 	global format $ ':trim-trailing-spaces<ret>'
-map -docstring 'replace spaces full-width to space' \
+map -docstring 'replace spaces full-width to half-width' \
 	global format f ':replace-spaces-full-to-half<ret>'
