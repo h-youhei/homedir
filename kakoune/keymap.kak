@@ -219,6 +219,12 @@ map global normal '<c-d>' ':cd<space>' # 'change Directory'
 # map global normal '<c-p>' # 'fzf in project'
 # map global normal '<c->' # 'open terminal in project root'
 
+### paste ###
+map global normal p ';<a-p><a-;>' #'paste after cursor and select it'
+map global normal P ':<a-P><a-;>' #'paste before cursor and select it'
+map global normal '<a-p>' '<a-p><a-;>' #'paste after selection and select it'
+map global normal '<a-P>' '<a-P><a-;>' #'paste before selection and select it'
+
 ### clipboard ###
 declare-user-mode clipboard
 map global normal '\'' ':enter-user-mode clipboard<ret>'
