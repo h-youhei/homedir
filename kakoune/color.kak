@@ -28,14 +28,6 @@ define-command gui-color %{
 	face Default default
 	face PrimarySelection bright-white,bright-green
 	face SecondarySelection bright-white,bright-magenta
-	hook global ModeChange normal:insert %{
-		set-face PrimarySelection default
-		set-face SecondarySelection default
-	}
-	hook global ModeChange insert:normal %{
-		set-face PrimarySelection bright-white,bright-green
-		set-face SecondarySelection bright-white,bright-magenta
-	}
 	face PrimaryCursor black,white+b
 	face PrimaryCursorEol black,white+b
 	face SecondaryCursor bright-blue,bright-cyan
@@ -88,14 +80,6 @@ define-command console-color %{
 	face Default default
 	face PrimarySelection black,white
 	face SecondarySelection white,blue
-	hook global ModeChange normal:insert %{
-		set-face PrimarySelection default
-		set-face SecondarySelection default
-	}
-	hook global ModeChange insert:normal %{
-		set-face PrimarySelection black,white
-		set-face SecondarySelection white,blue
-	}
 	face PrimaryCursor black,white
 	face PrimaryCursorEol black,white
 	face SecondaryCursor black,white
