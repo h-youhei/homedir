@@ -222,7 +222,8 @@ map global normal '<c-d>' ':cd<space>' # 'change Directory'
 ### clipboard ###
 declare-user-mode clipboard
 map global normal '\'' ':enter-user-mode clipboard<ret>'
-declare-option str clipboard 'xsel --clipboard -n -l /dev/null'
+declare-option str clipboard 'xsel --clipboard -l /dev/null'
+#TODO: if last character is \n, treat linewise
 map -docstring 'Paste after current selection from clipboard' \
 	global clipboard p "<a-!>%opt{clipboard} -o<ret>"
 map -docstring 'Paste before current selection from clipboard' \
