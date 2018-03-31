@@ -20,13 +20,18 @@ add-highlighter global show_whitespaces -lf ' ' -tab '>' -tabpad '_' -spc ' '
 add-highlighter shared/ group space_warning
 #'trailing space'
 add-highlighter shared/space_warning regex \h+$ 0:Error
-# execute-keys -draft '%s\h+$<ret>d' # trim-whitespace
+define-command trim-trailing-spaces %{
+	execute-keys 's\h+$<ret>d'
+}
 #'mix tab and space
 add-highlighter shared/space_warning regex ^\t+\u0020+ 0:Error
 add-highlighter shared/space_warning regex ^\u0020+\t+ 0:Error
 #'fullwidth space'
 add-highlighter shared/space_warning regex \u3000 0:Error
-# execute-keys -draft '%s\u3000<ret>r<space>' # replace full-width space to half-width
+define-command -docstring 'replace full-width space to half-width' \
+replace-spaces-full-to-half %{
+	execute-keys 's\u3000<ret>r<space>'
+}
 
 # don't highlight in insert mode
 add-highlighter global ref space_warning
@@ -67,7 +72,7 @@ define-command ide %{
 define-command -docstring 'open new terminal in current directory' \
 open-terminal %{ %sh{
 	mlterm > /dev/null 2>&1 &
-}} 
+}}
 alias global t open-terminal
 
 ### git ###
@@ -75,20 +80,20 @@ define-command -docstring 'edit selected file in the git repository' -params 1 \
 -shell-candidates %{ git ls-files `git rev-parse --show-toplevel` } \
 git-edit %{
 	edit %arg{1}
-} 
+}
 alias global ge git-edit
 
 define-command -docstring 'open new terminal in the git root' \
 git-open-terminal %{ %sh{
 	mlterm --working-directory `git rev-parse --show-toplevel` > /dev/null 2>&1 &
-}} 
+}}
 alias global gt git-open-terminal
 
 ### filetype ###
 define-command -hidden _git-commit-start-insert-but-amend %{
 	try %{
 		execute-keys 's[^\n]<ret>'
-	} catch %{ 
+	} catch %{
 		execute-keys i
 	}
 }
@@ -115,7 +120,7 @@ setup-capslock-auto-switch
 		#find -L "$1" -type f -name '*\.kak' \
 			#-exec printf 'try %%{ source "%s" } catch %%{ echo -debug Autoload: could not load "%s" }\n' '{}' '{}' \;
 	#}
-	
+
 	#if [ -d "$kak_config/autoload-after" ]; then
 		#autoload_directory "$kak_config/autoload-after"
 	#fi

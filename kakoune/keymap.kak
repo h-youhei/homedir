@@ -31,7 +31,7 @@ map global normal '<a-G>' '<tab>' # 'jump forward'
 ### view ###
 # don't escape view mode with cursor keys
 # escape view mode immediately with other keys
-map global normal v V 
+map global normal v V
 map global view v 'v<esc>' -docstring 'cursor center (vertically)'
 map global view c 'c<esc>' -docstring 'cursor center (vertically)'
 map global view m 'm<esc>' -docstring 'cursor center (horizontally)'
@@ -78,7 +78,7 @@ map global normal '<a-K>' ':drop-selection-each-line<ret>'
 map global normal '<esc>' ":execute-keys '<space>;'<ret>" # 'deselect all'
 #map global normal '<space>' '<a-space>' # 'remove current selection'
 #map global normal '<a-space>' '<space>' # 'select only current selection'
- 
+
 map global normal * '%' # 'select whole buffer'
 map global normal '%' m # 'select to matching character'
 map global normal '<a-%>' M # 'extend selection to matching character'
@@ -237,3 +237,11 @@ define-command remove-all-indent %{
 	}
 }
 map global normal '<a-lt>' ':remove-all-indent<ret>'
+
+### format ###
+declare-user-mode format
+map global normal = ':enter-user-mode format<ret>'
+map -docstring 'trim trailing spaces' \
+	global format $ ':trim-trailing-spaces<ret>'
+map -docstring 'replace spaces full-width to space' \
+	global format f ':replace-spaces-full-to-half<ret>'
