@@ -68,6 +68,29 @@ map global normal '<a-]>' } # 'expand text object forward'
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 
+### search ###
+#put cursor on beginning of selection
+#TODO:
+#	incremental #1958
+#	initial string -init doesn't erase automatically
+#define-command -hidden search-forward %{
+	#prompt 'search:' %{
+		#execute-keys "/%val{text}<ret><a-;>"
+	#}
+#}
+#nothing happens
+#define-command -hidden swap-anchor-and-cursor-after-prompt%{
+	#hook -group search global ModeChange prompt:normal %{
+		#execute-keys '<a-;>'
+		#remove-hooks global search
+	#}
+#}
+#map global normal / ':search-forward<ret>'
+#map global normal n 'n<a-:><a-;>'
+#map global normal N '<a-n><a-:><a-;>'
+#map global normal '<a-n>' 'N<a-:><a-;>'
+#map global normal '<a-N>' '<a-N><a-:><a-;>'
+
 ### selection ###
 map global normal k '<a-k>' # 'Keep matched selects'
 map global normal K '<a-K>' # 'drop matched selects'
