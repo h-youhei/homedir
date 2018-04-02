@@ -217,7 +217,7 @@ map global normal '<c-t>' ':open-terminal<ret>' #'open new terminal'
 
 ### paste ###
 map global normal p ';<a-p><a-;>' #'paste after cursor and select it'
-map global normal P ':<a-P><a-;>' #'paste before cursor and select it'
+map global normal P ';<a-P><a-;>' #'paste before cursor and select it'
 map global normal '<a-p>' '<a-p><a-;>' #'paste after selection and select it'
 map global normal '<a-P>' '<a-P><a-;>' #'paste before selection and select it'
 
