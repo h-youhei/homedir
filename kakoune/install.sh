@@ -29,9 +29,9 @@ plugin_local() {
 #plugin_remote() {
 #}
 
-plugin surround
 plugin capslock
 plugin multiple-insert
 plugin copy-or-shrink
 plugin_local each-line-selection
+plugin_local surround
 plugin_local ibus
