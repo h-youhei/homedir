@@ -10,9 +10,9 @@ map global prompt '<a-l>' '<home><c-k>' #'delete Line'
 map global prompt '<c-q>' '<c-v>' #'insert literal'
 
 ### insert mode ###
-map global insert '<home>' '<a-;>gi' #'move cursor to indent
-map global insert '<pageup>' '<a-;><c-u>' #'scroll half page up
-map global insert '<pagedown>' '<a-;><c-d>' #'scroll half page down
+map global insert '<home>' '<a-;>gi' #'move cursor to indent'
+map global insert '<pageup>' '<a-;><c-u>' #'scroll half page up'
+map global insert '<pagedown>' '<a-;><c-d>' #'scroll half page down'
 
 ### cursor ###
 map global normal ^ '<home>' #'move cursor line begin'
@@ -88,7 +88,6 @@ map global normal / ':_activate-hooks-put-cursor-search-begin<ret>/'
 map global normal ? ':_activate-hooks-put-cursor-search-begin<ret><a-/>'
 map global normal '<a-/>' ':_activate-hooks-put-cursor-search-begin<ret>?'
 map global normal '<a-?>' ':_activate-hooks-put-cursor-search-begin<ret><a-?>'
-map global normal ? ':search-backward<ret>'
 map global normal n 'n<a-:><a-;>'
 map global normal N '<a-n><a-:><a-;>'
 map global normal '<a-n>' 'N<a-:><a-;>'
@@ -135,6 +134,7 @@ map global normal '<a-`>' ';<a-`>' #'swap case a char'
 plug multiple-insert
 map global normal i ':start-insert-before-cursor<ret>'
 map global normal a ':start-insert-after-cursor<ret><a-;>;'
+#H -> |--| -> surround
 map global normal h i #'start insert before selection'
 map global normal H a #'start insert after selection'
 map global normal j ':inject-char-before-cursor<ret>' #'inJect a character before cursor'
