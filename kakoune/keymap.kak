@@ -57,10 +57,10 @@ map global normal F '<a-f>' #'Find a char backward'
 map global normal '<a-f>' F #'expand to a char'
 map global normal T '<a-t>' #'select to before a entered charcter backward'
 map global normal '<a-t>' T #'expand to a entered charcter forward'
-map global normal ? '<a-/>' #'search backward'
-map global normal '<a-/>' ? #'expand with search'
-map global normal N '<a-n>' #'select prev search'
-map global normal '<a-n>' N #'add a new selection with next match'
+#map global normal ? '<a-/>' #'search backward'
+#map global normal '<a-/>' ? #'expand with search'
+#map global normal N '<a-n>' #'select prev search'
+#map global normal '<a-n>' N #'add a new selection with next match'
 map global normal '<a-[>' { #'expand text object backward'
 map global normal '<a-]>' } #'expand text object forward'
 
@@ -70,26 +70,24 @@ map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
 
 ### search ###
 #put cursor on beginning of selection
-#TODO:
-#	incremental #1958
-#	initial string -init doesn't erase automatically
-#define-command -hidden search-forward %{
-	#prompt 'search:' %{
-		#execute-keys "/%val{text}<ret><a-;>"
-	#}
-#}
-#nothing happens
-#define-command -hidden swap-anchor-and-cursor-after-prompt%{
-	#hook -group search global ModeChange prompt:normal %{
-		#execute-keys '<a-;>'
-		#remove-hooks global search
-	#}
-#}
-#map global normal / ':search-forward<ret>'
-#map global normal n 'n<a-:><a-;>'
-#map global normal N '<a-n><a-:><a-;>'
-#map global normal '<a-n>' 'N<a-:><a-;>'
-#map global normal '<a-N>' '<a-N><a-:><a-;>'
+define-command -hidden _activate-hooks-put-cursor-search-begin %{
+	hook -group put-cursor-search-begin window RawKey <ret> %{
+		execute-keys '<a-:><a-;>'
+		remove-hooks window put-cursor-search-begin
+	}
+	hook -group put-cursor-search-begin window RawKey <esc> %{
+		remove-hooks window put-cursor-search-begin
+	}
+}
+map global normal / ':_activate-hooks-put-cursor-search-begin<ret>/'
+map global normal ? ':_activate-hooks-put-cursor-search-begin<ret><a-/>'
+map global normal '<a-/>' ':_activate-hooks-put-cursor-search-begin<ret>?'
+map global normal '<a-?>' ':_activate-hooks-put-cursor-search-begin<ret><a-?>'
+map global normal ? ':search-backward<ret>'
+map global normal n 'n<a-:><a-;>'
+map global normal N '<a-n><a-:><a-;>'
+map global normal '<a-n>' 'N<a-:><a-;>'
+map global normal '<a-N>' '<a-N><a-:><a-;>'
 
 ### selection ###
 map global normal k '<a-k>' #'Keep matched selects'
