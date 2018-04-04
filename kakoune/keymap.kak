@@ -9,9 +9,14 @@ map global prompt '<a-h>' '<c-u>' #'delete to Home'
 map global prompt '<a-l>' '<home><c-k>' #'delete Line'
 map global prompt '<c-q>' '<c-v>' #'insert literal'
 
+### insert mode ###
+map global insert '<home>' '<a-;>gi' #'move cursor to indent
+map global insert '<pageup>' '<a-;><c-u>' #'scroll half page up
+map global insert '<pagedown>' '<a-;><c-d>' #'scroll half page down
+
 ### cursor ###
 map global normal ^ '<home>' #'move cursor line begin'
-map global normal '<home>' ';Gi' #'move cursor indent'
+map global normal '<home>' ';Gi' #'move cursor to indent'
 map global normal '<left>' H #'expand cursor to left'
 map global normal '<right>' L #'expand cursor to right'
 
