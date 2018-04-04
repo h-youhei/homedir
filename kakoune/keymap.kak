@@ -134,7 +134,7 @@ map global normal '<a-r>' r #'replace each character with the next entered one'
 map global normal '<a-`>' ';<a-`>' #'swap case a char'
 plug multiple-insert
 map global normal i ':start-insert-before-cursor<ret>'
-map global normal a ':start-insert-after-cursor<ret>'
+map global normal a ':start-insert-after-cursor<ret><a-;>;'
 map global normal h i #'start insert before selection'
 map global normal H a #'start insert after selection'
 map global normal j ':inject-char-before-cursor<ret>' #'inJect a character before cursor'
