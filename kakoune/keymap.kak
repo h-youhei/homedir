@@ -13,6 +13,8 @@ map global prompt '<c-q>' '<c-v>' #'insert literal'
 map global insert '<home>' '<a-;>gi' #'move cursor to indent'
 map global insert '<pageup>' '<a-;><c-u>' #'scroll half page up'
 map global insert '<pagedown>' '<a-;><c-d>' #'scroll half page down'
+plug close-tag
+map global insert '<a-/>' '<esc>:close-tag<ret>i'
 
 ### cursor ###
 map global normal ^ '<home>' #'move cursor line begin'
@@ -68,6 +70,7 @@ map global normal '<a-t>' T #'expand to a entered charcter forward'
 #map global normal '<a-n>' N #'add a new selection with next match'
 map global normal '<a-[>' { #'expand text object backward'
 map global normal '<a-]>' } #'expand text object forward'
+map global object W '<a-w>' -docstring 'WORD'
 
 ### comment ###
 map global normal '#' :comment-line<ret> -docstring 'comment line'
@@ -137,6 +140,7 @@ map global normal a ':start-insert-after-cursor<ret><a-;>;'
 #H -> |--| -> surround
 map global normal h i #'start insert before selection'
 map global normal H a #'start insert after selection'
+map global normal '<a-h>' '<a-S>' #'select boundaries'
 map global normal j ':inject-char-before-cursor<ret>' #'inJect a character before cursor'
 map global normal J ':inject-char-after-cursor<ret>' #'inJect a character after cursor'
 

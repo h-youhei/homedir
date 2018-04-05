@@ -34,4 +34,5 @@ plugin multiple-insert
 plugin copy-or-shrink
 plugin_local each-line-selection
 plugin_local surround
+plugin_local close-tag
 plugin_local ibus
