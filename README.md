@@ -18,21 +18,20 @@ You can install setting individually to run install.sh under each directory.
 
 ## Is it maintained?
 ### Daily use so actively maintained
-- X11
+- X11 gtk
 - fontconfig
-- fcitx
-- git
+- git tig
 - kakoune
 - mozc
 - pacman
 - ripgrep
 - stalonetray
 - systemd
-- tig
 - xdg
 - xmonad
 - mlterm
-- zsh also sh-common
+- ibus
+- zsh sh-common
 
 ### Rarely use
 - bash
@@ -40,10 +39,10 @@ You can install setting individually to run install.sh under each directory.
 - tmux
 
 ### Abondoned
+- fcitx
 - emacs
-- ibus
 - neovim
 - portage
 - urxvt
-- mlterm
+- xterm
 - vimfx

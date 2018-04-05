@@ -20,10 +20,11 @@ fontconfig/install.sh
 xmonad/install.sh
 stalontray/install.sh
 mlterm/install.sh
-fcitx/install.sh
+ibus/install.sh
 mozc/install.sh
 tig/install.sh
 pacman/install.sh
+gtk/install.sh
 
 [ -d $HOME/bin ] || mkdir $HOME/bin
 bin() {
