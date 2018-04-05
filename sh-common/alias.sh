@@ -57,21 +57,27 @@ alias tarb='tar cvf --bzip2' targ='tar cvf --gzip' tarx='tar cvf --xz' untar='ta
 
 ### git ###
 alias g='git'
-alias ga='g add'
-alias gc='g commit' gca='gc --amend'
+alias ga='git add'
+alias gc='git commit' gca='gc --amend'
 alias gg='tig grep'
-alias gco='g checkout'
-alias gcl='pcl | xargs git clone'
-alias gd='g diff'
-alias gl='g log --graph'
-alias gm='g mv'
-alias gra='pcl | xargs git remote add' grau='pcl | xargs git remote add upstream'
-alias grb='g rebase -i' grbc='g rebase --continue'
+alias gco='git checkout'
+alias gcl='hub clone'
+alias pgcl='pcl | xargs git clone'
+alias gd='git diff'
+alias gl='git log --groph'
+alias gm='git mv'
+alias gp='git push' gpu='git push -u origin master'
+alias gra='hub remote add origin' grau='hub remote add upstream'
+alias pgra='pcl | xargs git remote add origin' pgrau='pcl | xargs git remote add upstream'
+alias grb='git rebase -i' grbc='git rebase --continue'
 alias grm='g rm'
-alias grs='g reset' grsh='grs --hard'
-alias grv='g revert'
-alias gs='g status'
+alias grs='git reset' grsh='grs --hard'
+alias grv='git revert'
+alias gs='git status'
+alias gsh='git show'
 alias gh='hub' ghb='gh browse'
+#sYnc
+alias gy='git pull'
 
 # no param: show branch list
 # with param: create branch
@@ -85,7 +91,7 @@ gb() {
 	command git branch
 }
 
-[ -z $XDG_CONFIG_HOME ] && XDG_CONFIG_HOME=$HOME/.config 
+[ -z $XDG_CONFIG_HOME ] && XDG_CONFIG_HOME=$HOME/.config
 if [ -d $XDG_CONFIG_HOME/sh-common/alias.d ] ; then
 	for f in $XDG_CONFIG_HOME/sh-common/alias.d/?*.sh ; do
 		[ -f $f ] && source $f
