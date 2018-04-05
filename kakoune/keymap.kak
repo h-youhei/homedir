@@ -137,10 +137,6 @@ map global normal '<a-`>' ';<a-`>' #'swap case a char'
 plug multiple-insert
 map global normal i ':start-insert-before-cursor<ret>'
 map global normal a ':start-insert-after-cursor<ret><a-;>;'
-#H -> |--| -> surround
-map global normal h i #'start insert before selection'
-map global normal H a #'start insert after selection'
-map global normal '<a-h>' '<a-S>' #'select boundaries'
 map global normal j ':inject-char-before-cursor<ret>' #'inJect a character before cursor'
 map global normal J ':inject-char-after-cursor<ret>' #'inJect a character after cursor'
 
@@ -245,14 +241,19 @@ map -docstring 'Yank line to clipboard' \
 	global clipboard Y "<a-x><a-|>%opt{clipboard} -i<ret>:echo 'copied line to clipboard'<ret>"
 
 ### surround ###
+#H -> |--| -> surround
+map global normal h i #'start insert before selection'
+map global normal H a #'start insert after selection'
+map global normal '<a-H>' '<a-S>' #'select boundaries'
 plug surround
-map global normal '<a-s>' ':surround<ret>' #'surround selection'
-map global normal '<a-d>' ':delete-surround<ret>' #'delete surround'
-map global normal '<a-c>' ':change-surround<ret>' #'change surround'
+map global normal '<a-h>' ':surround<ret>' #'surround selection'
+map global normal '<a-s>' ':select-surround<ret>' #'select surrounder'
+map global normal '<a-d>' ':delete-surround<ret>' #'delete surrounder'
+map global normal '<a-c>' ':change-surround<ret>' #'change surrounder'
 
 ### overwrite ###
 #plug overwrite
-#map global normal '<insert>' ':overwrite<ret>' -docstring 'overwrite mode'
+#map global normal '<insert>' ':overwrite<ret>' #'overwrite mode'
 
 ### completion ###
 hook global InsertCompletionShow .* %{
