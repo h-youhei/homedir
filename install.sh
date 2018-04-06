@@ -10,7 +10,7 @@ sh-common/install.sh
 bash/install.sh
 zsh/install.sh
 systemd/install.sh
-X11/install.sh 
+X11/install.sh
 
 
 ripgrep/install.sh
@@ -25,6 +25,7 @@ mozc/install.sh
 tig/install.sh
 pacman/install.sh
 gtk/install.sh
+qutebrowser/install.sh
 
 [ -d $HOME/bin ] || mkdir $HOME/bin
 bin() {

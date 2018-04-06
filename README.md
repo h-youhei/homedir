@@ -31,6 +31,7 @@ You can install setting individually to run install.sh under each directory.
 - xmonad
 - mlterm
 - ibus
+- qutebrowser
 - zsh sh-common
 
 ### Rarely use
