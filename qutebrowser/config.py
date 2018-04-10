@@ -1,6 +1,7 @@
 c.auto_save.interval = 0
 c.auto_save.session = True
 #c.session.lazy_restore = True
+c.completion.shrink = True
 c.confirm_quit = ['downloads']
 c.content.default_encoding = 'utf-8'
 #c.content.dns_prefetch = False
@@ -102,12 +103,38 @@ c.fonts.web.size.default_fixed = webfontsize
 	#'\\b前[へに]?(戻る)?\\b'
 #]
 homepage = 'qute://bookmarks/'
-#c.url.default_page = homepage
-#c.url.start_page = homepage
+c.url.default_page = homepage
+c.url.start_pages = [ homepage ]
 
-#c.url.searchengines = {
-	#'DEFAULT': '',
-#}
+c.url.searchengines = {
+	#'DEFAULT': 'https://duckduckgo.com?q={}',
+	'DEFAULT': 'https://google.com/search?q={}',
+	#[J]apanese dictionary
+	'j': 'https://dictionary.goo.ne.jp/freewordsearcher.html?mode=1&kind=jn&MT={}',
+	#[E]nglish dictionary
+	'e': 'https://oxfordlearnersdictionaries.com/search/english/?q={}',
+	#Japanese-[E]nglish dictionary
+	'E': 'http://eow.alc.co.jp/search?q={}',
+	#[G]ithub
+	'g': 'https://github.com/search?q={}',
+	#[I]mage
+	'i': 'https://google.com/search?tbm=isch&q={}',
+	#[V]ideo
+	'v': 'https://google.com/search?tbm=vid&q={}',
+	#'v' 'https://youtube.com/results?search_query={}'
+	#arch [L]inux wiki
+	'l': 'https://wiki.archlinux.org?search={}',
+	#[W]ikipedia
+	'w': 'https://wikipedia.org/wiki?search={}',
+	'W': 'https://ja.wikipedia.org/wiki?search={}',
+	#[P]ackage
+	'p': 'https://aur.archlinux.org/packages/?K={}',
+	#[H]askell
+	'h': 'https://hackage.haskell.org/package/search?terms={}',
+	#[R]ust
+	'r': 'https://crates.io/search?q={}',
+}
+
 fg = '#CCC'
 bg = '#000'
 dim_bg = '#555'
@@ -158,7 +185,7 @@ c.colors.messages.warning.bg = warn_bg
 c.colors.messages.warning.border = warn_bg
 c.colors.messages.warning.fg = fg
 c.colors.prompts.bg = menu_bg
-c.colors.prompts.border = menu_bg
+c.colors.prompts.border = '0px'
 c.colors.prompts.fg = fg
 c.colors.prompts.selected.bg = selected_bg
 c.colors.statusbar.caret.bg = selected_bg
@@ -374,6 +401,7 @@ config.bind('.', 'clear-messages ;; repeat-command')
 config.bind('Ch', 'clear-messages ;; history-clear')
 config.bind('Cd', 'clear-messages ;; download-clear')
 config.bind('Q', 'clear-messages ;; download-cancel')
+config.bind('wi', 'spawn firefox-developer-edition -devtools {url}')
 
 #turn off input method when going back normal mode
 config.bind('<Escape>', 'spawn --userscript ibus-off.sh ;; leave-mode', mode='insert')
