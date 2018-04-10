@@ -1,58 +1,62 @@
 ! Base Color
-#define BLACK #000000
-#define WHITE #cccccc
+#define BG #000000
+#define FG #cccccc
 
-! Base Color2
-#define DARK #112244
-#define LIGHT #ddccaa
+! Background
+#define BG_MENU #112244
+#define BG_SELECTED #114422
+#define BG_SECONDARY # 661133
+#define BG_ERROR #88000
+#define BG_WARN #666600
+#define BG_DIM #555555
 
-! Highlight
-#define BG_MAGENTA #330044
-#define BG_GREEN #005500
-#define HL_WHITE #ffffff
-
-! Caution
-#define BG_RED #880000
-
-! Coloring characters
+! Foreground
 #define GRAY #888888
 #define RED #ff3333
 #define GREEN #00dd00
-#define BROWN #eeaa00
-#define BLUE #2299ff
-#define YELLOW #ffff00
+#define YELLOW #EEEE00
+#define BLUE #2288ff
 #define PINK #ff66ff
 #define CYAN #44eeff
+#define WHITE #ffffff
 
-*background: BLACK
-*foreground: WHITE
-*cursorColor: WHITE
-*highlightColor: LIGHT
-*highlightTextColor: DARK
+*background: BG
+*foreground: FG
+*cursorColor: FG
+*highlightColor: FG
+*highlightTextColor: BG
 
-*color0: BLACK
+! Black
+*color0: BG
 *color8: GRAY
 
+! Red
 *color1: RED
-*color9: BG_RED
+*color9: BG_ERROR
 
+! Green
 *color2: GREEN
-*color10: BG_GREEN
+*color10: BG_SELECTED
 
-*color3: BROWN
-*color11: YELLOW
+! Yellow
+*color3: YELLOW
+*color11: BG_WARN
 
+! Blue
 *color4: BLUE
-*color12: DARK
+*color12: BG_MENU
 
+! Magenta
 *color5: PINK
-*color13: BG_MAGENTA
+*color13: BG_SECONDARY
 
+! Cyan
 *color6: CYAN
-*color14: LIGHT
+*color14: BG_DIM
 
-*color7: WHITE
-*color15: HL_WHITE
+! White
+*color7: FG
+*color15: WHITE
 
 *underlineColor: CYAN
 

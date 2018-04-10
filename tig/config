@@ -32,10 +32,10 @@ bind diff } :/^diff --
 
 color author default default
 color cursor 15 10
-color title-focus 14 12
+color title-focus default 12
 color section yellow default
 color title-blur 8 12
-color search-result 12 14 bold
+color search-result 15 14
 color status default default
 
 color mode default default

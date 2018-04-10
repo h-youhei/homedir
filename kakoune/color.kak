@@ -30,14 +30,14 @@ define-command gui-color %{
 	face SecondarySelection bright-white,bright-magenta
 	face PrimaryCursor black,white+b
 	face PrimaryCursorEol black,white+b
-	face SecondaryCursor bright-blue,bright-cyan
-	face SecondaryCursorEol bright-blue,bright-cyan
+	face SecondaryCursor bright-white,bright-cyan
+	face SecondaryCursorEol bright-white,bright-cyan
 	face LineNumbers bright-black
 	face LineNumberCursor bright-white,bright-blue
-	face MenuForeground bright-blue,bright-cyan+b
-	face MenuBackground bright-cyan,bright-blue
+	face MenuForeground bright-white,bright-green
+	face MenuBackground default,bright-blue
 	face MenuInfo bright-black+i
-	face Information bright-yellow
+	face Information yellow
 	face Error bright-white,bright-red
 	face StatusLine default
 	face StatusLineMode magenta

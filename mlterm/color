@@ -1,17 +1,17 @@
 black=#000000
 red=#ff3333
-green=#00dd00
-yellow=#eeaa00
+green=#00cc00
+yellow=#eecc00
 blue=#2299ff
 magenta=#ff66ff
-cyan=#44eeff
+cyan=#00ffff
 white=#cccccc
 hl_black=#888888
-hl_red=#i880000
-hl_green=#005500
-hl_yellow=#ffff00
+hl_red=#880000
+hl_green=#115522
+hl_yellow=#666600
 hl_blue=#112244
-hl_magenta=#330044
-hl_cyan=#ddccaa
+hl_magenta=#661133
+hl_cyan=#555555
 hl_white=#ffffff
 
