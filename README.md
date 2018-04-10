@@ -46,4 +46,3 @@ You can install setting individually to run install.sh under each directory.
 - portage
 - urxvt
 - xterm
-- vimfx
