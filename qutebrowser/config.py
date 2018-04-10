@@ -81,6 +81,7 @@ c.fonts.monospace = 'monospace'
 webfontsize = 16
 c.fonts.web.size.default = webfontsize
 c.fonts.web.size.default_fixed = webfontsize
+c.fonts.web.size.minimum = webfontsize
 
 #c.hints.next_regexes = [
 	#'\\bnext\\b',
