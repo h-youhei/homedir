@@ -1,6 +1,5 @@
 ### line number ###
 add-highlighter global number_lines -relative -hlcursor -separator ' '
-set-face LineNumbers yellow,default
 
 ### format ###
 set-option global tabstop 4
