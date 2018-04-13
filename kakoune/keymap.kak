@@ -258,11 +258,11 @@ map global normal '<a-c>' ':change-surround<ret>' #'change surrounder'
 ### completion ###
 hook global InsertCompletionShow .* %{
 	map window insert <tab> <c-n>
-	map window insert <backtab> <c-p>
+	map window insert <s-tab> <c-p>
 }
 hook global InsertCompletionHide .* %{
 	unmap window insert <tab> <c-n>
-	unmap window insert <backtab> <c-p>
+	unmap window insert <s-tab> <c-p>
 }
 
 ### indent ###
