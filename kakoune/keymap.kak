@@ -202,7 +202,17 @@ map global normal x q #'eXecute macro'
 map global normal X Q #'start or stop recording macro'
 
 ### quit ###
-map global normal q ':quit<ret>' #'Quit client'
+define-command -hidden smart-quit %{ %sh{
+	case $kak_bufname in
+	\*debug\*)
+		echo 'execute-keys ga' ;;
+	\*doc-*)
+		echo delete-buffer ;;
+	*)
+		echo quit ;;
+	esac
+}}
+map global normal q ':smart-quit<ret>' #'Quit client'
 map global normal Q ':kill<ret>' #'Quit server'
 
 ### buffer ###
