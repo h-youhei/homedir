@@ -18,7 +18,7 @@ if [ -d $user_resources.d ] ; then
 	unset f
 fi
 
-xrandr --output HDMI1 --primary
+xrandr --output HDMI2 --primary
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
