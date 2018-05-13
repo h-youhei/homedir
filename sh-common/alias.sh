@@ -51,7 +51,7 @@ alias rnm='rename'
 alias sa='ssh-add'
 alias sysc='systemctl'
 alias sln='ln -s' uln='unlink'
-alias t='mlterm &; disown %mlterm'
+alias t='xterm &'
 #Bzip Gzip Xz
 alias tarb='tar cvf --bzip2' targ='tar cvf --gzip' tarx='tar cvf --xz' utar='tar xvf'
 alias gz='gzip' ugz='gunzip'

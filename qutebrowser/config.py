@@ -16,7 +16,7 @@ c.content.windowed_fullscreen = True
 #c.downloads.location.prompt = False
 c.downloads.position = 'bottom'
 c.editor.command = [
-	'mlterm', '-e',
+	'xterm', '-e',
 	'sh', '-c',
 	"kak -e  'execute-keys i' +{line}:{column} {file}"
 ]

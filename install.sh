@@ -19,7 +19,7 @@ vim/install.sh
 fontconfig/install.sh
 xmonad/install.sh
 stalontray/install.sh
-mlterm/install.sh
+xterm/install.sh
 ibus/install.sh
 mozc/install.sh
 tig/install.sh

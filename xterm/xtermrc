@@ -4,7 +4,7 @@ XTerm*locale: true
 XTerm*renderFont: true
 XTerm*faceSize: 11
 XTerm*faceName: Source Code Pro
-XTerm*faceNameDoublesize: Source Han Sans JP
+XTerm*faceNameDoublesize: Noto Sans CJK JP
 !XTerm*ximFont: Source Han Sans JP
 !XTerm*preeditType: OnTheSpot,OverTheSpot,Root
 
@@ -39,7 +39,7 @@ XTerm.backarrowKey: false
 XTerm.ttyModes: erase ^?
 
 XTerm*translation: #override \n\
-	Shift <KeyPress> Insert: insert-selection(CLIPBOARD)　\n\
+	Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\
 	Shift <Btn1Up>: exec-formatted("luakit '%t'", CLIPBOARD)
 !exec-selectable("xterm -e less %s", all)
 !xurls

@@ -29,7 +29,7 @@ You can install setting individually to run install.sh under each directory.
 - systemd
 - xdg
 - xmonad
-- mlterm
+- xterm
 - ibus
 - qutebrowser
 - zsh sh-common
@@ -45,4 +45,4 @@ You can install setting individually to run install.sh under each directory.
 - neovim
 - portage
 - urxvt
-- xterm
+- mlterm
