@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pkill '^hugo$'
+cd `git rev-parse --show-toplevel`
+hugo server --disableFastRender --forceSyncStatic --ignoreCache > /dev/null &
