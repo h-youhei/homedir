@@ -78,7 +78,7 @@ alias gs='git status'
 alias gsh='git show'
 alias gh='hub' ghb='gh browse'
 #sYnc
-alias gy='git pull'
+alias gy='git pull' gyu='git pull upstream master'
 
 # no param: show branch list
 # with param: create branch
