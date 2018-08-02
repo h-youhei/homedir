@@ -7,8 +7,8 @@ fi
 
 cwd=`pwd`/
 git_root=`git rev-parse --show-toplevel`
-new=${cwd##$git_root/content/}$1
+new=${cwd##$git_root/content/}$1.md
 
 cd $git_root
 hugo new $new
-[ $? -eq 0 ] && kak content/$new
+[ $? -eq 0 ] && [ $EDITOR ] && $EDITOR content/$new
