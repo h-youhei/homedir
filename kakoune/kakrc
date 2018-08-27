@@ -1,5 +1,5 @@
 ### line number ###
-add-highlighter global number_lines -relative -hlcursor -separator ' '
+add-highlighter global/ number-lines -relative -hlcursor -separator ' '
 
 ### format ###
 set-option global tabstop 4
@@ -9,36 +9,36 @@ set-option global indentwidth 0
 set-option global ui_options ncurses_assistant=none
 set-option global scrolloff 1,0
 
-add-highlighter global show_matching
+add-highlighter global/ show-matching
 
 ### hlsearch
-#add-highlighter global dynregex '%reg{/}' 0:default,+r
+#add-highlighter global/ dynregex '%reg{/}' 0:default,+r
 
 ### hidden characters ###
-add-highlighter global show_whitespaces -lf ' ' -tab '>' -tabpad '_' -spc ' '
-add-highlighter shared/ group space_warning
+add-highlighter global/ show-whitespaces -lf ' ' -tab '>' -tabpad '_' -spc ' '
+add-highlighter shared/space-warning group
 #'trailing space'
-add-highlighter shared/space_warning regex \h+$ 0:Error
+add-highlighter shared/space-warning/trailing-space regex \h+$ 0:Error
 define-command trim-trailing-spaces %{
 	execute-keys 's\h+$<ret>d'
 }
 #'mix tab and space'
-add-highlighter shared/space_warning regex ^\t+\u0020+ 0:Error
-add-highlighter shared/space_warning regex ^\u0020+\t+ 0:Error
+add-highlighter shared/space-warning/space-after-tab regex ^\t+\u0020+ 0:Error
+add-highlighter shared/space-warning/tab-after-space regex ^\u0020+\t+ 0:Error
 #'fullwidth space'
-add-highlighter shared/space_warning regex \u3000 0:Error
+add-highlighter shared/space-warning/fullwidth-space regex \u3000 0:Error
 define-command -docstring 'replace spaces full-width to half-width' \
 replace-spaces-full-to-half %{
 	execute-keys 's\u3000<ret>r<space>'
 }
 
 # don't highlight in insert mode
-add-highlighter global ref space_warning
+add-highlighter global/ ref space-warning
 hook global ModeChange normal:insert %{
-	remove-highlighter global/space_warning
+	remove-highlighter global/space-warning
 }
 hook global  ModeChange insert:normal %{
-	add-highlighter global ref space_warning
+	add-highlighter global/ ref space-warning
 }
 
 ### status line ###
