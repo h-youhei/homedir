@@ -59,6 +59,7 @@ alias gz='gzip' ugz='gunzip'
 ### git ###
 alias g='git'
 alias ga='git add'
+alias gbrm='git branch -d'
 alias gc='git commit' gca='gc --amend'
 alias gg='tig grep'
 alias gco='git checkout'
@@ -66,7 +67,8 @@ alias gcl='hub clone'
 alias pgcl='pcl | xargs git clone'
 alias gd='git diff'
 alias gl='git log --groph'
-alias gm='git mv'
+alias gm='git merge'
+alias gmv='git mv'
 alias gp='git push' gpu='git push -u origin master'
 alias gra='hub remote add origin' grau='hub remote add upstream'
 alias pgra='pcl | xargs git remote add origin' pgrau='pcl | xargs git remote add upstream'
@@ -90,6 +92,17 @@ gb() {
 	fi
 
 	command git branch
+}
+ghpr() {
+	if test "$#" -ne 1
+	then
+		echo 'put pull request number'
+		return
+	fi
+	repo=`git config --get remote.origin.url`
+	repo=${repo%.git}
+	repo=${repo#git@github.com:}
+	hub checkout https://github.com/$repo/pull/$1
 }
 
 [ -z $XDG_CONFIG_HOME ] && XDG_CONFIG_HOME=$HOME/.config
