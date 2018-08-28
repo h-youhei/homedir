@@ -100,7 +100,11 @@ define-command console-color %{
 	face window Whitespace blue
 }
 
-define-command -hidden _setup-color %{ %sh{
-	[ $TERM = linux ] && echo console-color
+define-command -hidden _setup-color %{ evaluate-commands %sh{
+	if [ $TERM = linux ] ; then
+		echo console-color
+	else
+		echo nop
+	fi
 }}
 hook global WinDisplay .* %{  _setup-color }

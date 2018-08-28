@@ -113,7 +113,7 @@ map global normal '<a-|>' $ #'pipe each selection. then keep selections the comm
 
 define-command -hidden split-with-char %{
 	info -title 'split with next char' 'enter char to split selection'
-	on-key %{ %sh{
+	on-key %{ evaluate-commands %sh{
 		case $kak_key in
 		#use execute-keys to close infomation area
 		"<esc>" | "<backspace>") echo "execute-keys :nop<ret>" ;;
@@ -180,29 +180,24 @@ map global normal M Z #'save Mark'
 # If nothing is marked, <a-z> and <a-Z> behave like z and Z.
 # So <a-z>a and <a-Z>a start insert mode accidentally.
 # These wrappers prevent it.
-define-command -hidden fold-mark-restore %{ %sh{
-	if [ $kak_reg_caret ] ; then
-		echo "execute-keys -save-regs '' <a-z>a"
-	else
-		echo "fail 'Register ^ does not contain a selection desc'"
-	fi
-}}
-define-command -hidden fold-mark-save %{ execute-keys -save-regs '' %sh{
-	if [ $kak_reg_caret ] ; then
-		echo "<a-Z>a"
-	else
-		echo "<a-Z>"
-	fi
-}}
-map global normal z ':fold-mark-restore<ret>'
-map global normal Z ':fold-mark-save<ret>'
+define-command -hidden fold-mark-save %{
+	try %{
+		#check if mark is already set
+		execute-keys -draft z
+		execute-keys -save-regs '' "<a-Z>a"
+	} catch %{
+		execute-keys -save-regs '' "<a-Z>"
+	}
+}
+map global normal <a-m> ':fold-mark-save<ret>'
+map global normal <a-M> <a-z>
 
 ### macro ###
 map global normal x q #'eXecute macro'
 map global normal X Q #'start or stop recording macro'
 
 ### quit ###
-define-command -hidden smart-quit %{ %sh{
+define-command -hidden smart-quit %{ evaluate-commands %sh{
 	case $kak_bufname in
 	\*debug\*)
 		echo 'execute-keys ga' ;;
@@ -214,10 +209,10 @@ define-command -hidden smart-quit %{ %sh{
 }}
 map global normal q ':smart-quit<ret>' #'Quit client'
 map global normal Q ':kill<ret>' #'Quit server'
+map global normal <a-q> ':delete-buffer<ret>' #'Quit buffer'
 
 ### buffer ###
 map global normal '<c-b>' ':buffer<space>' #'switch Buffer'
-map global normal '<a-q>' ':delete-buffer<ret>' #'Quit buffer'
 map global normal '<plus>' ':write<ret>' #'save buffer'
 
 ### file system ###
@@ -236,7 +231,7 @@ map global normal '<a-P>' '<a-P><a-;>' #'paste before selection and select it'
 
 ### clipboard ###
 declare-user-mode clipboard
-map global normal '\'' ':enter-user-mode clipboard<ret>'
+map global normal \' ':enter-user-mode clipboard<ret>'
 declare-option str clipboard 'xsel --clipboard -l /dev/null'
 #TODO: if last character is \n, treat linewise
 map -docstring 'Paste after current selection from clipboard' \

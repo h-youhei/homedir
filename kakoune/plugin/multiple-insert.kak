@@ -4,11 +4,11 @@ define-command  -docstring 'Start insert mode before cursor.
 If count is given, multiple inserted text count times.' \
 start-insert-before-cursor %{
 	execute-keys \;
-	%sh{
+	evaluate-commands %sh{
 		if [ $kak_count -gt 1 ]; then
 			echo _multiple-insert
 		else
-			echo execute-keys i
+			echo execute-keys -with-hooks i
 		fi
 	}
 }
@@ -17,37 +17,29 @@ define-command -docstring 'Start insert mode after cursor.
 If count is given, multiple inserted text count times.' \
 start-insert-after-cursor %{
 	execute-keys \;
-	%sh{
+	evaluate-commands %sh{
 		if [ $kak_count -gt 1 ]; then
 			echo _multiple-append
 		else
-			echo execute-keys a
+			echo execute-keys -with-hooks a
 		fi
 	}
 }
 
 define-command -hidden _multiple-insert %{
-	try %{
-		execute-keys -draft 's[^\n]<ret>'
-		execute-keys "y%val{count}p%val{count}Ls.<ret><a-space>c"
-	} catch %{
-		_multiple-insert-on-eol
-	}
+	execute-keys "y%val{count}p%val{count}Ls.<ret><a-space>c"
 }
 
 define-command -hidden _multiple-append %{
-	try %{
-		execute-keys -draft 's[^\n]<ret>'
-		execute-keys "y%val{count}p%val{count}Ls.<ret>'<a-space>c"
-	} catch %{
-		_multiple-insert-on-eol
-	}
+	#whether to start insert at beginning of next line or eol
+	#try %{
+		#throw on eol
+		#execute-keys -draft 's[^\n]<ret>'
+		execute-keys "y%val{count}p%val{count}Ls.<ret>)<a-space>c"
+	#} catch %{
+	#	_multiple-insert
+	#}
 }
-
-define-command  -hidden _multiple-insert-on-eol %{ %sh{
-	decremented=$(($kak_count - 1))
-	echo "execute-keys \"i.<esc>y${decremented}P${decremented}Hs.<ret>c\""
-}}
 
 #define-command -docstring 'Start insert mode before selection.
 #If count is given, multiple inserted text count times.' \
@@ -80,7 +72,7 @@ inject-char-after-cursor %{
 }
 
 define-command -hidden -params 1 _impl-inject-char %{
-	on-key %{ %sh{
+	on-key %{ evaluate-commands %sh{
 		if [ $kak_count -eq 0 ] ; then
 			echo "execute-keys $1$kak_key<esc>"
 		else

@@ -1,21 +1,29 @@
 declare-option -hidden bool capslock_was_on false
 
 #not a tty in kakoune
-define-command capslock-turn-on %{ %sh{
+define-command capslock-turn-on %{ evaluate-commands %sh{
 	#if [ $TERM = linux ] ; then
 		#setleds caps < $TTY
 	#else
 		state=`xset q | grep LED | rev | cut -c1`
-		[ $state -eq 0 ] && echo 'capslock-toggle'
+		if [ $state -eq 0 ] ; then
+			echo 'capslock-toggle'
+		else
+			echo nop
+		fi
 	#fi
 }}
 
-define-command capslock-turn-off %{ %sh{
+define-command capslock-turn-off %{ evaluate-commands %sh{
 	#if [ $TERM = linux ] ; then
 		#setleds -F -caps < $TTY
 	#else
 		state=`xset q | grep LED | rev | cut -c1`
-		[ $state -eq 1 ] && echo 'capslock-toggle'
+		if [ $state -eq 1 ] ; then
+			echo 'capslock-toggle'
+		else
+			echo nop
+		fi
 	#fi
 }}
 
@@ -23,7 +31,7 @@ define-command -hidden capslock-toggle %{ %sh{
 	xdotool key Caps_Lock
 }}
 	
-define-command -hidden capslock-turn-off-with-state %{ %sh{
+define-command -hidden capslock-turn-off-with-state %{ evaluate-commands %sh{
 	#if [ $TERM = linux ] ; then
 		#state=`setleds | awk 'NR==2 { print $6 } ' < $TTY`
 		#if [ $state = on ] ; then
@@ -43,8 +51,12 @@ define-command -hidden capslock-turn-off-with-state %{ %sh{
 	#fi
 }}
 
-define-command -hidden capslock-restore-state %{ %sh{
-	[ $kak_opt_capslock_was_on = true ] && echo 'capslock-turn-on'
+define-command -hidden capslock-restore-state %{ evaluate-commands %sh{
+	if [ $kak_opt_capslock_was_on = true ] ; then
+		echo 'capslock-turn-on'
+	else
+		echo nop
+	fi
 }}
 
 #prompt hook slow down many command.
