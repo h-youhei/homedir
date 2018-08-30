@@ -289,9 +289,15 @@ map -docstring 'trim trailing spaces' \
 	global format $ ':trim-trailing-spaces<ret>'
 map -docstring 'replace spaces full-width to half-width' \
 	global format f ':replace-spaces-full-to-half<ret>'
-map -docstring 'replace indent from space to tab' \
-	global format <tab> 's^\h+<ret><a-@>'
-map -docstring 'replace indent from tab to space' \
+define-command fix-indent-with-tab %{
+	execute-keys 's^\h+<ret><a-@>'
+	try %{
+		execute-keys 's\u0020+<ret>d'
+	}
+}
+map -docstring 'fix indent with tab' \
+	global format <tab> ':fix-indent-with-tab<ret>'
+map -docstring 'fix indent with space' \
 	global format <space> 's^\h+<ret>@'
 # not to select indent, use \S
 map -docstring 'collapse spaces' \
