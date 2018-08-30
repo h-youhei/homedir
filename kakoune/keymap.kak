@@ -289,3 +289,10 @@ map -docstring 'trim trailing spaces' \
 	global format $ ':trim-trailing-spaces<ret>'
 map -docstring 'replace spaces full-width to half-width' \
 	global format f ':replace-spaces-full-to-half<ret>'
+map -docstring 'replace indent from space to tab' \
+	global format <tab> 's^\h+<ret><a-@>'
+map -docstring 'replace indent from tab to space' \
+	global format <space> 's^\h+<ret>@'
+# not to select indent, use \S
+map -docstring 'collapse spaces' \
+	global format . 's\S\s{2,}<ret>s\s{2,}<ret>\c<space><esc>'
