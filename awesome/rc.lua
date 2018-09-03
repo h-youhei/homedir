@@ -355,7 +355,13 @@ globalkeys = gears.table.join(
 			}
 		end,
 		{description = "lua execute prompt", group = "awesome"}),
-	-- TODO: search engine prompt
+	awful.key({ modkey }, "s",
+		function () awful.spawn("searchmenu") end,
+		{description = "search on google", group = "search"}),
+	awful.key({ modkey, "Shift" }, "s",
+		function () mode.enter("search") end,
+		{description = "select engine for search", group = "search"}),
+	-- TODO: search with primary selection
 	-- Menubar
 	awful.key({ modkey }, "p", function() menubar.show() end,
 		{description = "show the menubar", group = "launcher"})
@@ -552,6 +558,49 @@ mode.add("layout", "Switch layout", {
 		end,
 		description = "tile (master is bottom)",
 	},
+})
+mode.add("search", "Select search engine", {
+	{
+		key = "i",
+		press = function () awful.spawn("searchmenu image") end,
+		description = "image",
+	}, {
+		key = "y",
+		press = function () awful.spawn("searchmenu youtube") end,
+		description = "youtube",
+	}, {
+		key = "m",
+		press = function () awful.spawn("searchmenu map") end,
+		description = "map",
+	}, {
+		key = "w",
+		press = function () awful.spawn("searchmenu wikipedia") end,
+		description = "wikipedia",
+	}, {
+		key = "g",
+		press = function () awful.spawn("searchmenu github") end,
+		description = "github",
+	}, {
+		key = "l",
+		press = function () awful.spawn("searchmenu archlinux") end,
+		description = "arch linux wiki",
+	}, {
+		key = "p",
+		press = function () awful.spawn("searchmenu aur") end,
+		description = "AUR package",
+	}, {
+		key = "e",
+		press = function () awful.spawn("searchmenu english") end,
+		description = "english dictionary",
+	}, {
+		key = "j",
+		press = function () awful.spawn("searchmenu japanese") end,
+		description = "japanese dictionary",
+	}, {
+		key = "t",
+		press = function () awful.spawn("searchmenu translation") end,
+		description = "jp-en or en-jp translation dictionary",
+	}
 })
 -- TODO: mode launcher
 

@@ -1,0 +1,58 @@
+#!/bin/sh
+
+if [ $BROWSER ] ; then
+	browser=$BROWSER
+else
+	browser=firefox
+fi
+browser=firefox-developer-edition
+
+if [ $1 ] ; then
+	engine=$1
+else
+	engine=google
+fi
+
+case $engine in
+	google)
+		query='https://www.google.com/search?num=100&q='
+		;;
+	image)
+		query='https://www.google.com/search?tbm=isch&q='
+		;;
+	youtube)
+		query='https://www.youtube.com/results?search_type=search_videos&search_query='
+		;;
+	map)
+		query='https://www.google.com/maps?q='
+		;;
+	wikipedia)
+		query='https://en.wikipedia.org/wiki/Special:Search?go=Go&search='
+		;;
+	github)
+		query='https://github.com/search?q='
+		;;
+	archlinux)
+		query='https://wiki.archlinux.org/index.php?search=?'
+		;;
+	aur)
+		query='https://aur.archlinux.org/packages?K='
+		;;
+	english)
+		query='https://www.oxfordlearnersdictionaries.com/search/english/?=english&q='
+		;;
+	japanese)
+		query='https://dictionary.goo.ne.jp/freewordsearcher.html?mode=1&kind=jn&MT='
+		;;
+	translation)
+		query='https://eowpw.alc.co.jp/search?q='
+		;;
+	*)
+		echo 'unknown engine'
+		exit 1
+		;;
+esac
+
+input=`echo '' | dmenu -p $engine`
+
+$browser $query"$input"
