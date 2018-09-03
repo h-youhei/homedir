@@ -285,10 +285,10 @@ map global normal '<a-lt>' ':remove-all-indent<ret>'
 ### format ###
 declare-user-mode format
 map global normal = ':enter-user-mode format<ret>'
-map -docstring 'trim trailing spaces' \
+map -docstring '<a-x>trim trailing spaces' \
 	global format $ ':trim-trailing-spaces<ret>'
 map -docstring 'replace spaces full-width to half-width' \
-	global format f ':replace-spaces-full-to-half<ret>'
+	global format f '<a-x>:replace-spaces-full-to-half<ret>'
 define-command fix-indent-with-tab %{
 	execute-keys 's^\h+<ret><a-@>'
 	try %{
@@ -296,9 +296,9 @@ define-command fix-indent-with-tab %{
 	}
 }
 map -docstring 'fix indent with tab' \
-	global format <tab> ':fix-indent-with-tab<ret>'
+	global format <tab> '<a-x>:fix-indent-with-tab<ret>'
 map -docstring 'fix indent with space' \
-	global format <space> 's^\h+<ret>@'
+	global format <space> '<a-x>s^\h+<ret>@'
 # not to select indent, use \S
 map -docstring 'collapse spaces' \
-	global format . 's\S\s{2,}<ret>s\s{2,}<ret>\c<space><esc>'
+	global format . 's\H\u0020{2,}<ret>s\u0020{2,}<ret>\c<space><esc>'
