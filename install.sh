@@ -17,8 +17,7 @@ ripgrep/install.sh
 tmux/install.sh
 vim/install.sh
 fontconfig/install.sh
-xmonad/install.sh
-stalontray/install.sh
+awesome/install.sh
 xterm/install.sh
 ibus/install.sh
 mozc/install.sh

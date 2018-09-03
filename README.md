@@ -25,10 +25,9 @@ You can install setting individually to run install.sh under each directory.
 - mozc
 - pacman
 - ripgrep
-- stalonetray
 - systemd
 - xdg
-- xmonad
+- awesome
 - xterm
 - ibus
 - qutebrowser
@@ -37,12 +36,14 @@ You can install setting individually to run install.sh under each directory.
 ### Rarely use
 - bash
 - vim
+- neovim
 - tmux
 
 ### Abondoned
 - fcitx
 - emacs
-- neovim
 - portage
 - urxvt
 - mlterm
+- xmonad
+- stalonetray
