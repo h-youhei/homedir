@@ -13,5 +13,3 @@ ln -s $script_dir/lib $xmonad_dir/.
 ln -s $script_dir/xmobar $XDG_CONFIG_HOME/.
 
 ln -sf $script_dir/xinit.sh $XDG_CONFIG_HOME/X11/xinitrc.d/99-window-manager.sh
-
-command -v xmonad && xmonad --recompile
