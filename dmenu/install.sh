@@ -7,4 +7,4 @@ bin() {
 	ln -s $script_dir/bin/$1 $HOME/bin/
 }
 
-bin searchmenu
+bin websearch

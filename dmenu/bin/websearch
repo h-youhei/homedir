@@ -5,10 +5,9 @@ if [ $BROWSER ] ; then
 else
 	browser=firefox
 fi
-browser=firefox-developer-edition
 
-if [ $1 ] ; then
-	engine=$1
+if [ $2 ] ; then
+	engine=$2
 else
 	engine=google
 fi
@@ -53,6 +52,26 @@ case $engine in
 		;;
 esac
 
-input=`echo '' | dmenu -p $engine`
+case $1 in
+	menu)
+		input=`echo -n | dmenu -p $engine`
+		;;
+	selection)
+		input=`xsel`
+		;;
+	clipboard)
+		input=`xsel --clipboard`
+		;;
+	*)
+		echo 'unknown mode'
+		exit 1
+esac
 
-$browser $query"$input"
+if [ -z $input ] ; then
+	exit
+# if input is url, then open the url without search engine
+elif [ `echo "$input" | grep -E '.+://.+'` ]
+	$browser "$input"
+else
+	$browser $query"$input"
+fi

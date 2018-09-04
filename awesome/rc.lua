@@ -341,11 +341,11 @@ globalkeys = gears.table.join(
 		{description = "restore minimized", group = "client"}),
 
 	-- Prompt
-	awful.key({ modkey }, "r",
+	awful.key({ modkey }, "x",
 		function () awful.screen.focused().mypromptbox:run() end,
 		{description = "run prompt", group = "launcher"}),
 
-	awful.key({ modkey }, "x",
+	awful.key({ modkey, "Shift" }, ";",
 		function ()
 			awful.prompt.run {
 				prompt       = "Run Lua code: ",
@@ -356,14 +356,21 @@ globalkeys = gears.table.join(
 		end,
 		{description = "lua execute prompt", group = "awesome"}),
 	awful.key({ modkey }, "s",
-		function () awful.spawn("searchmenu") end,
+		function () awful.spawn("websearch menu") end,
 		{description = "search on google", group = "search"}),
 	awful.key({ modkey, "Shift" }, "s",
 		function () mode.enter("search") end,
 		{description = "select engine for search", group = "search"}),
+	awful.key({ modkey }, "p",
+		function () awful.spawn("websearch selection") end,
+		{description = "search on google with primary selection", group = "search"}),
+	awful.key({ modkey, "Shift" }, "p",
+		function () mode.enter("selection_search") end,
+		{description = "select engine for search with primary selection", group = "search"}),
+		
 	-- TODO: search with primary selection
 	-- Menubar
-	awful.key({ modkey }, "p", function() menubar.show() end,
+	awful.key({ modkey }, "r", function() menubar.show() end,
 		{description = "show the menubar", group = "launcher"})
 )
 
@@ -475,6 +482,7 @@ clientbuttons = gears.table.join(
 mode.init()
 mode.add("power", "Power management", {
 	{
+	-- TODO:doesn't work
 		key = "q",
 		presS = awesome.quit,
 		description = "quit awesome",
@@ -559,49 +567,53 @@ mode.add("layout", "Switch layout", {
 		description = "tile (master is bottom)",
 	},
 })
-mode.add("search", "Select search engine", {
-	{
-		key = "i",
-		press = function () awful.spawn("searchmenu image") end,
-		description = "image",
-	}, {
-		key = "y",
-		press = function () awful.spawn("searchmenu youtube") end,
-		description = "youtube",
-	}, {
-		key = "m",
-		press = function () awful.spawn("searchmenu map") end,
-		description = "map",
-	}, {
-		key = "w",
-		press = function () awful.spawn("searchmenu wikipedia") end,
-		description = "wikipedia",
-	}, {
-		key = "g",
-		press = function () awful.spawn("searchmenu github") end,
-		description = "github",
-	}, {
-		key = "l",
-		press = function () awful.spawn("searchmenu archlinux") end,
-		description = "arch linux wiki",
-	}, {
-		key = "p",
-		press = function () awful.spawn("searchmenu aur") end,
-		description = "AUR package",
-	}, {
-		key = "e",
-		press = function () awful.spawn("searchmenu english") end,
-		description = "english dictionary",
-	}, {
-		key = "j",
-		press = function () awful.spawn("searchmenu japanese") end,
-		description = "japanese dictionary",
-	}, {
-		key = "t",
-		press = function () awful.spawn("searchmenu translation") end,
-		description = "jp-en or en-jp translation dictionary",
-	}
-})
+local function setup_websearch(m, description, input)
+	mode.add(m, description, {
+		{
+			key = "i",
+			press = function () awful.spawn("websearch " .. input .. " image") end,
+			description = "image",
+		}, {
+			key = "y",
+			press = function () awful.spawn("websearch " .. input .. " youtube") end,
+			description = "youtube",
+		}, {
+			key = "m",
+			press = function () awful.spawn("websearch " .. input .. " map") end,
+			description = "map",
+		}, {
+			key = "w",
+			press = function () awful.spawn("websearch " .. input .. " wikipedia") end,
+			description = "wikipedia",
+		}, {
+			key = "g",
+			press = function () awful.spawn("websearch " .. input .. " github") end,
+			description = "github",
+		}, {
+			key = "l",
+			press = function () awful.spawn("websearch " .. input .. " archlinux") end,
+			description = "arch linux wiki",
+		}, {
+			key = "p",
+			press = function () awful.spawn("websearch " .. input .. " aur") end,
+			description = "AUR package",
+		}, {
+			key = "e",
+			press = function () awful.spawn("websearch " .. input .. " english") end,
+			description = "english dictionary",
+		}, {
+			key = "j",
+			press = function () awful.spawn("websearch " .. input .. " japanese") end,
+			description = "japanese dictionary",
+		}, {
+			key = "t",
+			press = function () awful.spawn("websearch " .. input .. " translation") end,
+			description = "jp-en or en-jp translation dictionary",
+		}
+	})
+end
+setup_websearch("search", "Select search engine (search with menu)", "menu")
+setup_websearch("selection_search", "Select search engine (search with selection)", "selection")
 -- TODO: mode launcher
 
 -- Set keys
