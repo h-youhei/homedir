@@ -13,7 +13,11 @@ ln -s $script_dir/keymap.kak $kak_dir/
 ln -s $script_dir/autoload $kak_dir/
 
 [ -d $HOME/bin ] || mkdir $HOME/bin
-ln -s $script_dir/bin/kak-git $HOME/bin/
+bin() {
+	ln -s $script_dir/bin/$1 $HOME/bin/
+}
+bin kak-git
+bin kaklip
 
 [ -d $kak_dir/plugin ] || mkdir $kak_dir/plugin
 plugin_dir=$HOME/workspace/kakoune-plugin

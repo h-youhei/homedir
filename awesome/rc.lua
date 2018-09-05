@@ -281,6 +281,9 @@ globalkeys = gears.table.join(
 		function () awful.spawn(terminal) end,
 		{description = "open a terminal", group = "launcher"}),
 
+	awful.key({ modkey }, "c",
+		function () awful.spawn(terminal_cmd .. "kaklip") end,
+		{description = "edit clipboard"}),
 	-- Screenshot
 	awful.key({}, "Print",
 		function () awful.spawn.with_shell(
@@ -367,7 +370,7 @@ globalkeys = gears.table.join(
 	awful.key({ modkey, "Shift" }, "p",
 		function () mode.enter("selection_search") end,
 		{description = "select engine for search with primary selection", group = "search"}),
-		
+
 	-- TODO: search with primary selection
 	-- Menubar
 	awful.key({ modkey }, "r", function() menubar.show() end,
@@ -616,6 +619,8 @@ setup_websearch("search", "Select search engine (search with menu)", "menu")
 setup_websearch("selection_search", "Select search engine (search with selection)", "selection")
 -- TODO: mode launcher
 
+awful.screen.focus(screen.primary)
+
 -- Set keys
 root.keys(globalkeys)
 -- }}}
@@ -639,39 +644,46 @@ awful.rules.rules = {
 	},
 
 	-- Floating clients.
-	{ rule_any = {
-		instance = {
-		  "DTA",  -- Firefox addon DownThemAll.
-		  "copyq",  -- Includes session name in class.
+	{
+		rule_any = {
+			instance = {
+				"DTA",  -- Firefox addon DownThemAll.
+				"copyq",  -- Includes session name in class.
+			},
+			class = {
+				"Arandr",
+				"Gpick",
+				"Kruler",
+				"MessageWin",  -- kalarm.
+				"Sxiv",
+				"Wpa_gui",
+				"pinentry",
+				"veromix",
+				"xtightvncviewer"
+			},
+			name = {
+				"Event Tester",  -- xev.
+			},
+			role = {
+				"AlarmWindow",  -- Thunderbird's calendar.
+				"pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+			}
 		},
-		class = {
-		  "Arandr",
-		  "Gpick",
-		  "Kruler",
-		  "MessageWin",  -- kalarm.
-		  "Sxiv",
-		  "Wpa_gui",
-		  "pinentry",
-		  "veromix",
-		  "xtightvncviewer"},
-
-		name = {
-		  "Event Tester",  -- xev.
-		},
-		role = {
-		  "AlarmWindow",  -- Thunderbird's calendar.
-		  "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+		properties = {
+			floating = true,
+			placement = awful.placement.centered
 		}
-	  }, properties = { floating = true }},
+	},
 
 	-- Add titlebars to normal clients and dialogs
 	{ rule_any = {type = { "normal", "dialog" }
 	  }, properties = { titlebars_enabled = true }
 	},
 
-	-- Set Firefox to always map on the tag named "2" on screen 1.
-	-- { rule = { class = "Firefox" },
-	--   properties = { screen = 1, tag = "2" } },
+	{
+		rule = { class = "Firefox Developer Edition" },
+		properties = { screen = 2 }
+	},
 }
 -- }}}
 
@@ -745,14 +757,14 @@ end
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
 	-- don't trigger
-	client.disconnect_signal("focus", update_pointer)
+	-- client.disconnect_signal("focus", update_pointer)
 	if awful.client.focus.filter(c) then
 		client.focus = c
 	end
-	client.connect_signal("focus", update_pointer)
+	-- client.connect_signal("focus", update_pointer)
 end)
 
-client.connect_signal("focus", update_pointer)
+-- client.connect_signal("focus", update_pointer)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
