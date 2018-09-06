@@ -70,7 +70,7 @@ esac
 if [ -z $input ] ; then
 	exit
 # if input is url, then open the url without search engine
-elif [ `echo "$input" | grep -E '.+://.+'` ]
+elif [ `echo "$input" | grep -E '.+://.+'` ] ; then
 	$browser "$input"
 else
 	$browser $query"$input"
