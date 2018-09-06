@@ -2,6 +2,6 @@
 
 tmp=`mktemp`
 
-kak -e "map global normal q '%s.*[^\n]<ret><a-|>xsel -i -b -l /dev/null<ret>:quit!<ret>';execute-keys '!xsel -b<ret>%'" $tmp
+kak -e "map global normal q '_<a-|>xsel -i -b -l /dev/null<ret>:quit!<ret>';execute-keys '!xsel -b<ret>%'" $tmp
 
 rm $tmp
