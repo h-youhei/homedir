@@ -1,7 +1,13 @@
 #!/bin/sh
 
+if [ $BROWSER ] ; then
+	browser=$BROWSER
+else
+	browser=firefox
+fi
+
 cd `git rev-parse --show-toplevel`
 hugo server --disableFastRender --forceSyncStatic --ignoreCache > /dev/null &
 sleep 1
-firefox-developer-edition http://localhost:1313 &
+$browser http://localhost:1313 &
 
