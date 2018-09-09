@@ -1,0 +1,53 @@
+set numerichints
+set typelinkhints
+set noautofocus
+set showtabindices
+set completeonopen
+let mapleader = ""
+let barposition = "bottom"
+
+unmap h j k l e W A q Q cm cr x
+unmap mf mr my gy gr
+map F createActiveTabbedHint
+" map createTabbedHint
+" map createMultiHint
+
+unmap K R J E x X [[ ]]
+map t :buffer<space>
+map T goToTab
+map ] nextTab
+map [ previousTab
+map { moveTabLeft
+map } moveTabRight
+map d closeTab
+map u lastCloseTab
+map U :restore<space>
+map c :duplicate<cr>
+
+unmap H S L D
+map w goForward
+map b goBack
+
+map O :tabnew<space>
+map h :history<space>
+map B :bookmarks<space>
+map a createBookmark
+
+unmap gR
+map R reloadTabUncached
+
+unmap yy yY ya yh
+map y yankUrl
+map Y yankRootUrl
+
+map \ passKeys
+" passkey mode
+map <S-Esc> insertMode
+
+map i goToInput
+map I goToLastInput
+map s :open google<space>
+map S :tabnew google<space>
+" map e :open english
+" map E :tabnew english
+" map j :open japanese
