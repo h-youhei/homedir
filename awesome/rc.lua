@@ -52,6 +52,7 @@ terminal = "xterm"
 terminal_cmd = terminal .. " -e  "
 editor = os.getenv("EDITOR") or "kak" or "nvim" or "vim" or "vi"
 editor_cmd = terminal_cmd .. editor
+browser = os.getenv("BROWSER") or "firefox"
 
 -- Mod4 is GUI key, Mod1 is Alt key
 modkey = "Mod4"
@@ -207,7 +208,6 @@ end)
 -- ))
 -- }}}
 
--- { "edit config", editor_cmd .. " " .. awesome.conffile },
 -- {{{ Key bindings
 globalkeys = gears.table.join(
 	-- keep these binds in the case config is broken
@@ -281,9 +281,10 @@ globalkeys = gears.table.join(
 		function () awful.spawn(terminal) end,
 		{description = "open a terminal", group = "launcher"}),
 
-	awful.key({ modkey }, "c",
+	awful.key({ modkey }, "e",
 		function () awful.spawn(terminal_cmd .. "kaklip") end,
 		{description = "edit clipboard"}),
+
 	-- Screenshot
 	awful.key({}, "Print",
 		function () awful.spawn.with_shell(
@@ -371,10 +372,11 @@ globalkeys = gears.table.join(
 		function () mode.enter("selection_search") end,
 		{description = "select engine for search with primary selection", group = "search"}),
 
-	-- TODO: search with primary selection
 	-- Menubar
 	awful.key({ modkey }, "r", function() menubar.show() end,
-		{description = "show the menubar", group = "launcher"})
+		{description = "show the menubar", group = "launcher"}),
+	awful.key({ modkey }, "o", function() mode.enter("launcher") end,
+		{description = "enter launcher mode", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -570,6 +572,23 @@ mode.add("layout", "Switch layout", {
 		description = "tile (master is bottom)",
 	},
 })
+
+mode.add("launcher", "Launch program", {
+	{
+		key = "w",
+		press = function ()
+			awful.spawn(browser)
+		end,
+		description = "web browser",
+	}, {
+		key = "c",
+		press = function ()
+			awful.spawn("libreoffice --calc")
+		end,
+		description = "libreoffice calc",
+	},
+})
+
 local function setup_websearch(m, description, input)
 	mode.add(m, description, {
 		{
@@ -617,7 +636,6 @@ local function setup_websearch(m, description, input)
 end
 setup_websearch("search", "Select search engine (search with menu)", "menu")
 setup_websearch("selection_search", "Select search engine (search with selection)", "selection")
--- TODO: mode launcher
 
 awful.screen.focus(screen.primary)
 
@@ -681,7 +699,7 @@ awful.rules.rules = {
 	},
 
 	{
-		rule = { class = "Firefox Developer Edition" },
+		rule_any = { class = { "Firefox", "Chromium" } },
 		properties = { screen = 2 }
 	},
 }
@@ -743,16 +761,16 @@ client.connect_signal("request::titlebars", function(c)
 	}
 end)
 
-local function update_pointer(c)
-	-- c.x,y,width,height
-	mouse.coords(
-		{
-			x = c.x + c.width / 2,
-			y = c.y + 10
-		},
-		true
-	)
-end
+-- local function update_pointer(c)
+-- 	-- c.x,y,width,height
+-- 	mouse.coords(
+-- 		{
+-- 			x = c.x + c.width / 2,
+-- 			y = c.y + 10
+-- 		},
+-- 		true
+-- 	)
+-- end
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
