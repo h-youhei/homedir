@@ -35,7 +35,7 @@ replace-spaces-full-to-half %{
 # don't highlight in insert mode
 add-highlighter global/ ref space-warning
 hook global ModeChange normal:insert %{
-	remove-highlighter global/ref<slash>space-warning
+	remove-highlighter global/ref_space-warning
 }
 hook global  ModeChange insert:normal %{
 	add-highlighter global/ ref space-warning
