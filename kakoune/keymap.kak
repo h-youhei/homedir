@@ -70,7 +70,10 @@ map global normal '<a-t>' T #'expand to a entered charcter forward'
 #map global normal '<a-n>' N #'add a new selection with next match'
 map global normal '<a-[>' { #'expand text object backward'
 map global normal '<a-]>' } #'expand text object forward'
+map global normal M '<a-m>' #'select to the prev matching character
+map global normal '<a-m>' M #'extend selection to matching character'
 map global object W '<a-w>' -docstring 'WORD'
+
 
 ### comment ###
 map global normal '#' :comment-line<ret> -docstring 'comment line'
@@ -104,12 +107,6 @@ map global normal '<a-k>' ':keep-selection-each-line<ret>'
 map global normal '<a-K>' ':drop-selection-each-line<ret>'
 # use execute-keys to get rid of count
 map global normal '<esc>' ":execute-keys '<space>;'<ret>" #'deselect all'
-
-map global normal * '%' #'select whole buffer'
-map global normal '%' m #'select to matching character'
-map global normal '<a-%>' M #'extend selection to matching character'
-map global normal $ * #'put current selection on search register'
-map global normal '<a-|>' $ #'pipe each selection. then keep selections the command return 0'
 
 define-command -hidden split-with-char %{
 	info -title 'split with next char' 'enter char to split selection'
@@ -175,8 +172,6 @@ map global object _ 'c_|\W,_|\W<ret>' -docstring 'snake_case'
 #unmap global object c
 
 ### mark ###
-map global normal m z #'restore Mark'
-map global normal M Z #'save Mark'
 # If nothing is marked, <a-z> and <a-Z> behave like z and Z.
 # So <a-z>a and <a-Z>a start insert mode accidentally.
 # These wrappers prevent it.
@@ -189,8 +184,8 @@ define-command -hidden fold-mark-save %{
 		execute-keys -save-regs '' "<a-Z>"
 	}
 }
-map global normal <a-m> ':fold-mark-save<ret>'
-map global normal <a-M> <a-z>
+map global normal <a-z> ':fold-mark-save<ret>'
+map global normal <a-Z> <a-z>
 
 ### macro ###
 map global normal x q #'eXecute macro'
