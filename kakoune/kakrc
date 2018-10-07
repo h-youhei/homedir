@@ -77,7 +77,7 @@ alias global t open-terminal
 
 ### git ###
 define-command -docstring 'edit selected file in the git repository' -params 1 \
--shell-candidates %{ git ls-files `git rev-parse --show-toplevel` } \
+-shell-script-candidates %{ git ls-files `git rev-parse --show-toplevel` } \
 git-edit %{
 	edit %arg{1}
 }
