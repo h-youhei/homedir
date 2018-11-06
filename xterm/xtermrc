@@ -2,7 +2,7 @@ XTerm.termName: xterm-256color
 XTerm*locale: true
 !XTerm*cjkWidth: true
 XTerm*renderFont: true
-XTerm*faceSize: 11
+XTerm*faceSize: 16
 XTerm*faceName: Source Code Pro
 XTerm*faceNameDoublesize: Noto Sans CJK JP
 !XTerm*ximFont: Source Han Sans JP
@@ -40,7 +40,7 @@ XTerm.ttyModes: erase ^?
 
 XTerm*translation: #override \n\
 	Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\
-	Shift <Btn1Up>: exec-formatted("luakit '%t'", CLIPBOARD)
+	Shift <Btn1Up>: exec-formatted("chromium '%t'", CLIPBOARD)
 !exec-selectable("xterm -e less %s", all)
 !xurls
 !exec-selectable(command,page)
