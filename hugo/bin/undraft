@@ -1,0 +1,10 @@
+#!/bin/sh
+
+now=`date +%FT%T%:z`
+if [ -f $1 ] ; then
+	sed -i -e 's/^date *=.*/date = '$now'/' \
+		-e 's/^draft *= *true/draft = false/' $1
+else
+	echo "$1 not found"
+	exit 1
+fi

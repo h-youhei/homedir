@@ -1,0 +1,14 @@
+#!/bin/sh
+
+now=`date +%FT%T%:z`
+if [ -f $1 ] ; then
+	if grep -q '^lastmod *=' $1 ; then
+		sed -i -e 's/^lastmod *=.*/lastmod = '$now'/' $1
+	else
+		line=`grep -n '\+\+\+' $1 | sed -n 2p | cut -c 1`
+		sed -i -e "${line}ilastmod = $now\\" $1
+	fi
+else
+	echo "$1 not found"
+	exit 1
+fi
