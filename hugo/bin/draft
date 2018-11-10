@@ -1,11 +1,21 @@
 #!/bin/sh
 
 if [ -f $1 ] ; then
+	frontmatter=`grep -n '^+++' $1 | sed -n 2p | cut -c 1`
+	append=1
 	if grep -q '^draft *=' $1 ; then
-		sed -i -e 's/^draft *= *false/draft = true/' $1
+		line=`grep -n '^draft *=' $1 | head -n 1 | cut -c 1`
+		#check if draft is in frontmatter
+		if [ $frontmatter -gt $line ] ; then
+			sed -i -e '1,/^draft *=/s/^draft *= *false/draft = true/' $1
+		else
+			append=0
+		fi
 	else
-		line=`grep -n '\+\+\+' $1 | sed -n 2p | cut -c 1`
-		sed -i -e "${line}idraft = true\\" $1
+		append=0
+	fi
+	if [ $append -eq 0 ] ; then
+		sed -i -e "${frontmatter}idraft = true\\" $1
 	fi
 else
 	echo "$1 not found"
