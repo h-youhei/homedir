@@ -51,8 +51,8 @@ hook global BufWritePre .* %{ nop %sh{
 }}
 
 ### auto indent ###
-hook -group auto_indent global InsertChar \n %{ try %{ execute-keys -draft  \;K<a-&> } }
-hook global WinSetOption filetype=.* %{ remove-hooks global auto_indent }
+hook -group auto-indent global InsertChar \n %{ try %{ execute-keys -draft  \;K<a-&> } }
+hook global WinSetOption filetype=.* %{ remove-hooks global auto-indent }
 
 ### external tools ###
 set-option global grepcmd 'rg --with-filename --column'
