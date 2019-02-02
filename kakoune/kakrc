@@ -72,6 +72,7 @@ define-command ide %{
 define-command -docstring 'open new terminal in current directory' \
 open-terminal %{ %sh{
 	xterm > /dev/null 2>&1 &
+	echo nop
 }}
 alias global t open-terminal
 
@@ -87,6 +88,7 @@ define-command -docstring 'open new terminal in the git root' \
 git-open-terminal %{ %sh{
 	cd `git rev-parse --show-toplevel`
 	xterm > /dev/null 2>&1 &
+	echo nop
 }}
 alias global gt git-open-terminal
 
