@@ -29,6 +29,7 @@ define-command capslock-turn-off %{ evaluate-commands %sh{
 
 define-command -hidden capslock-toggle %{ %sh{
 	xdotool key Caps_Lock
+	echo nop
 }}
 	
 define-command -hidden capslock-turn-off-with-state %{ evaluate-commands %sh{
