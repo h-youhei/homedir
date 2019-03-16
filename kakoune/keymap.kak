@@ -219,8 +219,29 @@ map global normal '<c-t>' ':open-terminal<ret>' #'open new terminal'
 # map global normal '<c->' #'open terminal in project root'
 
 ### paste ###
-map global normal p ';<a-p><a-;>' #'paste after cursor and select it'
-map global normal P ';<a-P><a-;>' #'paste before cursor and select it'
+#paste before if param 1 is given
+define-command paste -params ..1 %{ evaluate-commands %sh{
+	if [ $kak_count = 0 ] ; then
+		if [ -z "$1" ] ; then
+			paste='<a-p>'
+		else
+			paste='<a-P>'
+		fi
+	else
+		if [ -z "$1" ] ; then
+			paste='p'
+		else
+			paste='P'
+		fi
+	fi
+	if [ -n "$kak_register" ] ; then
+		echo "execute-keys ';$kak_count\"$kak_register$paste'"
+	else
+		echo "execute-keys ';$kak_count$paste'"
+	fi
+}}
+map global normal p ':paste<ret>' #'paste after cursor and select it'
+map global normal P ':paste t<ret>' #'paste before cursor and select it'
 map global normal '<a-p>' '<a-p><a-;>' #'paste after selection and select it'
 map global normal '<a-P>' '<a-P><a-;>' #'paste before selection and select it'
 
