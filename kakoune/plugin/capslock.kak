@@ -6,6 +6,7 @@ define-command capslock-turn-on %{ evaluate-commands %sh{
 		#setleds caps < $TTY
 	#else
 		state=`xset q | grep LED | rev | cut -c1`
+		state=`expr $state % 2`
 		if [ $state -eq 0 ] ; then
 			echo 'capslock-toggle'
 		else
@@ -19,6 +20,7 @@ define-command capslock-turn-off %{ evaluate-commands %sh{
 		#setleds -F -caps < $TTY
 	#else
 		state=`xset q | grep LED | rev | cut -c1`
+		state=`expr $state % 2`
 		if [ $state -eq 1 ] ; then
 			echo 'capslock-toggle'
 		else
@@ -31,7 +33,7 @@ define-command -hidden capslock-toggle %{ %sh{
 	xdotool key Caps_Lock
 	echo nop
 }}
-	
+
 define-command -hidden capslock-turn-off-with-state %{ evaluate-commands %sh{
 	#if [ $TERM = linux ] ; then
 		#state=`setleds | awk 'NR==2 { print $6 } ' < $TTY`
@@ -43,6 +45,7 @@ define-command -hidden capslock-turn-off-with-state %{ evaluate-commands %sh{
 		#fi
 	#else
 		state=`xset q | grep LED | rev | cut -c1`
+		state=`expr $state % 2`
 		if [ $state -eq 1 ] ; then
 			echo 'set-option global capslock_was_on true'
 			echo 'capslock-toggle'
@@ -60,9 +63,6 @@ define-command -hidden capslock-restore-state %{ evaluate-commands %sh{
 	fi
 }}
 
-#prompt hook slow down many command.
-#As in doc command, the slowing down is significant.
-#after resolve issue #1747, uncomment the hook.
 define-command -docstring 'Turn off capslock when you go back normal mode.
 Turn on capslock when you enter insert mode,
 if it was on when you left insert mode last time.' \
@@ -70,12 +70,12 @@ setup-capslock-auto-switch %{
 	remove-hooks global capslock
 	hook -group capslock global ModeChange insert:normal %{ capslock-turn-off-with-state }
 	hook -group capslock global ModeChange normal:insert %{ capslock-restore-state }
-	#hook -group capslock global ModeChange prompt:normal %{ capslock-turn-off }
+	hook -group capslock global ModeChange prompt:normal %{ capslock-turn-off }
 }
 
 define-command -docstring 'turn off capslock when you go back normal mode.' \
 setup-capslock-auto-off %{
 	remove-hooks global capslock
 	hook -group capslock global ModeChange insert:normal %{ capslock-turn-off }
-	#hook -group capslock global ModeChange prompt:normal %{ capslock-turn-off }
+	hook -group capslock global ModeChange prompt:normal %{ capslock-turn-off }
 }
