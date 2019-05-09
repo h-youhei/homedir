@@ -12,8 +12,8 @@ local box = {}
 local function calculate_position(name, s)
 	local dpi = beautiful.xresources.get_dpi()
 	local w, h = textbox[name]:fit({dpi=dpi}, s.geometry.width, s.geometry.height)
-	box.width = w
-	box.height = h
+	box.width = w + beautiful.border_width * 2
+	box.height = h + beautiful.border_width * 2
 	box.x = s.geometry.x + (s.geometry.width / 2) - (box.width / 2)
 	box.y = s.geometry.y + (s.geometry.height / 2) - (box.height / 2)
 end
@@ -89,7 +89,8 @@ end
 
 function mode.enter(name, stay, s)
 	show_box(name, s)
-	local grabber = keygrabber.run(function(mod, key, event)
+	local grabber
+	grabber = keygrabber.run(function(mod, key, event)
 		if event == "press" and key == "Escape" then finish(grabber) end
 		local success, once = call_key(mode.modes[name], mod, key, event)
 		if success and (not stay or once) then finish(grabber) end
