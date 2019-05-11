@@ -315,7 +315,7 @@ globalkeys = gears.table.join(
 		{description = "(un)mute", group = "audio"}),
 
 	-- Power management
-	awful.key({ modkey }, "Escape" ,
+	awful.key({ modkey }, "Escape",
 		function () mode.enter("power") end,
 		{description = "into mode for power management", group = "mode"}),
 
@@ -694,13 +694,19 @@ awful.rules.rules = {
 	},
 
 	-- Add titlebars to normal clients and dialogs
-	{ rule_any = {type = { "normal", "dialog" }
-	  }, properties = { titlebars_enabled = true }
+	-- { rule_any = {type = { "normal", "dialog" }
+	{ rule_any =
+		{type = { "dialog" }},
+		properties = { titlebars_enabled = true }
 	},
 
 	{
-		rule_any = { class = { "Firefox", "Chromium" } },
-		properties = { screen = 2 }
+		rule_any = { class = {
+			"Firefox",
+			"Chromium",
+			"Kicad"
+		} },
+		properties = { maximized = true }
 	},
 }
 -- }}}
@@ -713,8 +719,8 @@ client.connect_signal("manage", function (c)
 	-- if not awesome.startup then awful.client.setslave(c) end
 
 	if awesome.startup and
-	  not c.size_hints.user_position
-	  and not c.size_hints.program_position then
+	not c.size_hints.user_position and
+	not c.size_hints.program_position then
 		-- Prevent clients from being unreachable after screen count changes.
 		awful.placement.no_offscreen(c)
 	end
