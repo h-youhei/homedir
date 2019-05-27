@@ -34,6 +34,7 @@ plugin_local() {
 #}
 
 plugin capslock
+plugin numlock
 plugin multiple-insert
 plugin copy-or-shrink
 plugin_local each-line-selection

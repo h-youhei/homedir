@@ -119,6 +119,10 @@ plug ibus
 set-option global ibus_on 'mozc-jp'
 setup-ibus-auto-switch
 
+plug numlock
+set-option global ibus_callback_on 'numlock-turn-on'
+set-option global ibus_callback_off 'numlock-turn-off'
+
 plug capslock
 setup-capslock-auto-switch
 
