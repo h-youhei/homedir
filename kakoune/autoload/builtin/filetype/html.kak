@@ -1,1 +1,1 @@
-/usr/share/kak/rc/base/html.kak
+/usr/share/kak/autoload/filetype/html.kak

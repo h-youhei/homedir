@@ -1,1 +1,1 @@
-/usr/share/kak/rc/base/markdown.kak
+/usr/share/kak/autoload/filetype/markdown.kak

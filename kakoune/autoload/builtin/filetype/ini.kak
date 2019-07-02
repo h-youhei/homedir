@@ -1,1 +1,1 @@
-/usr/share/kak/rc/base/ini.kak
+/usr/share/kak/autoload/filetype/ini.kak

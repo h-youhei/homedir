@@ -1,1 +1,1 @@
-/usr/share/kak/rc/base/git.kak
+/usr/share/kak/autoload/filetype/git.kak

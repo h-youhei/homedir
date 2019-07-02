@@ -1,1 +1,1 @@
-/usr/share/kak/rc/base/json.kak
+/usr/share/kak/autoload/filetype/json.kak

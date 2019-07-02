@@ -1,1 +1,1 @@
-/usr/share/kak/rc/base/css.kak
+/usr/share/kak/autoload/filetype/css.kak

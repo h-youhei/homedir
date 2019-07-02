@@ -56,7 +56,9 @@ hook global WinSetOption filetype=.* %{ remove-hooks global auto-indent }
 
 ### external tools ###
 set-option global grepcmd 'rg --with-filename --column'
-set-option global termcmd 'xterm -e sh -c'
+hook global ModuleLoaded x11 %{
+	set-option global termcmd 'xterm -e sh -c'
+}
 
 set-option global jumpclient main
 set-option global toolsclient tools

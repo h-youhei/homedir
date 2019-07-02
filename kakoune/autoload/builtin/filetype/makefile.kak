@@ -1,1 +1,1 @@
-/usr/share/kak/rc/core/makefile.kak
+/usr/share/kak/autoload/filetype/makefile.kak

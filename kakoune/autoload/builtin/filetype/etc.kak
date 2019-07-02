@@ -1,1 +1,1 @@
-/usr/share/kak/rc/base/etc.kak
+/usr/share/kak/autoload/filetype/etc.kak
