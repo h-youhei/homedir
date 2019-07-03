@@ -1,12 +1,12 @@
 ### readline ###
-map global prompt '<a-f>' '<c-w>' #'Forward word'
-map global prompt '<a-F>' '<c-a-w>' #'Forward WORD'
-map global prompt '<a-b>' '<c-b>' #'Backward word'
-map global prompt '<a-B>' '<c-a-b>' #'Backward WORD'
-map global prompt '<a-w>' '<c-b><c-k>' #'delete Word'
-map global prompt '<a-e>' '<c-k>' #'delete to End'
-map global prompt '<a-h>' '<c-u>' #'delete to Home'
-map global prompt '<a-l>' '<home><c-k>' #'delete Line'
+map global prompt '<a-w>' '<a-f>' #'Forward word'
+map global prompt '<a-W>' '<a-F>' #'Forward WORD'
+map global prompt '<a-e>' '<a-e>' #'Forward word end'
+map global prompt '<a-E>' '<a-E>' #'Forward WORD end'
+map global prompt '<a-d>' '<a-w>' #'delete Word'
+map global prompt '<a-D>' '<home><c-k>' #'delete Line'
+map global prompt '<a-l>' '<c-u>' #'delete to Home'
+map global prompt '<a-L>' '<c-k>' #'delete to End'
 map global prompt '<c-q>' '<c-v>' #'insert literal'
 
 ### insert mode ###

@@ -14,6 +14,12 @@ unset f
 
 KEYTIMEOUT=10
 
+function kill-whole-word () {
+	zle backward-word
+	zle kill-word
+}
+zle -N kill-whole-word
+
 function insert-to-visual () {
 	zle vi-cmd-mode
 	zle visual-mode
@@ -42,6 +48,8 @@ zle -N cd-parent
 
 bindkey -e
 
+bindkey '^u' cd-parent
+
 [ -z "$key[BackTab]" ] || bindkey "${key[BackTab]}" reverse-menu-complete
 bindkey "${key[Down]}" history-beginning-search-forward
 bindkey "${key[Up]}" history-beginning-search-backward
@@ -53,34 +61,34 @@ bindkey '\b' backward-delete-char
 bindkey "${key[Delete]}" delete-char
 bindkey "${key[Insert]}" overwrite-mode
 bindkey '\eb' backward-word
-bindkey '\ed' kill-word
-#kill to End
-bindkey '\ee' kill-line
-bindkey '\ef' forward-word
-#kill to Home
-bindkey '\eh' backward-kill-line
+bindkey '\eB' vi-backward-blank-word
+bindkey '\ed' kill-whole-word
+bindkey '\eD' kill-whole-line
+bindkey '\ee' vi-forward-word-end
+bindkey '\eE' vi-forward-blank-word-end
+bindkey '\ef' vi-find-next-char
+bindkey '\eF' vi-find-prev-char
 bindkey '\ei' insert-last-word
-bindkey '\el' kill-whole-line
+bindkey '\eL' kill-line
+bindkey '\el' backward-kill-line
 bindkey '\ep' yank
 bindkey '\eP' get-line
-bindkey '\et' transpose-char
-bindkey '\eT' transpose-words
+bindkey '\er' transpose-words
+bindkey '\et' vi-find-next-char-skip
+bindkey '\eT' vi-find-prev-char-skip
 bindkey '\eu' undo
 bindkey '\eU' redo
 bindkey '\ev' insert-to-visual
 bindkey '\eV' insert-to-visual-line
-bindkey '\ew' backward-kill-word
+bindkey '\ew' forward-word
 bindkey '\ey' copy-prev-word
 bindkey '\eY' push-line
-bindkey '\e]' vi-find-next-char
-bindkey '\e[' vi-find-prev-char-skip
 bindkey '\e~' vi-swap-case
 bindkey '\e,' vi-repeat-find
 bindkey '\e<' vi-rev-repeat-find
 bindkey "\e'" vi-set-buffer
-bindkey '\e%' vi-match-bracket
+bindkey '\em' vi-match-bracket
 bindkey '\e:' execute-named-cmd
-bindkey '\e^' cd-parent
 bindkey '\e' send-break
 
 #visual
@@ -97,7 +105,7 @@ bindkey -M visual 'b' backward-word
 bindkey -M visual 'w' forward-word
 bindkey -M visual '`' vi-uppercase
 bindkey -M visual '~' vi-lowercase
-bindkey -M visual '%' vi-match-bracket
+bindkey -M visual 'm' vi-match-bracket
 bindkey -M visual ',' vi-repeat-find
 bindkey -M visual '<' vi-rev-repeat-find
 
