@@ -39,7 +39,7 @@ You can install setting individually to run install.sh under each directory.
 - neovim
 - tmux
 
-### Abondoned
+### Abandoned
 - fcitx
 - emacs
 - portage
