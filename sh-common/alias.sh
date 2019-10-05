@@ -69,7 +69,7 @@ alias gd='git diff'
 alias gl='git log --groph'
 alias gm='git merge'
 alias gmv='git mv'
-alias gp='git push' gpu='git push -u origin master'
+alias gp='git push' gpu='gp -u origin master'
 alias gra='hub remote add origin' grau='hub remote add upstream'
 alias pgra='pcl | xargs git remote add origin' pgrau='pcl | xargs git remote add upstream'
 alias grb='git rebase -i' grbc='git rebase --continue'
@@ -85,7 +85,7 @@ alias gsmi='gsm init'
 alias gsmu='gsm update'
 alias gh='hub' ghb='gh browse'
 #sYnc
-alias gy='git pull' gyu='git pull upstream master'
+alias gy='git pull' gyo='gy orgin master' gyu='gy upstream master'
 
 # no param: show branch list
 # with param: create branch
