@@ -12,7 +12,7 @@ alias xcl='xsel --clipboard' xsl='xsel --primary'
 #alias xcl='xclip -selection clipboard' xsl='xclip -selection primary'
 #yank
 #alias ycl='xclip --selection clipboard -i' ysl='xclip --selection primary -i'
-alias ycl='xcl -i <' ysl='xsl -i <'
+alias ycl='xcl -i' ysl='xsl -i'
 #paste
 alias pcl='xcl -o' psl='xsl -o'
 
