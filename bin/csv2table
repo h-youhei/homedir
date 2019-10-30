@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+import argparse
+import csv
+
+parser = argparse.ArgumentParser(description='csv to html table converter')
+parser.add_argument('file', help='csv filename to convert')
+parser.add_argument('-n', '--no-horizontal-header', action='store_true')
+parser.add_argument('-v', '--vertical-header', action='store_true')
+args = parser.parse_args()
+
+with open(args.file) as f:
+	reader = csv.reader(f)
+	print('<table>')
+	if not args.no_horizontal_header:
+		row1 = next(reader)
+		print('<tr>')
+		for col in row1:
+			print('<th>{0}</th>'.format(col))
+		print('</tr>')
+	for row in reader:
+		row = iter(row)
+		print('<tr>')
+		if args.vertical_header:
+			col1 = next(row)
+			print('<th>{0}</th>'.format(col1))
+		for col in row:
+			print('<td>{0}</td>'.format(col))
+		print('</tr>')
+	print('table')
