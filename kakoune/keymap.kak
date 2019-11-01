@@ -13,6 +13,7 @@ map global prompt '<c-q>' '<c-v>' #'insert literal'
 map global insert '<home>' '<a-;>gi' #'move cursor to indent'
 map global insert '<pageup>' '<a-;><c-u>' #'scroll half page up'
 map global insert '<pagedown>' '<a-;><c-d>' #'scroll half page down'
+map global insert '<a-ret>' '<lt>br>' #'br tag'
 plug close-tag
 map global insert '<a-/>' '<esc>:close-tag<ret>i'
 
@@ -288,7 +289,6 @@ hook global InsertCompletionHide .* %{
 
 ### indent ###
 map global normal & '<a-:><a-;>&' #'left alignment'
-map global insert '<a-ret>' '<a-;><a-o><down>' #'newline without indent'
 define-command remove-all-indent %{
 	try %{
 		execute-keys -draft "<a-x>s^\Q%opt{comment_line}\E*\s+<ret>"

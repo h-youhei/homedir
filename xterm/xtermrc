@@ -36,6 +36,7 @@ XTerm*on3Clicks: regex ((http(s)?:\/\/)|(www\.))([[:alnum:]!#+,./=?@_~-]|(%[[:xd
 
 XTerm*metaSendsEscape: true
 XTerm.backarrowKey: false
+XTerm*fullscreen: never
 XTerm.ttyModes: erase ^?
 
 XTerm*translation: #override \n\
