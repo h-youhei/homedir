@@ -23,10 +23,10 @@ define-command trim-trailing-spaces %{
 	execute-keys 's\h+$<ret>d'
 }
 #'mix tab and space'
-add-highlighter shared/space-warning/space-after-tab regex ^\t+\u0020+ 0:Error
-add-highlighter shared/space-warning/tab-after-space regex ^\u0020+\t+ 0:Error
+add-highlighter shared/space-warning/space-after-tab regex ^\t+\u000020+ 0:Error
+add-highlighter shared/space-warning/tab-after-space regex ^\u000020+\t+ 0:Error
 #'fullwidth space'
-add-highlighter shared/space-warning/fullwidth-space regex \u3000 0:Error
+add-highlighter shared/space-warning/fullwidth-space regex \u003000 0:Error
 define-command -docstring 'replace spaces full-width to half-width' \
 replace-spaces-full-to-half %{
 	execute-keys 's\u3000<ret>r<space>'
