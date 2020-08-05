@@ -68,14 +68,14 @@ Turn on capslock when you enter insert mode,
 if it was on when you left insert mode last time.' \
 setup-capslock-auto-switch %{
 	remove-hooks global capslock
-	hook -group capslock global ModeChange insert:normal %{ capslock-turn-off-with-state }
-	hook -group capslock global ModeChange normal:insert %{ capslock-restore-state }
-	hook -group capslock global ModeChange prompt:normal %{ capslock-turn-off }
+	hook -group capslock global ModeChange pop:insert:normal %{ capslock-turn-off-with-state }
+	hook -group capslock global ModeChange push:normal:insert %{ capslock-restore-state }
+	hook -group capslock global ModeChange pop:prompt:normal %{ capslock-turn-off }
 }
 
 define-command -docstring 'turn off capslock when you go back normal mode.' \
 setup-capslock-auto-off %{
 	remove-hooks global capslock
-	hook -group capslock global ModeChange insert:normal %{ capslock-turn-off }
-	hook -group capslock global ModeChange prompt:normal %{ capslock-turn-off }
+	hook -group capslock global ModeChange pop:insert:normal %{ capslock-turn-off }
+	hook -group capslock global ModeChange pop:prompt:normal %{ capslock-turn-off }
 }
