@@ -489,7 +489,7 @@ mode.add("power", "Power management", {
 	{
 	-- TODO:doesn't work
 		key = "q",
-		presS = awesome.quit,
+		press = awesome.quit,
 		description = "quit awesome",
 	}, {
 		key = "c",
@@ -637,7 +637,15 @@ end
 setup_websearch("search", "Select search engine (search with menu)", "menu")
 setup_websearch("selection_search", "Select search engine (search with selection)", "selection")
 
-awful.screen.focus(screen.primary)
+for s in screen do
+	for out,_ in pairs(s.outputs) do
+		if out == "HDMI2" then
+			awful.screen.focus(out)
+		end
+	end
+end
+-- This doesn't work expected
+-- awful.screen.focus(screen.primary)
 
 -- Set keys
 root.keys(globalkeys)
