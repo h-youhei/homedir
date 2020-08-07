@@ -712,9 +712,15 @@ awful.rules.rules = {
 		rule_any = { class = {
 			"Firefox",
 			"Chromium",
-			"Kicad"
+			"Kicad",
 		} },
 		properties = { maximized = true }
+	},
+	{
+		rule_any = { class = {
+			"t-engine"
+		} },
+		properties = { fullscreen = true }
 	},
 }
 -- }}}
