@@ -119,6 +119,7 @@ source "%val{config}/color.kak"
 ### input method
 plug ibus
 set-option global ibus_on 'mozc-jp'
+set-option global ibus_off 'xkb:jp::jpn'
 setup-ibus-auto-switch
 
 plug numlock
