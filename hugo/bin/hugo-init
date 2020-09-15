@@ -1,0 +1,29 @@
+#!/bin/sh
+
+script_path=`readlink -f $0`
+script_dir=`dirname $script_path`
+
+if [ $# -eq 0 ] ; then
+	if [ -n `ls` ] ; then
+		echo 'files already exist'
+		exit 1
+	fi
+	hugo new site .
+elif [ $# -eq 1 ] ; then
+	if [ -n `ls $1` ] ; then
+		echo 'files already exist'
+		exit 1
+	fi
+	hugo new site $1
+	cd $1
+else
+	echo 'too many arguments'
+	exit 1
+fi
+
+git init
+
+rm archetypes/default.md
+ln -s $script_dir/../theme themes/
+rsync $script_dir/../config.toml .
+echo 'themes' > .gitignore
