@@ -713,6 +713,7 @@ awful.rules.rules = {
 			"Firefox",
 			"Chromium",
 			"Kicad",
+			"obs",
 		} },
 		properties = { maximized = true }
 	},
