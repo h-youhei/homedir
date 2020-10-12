@@ -714,7 +714,7 @@ awful.rules.rules = {
 			"Chromium",
 			"Kicad",
 			"obs",
-			"shotcut",
+			"Shotcut",
 			"vlc",
 		} },
 		properties = { maximized = true }
