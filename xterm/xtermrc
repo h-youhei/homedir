@@ -2,7 +2,7 @@ XTerm.termName: xterm-256color
 XTerm*locale: true
 !XTerm*cjkWidth: true
 XTerm*renderFont: true
-XTerm*faceSize: 12
+XTerm*faceSize: 13
 XTerm*faceName: Source Code Pro
 XTerm*faceNameDoublesize: Noto Sans CJK JP
 !XTerm*ximFont: Source Han Sans JP
