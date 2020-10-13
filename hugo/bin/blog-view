@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ $BROWSER ] ; then
+	browser=$BROWSER
+else
+	browser=firefox
+fi
+
+cd $HOME/workspace/blog
+hugo server --forceSyncStatic --gc --ignoreCache > /dev/null &
+sleep 1
+$browser http://localhost:1313 &
+
