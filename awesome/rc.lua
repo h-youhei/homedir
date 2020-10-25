@@ -716,6 +716,7 @@ awful.rules.rules = {
 			"obs",
 			"Shotcut",
 			"vlc",
+			"Audacity",
 		} },
 		properties = { maximized = true }
 	},
