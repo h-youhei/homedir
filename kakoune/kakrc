@@ -10,10 +10,11 @@ set-option global ui_options ncurses_assistant=none
 set-option global scrolloff 1,0
 
 add-highlighter global/ show-matching
+# softwrap
+add-highlighter global/ wrap
 
 ### hlsearch
 #add-highlighter global/ dynregex '%reg{/}' 0:default,+r
-
 ### hidden characters ###
 add-highlighter global/ show-whitespaces -lf ' ' -tab '>' -tabpad '_' -spc ' '
 add-highlighter shared/space-warning group

@@ -32,6 +32,7 @@ face global PrimaryCursorEol black,white+b
 face global SecondaryCursor bright-white,bright-cyan
 face global SecondaryCursorEol bright-white,bright-cyan
 face global LineNumbers bright-black
+face global LineNumbersWrapped bright-black+i
 face global LineNumberCursor bright-white,bright-blue
 face global MenuForeground bright-white,bright-green
 face global MenuBackground default,bright-blue
