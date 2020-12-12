@@ -55,6 +55,7 @@ alias t='xterm &'
 #Bzip Gzip Xz
 alias tarb='tar cvf --bzip2' targ='tar cvf --gzip' tarx='tar cvf --xz' utar='tar xvf'
 alias gz='gzip' ugz='gunzip'
+alias z='zip' uz='unzip'
 
 ### git ###
 alias g='git'
