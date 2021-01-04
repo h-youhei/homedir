@@ -2,16 +2,16 @@
 
 now=`date +%FT%T%:z`
 if [ -f $1 ] ; then
-	frontmatter=`grep -n '^+++' $1 | sed -n 2p | cut -c 1`
+	frontmatter=`grep -m2 -n '^+++' $1 | tail -n 1 | grep -Eo '^[0-9]+'`
 	if grep -q '^draft *=' $1 ; then
-		line=`grep -n '^draft *=' $1 | head -n 1 | cut -c 1`
+		line=`grep -n '^draft *=' $1 | head -n 1 | grep -Eo '^[0-9]+'`
 		#check if draft is in frontmatter
 		if [ $frontmatter -gt $line ] ; then
 			sed -i -e '1,/^draft *=/s/^draft *= *true/draft = false/' $1
 		fi
 	fi
 	if grep -q '^date *=' $1 ; then
-		line=`grep -n '^date *=' $1 | head -n 1 | cut -c 1`
+		line=`grep -n '^date *=' $1 | head -n 1 | grep -Eo '^[0-9]+'`
 		#check if date is in frontmatter
 		if [ $frontmatter -gt $line ] ; then
 			sed -i -e '1,/^date *=/s/^date *=.*/date = '$now'/' $1
